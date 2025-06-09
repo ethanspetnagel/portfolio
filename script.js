@@ -4,20 +4,20 @@ const loadingImages = [
     { src: './loading screen image 2.png', caption: 'Image 2' }
 ];
 
-// Project media mapping - LOCAL FILES ONLY
+// Project media mapping - CORRECTED FOR YOUR FOLDER STRUCTURE
 const projectMedia = {
-    'slug': './slug archive video.mp4',
+    'slug': '', // No slug video file in your folder
     'church': './church video bg.mp4',
-    'talamel': '', // No video yet
-    'fox-and-lion': '', // No video yet
-    'cardioscape': '', // No video yet
+    'talamel': '', // No video file visible
+    'fox-and-lion': '', // No video file visible
+    'cardioscape': '', // No video file visible
     'lu-rose-gold': './lu rose gold video bg.mp4',
-    'green-lake-law': '', // No video yet
-    'artwork': '', // No video yet
+    'green-lake-law': '', // No video file visible
+    'artwork': '', // No video file visible
     'june-2025': '' // No video
 };
 
-// Bio link images - update these with your local images
+// Bio link images - update these with your local images when you add them
 const bioImages = {
     'church-company': '',
     'talamel-health': '',
@@ -171,7 +171,10 @@ function isVideo(url) {
 
 // Function to show fullscreen media
 function showFullscreenMedia(mediaUrl) {
-    if (!mediaUrl) return;
+    if (!mediaUrl) {
+        console.log('No media URL provided');
+        return;
+    }
     
     console.log('showFullscreenMedia called with:', mediaUrl);
     
@@ -199,7 +202,6 @@ function switchMedia(mediaUrl) {
     // Reset both media elements
     if (bgVideo) {
         bgVideo.pause();
-        bgVideo.src = '';
         bgVideo.classList.remove('active');
     }
     if (bgImage) {
@@ -212,7 +214,12 @@ function switchMedia(mediaUrl) {
     if (isVideo(mediaUrl)) {
         console.log('Loading video:', mediaUrl);
         
-        // Simple video loading
+        // Remove all existing event listeners to prevent conflicts
+        const newVideo = bgVideo.cloneNode(false);
+        bgVideo.parentNode.replaceChild(newVideo, bgVideo);
+        bgVideo = newVideo;
+        
+        // Set video properties
         bgVideo.src = mediaUrl;
         bgVideo.muted = true;
         bgVideo.loop = true;
@@ -228,7 +235,6 @@ function switchMedia(mediaUrl) {
         
         const handleCanPlay = function() {
             console.log('Video can play through');
-            bgVideo.removeEventListener('canplaythrough', handleCanPlay);
             bgVideo.classList.add('active');
             fullscreenBg.classList.add('active');
             fullscreenBg.style.opacity = '1';
@@ -239,17 +245,20 @@ function switchMedia(mediaUrl) {
             });
         };
         
-        bgVideo.addEventListener('canplaythrough', handleCanPlay);
-        
-        bgVideo.addEventListener('error', function(e) {
+        const handleError = function(e) {
             console.error('Video loading error:', e);
             console.error('Failed URL:', mediaUrl);
-            console.error('Error code:', bgVideo.error?.code);
-            console.error('Error message:', bgVideo.error?.message);
-        });
+            if (bgVideo.error) {
+                console.error('Error code:', bgVideo.error.code);
+                console.error('Error message:', bgVideo.error.message);
+            }
+        };
+        
+        bgVideo.addEventListener('canplaythrough', handleCanPlay, { once: true });
+        bgVideo.addEventListener('error', handleError);
         
         bgVideo.load();
-    } else {
+    } else if (mediaUrl) {
         console.log('Loading image/GIF:', mediaUrl);
         
         const img = new Image();
@@ -308,6 +317,8 @@ function handleProjectHover(link, isEntering) {
         const project = link.getAttribute('data-project');
         const projectInfo = link.getAttribute('data-info');
         const mediaUrl = projectMedia[project];
+        
+        console.log(`Hovering over ${project}, media URL: ${mediaUrl || 'No media'}`);
         
         activeProject = project;
         projectsContainer.classList.add('hovering');
@@ -464,27 +475,43 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set random loading image
     const selectedImage = getRandomLoadingImage();
-    if (loadingImg && selectedImage) {
-        loadingImg.src = selectedImage.src;
-        loadingCaption.textContent = selectedImage.caption;
+    if (loadingImage && selectedImage) {
+        loadingImage.src = selectedImage.src;
+        if (loadingCaption) {
+            loadingCaption.textContent = selectedImage.caption;
+        }
     }
     
     // Hide loading screen after 4 seconds
     setTimeout(() => {
         console.log('Hiding loading screen');
-        loadingScreen.classList.add('fade-out');
-        
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 500);
+        if (loadingScreen) {
+            loadingScreen.classList.add('fade-out');
+            
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                // Make sure main content is visible
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) {
+                    mainContent.classList.add('visible');
+                }
+            }, 500);
+        }
     }, 4000);
+    
+    // Log all project media paths for debugging
+    console.log('Project media paths:');
+    Object.entries(projectMedia).forEach(([project, path]) => {
+        console.log(`- ${project}: ${path || 'No media'}`);
+    });
 });
 
 // Fallback: Force hide loading screen
 window.addEventListener('load', () => {
+    console.log('Window fully loaded');
     setTimeout(() => {
         if (loadingScreen && loadingScreen.style.display !== 'none') {
-            console.log('Force hiding loading screen');
+            console.log('Force hiding loading screen on window load');
             loadingScreen.style.display = 'none';
         }
     }, 1000);
