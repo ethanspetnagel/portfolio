@@ -1,0 +1,563 @@
+/* Font Face Declaration for Borgia Pro */
+@font-face {
+  font-family: 'Borgia Pro';
+  src: url('BorgiaPro-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Borgia Pro';
+  src: url('BorgiaPro-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Borgia Pro';
+  src: url('BorgiaPro-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Borgia Pro';
+  src: url('BorgiaPro-BoldItalic.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Selection Highlight Colors - Modern Blue Shades */
+::selection {
+  background-color: #00233f; /* Dark blue background */
+  color: #c0e7ff; /* Light blue text */
+}
+
+::-moz-selection {
+  background-color: #00233f; /* Dark blue background */
+  color: #c0e7ff; /* Light blue text */
+}
+
+/* For specific elements if needed */
+.project-link::selection,
+.bio-text::selection,
+.date-text::selection {
+  background-color: #00233f;
+  color: #c0e7ff;
+}
+
+body {
+  background-color: #fafafa;
+  color: #0f0f0f;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+}
+
+/* Loading Screen */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-image {
+  max-width: 60%;
+  max-height: 60%;
+  object-fit: contain;
+  opacity: 0;
+  animation: fadeIn 6s ease-in-out forwards;
+}
+
+.loading-caption {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: calc(1.6rem - 7px); /* Same as bio text */
+  color: #0f0f0f;
+  opacity: 0;
+  animation: fadeIn 6s ease-in-out forwards;
+  animation-delay: 0.5s;
+  white-space: nowrap;
+  text-align: center;
+  font-family: 'Borgia Pro', 'Courier New', serif; /* Same font as bio */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Fullscreen Background Layer */
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  background-color: #fafafa;
+}
+
+.fullscreen-bg.active {
+  opacity: 1;
+}
+
+.fullscreen-bg video,
+.fullscreen-bg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.fullscreen-bg video.active,
+.fullscreen-bg img.active {
+  display: block;
+}
+
+/* Add filter for images only, not church video */
+.fullscreen-bg img.active {
+  filter: brightness(0.9);
+}
+
+/* Better video quality */
+.fullscreen-bg video.active {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Main Content */
+.main-content {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px 120px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.main-content.visible {
+  opacity: 1;
+}
+
+/* Projects Container - Updated with padding-top */
+.projects-container {
+  text-align: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto 100px;
+  line-height: 0.8;
+  padding-top: 10px; /* Added to push down project links */
+}
+
+.projects-container.hovering .project-link {
+  opacity: 0.25;
+}
+
+.projects-container.hovering .project-link:hover {
+  opacity: 1;
+}
+
+/* Project Links - Updated font size and hover color */
+.project-link {
+  display: inline-block;
+  color: #0f0f0f;
+  text-decoration: none;
+  font-size: clamp(36px, 8.1vw, 99px); /* 10% smaller than original */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  transition: opacity 0.2s ease, color 0.3s ease; /* Faster color transition */
+  cursor: crosshair;
+  position: relative;
+  width: auto;
+}
+
+.projects-container {
+  text-align: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto 100px;
+  line-height: 0.8;
+}
+
+.projects-container a {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+/* Changed hover color to yellow */
+.project-link:hover {
+  color: #ffff00;
+}
+
+/* Website Info */
+.website-info {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.date-text {
+  font-size: clamp(16px, 2.8vw, 39px);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #0f0f0f;
+  padding: 0; /* Remove padding for exact size match */
+  display: inline-block;
+}
+
+/* Date text hover - background turns black, text turns white */
+.date-text:hover {
+  color: #ffffff; /* White text on hover */
+}
+
+/* Special class for black background effect */
+body.june-hover {
+  background-color: #000000;
+  transition: background-color 0.3s ease;
+}
+
+body.june-hover .project-link,
+body.june-hover .date-text,
+body.june-hover .about-toggle,
+body.june-hover .bio-text,
+body.june-hover .bio-text p,
+body.june-hover .bio-text a,
+body.june-hover .contact-links a {
+  color: #ffffff; /* White text */
+}
+
+.date-text.project-active {
+  color: #0f0f0f;
+}
+
+/* Bio Section - Updated positioning to prevent overlap */
+.bio-section {
+  position: fixed;
+  bottom: 40px; /* Same as website-info */
+  left: 20px;
+  max-width: 400px; /* Further reduced for tighter layout */
+  z-index: 15;
+}
+
+.about-toggle,
+.bio-text,
+.bio-text p,
+.bio-text a,
+.contact-links a {
+  color: #0f0f0f;
+  mix-blend-mode: difference;
+}
+
+/* About toggle - Match JUNE 2025 exactly */
+.about-toggle {
+  font-size: clamp(16px, 2.8vw, 39px); /* Same as date-text */
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 8px; /* Reduced by 2px to move down */
+  transition: opacity 0.3s ease;
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase; /* Changed to uppercase */
+  line-height: 1; /* Add line-height to match */
+  padding: 0; /* Remove padding to match JUNE 2025 exactly */
+}
+
+.about-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Bio content - Updated for better visibility */
+.bio-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+.bio-content.active {
+  max-height: 600px; /* Increased to show all content */
+  opacity: 1;
+  overflow: visible; /* Allow content to be visible */
+}
+
+/* Bio text - Changed to Borgia Pro font */
+.bio-text {
+  font-size: calc(1.6rem - 7px); /* Reduced by 7px */
+  line-height: 1.2;
+  text-align: left;
+  font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
+}
+
+.bio-text p {
+  margin-bottom: 10px;
+  font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
+}
+
+.bio-text a {
+  text-decoration: underline;
+  transition: opacity 0.3s ease;
+  font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
+}
+
+.bio-text a:hover {
+  opacity: 0.7;
+}
+
+/* Contact links - Changed to Borgia Pro Bold and adjusted for single line */
+.contact-links {
+  margin-top: 15px;
+  white-space: nowrap; /* Keep links on one line */
+}
+
+.contact-links a {
+  display: inline-block;
+  margin-right: 15px; /* Increased spacing */
+  font-size: calc(1.6rem - 7px); /* Reduced by 7px */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-style: normal;
+  font-family: 'Borgia Pro', 'Courier New', monospace;
+  font-weight: bold; /* Made bold */
+}
+
+.contact-links a:hover {
+  color: #0000FF; /* Hyperlink blue on hover */
+  text-decoration: underline;
+}
+
+.contact-links a:hover {
+  opacity: 0.7;
+}
+
+/* Bio Preview */
+.bio-preview {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 150px;
+  height: 150px;
+  display: none;
+  z-index: 14;
+}
+
+.bio-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bio-preview.active {
+  display: block;
+}
+
+/* Touch device styles */
+@media (hover: none) and (pointer: coarse) {
+  .project-link.touch-active {
+    color: #ffff00; /* Changed to yellow */
+  }
+
+  .projects-container.touch-hovering .project-link {
+    opacity: 0.25;
+  }
+
+  .projects-container.touch-hovering .project-link.touch-active {
+    opacity: 1;
+  }
+}
+
+/* Media Queries - Tablet */
+@media (max-width: 768px) {
+  .project-link {
+    font-size: clamp(27px, 8.1vw, 72px); /* 10% smaller */
+  }
+
+  .date-text {
+    font-size: clamp(25px, 5vw, 60px);
+  }
+
+  .about-toggle {
+    font-size: clamp(25px, 5vw, 60px); /* Match date-text */
+  }
+
+  .bio-section {
+    max-width: 300px;
+    left: 10px;
+    bottom: 10px;
+  }
+
+  .bio-preview {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Media Queries - Mobile */
+@media (max-width: 480px) {
+  body {
+    overflow-y: auto;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    min-height: 100vh;
+    padding: 40px 20px 20px;
+    justify-content: flex-start;
+  }
+
+  .projects-container {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    line-height: 1.1;
+    padding-top: 10px; /* Maintain padding on mobile */
+  }
+
+  .project-link {
+    font-size: clamp(21.6px, 7.2vw, 40.5px); /* 10% smaller */
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+
+  .website-info {
+    position: static;
+    bottom: auto;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 40px;
+    margin-bottom: 20px; /* Reduced margin */
+    text-align: center;
+  }
+
+  .date-text {
+    font-size: clamp(20px, 5vw, 40px);
+  }
+
+  .about-toggle {
+    font-size: clamp(20px, 5vw, 40px); /* Match date-text */
+  }
+
+  .bio-section {
+    position: static;
+    bottom: auto;
+    left: auto;
+    max-width: 100%;
+    margin: 0 auto; /* Center the section */
+    padding: 0 20px 20px;
+    text-align: center; /* Center about toggle */
+  }
+
+  .about-toggle {
+    padding: 5px 10px;
+    margin-bottom: 20px;
+  }
+
+  .bio-content {
+    max-height: none;
+    text-align: left; /* Keep bio text left-aligned */
+  }
+
+  .bio-content.active {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bio-text {
+    font-size: calc(1.3rem - 7px); /* Reduced by 7px on mobile */
+    line-height: 1.2;
+  }
+
+  .contact-links {
+    white-space: normal; /* Allow wrapping on mobile if needed */
+  }
+
+  .contact-links a {
+    font-size: calc(1.3rem - 7px); /* Reduced by 7px */
+    margin-right: 12px;
+    display: inline-block;
+    margin-bottom: 5px;
+    font-family: 'Borgia Pro', 'Courier New', monospace;
+  }
+
+  .loading-caption {
+    font-size: calc(1.3rem - 7px); /* Same as bio text on mobile */
+    bottom: -30px;
+  }
+
+  .loading-caption {
+    font-size: 10px;
+    bottom: -30px;
+  }
+
+  /* Hide bio preview on mobile */
+  .bio-preview {
+    display: none !important;
+  }
+
+  /* Fix mix-blend-mode on mobile */
+  .about-toggle,
+  .bio-text,
+  .bio-text p,
+  .bio-text a,
+  .contact-links a {
+    mix-blend-mode: normal;
+    color: #0f0f0f;
+  }
+}
