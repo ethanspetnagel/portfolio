@@ -70,38 +70,72 @@ document.addEventListener('DOMContentLoaded', () => {
   const projectsButton = document.getElementById('projectsButton') || document.querySelector('.projects-button');
   const siteTitle = document.querySelector('.site-title');
 
-  // SCRAMBLE EFFECT for projects button: arrow → HOME, stays as HOME after hover
+  // Create star scroll indicators
+  const createScrollStars = () => {
+      const starLeft = document.createElement('div');
+      starLeft.className = 'star-scroll-indicator';
+      starLeft.textContent = '★';
+      document.querySelector('.page').appendChild(starLeft);
+
+      const starRight = document.createElement('div');
+      starRight.className = 'star-scroll-indicator-gallery';
+      starRight.textContent = '★';
+      document.querySelector('.page').appendChild(starRight);
+
+      return { starLeft, starRight };
+  };
+
+  const { starLeft, starRight } = createScrollStars();
+
+  // SCRAMBLE EFFECT for projects button: arrow → HOME → arrow
   const projectsScramble = new TextScramble(projectsButton);
   let projectsButtonState = 'arrow';
 
-  // Start as arrow
-  projectsButton.textContent = '\u2190';
+  // Start with thicker arrow using the specific symbol
+  projectsButton.textContent = '⬅';
+  projectsButton.style.fontWeight = 'bold';
+  projectsButton.style.fontSize = 'clamp(16px, 2.8vw, 39px)';
 
   projectsButton.addEventListener('mouseenter', function () {
-      if (projectsButtonState !== 'home') {
-          projectsScramble.setText('HOME');
-      }
-  });
-
-  projectsButton.addEventListener('mouseleave', function () {
       projectsScramble.setText('HOME');
       projectsButtonState = 'home';
   });
 
-  // Always keep HOME after first hover
-  projectsButton.addEventListener('blur', function () {
-      if (projectsButtonState === 'home') {
-          projectsButton.textContent = 'HOME';
-      }
+  projectsButton.addEventListener('mouseleave', function () {
+      // Return to arrow on mouse leave
+      setTimeout(() => {
+          projectsButton.textContent = '⬅';
+          projectsButtonState = 'arrow';
+      }, 50);
   });
 
-  // Site title hover effect (black background, white text on left column)
+  // Site title hover effect - works from all directions
+  let isOverTitle = false;
+  
   siteTitle.addEventListener('mouseenter', function () {
+      isOverTitle = true;
       document.body.classList.add('title-hover');
   });
 
   siteTitle.addEventListener('mouseleave', function () {
+      isOverTitle = false;
       document.body.classList.remove('title-hover');
+  });
+
+  // Additional check for edge cases
+  siteTitle.addEventListener('mouseover', function () {
+      if (!isOverTitle) {
+          isOverTitle = true;
+          document.body.classList.add('title-hover');
+      }
+  });
+
+  siteTitle.addEventListener('mouseout', function (e) {
+      // Check if mouse is actually leaving the element
+      if (!siteTitle.contains(e.relatedTarget)) {
+          isOverTitle = false;
+          document.body.classList.remove('title-hover');
+      }
   });
 
   // TAB SWITCHING: Show/hide essays and project sets in sync
@@ -118,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const currentEssay = document.querySelector(`.essay-text[data-index="${index}"]`);
           if (currentEssay) currentEssay.classList.add('active');
 
-          // Update projects
+          // Update projects - Fixed to match original indexing
           projects.forEach(p => p.classList.remove('active'));
           const currentProject = document.querySelector(`.project-set[data-index="${index}"]`);
           if (currentProject) currentProject.classList.add('active');
@@ -261,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   cursorLabel.style.display = 'block';
                   cursorLabel.style.left = `${e.clientX}px`;
                   cursorLabel.style.top = `${e.clientY}px`;
-                  cursorLabel.style.color = '#4FC3F7'; // light blue
+                  cursorLabel.style.color = '#e0e0e0'; // Updated to light grey
               }
           } else {
               cursorLabel.style.display = 'none';
@@ -281,6 +315,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Initialize first slide
       showSlide(currentIndex);
+  });
+
+  // Custom star scrollbar functionality
+  let scrollTimeoutLeft, scrollTimeoutRight;
+  const essaySidebar = document.querySelector('.essay-sidebar');
+  const projectGallery = document.querySelector('.project-gallery');
+
+  function updateStarPosition(element, star, isGallery = false) {
+      const scrollPercentage = element.scrollTop / (element.scrollHeight - element.clientHeight);
+      const viewportHeight = element.clientHeight;
+      const topPosition = 120 + (viewportHeight - 240) * scrollPercentage;
+      star.style.top = `${topPosition}px`;
+  }
+
+  function showScrollStar(element, star, timeout) {
+      element.classList.add('scrolling');
+      clearTimeout(timeout);
+      return setTimeout(() => {
+          element.classList.remove('scrolling');
+      }, 1000);
+  }
+
+  essaySidebar.addEventListener('scroll', () => {
+      updateStarPosition(essaySidebar, starLeft);
+      scrollTimeoutLeft = showScrollStar(essaySidebar, starLeft, scrollTimeoutLeft);
+  });
+
+  projectGallery.addEventListener('scroll', () => {
+      updateStarPosition(projectGallery, starRight, true);
+      scrollTimeoutRight = showScrollStar(projectGallery, starRight, scrollTimeoutRight);
   });
 
   // Smooth scroll behavior for any anchor links

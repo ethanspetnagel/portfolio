@@ -1,98 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ethan Spetnagel - Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Quadrant Font Import - Update this with your actual font URL if you have one -->
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Favicon - add your favicon image here -->
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="icon" type="image/x-icon" href="favicon.png" />
-  </head>
-  <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-      <div class="loading-container">
-        <img class="loading-image" id="loadingImage" src="" alt="Loading" />
-        <p class="loading-caption" id="loadingCaption"></p>
-      </div>
-    </div>
-
-    <!-- Full Screen Background for Images/Videos -->
-    <div class="fullscreen-bg" id="fullscreenBg">
-      <video id="bgVideo" muted loop playsinline autoplay></video>
-      <img id="bgImage" alt="" />
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-      <!-- Projects -->
-      <div class="projects-container">
-        <a href="slug/slug.html" class="project-link" data-project="slug" data-info="PRODUCTS & IDENTITY – 2023">SLUG</a><!-- trigger redeploy -->
-        <a href="church/church.html" class="project-link" data-project="church" data-info="GRAPHICS – 2025">CHURCH</a>
-        <a href="talamel/talamel.html" class="project-link" data-project="talamel" data-info="UX & IDENTITY – 2025">TALAMEL</a>
-        <a href="foxandlion/foxandlion.html" class="project-link" data-project="fox-and-lion" data-info="UX – 2025">FOX AND LION</a>
-        <a href="cardioscape/cardioscape.html" class="project-link" data-project="cardioscape" data-info="IxD – 2024">CARDIOSCAPE</a>
-        <a href="lu rose gold/lu-rose-gold.html" class="project-link" data-project="lu-rose-gold" data-info="TATTOO VIZUALIZER – 2024">LU ROSE GOLD</a>
-        <a href="greenlakelaw/greenlakelaw.html" class="project-link" data-project="green-lake-law" data-info="IDENTITY – 2025">GREEN LAKE LAW</a>
-        <a href="artwork/artwork.html" class="project-link" data-project="artwork" data-info="SELECTED WORKS">ARTWORK</a>
-      </div>
-
-      <!-- Website Info -->
-      <div class="website-info">
-        <p class="date-text" id="dateText" data-project="june-2025">JUNE 2025</p>
-      </div>
-
-      <!-- Bio Section -->
-      <div class="bio-section">
-        <div class="about-toggle" id="aboutToggle">about</div>
-        <div class="bio-content" id="bioContent">
-          <div class="bio-text">
-            <p>
-              Ethan Spetnagel is an interdisciplinary designer based in
-              Queens, New York.
-            </p>
-            <p>
-              Currently, he is a Manager of Design & Fulfillment at
-              <a href="https://www.churchcalifornia.com" target="_blank" data-bio="church-company"><i>Church California</i></a> – a
-              skincare and grooming brand. He is also working as a UX
-              Designer for
-              <a href="https://www.talamelhealth.com" target="_blank" data-bio="talamel-health"><i>Talamel Health Technologies</i></a>
-              – a healthcare start-up that's revolutionizing how people
-              find post-acute care.
-            </p>
-            <p>
-              In 2023, he designed and founded
-              <a href="https://www.slugsoap.net" target="_blank" data-bio="slug-soap"><i>Slug</i></a>, an eco-friendly,
-              artisanal soap brand where he handled everything from product
-              development and packaging to digital branding.
-            </p>
-            <p>
-              He graduated from the
-              <a href="https://www.colorado.edu" target="_blank" data-bio="colorado"><i>University of Colorado</i></a> with a
-              dual major in Information Analytics and Finance.
-            </p>
-            <p>
-              Available for freelance and collaborative work — reach out via email or text.
-            </p>
-          </div>
-          <div class="contact-links">
-            <a href="mailto:ethanspetnagel@gmail.com">email</a>
-            <a href="http://instagram.com/ethan141744114/" target="_blank">instagram</a>
-            <a href="https://www.linkedin.com/in/ethanspetnagel/" target="_blank">linkedIn</a>
-            <a href="https://www.are.na/ethan-spetnagel" target="_blank">are.na</a>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Slug Soap</title>
+  <link rel="stylesheet" href="slug.css" />
+  <script defer src="slug.js"></script>
+</head>
+<body>
+  <a href="https://ethanspetnagel.online" class="projects-button">OTHER PROJECTS</a>
+  <div class="cursor-label" id="cursorLabel"></div>
+  <div class="page">
+    <!-- LEFT TEXT COLUMN -->
+    <aside class="essay-sidebar">
+      <h1 class="site-title">SLUG</h1>
+      <nav class="essay-nav">
+        <span class="essay-tab active" data-index="0">INFORMATION</span>
+        <span class="essay-tab" data-index="1">PRODUCT DESIGN</span>
+        <span class="essay-tab" data-index="2">IDENTITY</span>
+        <span class="essay-tab" data-index="3">PACKAGING</span>
+        <span class="essay-tab" data-index="4">WEB DESIGN</span>
+        <span class="essay-tab" data-index="5">MOTION DESIGN</span>
+      </nav>
+      <div class="essay-content">
+        <div class="essay-text active" data-index="0">
+          <p><strong></strong></p>
+          <p>
+            I launched Slug Soap as an independent venture exploring the intersection of product design and everyday objects. What began as an experiment in soap making evolved into a comprehensive design project spanning product development, brand identity, packaging systems, and digital experiences.
+          </p>
+          <p>
+            Over the course of the project, I designed and produced six distinct soap varieties, each investigating different formal approaches and functional considerations within this familiar typology. The collection has sold over 500 bars through select San Francisco retailers and direct-to-consumer channels.
+          </p>
+          <p>
+            The project challenged me to rethink how design can transform utilitarian objects into more engaging experiences. Each soap explores specific design principles: material transparency with embedded objects, ergonomic solutions for grip, organic geometries inspired by natural forms, and sustainable production using soap remnants. Beyond the physical products, I developed a cohesive visual system that bridges digital and craft aesthetics, custom packaging solutions, and a streamlined e-commerce platform.
+          </p>
+          <p>
+            Slug Soap demonstrates a complete design process from initial concept through market release, showing how thoughtful design can bring unexpected character to everyday routines while maintaining practical functionality.
+          </p>
+        </div>
+        <div class="essay-text" data-index="1">
+          <p><strong></strong></p>
+          <p>
+            The Slug Soap collection consists of six distinct forms, each addressing specific design challenges within the constraints of a functional hygiene product. Working with glycerin-based materials allowed me to explore transparency, color, and sculptural possibilities while maintaining the core requirements of effective cleansing and longevity.
+          </p>
+          <p><strong>Mystery Soap</strong></p>
+          <p>
+            Mystery Soap marked the beginning of Slug Soap's design exploration. Initially inspired by insect lollipops and resin paperweights, these transparent bars contain objects suspended within them — transforming ordinary items into art. Each bar features raised typography spelling 'slug' in custom block letters, adding both brand recognition and tactile feedback. As the soap wears down, the interplay between smooth surfaces and dimensional text creates evolving grip zones that change throughout the product's lifecycle.
+          </p>
+          <p><strong>Cheese Soap</strong></p>
+          <p>
+            The Cheese Soap emerged from user research highlighting the primary failure point of traditional soap: poor grip when wet. Its wedge form directly references Swiss cheese, with characteristic holes serving as intuitive grip points and visual markers. I spent considerable time determining optimal hole placement to maintain structural integrity while maximizing lathering surface area. The triangular profile naturally fits palm contours, while flat faces provide stable storage surfaces.
+          </p>
+          <p><strong>Shell Soap</strong></p>
+          <p>
+            Shell Soap represents the collection's most complex geometric challenge. Based on logarithmic spirals found in gastropod shells, the form required multiple prototyping iterations to achieve the correct coil ratio. The spiral creates natural drainage channels while offering multiple grip orientations. Each color variant was matched with complementary scents — pink with rose, blue with ocean — establishing a connection between visual and olfactory experiences. The decreasing radius ensures ergonomic properties remain consistent as the soap diminishes.
+          </p>
+          <p><strong>Star Soap</strong></p>
+          <p>
+            Star Soap explores form and function through five-pointed geometry enhanced with phosphorescent material. The glow-in-the-dark element adds an interactive quality while the vertices provide natural grip points. The central mass maintains adequate surface area for lathering, and the rotational symmetry means there's no wrong way to hold it — addressing common frustrations with directional soap designs.
+          </p>
+          <p><strong>Grip Soap</strong></p>
+          <p>
+            Grip Soap represents the most technically driven design in the collection. Its faceted geometry features precisely angled ridges optimized for wet-hand friction. The embossed Slug logo on the front face serves triple duty: brand identification, additional grip texture, and visual orientation indicator. The charcoal variant incorporates production remnants from other soaps, creating a zero-waste option with unique marbled patterns while maintaining identical functional properties.
+          </p>
+          <p><strong>Merchandise</strong></p>
+          <p>
+            Beyond soap, I developed a merchandise line that extends the Slug brand into everyday objects. The collection includes screen-printed t-shirts featuring the pixelated snail logo and supporting illustrations, stainless steel water bottles with etched designs, and vinyl sticker sheets showcasing the full cast of Slug characters. Each piece maintains the brand's visual language while serving as functional items that customers can integrate into their daily routines. The merchandise creates additional touchpoints for brand engagement beyond the bathroom.
+          </p>
+          <p><strong>Production Process</strong></p>
+          <p>
+            Each design required developing custom molds using 3D printing and silicone casting techniques. Production involves precise temperature control and timing for consistent results. I adjust material formulation by design — the Star Soap requires increased hardness for point retention, while the Shell Soap needs flexibility for curved surfaces. This iterative process of prototyping, testing, and refinement continues to inform new variations and improvements.
+          </p>
+        </div>
+        <div class="essay-text" data-index="2">
+          <p><strong></strong></p>
+          <p>
+            Slug Soap's visual identity merges pixelated graphics with cross-stitch patterns, creating a system that bridges digital and handmade aesthetics. This approach extends across packaging, web presence, and merchandise, establishing a cohesive brand language that adapts to various applications while maintaining recognizability.
+          </p>
+          <p><strong>Logo Development</strong></p>
+          <p>
+            The Slug Soap logo centers on a pixelated snail mark featuring a distinctive spiral shell pattern. While the company name references slugs, I chose a snail for the visual identity as a more approachable and recognizable character. This intentional contrast between name and symbol adds intrigue to the brand story. I hand-drew the original snail, then translated it into a pixel grid to achieve the final mark. The spiral motif became a recurring element throughout the visual system, appearing in various scales and applications.
+          </p>
+          <p><strong>Supporting Graphics</strong></p>
+          <p>
+            Beyond the primary logo, I developed an extended visual vocabulary of characters and illustrations. These sketches — visible in the sticker sheet — include various snails, mushrooms, trees, houses, and abstract elements that create a whimsical ecosystem around the brand. Each illustration maintains the same hand-drawn quality, loosely rendered to contrast with the precision of the pixelated logo. This combination of tight and loose elements gives the brand flexibility and personality.
+          </p>
+          <p><strong>Typography</strong></p>
+          <p>
+            The brand uses Monument Grotesk Mono paired with Eucrosia UPC Italic to create functional contrast. Monument's monospaced structure handles product information, ingredients lists, and website copy — its uniform character width ensures consistent readability across applications. Eucrosia UPC Italic provides expressive counterpoint for headlines and callouts, its fluid strokes adding movement against Monument's rigid grid. This pairing reflects the broader tension between digital precision and organic form that defines the brand.
+          </p>
+          <p><strong>Color System</strong></p>
+          <p>
+            The palette centers on dual-tone variations of purple, blue, and green, creating a foundation that unifies the brand while allowing individual soap colors to stand out. Rather than competing with the product's vibrant hues, these supporting colors provide a consistent backdrop across touchpoints. The system includes both saturated and muted variants, enabling hierarchy and emphasis without introducing new colors. This restraint ensures the soaps themselves remain the visual focus while maintaining brand recognition.
+          </p>
+        </div>
+        <div class="essay-text" data-index="3">
+          <p><strong></strong></p>
+          <p>
+            The packaging system for Slug Soap balances minimal exterior presentation with surprising interior details, creating a deliberate unboxing experience that mirrors the unexpected nature of the products themselves.
+          </p>
+          <p><strong>Box Design</strong></p>
+          <p>
+            I designed a universal container to accommodate the star, grip, shell, and flower soap forms. The exterior features an off-white surface with two embossed elements: the snail logo on the front face and 'slug' on the bottom. These subtle dimensional details invite touch before the box is even opened, establishing the tactile nature of the brand experience. The minimal exterior deliberately understates what's inside, setting up the reveal moment.
+          </p>
+          <p><strong>Interior Experience</strong></p>
+          <p>
+            Opening the box exposes a vibrant interior printed with Slug Soap's full character set in two-tone green. This contrast between quiet exterior and energetic interior creates a moment of delight during unboxing. The illustrated elements appear to float across the interior surfaces, creating visual interest from every angle as customers remove their soap. The graphics use dark and light green inks to create depth without overwhelming the space.
+          </p>
+          <p><strong>Product Protection</strong></p>
+          <p>
+            Each soap bar is individually wrapped in certified compostable wax paper before boxing. The material specifications include a 30gsm basis weight with plant-based wax coating that provides moisture barrier properties while maintaining breathability. This prevents glycerin sweating during temperature fluctuations and protects the product surface during transit. The translucent quality of the wax paper creates an additional unveiling moment while allowing partial visibility of the soap form. The paper's matte finish contrasts with the soap's glossy surface, adding textural variety to the unboxing sequence.
+          </p>
+          <p><strong>Materials and Construction</strong></p>
+          <p>
+            The packaging uses 18pt 100% post-consumer waste paperboard, selected for both sustainability and performance. This weight provides excellent embossing retention while maintaining structural integrity. The recycled stock's natural off-white tone adds subtle texture that enhances the embossed elements. Custom-mixed soy-based inks in two green tones print the interior illustrations. The box employs a tuck-end construction with reinforced corners, ensuring it maintains its shape during shipping and display while allowing easy opening and resealing.
+          </p>
+          <p><strong>Production Considerations</strong></p>
+          <p>
+            Creating consistent embossing across recycled stock required careful die adjustment and pressure calibration. The two-color interior printing uses precise registration to maintain the illustrated quality of the original drawings. Each box is die-cut and scored for hand assembly, allowing production flexibility while maintaining quality standards. The design accommodates various soap heights through a universal interior depth that works across the product range.
+          </p>
+        </div>
+        <div class="essay-text" data-index="4">
+          <p><strong></strong></p>
+          <p>
+            For Slug Soap's e-commerce platform, I focused on creating a streamlined interface that prioritizes product discovery while maintaining essential brand elements. The site architecture reflects the same balance of simplicity and surprise found in the physical products.
+          </p>
+          <p><strong>Information Architecture</strong></p>
+          <p>
+            The site employs a split-screen layout with scrollable product catalog on the left and fixed navigation on the right. This approach keeps products front and center while ensuring key functions remain accessible. Each product card follows a consistent template: hero image, detailed description, and prominent 'Add to Cart' button, separated by subtle dividers for visual clarity. The fixed sidebar contains company information, navigation links, and social media connections, creating a persistent brand presence without overwhelming the shopping experience.
+          </p>
+          <p><strong>Responsive Strategy</strong></p>
+          <p>
+            On mobile devices, the layout adapts through a fundamental restructuring rather than simple scaling. The fixed sidebar elements migrate to a sticky header, maintaining functional parity while optimizing for touch interactions. Product cards expand to full width with larger tap targets, and the cart interface slides in from the right to preserve screen real estate. This responsive approach ensures consistent functionality across devices while acknowledging the different interaction patterns of desktop and mobile users.
+          </p>
+          <p><strong>Visual Design</strong></p>
+          <p>
+            The interface extends the brand's pixel aesthetic through subtle grid alignments and monospaced typography. Product photography maintains consistent lighting and background treatment to create visual cohesion within the catalog. Hover states on desktop reveal additional product angles, while mobile users can swipe through images. The minimal color palette allows product colors to dominate, with interface elements using only neutral tones and the brand's signature green for interactive elements.
+          </p>
+          <p><strong>Technical Implementation</strong></p>
+          <p>
+            Built on a lightweight framework prioritizing performance, the site loads quickly despite image-heavy content. Lazy loading prevents unnecessary bandwidth usage, while optimized images maintain quality at minimal file sizes. The cart system uses session storage to preserve selections without requiring accounts, reducing friction in the purchase process. Payment integration through Stripe enables secure transactions while maintaining the streamlined aesthetic.
+          </p>
+        </div>
+        <div class="essay-text" data-index="5">
+          <p><strong></strong></p>
+          <p>
+            The motion work for Slug Soap explores how animation can communicate brand personality and product qualities through various techniques and platforms.
+          </p>
+          <p><strong>3D Product Visualization</strong></p>
+          <p>
+            Using Blender, I created rotating product renders that showcase each soap's dimensional qualities. These animations emphasize the unique characteristics of each design — the Shell Soap spirals as it rotates, the Star Soap's points catch light at different angles, and the Mystery Soap's transparency reveals embedded objects from multiple perspectives. The consistent lighting setup and rotation speed across all products creates a cohesive catalog while highlighting individual features.
+          </p>
+          <p><strong>Brand Animation</strong></p>
+          <p>
+            In After Effects, I developed animated versions of the Slug logo and supporting graphics. The pixelated snail animates through a frame-by-frame sequence that references early video game sprites, reinforcing the digital craft aesthetic. Supporting characters appear through various transition effects: mushrooms grow from single pixels, trees branch out algorithmically, and the snail leaves a subtle trail as it moves. These animations appear in social media content and email campaigns.
+          </p>
+          <p><strong>Process Documentation</strong></p>
+          <p>
+            I produced time-lapse videos documenting the soap-making process, from mixing glycerin to demolding finished products. These behind-the-scenes glimpses, edited with minimal color grading to maintain authenticity, help customers understand the craft involved in each bar. The documentation serves both marketing and educational purposes, demystifying the production process while building trust in the brand's handmade claims.
+          </p>
         </div>
       </div>
-    </div>
-
-    <!-- Bio Image Preview -->
-    <div class="bio-preview" id="bioPreview">
-      <img src="" alt="" id="bioPreviewImage" />
-    </div>
-
-    <script src="script.js"></script>
-  </body>
+    </aside>
+    <!-- RIGHT IMAGE COLUMN -->
+    <main class="project-gallery">
+      <section class="project-set active" data-index="0">
+        <div class="project-block slideshow-zone">
+          <div class="slide current">
+            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&h=600&fit=crop" alt="Digital Archive">
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop" alt="Data Visualization">
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1568667256549-094345857637?w=800&h=600&fit=crop" alt="Library Architecture">
+          </div>
+          <div class="info-toggle">INFO</div>
+          <div class="info-panel">
+            <p>ARCHIVE INTERIOR STUDY, 2024<br>
+            DIGITAL PHOTOGRAPH<br>
+            DIMENSIONS: 800 × 600<br>
+            DOCUMENTATION OF SPATIAL ORGANIZATION SYSTEMS</p>
+          </div>
+        </div>
+        <div class="project-block slideshow-zone">
+          <div class="slide current">
+            <img src="https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=800&h=600&fit=crop" alt="Architectural Model">
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=600&fit=crop" alt="Building Structure">
+          </div>
+          <div class="caption">06 — CONCEPTUAL ARCHITECTURE MODEL</div>
+          <div class="info-toggle">INFO</div>
+          <div class="info-panel">
+            <p>DATE: MARCH 2024<br>
+            SOFTWARE: RHINO, GRASSHOPPER<br>
+            TYPE: PARAMETRIC DESIGN<br>
+            <br>
+            EXPLORING DIGITAL SPACE THROUGH PHYSICAL METAPHORS</p>
+          </div>
+        </div>
+        <div class="project-block slideshow-zone">
+          <div class="slide current">
+            <video loop muted>
+              <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop" alt="Digital Infrastructure">
+          </div>
+          <div class="caption">VIDEO SCROLL DEMO</div>
+          <div class="info-toggle">INFO</div>
+          <div class="info-panel">
+            <p>NETWORK TOPOLOGY VISUALIZATION<br>
+            VIDEO DOCUMENTATION<br>
+            DURATION: 0:30<br>
+            INFRASTRUCTURE MAPPING PROJECT</p>
+          </div>
+        </div>
+        <div class="project-block slideshow-zone">
+          <div class="slide current">
+            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=600&fit=crop" alt="Code Structure">
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&h=600&fit=crop" alt="Programming Interface">
+          </div>
+          <div class="caption">ALGORITHMIC PATTERN STUDY</div>
+          <div class="info-toggle">INFO</div>
+          <div class="info-panel">
+            <p>ALGORITHMIC PATTERN STUDY<br>
+            GENERATIVE DESIGN<br>
+            JAVASCRIPT, WEBGL<br>
+            REAL-TIME VISUALIZATION</p>
+          </div>
+        </div>
+        <div class="project-block slideshow-zone">
+          <div class="slide current">
+            <img src="https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?w=800&h=600&fit=crop" alt="Archive Boxes">
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=800&h=600&fit=crop" alt="Filing System">
+          </div>
+          <div class="caption">PHYSICAL TO DIGITAL TRANSLATION</div>
+          <div class="info-toggle">INFO</div>
+          <div class="info-panel">
+            <p>DATE: DECEMBER 2023<br>
+            TYPE: ARCHIVAL DOCUMENTATION<br>
+            <br>
+            TAXONOMY DEVELOPMENT PROJECT</p>
+          </div>
+        </div>
+        <div class="project-block slideshow-zone">
+          <div class="slide current">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" alt="Documentation Process">
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop" alt="Code Documentation">
+          </div>
+          <div class="caption">COLLABORATIVE DOCUMENTATION</div>
+          <div class="info-toggle">INFO</div>
+          <div class="info-panel">
+            <p>DATE: JUNE 2023<br>
+            TYPE: KNOWLEDGE MANAGEMENT<br>
+            <br>
+            DISTRIBUTED AUTHORSHIP</p>
+          </div>
+        </div>
+      </section>
+      <!-- Add other sections as needed -->
+    </main>
+  </div>
+</body>
 </html>
