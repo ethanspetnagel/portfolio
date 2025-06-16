@@ -344,11 +344,19 @@ body.june-hover .contact-links a {
   line-height: 1.2;
   text-align: left;
   font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
+  cursor: default;
 }
 
 .bio-text p {
   margin-bottom: 10px;
   font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
+}
+
+/* Add word span styling for text parting effect */
+.bio-text .word {
+  display: inline-block;
+  transition: transform 0.1s ease-out;
+  margin-right: 0.3em;
 }
 
 .bio-text a {
@@ -361,9 +369,9 @@ body.june-hover .contact-links a {
   opacity: 0.7;
 }
 
-/* Contact links - Changed to Borgia Pro Bold and adjusted for single line */
+/* Contact links - Updated with yellow hover and asterisk */
 .contact-links {
-  margin-top: 15px;
+  margin-top: 20px;
   white-space: nowrap; /* Keep links on one line */
 }
 
@@ -375,14 +383,8 @@ body.june-hover .contact-links a {
   transition: all 0.3s ease;
   font-style: normal;
   font-family: 'Borgia Pro', 'Courier New', monospace;
-  font-weight: bold; /* Made bold */
-}
-
-.contact-links a {
-  display: inline-block;
-  font-style: normal;
+  font-weight: default;
   position: relative;
-  transition: all 0.2s ease;
 }
 
 .contact-links a::before {
@@ -394,14 +396,16 @@ body.june-hover .contact-links a {
 }
 
 .contact-links a:hover {
-  color: #0066cc; /* Hyperlink blue on hover */
+  color: #ffcc00; /* Changed from blue to yellow */
   text-decoration: underline;
   font-style: italic;
 }
 
 .contact-links a:hover::before {
-  content: '*';
+  content: '*'; /* Changed from star to asterisk */
   opacity: 1;
+  position: absolute;
+  left: -0.5em; /* Adjusted to be closer to the word */
 }
 
 /* Bio Preview */
@@ -578,7 +582,9 @@ body.june-hover .contact-links a {
     color: #0f0f0f;
   }
   
-}/* Main Content - always start visible */
+}
+
+/* Main Content - always start visible */
 .main-content {
   position: fixed;
   top: 0;

@@ -136,11 +136,11 @@ body.title-hover .project-gallery {
   opacity: 1;
 }
 
-/* SINGLE LINE NAVIGATION WITH TITLE */
+/* SINGLE LINE NAVIGATION WITH TITLE - REDUCED GAP */
 .top-navigation {
   display: flex;
   align-items: baseline;
-  gap: 80px;
+  gap: 40px; /* Reduced from 80px to 40px - cut in half */
   margin-bottom: 35px;
   width: 100%;
 }
@@ -195,7 +195,7 @@ body.title-hover .project-gallery {
   margin-right: 0;
 }
 
-/* Active state gets star and yellow color */
+/* Active state gets asterisk (not star) and yellow color */
 .essay-tab.active {
   font-weight: 400;
   color: #ffcc00 !important;
@@ -203,7 +203,7 @@ body.title-hover .project-gallery {
 }
 
 .essay-tab.active::before {
-  content: "★";
+  content: "*"; /* Changed from ★ to * */
   color: #ffcc00;
   margin-right: 3px;
 }
@@ -517,7 +517,7 @@ body.title-hover .project-gallery {
     width: calc(100vw - 38vw);
   }
   .top-navigation {
-    gap: 60px; /* Reduce gap slightly on smaller screens */
+    gap: 30px; /* Adjusted proportionally */
   }
 }
 
