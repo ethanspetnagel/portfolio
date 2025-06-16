@@ -127,7 +127,7 @@ body.title-hover .project-gallery {
   font-size: 33.6px; /* 30% smaller than 48px */
   color: #ffcc00;
   opacity: 0;
-  transition: opacity 1s ease, top 0.2s linear; /* 1 second fade */
+  transition: opacity 0.5s ease, top 0.2s linear; /* Faster fade */
   pointer-events: none;
   z-index: 100;
 }
@@ -175,8 +175,8 @@ body.title-hover .project-gallery {
 
 .essay-tab {
   cursor: pointer;
-  color: #0f0f0f;
-  transition: all 0.3s ease;
+  color: #0f0f0f !important; /* Force black */
+  transition: font-style 0.3s ease;
   white-space: nowrap;
   padding: 0;
   line-height: 1.08;
@@ -186,34 +186,36 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
-/* FIXED hover effect - asterisk directly on word, no highlight */
+/* FIXED hover effect - NO YELLOW, asterisk directly on word */
 .essay-tab:hover:not(.active) {
-  color: #0f0f0f; /* Stay black */
+  color: #0f0f0f !important; /* Stay black */
   font-style: italic;
 }
 
 .essay-tab:hover:not(.active)::before {
   content: "*";
-  color: #0f0f0f;
+  color: #0f0f0f !important;
   margin-right: 0;
 }
 
-/* Active state gets asterisk (not star) and yellow color */
+/* Active state gets asterisk (not star), NO UNDERLINE, and yellow color */
 .essay-tab.active {
   font-weight: 400;
   color: #ffcc00 !important;
   font-style: italic;
+  text-decoration: none !important; /* No underline */
 }
 
 .essay-tab.active::before {
   content: "*"; /* Changed from ★ to * */
-  color: #ffcc00;
+  color: #ffcc00 !important;
   margin-right: 3px;
 }
 
 /* Remove any conflicting hover styles */
 .essay-tab:hover {
   text-shadow: none !important;
+  color: #0f0f0f !important; /* Force black on hover */
 }
 
 /* Essay content - CLEAN VERSION */
@@ -293,7 +295,7 @@ body.title-hover .project-gallery {
   font-size: 33.6px; /* 30% smaller than 48px */
   color: #ffcc00;
   opacity: 0;
-  transition: opacity 1s ease, top 0.2s linear; /* 1 second fade */
+  transition: opacity 0.5s ease, top 0.2s linear; /* Faster fade */
   pointer-events: none;
   z-index: 100;
 }
@@ -530,7 +532,7 @@ body.title-hover .project-gallery {
 
 /* Apply entrance animation when coming from transition */
 body.from-transition {
-  animation: pageSlideDown 2s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  animation: pageSlideDown 1.2s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
 }
 
 body.from-transition .page > * {

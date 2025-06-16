@@ -261,6 +261,8 @@ body {
   color: #0f0f0f;
   padding: 0; /* Remove padding for exact size match */
   display: inline-block;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 /* Date text hover - background turns black, text turns white */
@@ -288,7 +290,7 @@ body.june-hover .contact-links a {
   color: #0f0f0f;
 }
 
-/* Bio Section - Updated positioning to prevent overlap */
+/* Bio Section - Updated positioning to ensure alignment */
 .bio-section {
   position: fixed;
   bottom: 40px; /* Same as website-info */
@@ -316,7 +318,7 @@ body.june-hover .contact-links a {
   position: relative;
   display: inline-block;
   text-transform: uppercase; /* Changed to uppercase */
-  line-height: 1; /* Add line-height to match */
+  line-height: 1; /* Same line-height as date-text */
   padding: 0; /* Remove padding to match JUNE 2025 exactly */
 }
 
@@ -369,7 +371,7 @@ body.june-hover .contact-links a {
   opacity: 0.7;
 }
 
-/* Contact links - Updated with yellow hover and asterisk */
+/* Contact links - FIXED: No yellow, no underline on hover */
 .contact-links {
   margin-top: 20px;
   white-space: nowrap; /* Keep links on one line */
@@ -383,29 +385,28 @@ body.june-hover .contact-links a {
   transition: all 0.3s ease;
   font-style: normal;
   font-family: 'Borgia Pro', 'Courier New', monospace;
-  font-weight: default;
+  font-weight: normal;
   position: relative;
+  color: #0f0f0f !important; /* Force black color */
 }
 
 .contact-links a::before {
   content: '';
   position: absolute;
-  left: -1em;
+  left: -0.5em;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .contact-links a:hover {
-  color: #ffcc00; /* Changed from blue to yellow */
-  text-decoration: underline;
+  color: #0f0f0f !important; /* Stay black on hover */
+  text-decoration: none !important; /* No underline */
   font-style: italic;
 }
 
 .contact-links a:hover::before {
-  content: '*'; /* Changed from star to asterisk */
+  content: '*'; /* Asterisk */
   opacity: 1;
-  position: absolute;
-  left: -0.5em; /* Adjusted to be closer to the word */
 }
 
 /* Bio Preview */
@@ -467,6 +468,11 @@ body.june-hover .contact-links a {
   .bio-preview {
     width: 100px;
     height: 100px;
+  }
+  
+  .contact-links a:hover {
+    color: #0f0f0f !important;
+    text-decoration: none !important;
   }
 }
 
@@ -555,6 +561,12 @@ body.june-hover .contact-links a {
     display: inline-block;
     margin-bottom: 5px;
     font-family: 'Borgia Pro', 'Courier New', monospace;
+    color: #0f0f0f !important;
+  }
+  
+  .contact-links a:hover {
+    color: #0f0f0f !important;
+    text-decoration: none !important;
   }
 
   .loading-caption {
@@ -600,121 +612,78 @@ body.june-hover .contact-links a {
   visibility: visible;
 }
 
-/* Page Transition Overlay */
-.page-transition {
+/* NEW IMPROVED Page Transition Styles */
+.page-transition-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  z-index: 10000;
+  height: 100vh;
+  background: #f0f5f5;
+  z-index: 20000;
   pointer-events: none;
   display: none;
+  overflow: hidden;
 }
 
-.page-transition.active {
+.page-transition-overlay.active {
   display: block;
   pointer-events: all;
 }
 
-/* Morphing Circle */
-.morph-circle {
+/* Cloned content containers */
+.transition-clone-current,
+.transition-clone-next {
   position: absolute;
-  background: #ffcc00;
-  border-radius: 50%;
-  transform-origin: center;
-  will-change: transform;
-  mix-blend-mode: normal;
-}
-
-/* Noise Overlay */
-.noise-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 10001;
-  mix-blend-mode: overlay;
-  background-image: 
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 1px,
-      rgba(255, 255, 255, 0.03) 1px,
-      rgba(255, 255, 255, 0.03) 2px
-    );
-  animation: noiseMove 0.2s infinite linear;
+  height: 100vh;
+  left: 0;
+  overflow: hidden;
 }
 
-.noise-overlay.active {
-  opacity: 0.4;
-  transition: opacity 0.3s ease-in;
+.transition-clone-current {
+  top: 0;
+  z-index: 1;
 }
 
-@keyframes noiseMove {
-  0% { transform: translate(0, 0); }
-  10% { transform: translate(-1%, -1%); }
-  20% { transform: translate(1%, 1%); }
-  30% { transform: translate(-1%, 1%); }
-  40% { transform: translate(1%, -1%); }
-  50% { transform: translate(-1%, 0); }
-  60% { transform: translate(1%, 0); }
-  70% { transform: translate(0, 1%); }
-  80% { transform: translate(0, -1%); }
-  90% { transform: translate(1%, 1%); }
-  100% { transform: translate(0, 0); }
+.transition-clone-next {
+  top: -100vh;
+  z-index: 2;
 }
 
-/* Text Clone for Transition */
-.transition-text {
-  position: absolute;
-  font-size: clamp(36px, 8.1vw, 99px);
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  color: #0f0f0f;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  z-index: 10002;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+/* Animation for pushing effect */
+@keyframes pushDown {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(100vh) scale(0.9);
+  }
 }
 
-.transition-text.active {
-  opacity: 1;
-  color: #ffffff;
-  transform: translate(-50%, -50%) scale(1.2);
+@keyframes slideInCurved {
+  0% {
+    transform: translateY(-100vh) translateX(0);
+  }
+  50% {
+    transform: translateY(-20vh) translateX(80px); /* Strong curve */
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
 }
 
-.transition-text.morph {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(15);
-  filter: blur(10px);
+.transition-clone-current.animating {
+  animation: pushDown 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.transition-clone-next.animating {
+  animation: slideInCurved 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Prevent scroll during transition */
 body.transitioning {
   overflow: hidden;
-}
-
-/* Loading state for smooth transition */
-.page-loading {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background: #ffcc00;
-  z-index: 9998;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.page-loading.active {
-  opacity: 1;
-  pointer-events: all;
 }

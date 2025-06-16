@@ -214,6 +214,89 @@ class TextScramble {
       }
     }
   }
+
+  // Smooth scroll implementation
+  class SmoothScroll {
+    constructor(element, options = {}) {
+      this.element = element;
+      this.options = {
+        damping: options.damping || 0.1, // Higher = heavier feel
+        thumbFactor: options.thumbFactor || 0.5,
+        ...options
+      };
+      
+      this.targetScroll = 0;
+      this.currentScroll = 0;
+      this.isScrolling = false;
+      this.animationFrame = null;
+      
+      this.init();
+    }
+
+    init() {
+      // Prevent native scroll
+      this.element.style.overflow = 'hidden';
+      
+      // Create scroll content wrapper
+      const content = this.element.innerHTML;
+      this.element.innerHTML = '';
+      
+      this.wrapper = document.createElement('div');
+      this.wrapper.style.transform = 'translateY(0)';
+      this.wrapper.innerHTML = content;
+      this.element.appendChild(this.wrapper);
+      
+      // Bind events
+      this.element.addEventListener('wheel', this.onWheel.bind(this), { passive: false });
+      
+      // Start animation loop
+      this.animate();
+    }
+
+    onWheel(e) {
+      e.preventDefault();
+      
+      // Calculate scroll delta with thumbing
+      const delta = e.deltaY * this.options.thumbFactor;
+      this.targetScroll += delta;
+      
+      // Clamp to content bounds
+      const maxScroll = this.wrapper.offsetHeight - this.element.offsetHeight;
+      this.targetScroll = Math.max(0, Math.min(this.targetScroll, maxScroll));
+      
+      if (!this.isScrolling) {
+        this.isScrolling = true;
+        this.element.classList.add('scrolling');
+      }
+      
+      // Clear timeout for scroll end detection
+      clearTimeout(this.scrollTimeout);
+      this.scrollTimeout = setTimeout(() => {
+        this.isScrolling = false;
+        this.element.classList.remove('scrolling');
+      }, 150);
+    }
+
+    animate() {
+      // Smooth interpolation
+      const diff = this.targetScroll - this.currentScroll;
+      this.currentScroll += diff * this.options.damping;
+      
+      // Apply transform
+      this.wrapper.style.transform = `translateY(${-this.currentScroll}px)`;
+      
+      // Update native scroll position for star indicator
+      this.element.scrollTop = this.currentScroll;
+      
+      // Continue animation
+      this.animationFrame = requestAnimationFrame(this.animate.bind(this));
+    }
+
+    destroy() {
+      cancelAnimationFrame(this.animationFrame);
+      this.element.removeEventListener('wheel', this.onWheel);
+    }
+  }
   
   document.addEventListener('DOMContentLoaded', () => {
     // Page Entrance Animation Handler
@@ -224,25 +307,19 @@ class TextScramble {
         (document.referrer && document.referrer.includes(window.location.hostname));
       
       if (fromTransition) {
-        // Create entrance overlay
-        const entranceOverlay = document.createElement('div');
-        entranceOverlay.className = 'entrance-overlay';
-        document.body.appendChild(entranceOverlay);
-        
         // Add transition class
         document.body.classList.add('from-transition');
         
         // Clean up after animation
         setTimeout(() => {
           document.body.classList.remove('from-transition');
-          entranceOverlay.remove();
           
           // Clean URL if it has transition parameter
           if (urlParams.get('transition')) {
             const cleanUrl = window.location.pathname;
             window.history.replaceState({}, document.title, cleanUrl);
           }
-        }, 1500);
+        }, 2000);
       }
     }
 
@@ -259,6 +336,14 @@ class TextScramble {
     // Initialize text parting effect
     const textParting = new TextPartingEffect();
     textParting.init();
+
+    // Initialize smooth scroll
+    const essaySidebar = document.querySelector('.essay-sidebar');
+    const projectGallery = document.querySelector('.project-gallery');
+    
+    // Apply smooth scroll with heavier feel on gallery
+    const smoothScrollLeft = new SmoothScroll(essaySidebar, { damping: 0.08 });
+    const smoothScrollRight = new SmoothScroll(projectGallery, { damping: 0.06, thumbFactor: 0.4 });
   
     // Create star scroll indicators
     const createScrollStars = () => {
@@ -297,6 +382,12 @@ class TextScramble {
             projectsButton.textContent = '⬅';
             projectsButtonState = 'arrow';
         }, 50);
+    });
+
+    // Make site title clickable to go home
+    siteTitle.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'https://ethanspetnagel.online'; // or just '/'
     });
   
     // Site title hover effect - works from all directions
@@ -348,8 +439,8 @@ class TextScramble {
             if (currentProject) currentProject.classList.add('active');
   
             // Scroll both columns to top when switching tabs
-            document.querySelector('.essay-sidebar').scrollTop = 0;
-            document.querySelector('.project-gallery').scrollTop = 0;
+            smoothScrollLeft.targetScroll = 0;
+            smoothScrollRight.targetScroll = 0;
   
             // Reinitialize text parting effect for new content
             setTimeout(() => {
@@ -396,6 +487,13 @@ class TextScramble {
         function showSlide(i) {
             slides.forEach(s => s.classList.remove('current'));
             slides[i].classList.add('current');
+            
+            // Auto-play video if it's the current slide
+            const video = slides[i].querySelector('video');
+            if (video) {
+                video.play();
+                isPlaying = true;
+            }
         }
   
         function isVideo(slide) {
@@ -508,14 +606,13 @@ class TextScramble {
             }
         });
   
-        // Initialize first slide
+        // Initialize first slide and auto-play video
         showSlide(currentIndex);
     });
   
-    // Custom star scrollbar functionality
+    // Custom star scrollbar functionality with fade after 4 seconds
     let scrollTimeoutLeft, scrollTimeoutRight;
-    const essaySidebar = document.querySelector('.essay-sidebar');
-    const projectGallery = document.querySelector('.project-gallery');
+    let fadeTimeoutLeft, fadeTimeoutRight;
   
     function updateStarPosition(element, star, isGallery = false) {
         const scrollPercentage = element.scrollTop / (element.scrollHeight - element.clientHeight);
@@ -524,22 +621,38 @@ class TextScramble {
         star.style.top = `${topPosition}px`;
     }
   
-    function showScrollStar(element, star, timeout) {
+    function showScrollStar(element, star, scrollTimeout, fadeTimeout, isGallery = false) {
         element.classList.add('scrolling');
-        clearTimeout(timeout);
-        return setTimeout(() => {
+        star.style.opacity = isGallery ? '0.8' : '1';
+        
+        clearTimeout(scrollTimeout);
+        clearTimeout(fadeTimeout);
+        
+        // Hide after scrolling stops
+        scrollTimeout = setTimeout(() => {
             element.classList.remove('scrolling');
         }, 1000);
+        
+        // Fade out after 4 seconds of no activity
+        fadeTimeout = setTimeout(() => {
+            star.style.opacity = '0';
+        }, 2000); // Changed from 4000 to 2000 for faster fade
+        
+        return { scrollTimeout, fadeTimeout };
     }
   
     essaySidebar.addEventListener('scroll', () => {
         updateStarPosition(essaySidebar, starLeft);
-        scrollTimeoutLeft = showScrollStar(essaySidebar, starLeft, scrollTimeoutLeft);
+        const timeouts = showScrollStar(essaySidebar, starLeft, scrollTimeoutLeft, fadeTimeoutLeft);
+        scrollTimeoutLeft = timeouts.scrollTimeout;
+        fadeTimeoutLeft = timeouts.fadeTimeout;
     });
   
     projectGallery.addEventListener('scroll', () => {
         updateStarPosition(projectGallery, starRight, true);
-        scrollTimeoutRight = showScrollStar(projectGallery, starRight, scrollTimeoutRight);
+        const timeouts = showScrollStar(projectGallery, starRight, scrollTimeoutRight, fadeTimeoutRight, true);
+        scrollTimeoutRight = timeouts.scrollTimeout;
+        fadeTimeoutRight = timeouts.fadeTimeout;
     });
   
     // Smooth scroll behavior for any anchor links
@@ -616,7 +729,7 @@ class TextScramble {
         preloadImage(img.src);
     });
   
-    // Enable independent scroll for columns (Desktop)
+    // Enable independent scroll for columns (Desktop) - handled by smooth scroll now
     document.querySelectorAll('.essay-sidebar, .project-gallery').forEach(scroller => {
         scroller.addEventListener('mouseenter', function () {
             this.focus();
@@ -625,28 +738,4 @@ class TextScramble {
         scroller.setAttribute('tabindex', '0');
         scroller.style.outline = 'none';
     });
-  
-    // Prevent page scroll when hovering/scrolling in either column
-    document.body.addEventListener('wheel', function (e) {
-        // Find which scroller is under the mouse
-        const essaySidebar = document.querySelector('.essay-sidebar');
-        const projectGallery = document.querySelector('.project-gallery');
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-        let handled = false;
-  
-        function isInside(elem) {
-            const rect = elem.getBoundingClientRect();
-            return mouseX >= rect.left && mouseX <= rect.right &&
-                mouseY >= rect.top && mouseY <= rect.bottom;
-        }
-        if (isInside(essaySidebar)) {
-            essaySidebar.scrollTop += e.deltaY;
-            handled = true;
-        } else if (isInside(projectGallery)) {
-            projectGallery.scrollTop += e.deltaY;
-            handled = true;
-        }
-        if (handled) e.preventDefault();
-    }, { passive: false });
   });

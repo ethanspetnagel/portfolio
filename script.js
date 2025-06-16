@@ -47,9 +47,44 @@ let currentMedia = null;
 let activeProject = null;
 let hoverTimeout = null;
 let mediaTransitionTimeout = null;
+const preloadedVideos = {};
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// Preload all videos during loading screen
+function preloadAllVideos() {
+    const videoPromises = [];
+    
+    Object.entries(projectMedia).forEach(([project, url]) => {
+        if (url && isVideo(url)) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.autoplay = false;
+            video.preload = 'auto';
+            
+            const loadPromise = new Promise((resolve) => {
+                video.addEventListener('canplaythrough', () => {
+                    preloadedVideos[project] = video;
+                    resolve();
+                }, { once: true });
+                
+                video.addEventListener('error', () => {
+                    console.error(`Failed to preload video for ${project}`);
+                    resolve(); // Resolve anyway to not block
+                });
+            });
+            
+            video.load();
+            videoPromises.push(loadPromise);
+        }
+    });
+    
+    return Promise.all(videoPromises);
+}
 
 // Text scramble effect - letters only
 class TextScramble {
@@ -322,7 +357,7 @@ function isVideo(url) {
     return videoExtensions.some(ext => url.toLowerCase().includes(ext));
 }
 
-// Function to show fullscreen media
+// Function to show fullscreen media - IMPROVED WITH PRELOADED VIDEOS
 function showFullscreenMedia(mediaUrl) {
     if (!mediaUrl) {
         console.log('No media URL provided');
@@ -340,11 +375,56 @@ function showFullscreenMedia(mediaUrl) {
         mediaTransitionTimeout = null;
     }
     
-    hideFullscreenMedia();
+    // Show immediately if we have a preloaded video
+    const project = activeProject;
+    if (preloadedVideos[project]) {
+        switchPreloadedVideo(project);
+    } else {
+        hideFullscreenMedia();
+        setTimeout(() => {
+            switchMedia(mediaUrl);
+        }, 100);
+    }
+}
+
+// Function to switch to preloaded video
+function switchPreloadedVideo(project) {
+    currentMedia = projectMedia[project];
     
-    setTimeout(() => {
-        switchMedia(mediaUrl);
-    }, 100);
+    // Reset media elements
+    if (bgVideo) {
+        bgVideo.pause();
+        bgVideo.classList.remove('active');
+    }
+    if (bgImage) {
+        bgImage.src = '';
+        bgImage.classList.remove('active');
+    }
+    
+    // Use preloaded video
+    const preloadedVideo = preloadedVideos[project];
+    if (preloadedVideo) {
+        // Replace current video with preloaded one
+        const newVideo = preloadedVideo.cloneNode(true);
+        bgVideo.parentNode.replaceChild(newVideo, bgVideo);
+        bgVideo = newVideo;
+        
+        // Apply styles and show immediately
+        if (project !== 'church') {
+            bgVideo.style.filter = 'brightness(0.9)';
+        } else {
+            bgVideo.style.filter = 'none';
+        }
+        
+        bgVideo.classList.add('active');
+        fullscreenBg.classList.add('active');
+        fullscreenBg.style.opacity = '1';
+        
+        // Play immediately
+        bgVideo.play().catch(e => {
+            console.error('Video play error:', e);
+        });
+    }
 }
 
 // Function to switch media
@@ -637,7 +717,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Hide loading screen after 4 seconds
+    // Preload videos during loading screen
+    preloadAllVideos().then(() => {
+        console.log('All videos preloaded');
+    });
+    
+    // Hide loading screen after 6 seconds to ensure videos are loaded
     setTimeout(() => {
         console.log('Hiding loading screen');
         if (loadingScreen) {
@@ -652,7 +737,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 500);
         }
-    }, 4000);
+    }, 6000); // Increased from 4000 to give videos more time to load
     
     // Log all project media paths for debugging
     console.log('Project media paths:');
@@ -681,9 +766,9 @@ setTimeout(() => {
         console.log('Emergency hide loading screen');
         loadingScreen.style.display = 'none';
     }
-}, 5000);
+}, 8000); // Increased for video loading
 
-// NEW Page Transition System with Curved Slide
+// NEW IMPROVED Page Transition System
 class PageTransition {
     constructor() {
         this.isTransitioning = false;
@@ -699,29 +784,26 @@ class PageTransition {
     }
 
     createTransitionElements() {
-        // Create main transition container
-        const transitionContainer = document.createElement('div');
-        transitionContainer.className = 'page-transition-container';
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'page-transition-overlay';
         
-        // Create current page wrapper
-        const currentPageWrapper = document.createElement('div');
-        currentPageWrapper.className = 'transition-current-page';
+        // Create containers for cloned content
+        const currentClone = document.createElement('div');
+        currentClone.className = 'transition-clone-current';
         
-        // Create next page wrapper (will be populated with iframe)
-        const nextPageWrapper = document.createElement('div');
-        nextPageWrapper.className = 'transition-next-page';
+        const nextClone = document.createElement('div');
+        nextClone.className = 'transition-clone-next';
         
-        transitionContainer.appendChild(currentPageWrapper);
-        transitionContainer.appendChild(nextPageWrapper);
-        
-        // Add to body
-        document.body.appendChild(transitionContainer);
+        overlay.appendChild(currentClone);
+        overlay.appendChild(nextClone);
+        document.body.appendChild(overlay);
         
         // Store references
         this.elements = {
-            container: transitionContainer,
-            currentPage: currentPageWrapper,
-            nextPage: nextPageWrapper
+            overlay: overlay,
+            currentClone: currentClone,
+            nextClone: nextClone
         };
     }
 
@@ -744,72 +826,30 @@ class PageTransition {
         document.body.classList.add('transitioning');
         
         // Clone current page content
-        const mainContent = document.querySelector('.main-content').cloneNode(true);
-        this.elements.currentPage.appendChild(mainContent);
+        const mainContent = document.querySelector('body').cloneNode(true);
+        // Remove transition overlay from clone
+        const overlayInClone = mainContent.querySelector('.page-transition-overlay');
+        if (overlayInClone) overlayInClone.remove();
         
-        // Create iframe for next page
-        const iframe = document.createElement('iframe');
-        iframe.src = targetUrl + '?transition=true';
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-        iframe.style.border = 'none';
-        iframe.style.position = 'absolute';
-        iframe.style.top = '0';
-        iframe.style.left = '0';
+        this.elements.currentClone.innerHTML = mainContent.innerHTML;
         
-        // Load next page content
-        iframe.onload = () => {
-            // Start animation after iframe loads
+        // Create next page content
+        const nextContent = document.createElement('div');
+        nextContent.innerHTML = '<div style="height: 100vh; display: flex; align-items: center; justify-content: center;"><h1 style="font-size: 4rem;">Loading...</h1></div>';
+        this.elements.nextClone.appendChild(nextContent);
+        
+        // Activate overlay
+        this.elements.overlay.classList.add('active');
+        
+        // Start animation
+        setTimeout(() => {
+            this.elements.currentClone.classList.add('animating');
+            this.elements.nextClone.classList.add('animating');
+            
+            // Navigate after animation
             setTimeout(() => {
-                this.animateTransition(targetUrl);
-            }, 100);
-        };
-        
-        this.elements.nextPage.appendChild(iframe);
-        
-        // Activate transition container
-        this.elements.container.classList.add('active');
-    }
-
-    animateTransition(targetUrl) {
-        // Apply curved slide animation
-        const duration = 2000; // 2 seconds
-        const easing = 'cubic-bezier(0.4, 0.0, 0.2, 1)'; // Smooth deceleration
-        
-        // Animate current page sliding down with slight scale
-        this.elements.currentPage.style.transition = `transform ${duration}ms ${easing}`;
-        this.elements.currentPage.style.transform = 'translateY(100vh) scale(0.95)';
-        
-        // Animate next page sliding in with curve
-        this.elements.nextPage.style.transition = `transform ${duration}ms ${easing}`;
-        this.elements.nextPage.style.transform = 'translateY(0) translateX(0)';
-        
-        // Add curve effect using multiple keyframes
-        const startTime = performance.now();
-        const animate = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Create curved path
-            const curve = Math.sin(progress * Math.PI * 0.5) * 50; // Curve amplitude
-            const yProgress = this.easeOutCubic(progress);
-            
-            this.elements.nextPage.style.transform = `translateY(${(1 - yProgress) * -100}vh) translateX(${curve * (1 - progress)}px)`;
-            
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                // Transition complete, navigate
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 100);
-            }
-        };
-        
-        requestAnimationFrame(animate);
-    }
-
-    easeOutCubic(t) {
-        return 1 - Math.pow(1 - t, 3);
+                window.location.href = targetUrl + '?transition=true';
+            }, 1200);
+        }, 50);
     }
 }
