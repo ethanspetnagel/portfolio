@@ -532,7 +532,7 @@ body.title-hover .project-gallery {
   }
   .essay-nav {
     font-size: calc(1.3rem - 7px);
-    gap: 16px;
+    gap: 20px;
   }
   .essay-text p {
     font-size: calc(1.3rem - 7px);
