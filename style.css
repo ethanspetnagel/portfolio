@@ -378,13 +378,30 @@ body.june-hover .contact-links a {
   font-weight: bold; /* Made bold */
 }
 
-.contact-links a:hover {
-  color: #0000FF; /* Hyperlink blue on hover */
-  text-decoration: underline;
+.contact-links a {
+  display: inline-block;
+  font-style: normal;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.contact-links a::before {
+  content: '';
+  position: absolute;
+  left: -1em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .contact-links a:hover {
-  opacity: 0.7;
+  color: #0066cc; /* Hyperlink blue on hover */
+  text-decoration: underline;
+  font-style: italic;
+}
+
+.contact-links a:hover::before {
+  content: '*';
+  opacity: 1;
 }
 
 /* Bio Preview */
