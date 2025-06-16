@@ -133,7 +133,7 @@ body.title-hover .project-gallery {
 }
 .essay-sidebar:hover ~ .star-scroll-indicator,
 .essay-sidebar.scrolling ~ .star-scroll-indicator {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 /* Title and nav container - FIXED to be inline */
@@ -465,7 +465,7 @@ body.title-hover .project-gallery {
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 13px; /* Smaller size to match captions */
-  color: #0f0f0f;
+  color: #ffcc00;
   padding: 0;
   transition: color 0.3s ease;
   text-transform: uppercase;
@@ -478,7 +478,7 @@ body.title-hover .project-gallery {
 .play-pause-btn:hover,
 .play-pause:hover {
   color: #ffcc00;
-  text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
+  text-shadow: 0 0 0px rgba(255, 204, 0, 0.3);
 }
 
 /* Responsive */
