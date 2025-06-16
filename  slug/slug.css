@@ -11,11 +11,11 @@
 
 /* Updated selection color */
 ::selection {
-  background-color: #edb73e;
+  background-color: #ffd400;
   color: #000000;
 }
 ::-moz-selection {
-  background-color: #edb73e;
+  background-color: #ffd400;
   color: #000000;
 }
 
@@ -58,17 +58,17 @@ body.title-hover .essay-tab {
   font-size: clamp(16px, 2.8vw, 39px);
   text-transform: uppercase;
   text-decoration: none;
-  color: #0f0f0f;
+  color: #0f0f0f; /* Black color */
   background: none;
   border: none;
   cursor: pointer;
   z-index: 1000;
   letter-spacing: 0.02em;
-  transition: opacity 0.3s ease, color 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .projects-button:hover {
-  color: #edb73e;
+  opacity: 0.6;
 }
 
 /* Updated cursor label color */
@@ -78,13 +78,13 @@ body.title-hover .essay-tab {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(16px, 2.8vw, 39px);
-  color: #edb73e; /* Updated accent color */
+  color: #ffd400; /* Updated accent color */
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  text-shadow: 0 1px 8px rgba(237, 183, 62, 0.3), 0 0 2px #edb73e;
+  text-shadow: 0 1px 8px rgba(255, 212, 0, 0.3), 0 0 2px #ffd400;
 }
 
 .page {
@@ -123,7 +123,7 @@ body.title-hover .essay-tab {
   left: calc(36vw - 25px);
   top: 15px; /* Adjusted for new top padding */
   font-size: 48px;
-  color: #edb73e; /* Updated accent color */
+  color: #ffd400; /* Updated accent color */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
   pointer-events: none;
@@ -134,16 +134,18 @@ body.title-hover .essay-tab {
   opacity: 0.8;
 }
 
-/* Title and nav container */
+/* Title and nav container - spans across both columns */
 .title-nav-container {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  right: 20px; /* Extends across both columns */
   display: flex;
   align-items: baseline;
-  gap: 25px; /* Space between title and tabs */
-  margin-bottom: 35px;
-  position: relative;
-  top: 0;
-  padding-top: 0;
-  flex-wrap: nowrap;
+  gap: 30px; /* 30px space between title and tabs */
+  z-index: 10;
+  background: #f0f5f5; /* Match background */
+  padding-right: 20px;
 }
 
 .site-title {
@@ -197,20 +199,20 @@ body.title-hover .essay-tab {
 }
 
 .essay-tab:hover {
-  color: #ffffff; /* White on hover */
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  color: #ffd400; /* Accent color on hover */
+  text-shadow: 0 0 8px rgba(255, 212, 0, 0.3);
 }
 
 .essay-tab.active {
   font-weight: 400;
-  color: #edb73e; /* Accent color when active */
+  color: #ffd400; /* Accent color when active */
   font-style: italic; /* Italicized when selected */
 }
 
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
-  margin-top: 20px;
+  margin-top: calc(1.6rem + 28px); /* Adjust for fixed nav */
 }
 
 .essay-text {
@@ -279,7 +281,7 @@ body.title-hover .project-gallery {
   right: 15px;
   top: 15px; /* Adjusted for new top padding */
   font-size: 48px;
-  color: #edb73e; /* Updated accent color */
+  color: #ffd400; /* Updated accent color */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
   pointer-events: none;
@@ -297,6 +299,7 @@ body.title-hover .project-gallery {
   flex-direction: column;
   gap: 90px 0;
   align-items: flex-end; /* Changed to flex-end to push images right */
+  margin-top: calc(1.6rem + 28px); /* Adjust for fixed nav */
 }
 
 .project-set.active {
@@ -402,10 +405,10 @@ body.title-hover .project-gallery {
   align-self: flex-start;
   margin-top: 14px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px;
+  font-size: calc(1.6rem - 7px); /* Same size as tabs */
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.01em;
 }
 
 .info-toggle {
@@ -413,15 +416,15 @@ body.title-hover .project-gallery {
   margin-top: 8px;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px;
+  font-size: calc(1.6rem - 7px); /* Same size as tabs */
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.01em;
   transition: all 0.3s ease;
 }
 .info-toggle:hover {
-  color: #edb73e; /* Updated accent color */
-  text-shadow: 0 0 6px rgba(237, 183, 62, 0.3);
+  color: #ffd400; /* Updated accent color */
+  text-shadow: 0 0 6px rgba(255, 212, 0, 0.3);
 }
 .info-toggle.active {
   font-weight: bold;
@@ -430,10 +433,10 @@ body.title-hover .project-gallery {
   align-self: flex-start;
   margin-top: 8px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px;
+  font-size: calc(1.6rem - 7px); /* Same size as tabs */
   font-weight: normal;
   text-transform: none;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
   line-height: 1.4;
   color: #0f0f0f;
   max-height: 0;
@@ -454,13 +457,13 @@ body.title-hover .project-gallery {
 .info-panel p:first-child {
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: -0.01em;
   margin-bottom: 12px;
 }
 .info-panel p strong {
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.01em;
   display: inline-block;
   margin-right: 20px;
   min-width: 120px;
@@ -480,7 +483,7 @@ body.title-hover .project-gallery {
     width: calc(100vw - 38vw);
   }
   .title-nav-container {
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 20px;
   }
 }
@@ -512,18 +515,27 @@ body.title-hover .project-gallery {
   .essay-sidebar {
     border-bottom: 1px solid #0f0f0f;
   }
+  .title-nav-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    flex-direction: column;
+    gap: 10px;
+  }
   .site-title {
     font-size: calc(1.3rem - 7px);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   .essay-nav {
     margin-bottom: 20px;
     font-size: calc(1.3rem - 7px);
     gap: 16px;
   }
-  .title-nav-container {
-    flex-direction: column;
-    gap: 10px;
+  .essay-content,
+  .project-set {
+    margin-top: 20px;
   }
   .essay-text p,
   .caption,
@@ -563,4 +575,4 @@ body.title-hover .project-gallery {
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
   }
-}
+}git
