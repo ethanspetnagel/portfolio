@@ -62,7 +62,7 @@ class TextScramble {
     }
   }
   
-  // Text Parting Sea Effect Class
+  // Text Parting Sea Effect Class - Word Level
   class TextPartingEffect {
     constructor() {
       this.activeElements = new Map();
@@ -70,6 +70,9 @@ class TextScramble {
     }
   
     init() {
+      // First, wrap all words in spans
+      this.wrapWordsInSpans();
+      
       const interactiveTexts = document.querySelectorAll('.interactive-text');
       
       interactiveTexts.forEach(element => {
@@ -79,52 +82,115 @@ class TextScramble {
       });
     }
   
+    wrapWordsInSpans() {
+      const interactiveTexts = document.querySelectorAll('.interactive-text');
+      
+      interactiveTexts.forEach(element => {
+        // Skip if already processed
+        if (element.querySelector('.word')) return;
+        
+        const textNodes = this.getTextNodes(element);
+        
+        textNodes.forEach(node => {
+          const words = node.textContent.split(/(\s+)/);
+          const fragment = document.createDocumentFragment();
+          
+          words.forEach(word => {
+            if (word.trim() !== '') {
+              const span = document.createElement('span');
+              span.className = 'word';
+              span.textContent = word;
+              fragment.appendChild(span);
+            } else {
+              // Preserve whitespace
+              fragment.appendChild(document.createTextNode(word));
+            }
+          });
+          
+          node.parentNode.replaceChild(fragment, node);
+        });
+      });
+    }
+  
+    getTextNodes(element) {
+      const textNodes = [];
+      const walker = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      );
+      
+      let node;
+      while (node = walker.nextNode()) {
+        if (node.textContent.trim() !== '') {
+          textNodes.push(node);
+        }
+      }
+      
+      return textNodes;
+    }
+  
     startParting(element) {
       if (!this.activeElements.has(element)) {
-        const rect = element.getBoundingClientRect();
-        const originalTransform = element.style.transform;
+        const words = element.querySelectorAll('.word');
+        const wordData = new Map();
+        
+        words.forEach(word => {
+          const rect = word.getBoundingClientRect();
+          wordData.set(word, {
+            rect: rect,
+            originalTransform: word.style.transform || '',
+            isActive: true
+          });
+        });
         
         this.activeElements.set(element, {
-          rect: rect,
-          originalTransform: originalTransform,
+          words: wordData,
           isActive: true
         });
       }
     }
   
     updateParting(event) {
-      const element = event.target;
+      const element = event.target.closest('.interactive-text');
       const data = this.activeElements.get(element);
       
       if (!data || !data.isActive) return;
   
-      const rect = element.getBoundingClientRect();
       const mouseX = event.clientX;
       const mouseY = event.clientY;
       
-      // Calculate mouse position relative to element center
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const deltaX = mouseX - centerX;
-      const deltaY = mouseY - centerY;
-      
-      // Calculate distance from center (0 to 1)
-      const maxDistance = Math.sqrt(Math.pow(rect.width / 2, 2) + Math.pow(rect.height / 2, 2));
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      const normalizedDistance = Math.min(distance / maxDistance, 1);
-      
-      // Calculate parting effect strength (stronger when mouse is closer)
-      const strength = (1 - normalizedDistance) * 15; // Max 15px displacement
-      
-      // Calculate direction to push text away from cursor
-      const angle = Math.atan2(deltaY, deltaX);
-      const pushX = -Math.cos(angle) * strength;
-      const pushY = -Math.sin(angle) * strength;
-      
-      // Apply transform
-      element.style.transform = `translate(${pushX}px, ${pushY}px)`;
-      element.style.transition = 'transform 0.1s ease-out';
+      data.words.forEach((wordData, word) => {
+        const rect = word.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const deltaX = mouseX - centerX;
+        const deltaY = mouseY - centerY;
+        
+        // Calculate distance from word center
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        const maxInfluence = 150; // Influence radius in pixels
+        
+        if (distance < maxInfluence) {
+          // Calculate parting effect strength (stronger when mouse is closer)
+          const strength = (1 - distance / maxInfluence) * 25; // Max 25px displacement
+          
+          // Calculate direction to push word away from cursor
+          const angle = Math.atan2(deltaY, deltaX);
+          const pushX = -Math.cos(angle) * strength;
+          const pushY = -Math.sin(angle) * strength;
+          
+          // Apply transform
+          word.style.transform = `translate(${pushX}px, ${pushY}px)`;
+          word.style.transition = 'transform 0.1s ease-out';
+        } else {
+          // Return to original position if outside influence radius
+          word.style.transform = wordData.originalTransform;
+          word.style.transition = 'transform 0.2s ease-out';
+        }
+      });
     }
   
     endParting(element) {
@@ -133,9 +199,11 @@ class TextScramble {
       if (data) {
         data.isActive = false;
         
-        // Return to original position with smooth transition
-        element.style.transition = 'transform 0.3s ease-out';
-        element.style.transform = data.originalTransform || 'translate(0px, 0px)';
+        // Return all words to original positions
+        data.words.forEach((wordData, word) => {
+          word.style.transition = 'transform 0.3s ease-out';
+          word.style.transform = wordData.originalTransform;
+        });
         
         // Clean up after animation
         setTimeout(() => {
