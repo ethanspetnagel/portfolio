@@ -11,11 +11,11 @@
 
 /* Updated selection color */
 ::selection {
-  background-color: #e8f542;
+  background-color: #edb73e;
   color: #000000;
 }
 ::-moz-selection {
-  background-color: #e8f542;
+  background-color: #edb73e;
   color: #000000;
 }
 
@@ -51,9 +51,8 @@ body.title-hover .essay-tab {
 
 .projects-button {
   position: fixed;
-  top: 50vh; /* Moved to middle of page */
-  transform: translateY(-50%); /* Center vertically */
-  left: 15px; /* Reduced left padding */
+  bottom: 15px; /* Moved to bottom */
+  left: 15px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
   font-size: clamp(16px, 2.8vw, 39px);
@@ -65,27 +64,27 @@ body.title-hover .essay-tab {
   cursor: pointer;
   z-index: 1000;
   letter-spacing: 0.02em;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .projects-button:hover {
-  opacity: 0.8;
+  color: #edb73e;
 }
 
-/* Updated cursor label color with warm yellow-orange accent */
+/* Updated cursor label color */
 .cursor-label {
   position: fixed;
   pointer-events: none;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(16px, 2.8vw, 39px);
-  color: #f9c74f; /* Warm yellow-orange accent color */
+  color: #edb73e; /* Updated accent color */
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  text-shadow: 0 1px 8px rgba(249, 199, 79, 0.3), 0 0 2px #f9c74f;
+  text-shadow: 0 1px 8px rgba(237, 183, 62, 0.3), 0 0 2px #edb73e;
 }
 
 .page {
@@ -124,7 +123,7 @@ body.title-hover .essay-tab {
   left: calc(36vw - 25px);
   top: 15px; /* Adjusted for new top padding */
   font-size: 48px;
-  color: #f9c74f; /* Warm yellow-orange accent color */
+  color: #edb73e; /* Updated accent color */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
   pointer-events: none;
@@ -144,34 +143,42 @@ body.title-hover .essay-tab {
   position: relative;
   top: 0;
   padding-top: 0;
+  flex-wrap: nowrap;
 }
 
 .site-title {
   font-family: "Helvetica Neue", Arial, sans-serif; /* Changed to Helvetica */
   font-weight: bold; /* Bold */
-  font-size: 12px; /* Smaller to fit with tabs */
-  letter-spacing: 0.08em;
+  font-size: calc(1.6rem - 7px); /* Same size as paragraph text */
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: pointer;
-  line-height: 1;
+  line-height: 1.08;
   display: inline-block;
   margin: 0;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Contemporary horizontal nav - at top of page */
 .essay-nav {
   display: flex;
   flex-wrap: nowrap;
-  gap: 15px; /* Reduced gap to fit all tabs */
+  gap: 20px; /* Space between tabs */
   font-family: "Helvetica Neue", Arial, sans-serif; /* Changed to Helvetica */
-  font-size: 12px; /* Smaller to fit */
+  font-size: calc(1.6rem - 7px); /* Same size as paragraph text */
   font-style: normal;
   font-weight: 400;
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: -0.01em;
   align-items: baseline;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.essay-nav::-webkit-scrollbar {
+  display: none;
 }
 
 .essay-tab {
@@ -184,18 +191,19 @@ body.title-hover .essay-tab {
   transform: none;
   text-align: left;
   display: inline-block;
-  line-height: 1;
+  line-height: 1.08;
   margin: 0;
+  flex-shrink: 0;
 }
 
 .essay-tab:hover {
-  color: #f9c74f; /* Warm yellow-orange accent color */
-  text-shadow: 0 0 8px rgba(249, 199, 79, 0.3);
+  color: #ffffff; /* White on hover */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
 .essay-tab.active {
   font-weight: 400;
-  color: #ffffff; /* White when selected */
+  color: #edb73e; /* Accent color when active */
   font-style: italic; /* Italicized when selected */
 }
 
@@ -271,7 +279,7 @@ body.title-hover .project-gallery {
   right: 15px;
   top: 15px; /* Adjusted for new top padding */
   font-size: 48px;
-  color: #f9c74f; /* Warm yellow-orange accent color */
+  color: #edb73e; /* Updated accent color */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
   pointer-events: none;
@@ -412,8 +420,8 @@ body.title-hover .project-gallery {
   transition: all 0.3s ease;
 }
 .info-toggle:hover {
-  color: #f9c74f; /* Warm yellow-orange accent color */
-  text-shadow: 0 0 6px rgba(249, 199, 79, 0.3);
+  color: #edb73e; /* Updated accent color */
+  text-shadow: 0 0 6px rgba(237, 183, 62, 0.3);
 }
 .info-toggle.active {
   font-weight: bold;
@@ -475,17 +483,12 @@ body.title-hover .project-gallery {
     flex-direction: column;
     gap: 20px;
   }
-  .projects-button {
-    top: 20px; /* Reset to top for mobile */
-    transform: none;
-  }
 }
 @media (max-width: 768px) {
   .projects-button {
-    top: 20px;
+    bottom: 20px;
     left: 10px;
     font-size: clamp(25px, 5vw, 60px);
-    transform: none;
   }
   .page {
     flex-direction: column;
@@ -510,13 +513,13 @@ body.title-hover .project-gallery {
     border-bottom: 1px solid #0f0f0f;
   }
   .site-title {
-    font-size: 12px;
+    font-size: calc(1.3rem - 7px);
     margin-bottom: 20px;
   }
   .essay-nav {
     margin-bottom: 20px;
-    font-size: 11px;
-    gap: 10px;
+    font-size: calc(1.3rem - 7px);
+    gap: 16px;
   }
   .title-nav-container {
     flex-direction: column;
@@ -555,7 +558,7 @@ body.title-hover .project-gallery {
     font-size: clamp(20px, 5vw, 40px);
   }
   .site-title {
-    font-size: 11px;
+    font-size: calc(1.3rem - 7px);
   }
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
