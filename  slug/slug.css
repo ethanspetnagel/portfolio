@@ -51,7 +51,8 @@ body.title-hover .essay-tab {
 
 .projects-button {
   position: fixed;
-  top: 20px; /* Reduced top padding */
+  top: 50vh; /* Moved to middle of page */
+  transform: translateY(-50%); /* Center vertically */
   left: 15px; /* Reduced left padding */
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
@@ -71,20 +72,20 @@ body.title-hover .essay-tab {
   opacity: 0.8;
 }
 
-/* Updated cursor label color */
+/* Updated cursor label color with warm yellow-orange accent */
 .cursor-label {
   position: fixed;
   pointer-events: none;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(16px, 2.8vw, 39px);
-  color: #959fa5; /* Updated accent color */
+  color: #f9c74f; /* Warm yellow-orange accent color */
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  text-shadow: 0 1px 8px rgba(149, 159, 165, 0.3), 0 0 2px #959fa5;
+  text-shadow: 0 1px 8px rgba(249, 199, 79, 0.3), 0 0 2px #f9c74f;
 }
 
 .page {
@@ -105,7 +106,7 @@ body.title-hover .essay-tab {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 20px 40px 40px 15px; /* Reduced left padding and top padding */
+  padding: 15px 40px 40px 15px; /* Same padding on top and left */
   scrollbar-width: none;
   background: #f0f5f5; /* Updated background color */
   position: relative;
@@ -121,9 +122,9 @@ body.title-hover .essay-tab {
 .star-scroll-indicator {
   position: fixed;
   left: calc(36vw - 25px);
-  top: 20px; /* Adjusted for new top padding */
+  top: 15px; /* Adjusted for new top padding */
   font-size: 48px;
-  color: #959fa5; /* Updated accent color */
+  color: #f9c74f; /* Warm yellow-orange accent color */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
   pointer-events: none;
@@ -138,7 +139,7 @@ body.title-hover .essay-tab {
 .title-nav-container {
   display: flex;
   align-items: baseline;
-  gap: 40px; /* Space between title and tabs */
+  gap: 25px; /* Space between title and tabs */
   margin-bottom: 35px;
   position: relative;
   top: 0;
@@ -146,30 +147,30 @@ body.title-hover .essay-tab {
 }
 
 .site-title {
-  font-family: "Borgia Pro", "Arial Narrow", Arial, sans-serif; /* Changed to serif */
-  font-weight: bold;
-  font-size: calc(1.6rem - 7px); /* Same size as body text */
-  letter-spacing: -0.01em;
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed to Helvetica */
+  font-weight: bold; /* Bold */
+  font-size: 12px; /* Smaller to fit with tabs */
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
-  line-height: 1.08;
-  word-break: break-word;
+  line-height: 1;
   display: inline-block;
   margin: 0;
+  white-space: nowrap;
 }
 
 /* Contemporary horizontal nav - at top of page */
 .essay-nav {
   display: flex;
   flex-wrap: nowrap;
-  gap: 20px;
-  font-family: "Borgia Pro", "Arial Narrow", Arial, sans-serif; /* Changed to serif */
-  font-size: calc(1.6rem - 7px); /* Same size as body text */
-  font-style: italic; /* Made italic */
-  font-weight: normal;
+  gap: 15px; /* Reduced gap to fit all tabs */
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed to Helvetica */
+  font-size: 12px; /* Smaller to fit */
+  font-style: normal;
+  font-weight: 400;
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.08em;
   align-items: baseline;
 }
 
@@ -180,21 +181,22 @@ body.title-hover .essay-tab {
   position: relative;
   white-space: nowrap;
   padding: 0;
-  transform: none; /* Removed vertical stretch */
+  transform: none;
   text-align: left;
   display: inline-block;
-  line-height: 1.08;
+  line-height: 1;
   margin: 0;
 }
 
 .essay-tab:hover {
-  color: #959fa5; /* Updated accent color */
-  text-shadow: 0 0 8px rgba(149, 159, 165, 0.3);
+  color: #f9c74f; /* Warm yellow-orange accent color */
+  text-shadow: 0 0 8px rgba(249, 199, 79, 0.3);
 }
 
 .essay-tab.active {
-  font-weight: 700;
-  color: #959fa5; /* Updated accent color */
+  font-weight: 400;
+  color: #ffffff; /* White when selected */
+  font-style: italic; /* Italicized when selected */
 }
 
 .essay-content {
@@ -239,7 +241,7 @@ body.title-hover .essay-tab {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 20px 20px 40px 60px; /* Adjusted padding, images closer to right */
+  padding: 15px 20px 40px 60px; /* Adjusted top padding to match left sidebar */
   background-color: #f0f5f5; /* Updated background color */
   scrollbar-width: none;
   display: flex;
@@ -267,9 +269,9 @@ body.title-hover .project-gallery {
 .star-scroll-indicator-gallery {
   position: fixed;
   right: 15px;
-  top: 20px; /* Adjusted for new top padding */
+  top: 15px; /* Adjusted for new top padding */
   font-size: 48px;
-  color: #959fa5; /* Updated accent color */
+  color: #f9c74f; /* Warm yellow-orange accent color */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
   pointer-events: none;
@@ -410,8 +412,8 @@ body.title-hover .project-gallery {
   transition: all 0.3s ease;
 }
 .info-toggle:hover {
-  color: #959fa5; /* Updated accent color */
-  text-shadow: 0 0 6px rgba(149, 159, 165, 0.3);
+  color: #f9c74f; /* Warm yellow-orange accent color */
+  text-shadow: 0 0 6px rgba(249, 199, 79, 0.3);
 }
 .info-toggle.active {
   font-weight: bold;
@@ -473,12 +475,17 @@ body.title-hover .project-gallery {
     flex-direction: column;
     gap: 20px;
   }
+  .projects-button {
+    top: 20px; /* Reset to top for mobile */
+    transform: none;
+  }
 }
 @media (max-width: 768px) {
   .projects-button {
     top: 20px;
     left: 10px;
     font-size: clamp(25px, 5vw, 60px);
+    transform: none;
   }
   .page {
     flex-direction: column;
@@ -503,13 +510,13 @@ body.title-hover .project-gallery {
     border-bottom: 1px solid #0f0f0f;
   }
   .site-title {
-    font-size: calc(1.3rem - 7px);
+    font-size: 12px;
     margin-bottom: 20px;
   }
   .essay-nav {
     margin-bottom: 20px;
-    font-size: calc(1.3rem - 7px);
-    gap: 16px;
+    font-size: 11px;
+    gap: 10px;
   }
   .title-nav-container {
     flex-direction: column;
@@ -548,7 +555,7 @@ body.title-hover .project-gallery {
     font-size: clamp(20px, 5vw, 40px);
   }
   .site-title {
-    font-size: calc(1.3rem - 7px);
+    font-size: 11px;
   }
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
