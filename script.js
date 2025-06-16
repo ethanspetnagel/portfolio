@@ -672,3 +672,149 @@ setTimeout(() => {
         loadingScreen.style.display = 'none';
     }
 }, 5000);
+
+// Page Transition System
+class PageTransition {
+    constructor() {
+        this.isTransitioning = false;
+        this.init();
+    }
+
+    init() {
+        // Create transition elements
+        this.createTransitionElements();
+        
+        // Override default link behavior for project links
+        this.attachLinkHandlers();
+    }
+
+    createTransitionElements() {
+        // Create main transition container
+        const transitionContainer = document.createElement('div');
+        transitionContainer.className = 'page-transition';
+        
+        // Create morphing circle
+        const morphCircle = document.createElement('div');
+        morphCircle.className = 'morph-circle';
+        transitionContainer.appendChild(morphCircle);
+        
+        // Create noise overlay
+        const noiseOverlay = document.createElement('div');
+        noiseOverlay.className = 'noise-overlay';
+        
+        // Create text clone container
+        const transitionText = document.createElement('div');
+        transitionText.className = 'transition-text';
+        
+        // Create loading background
+        const pageLoading = document.createElement('div');
+        pageLoading.className = 'page-loading';
+        
+        // Add all elements to body
+        document.body.appendChild(transitionContainer);
+        document.body.appendChild(noiseOverlay);
+        document.body.appendChild(transitionText);
+        document.body.appendChild(pageLoading);
+        
+        // Store references
+        this.elements = {
+            container: transitionContainer,
+            circle: morphCircle,
+            noise: noiseOverlay,
+            text: transitionText,
+            loading: pageLoading
+        };
+    }
+
+    attachLinkHandlers() {
+        const projectLinks = document.querySelectorAll('.project-link');
+        
+        projectLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (!this.isTransitioning) {
+                    e.preventDefault();
+                    const href = link.href;
+                    const linkText = link.textContent;
+                    const linkRect = link.getBoundingClientRect();
+                    
+                    this.startTransition(href, linkText, linkRect);
+                }
+            });
+        });
+    }
+
+    startTransition(targetUrl, linkText, linkRect) {
+        this.isTransitioning = true;
+        document.body.classList.add('transitioning');
+        
+        // Calculate center position
+        const centerX = linkRect.left + linkRect.width / 2;
+        const centerY = linkRect.top + linkRect.height / 2;
+        
+        // Setup text clone
+        this.elements.text.textContent = linkText;
+        this.elements.text.style.left = centerX + 'px';
+        this.elements.text.style.top = centerY + 'px';
+        
+        // Setup morphing circle at link position
+        this.elements.circle.style.left = centerX + 'px';
+        this.elements.circle.style.top = centerY + 'px';
+        this.elements.circle.style.width = '0px';
+        this.elements.circle.style.height = '0px';
+        this.elements.circle.style.transform = 'translate(-50%, -50%) scale(0)';
+        
+        // Activate transition
+        this.elements.container.classList.add('active');
+        this.elements.text.classList.add('active');
+        
+        // Start morph animation sequence
+        requestAnimationFrame(() => {
+            // Phase 1: Expand circle slightly
+            this.elements.circle.style.transition = 'all 0.4s cubic-bezier(0.76, 0, 0.24, 1)';
+            this.elements.circle.style.width = '200px';
+            this.elements.circle.style.height = '200px';
+            this.elements.circle.style.transform = 'translate(-50%, -50%) scale(1)';
+            
+            // Add noise overlay
+            setTimeout(() => {
+                this.elements.noise.classList.add('active');
+            }, 100);
+            
+            // Phase 2: Morph text and expand circle to fill screen
+            setTimeout(() => {
+                this.elements.text.classList.add('morph');
+                
+                // Calculate scale needed to fill screen
+                const viewportDiagonal = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2);
+                const scale = (viewportDiagonal / 200) * 2;
+                
+                this.elements.circle.style.transition = 'all 0.8s cubic-bezier(0.76, 0, 0.24, 1)';
+                this.elements.circle.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                
+                // Morph circle to square
+                setTimeout(() => {
+                    this.elements.circle.style.borderRadius = '0%';
+                }, 200);
+                
+                // Phase 3: Fade to solid color and navigate
+                setTimeout(() => {
+                    this.elements.loading.classList.add('active');
+                    
+                    setTimeout(() => {
+                        // Add transition parameter to URL
+                        const separator = targetUrl.includes('?') ? '&' : '?';
+                        window.location.href = targetUrl + separator + 'transition=true';
+                    }, 300);
+                }, 500);
+            }, 400);
+        });
+    }
+}
+
+// Initialize page transition system when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // ... existing DOMContentLoaded code ...
+    
+    // Initialize page transition
+    const pageTransition = new PageTransition();
+});

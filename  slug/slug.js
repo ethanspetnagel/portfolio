@@ -216,6 +216,39 @@ class TextScramble {
   }
   
   document.addEventListener('DOMContentLoaded', () => {
+    // Page Entrance Animation Handler
+    function handlePageEntrance() {
+      // Check if coming from page transition
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromTransition = urlParams.get('transition') === 'true' || 
+        (document.referrer && document.referrer.includes(window.location.hostname));
+      
+      if (fromTransition) {
+        // Create entrance overlay
+        const entranceOverlay = document.createElement('div');
+        entranceOverlay.className = 'entrance-overlay';
+        document.body.appendChild(entranceOverlay);
+        
+        // Add transition class
+        document.body.classList.add('from-transition');
+        
+        // Clean up after animation
+        setTimeout(() => {
+          document.body.classList.remove('from-transition');
+          entranceOverlay.remove();
+          
+          // Clean URL if it has transition parameter
+          if (urlParams.get('transition')) {
+            const cleanUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+          }
+        }, 1500);
+      }
+    }
+
+    // Call entrance animation handler first
+    handlePageEntrance();
+
     const tabs = document.querySelectorAll('.essay-tab');
     const essays = document.querySelectorAll('.essay-text');
     const projects = document.querySelectorAll('.project-set');
