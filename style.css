@@ -599,3 +599,122 @@ body.june-hover .contact-links a {
   opacity: 1;
   visibility: visible;
 }
+
+/* Page Transition Overlay */
+.page-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  pointer-events: none;
+  display: none;
+}
+
+.page-transition.active {
+  display: block;
+  pointer-events: all;
+}
+
+/* Morphing Circle */
+.morph-circle {
+  position: absolute;
+  background: #ffcc00;
+  border-radius: 50%;
+  transform-origin: center;
+  will-change: transform;
+  mix-blend-mode: normal;
+}
+
+/* Noise Overlay */
+.noise-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10001;
+  mix-blend-mode: overlay;
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.03) 1px,
+      rgba(255, 255, 255, 0.03) 2px
+    );
+  animation: noiseMove 0.2s infinite linear;
+}
+
+.noise-overlay.active {
+  opacity: 0.4;
+  transition: opacity 0.3s ease-in;
+}
+
+@keyframes noiseMove {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-1%, -1%); }
+  20% { transform: translate(1%, 1%); }
+  30% { transform: translate(-1%, 1%); }
+  40% { transform: translate(1%, -1%); }
+  50% { transform: translate(-1%, 0); }
+  60% { transform: translate(1%, 0); }
+  70% { transform: translate(0, 1%); }
+  80% { transform: translate(0, -1%); }
+  90% { transform: translate(1%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Text Clone for Transition */
+.transition-text {
+  position: absolute;
+  font-size: clamp(36px, 8.1vw, 99px);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #0f0f0f;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  z-index: 10002;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.transition-text.active {
+  opacity: 1;
+  color: #ffffff;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.transition-text.morph {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(15);
+  filter: blur(10px);
+}
+
+/* Prevent scroll during transition */
+body.transitioning {
+  overflow: hidden;
+}
+
+/* Loading state for smooth transition */
+.page-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffcc00;
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.page-loading.active {
+  opacity: 1;
+  pointer-events: all;
+}
