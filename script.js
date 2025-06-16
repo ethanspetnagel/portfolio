@@ -468,8 +468,15 @@ function handleProjectHover(link, isEntering) {
     
     if (isEntering) {
         const project = link.getAttribute('data-project');
-        const projectInfo = link.getAttribute('data-info');
+        let projectInfo = link.getAttribute('data-info');
         const mediaUrl = projectMedia[project];
+        
+        // Update project info for specific projects
+        if (project === 'slug') {
+            projectInfo = 'PRODUCT & IDENTITY – 2024';
+        } else if (project === 'green-lake-law') {
+            projectInfo = 'UX & IDENTITY – 2025';
+        }
         
         console.log(`Hovering over ${project}, media URL: ${mediaUrl || 'No media'}`);
         
@@ -652,6 +659,9 @@ document.addEventListener('DOMContentLoaded', function() {
     Object.entries(projectMedia).forEach(([project, path]) => {
         console.log(`- ${project}: ${path || 'No media'}`);
     });
+    
+    // Initialize page transition
+    const pageTransition = new PageTransition();
 });
 
 // Fallback: Force hide loading screen
@@ -673,7 +683,7 @@ setTimeout(() => {
     }
 }, 5000);
 
-// Page Transition System
+// NEW Page Transition System with Curved Slide
 class PageTransition {
     constructor() {
         this.isTransitioning = false;
@@ -691,38 +701,27 @@ class PageTransition {
     createTransitionElements() {
         // Create main transition container
         const transitionContainer = document.createElement('div');
-        transitionContainer.className = 'page-transition';
+        transitionContainer.className = 'page-transition-container';
         
-        // Create morphing circle
-        const morphCircle = document.createElement('div');
-        morphCircle.className = 'morph-circle';
-        transitionContainer.appendChild(morphCircle);
+        // Create current page wrapper
+        const currentPageWrapper = document.createElement('div');
+        currentPageWrapper.className = 'transition-current-page';
         
-        // Create noise overlay
-        const noiseOverlay = document.createElement('div');
-        noiseOverlay.className = 'noise-overlay';
+        // Create next page wrapper (will be populated with iframe)
+        const nextPageWrapper = document.createElement('div');
+        nextPageWrapper.className = 'transition-next-page';
         
-        // Create text clone container
-        const transitionText = document.createElement('div');
-        transitionText.className = 'transition-text';
+        transitionContainer.appendChild(currentPageWrapper);
+        transitionContainer.appendChild(nextPageWrapper);
         
-        // Create loading background
-        const pageLoading = document.createElement('div');
-        pageLoading.className = 'page-loading';
-        
-        // Add all elements to body
+        // Add to body
         document.body.appendChild(transitionContainer);
-        document.body.appendChild(noiseOverlay);
-        document.body.appendChild(transitionText);
-        document.body.appendChild(pageLoading);
         
         // Store references
         this.elements = {
             container: transitionContainer,
-            circle: morphCircle,
-            noise: noiseOverlay,
-            text: transitionText,
-            loading: pageLoading
+            currentPage: currentPageWrapper,
+            nextPage: nextPageWrapper
         };
     }
 
@@ -734,87 +733,83 @@ class PageTransition {
                 if (!this.isTransitioning) {
                     e.preventDefault();
                     const href = link.href;
-                    const linkText = link.textContent;
-                    const linkRect = link.getBoundingClientRect();
-                    
-                    this.startTransition(href, linkText, linkRect);
+                    this.startTransition(href);
                 }
             });
         });
     }
 
-    startTransition(targetUrl, linkText, linkRect) {
+    startTransition(targetUrl) {
         this.isTransitioning = true;
         document.body.classList.add('transitioning');
         
-        // Calculate center position
-        const centerX = linkRect.left + linkRect.width / 2;
-        const centerY = linkRect.top + linkRect.height / 2;
+        // Clone current page content
+        const mainContent = document.querySelector('.main-content').cloneNode(true);
+        this.elements.currentPage.appendChild(mainContent);
         
-        // Setup text clone
-        this.elements.text.textContent = linkText;
-        this.elements.text.style.left = centerX + 'px';
-        this.elements.text.style.top = centerY + 'px';
+        // Create iframe for next page
+        const iframe = document.createElement('iframe');
+        iframe.src = targetUrl + '?transition=true';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.style.position = 'absolute';
+        iframe.style.top = '0';
+        iframe.style.left = '0';
         
-        // Setup morphing circle at link position
-        this.elements.circle.style.left = centerX + 'px';
-        this.elements.circle.style.top = centerY + 'px';
-        this.elements.circle.style.width = '0px';
-        this.elements.circle.style.height = '0px';
-        this.elements.circle.style.transform = 'translate(-50%, -50%) scale(0)';
-        
-        // Activate transition
-        this.elements.container.classList.add('active');
-        this.elements.text.classList.add('active');
-        
-        // Start morph animation sequence
-        requestAnimationFrame(() => {
-            // Phase 1: Expand circle slightly
-            this.elements.circle.style.transition = 'all 0.4s cubic-bezier(0.76, 0, 0.24, 1)';
-            this.elements.circle.style.width = '200px';
-            this.elements.circle.style.height = '200px';
-            this.elements.circle.style.transform = 'translate(-50%, -50%) scale(1)';
-            
-            // Add noise overlay
+        // Load next page content
+        iframe.onload = () => {
+            // Start animation after iframe loads
             setTimeout(() => {
-                this.elements.noise.classList.add('active');
+                this.animateTransition(targetUrl);
             }, 100);
+        };
+        
+        this.elements.nextPage.appendChild(iframe);
+        
+        // Activate transition container
+        this.elements.container.classList.add('active');
+    }
+
+    animateTransition(targetUrl) {
+        // Apply curved slide animation
+        const duration = 2000; // 2 seconds
+        const easing = 'cubic-bezier(0.4, 0.0, 0.2, 1)'; // Smooth deceleration
+        
+        // Animate current page sliding down with slight scale
+        this.elements.currentPage.style.transition = `transform ${duration}ms ${easing}`;
+        this.elements.currentPage.style.transform = 'translateY(100vh) scale(0.95)';
+        
+        // Animate next page sliding in with curve
+        this.elements.nextPage.style.transition = `transform ${duration}ms ${easing}`;
+        this.elements.nextPage.style.transform = 'translateY(0) translateX(0)';
+        
+        // Add curve effect using multiple keyframes
+        const startTime = performance.now();
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
             
-            // Phase 2: Morph text and expand circle to fill screen
-            setTimeout(() => {
-                this.elements.text.classList.add('morph');
-                
-                // Calculate scale needed to fill screen
-                const viewportDiagonal = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2);
-                const scale = (viewportDiagonal / 200) * 2;
-                
-                this.elements.circle.style.transition = 'all 0.8s cubic-bezier(0.76, 0, 0.24, 1)';
-                this.elements.circle.style.transform = `translate(-50%, -50%) scale(${scale})`;
-                
-                // Morph circle to square
+            // Create curved path
+            const curve = Math.sin(progress * Math.PI * 0.5) * 50; // Curve amplitude
+            const yProgress = this.easeOutCubic(progress);
+            
+            this.elements.nextPage.style.transform = `translateY(${(1 - yProgress) * -100}vh) translateX(${curve * (1 - progress)}px)`;
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                // Transition complete, navigate
                 setTimeout(() => {
-                    this.elements.circle.style.borderRadius = '0%';
-                }, 200);
-                
-                // Phase 3: Fade to solid color and navigate
-                setTimeout(() => {
-                    this.elements.loading.classList.add('active');
-                    
-                    setTimeout(() => {
-                        // Add transition parameter to URL
-                        const separator = targetUrl.includes('?') ? '&' : '?';
-                        window.location.href = targetUrl + separator + 'transition=true';
-                    }, 300);
-                }, 500);
-            }, 400);
-        });
+                    window.location.href = targetUrl;
+                }, 100);
+            }
+        };
+        
+        requestAnimationFrame(animate);
+    }
+
+    easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
     }
 }
-
-// Initialize page transition system when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // ... existing DOMContentLoaded code ...
-    
-    // Initialize page transition
-    const pageTransition = new PageTransition();
-});
