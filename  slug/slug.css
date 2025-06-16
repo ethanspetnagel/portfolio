@@ -78,13 +78,13 @@ body.title-hover .essay-tab {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(16px, 2.8vw, 39px);
-  color: #ffd400; /* Updated accent color */
+  color: #ffcc00; /* Updated accent color */
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  text-shadow: 0 1px 8px rgba(255, 212, 0, 0.3), 0 0 2px #ffd400;
+  text-shadow: 0 1px 8px rgba(255, 204, 0, 0.3), 0 0 2px #ffcc00;
 }
 
 .page {
@@ -123,7 +123,7 @@ body.title-hover .essay-tab {
   left: calc(36vw - 25px);
   top: 15px; /* Adjusted for new top padding */
   font-size: 48px;
-  color: #ffd400; /* Updated accent color */
+  color: #ffcc00; /* Updated accent color */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
   pointer-events: none;
@@ -146,6 +146,8 @@ body.title-hover .essay-tab {
   z-index: 10;
   background: #f0f5f5; /* Match background */
   padding-right: 20px;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  white-space: nowrap; /* Keep everything on one line */
 }
 
 .site-title {
@@ -199,13 +201,13 @@ body.title-hover .essay-tab {
 }
 
 .essay-tab:hover {
-  color: #ffd400; /* Accent color on hover */
-  text-shadow: 0 0 8px rgba(255, 212, 0, 0.3);
+  color: #ffcc00; /* Accent color on hover */
+  text-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
 }
 
 .essay-tab.active {
   font-weight: 400;
-  color: #ffd400; /* Accent color when active */
+  color: #ffcc00; /* Accent color when active */
   font-style: italic; /* Italicized when selected */
 }
 
@@ -281,7 +283,7 @@ body.title-hover .project-gallery {
   right: 15px;
   top: 15px; /* Adjusted for new top padding */
   font-size: 48px;
-  color: #ffd400; /* Updated accent color */
+  color: #ffcc00; /* Updated accent color */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
   pointer-events: none;
@@ -423,11 +425,60 @@ body.title-hover .project-gallery {
   transition: all 0.3s ease;
 }
 .info-toggle:hover {
-  color: #ffd400; /* Updated accent color */
-  text-shadow: 0 0 6px rgba(255, 212, 0, 0.3);
+  color: #ffcc00; /* Updated accent color */
+  text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
 }
 .info-toggle.active {
   font-weight: bold;
+}
+
+/* Slideshow navigation buttons */
+.slideshow-nav {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.slideshow-nav button,
+.slideshow-button,
+.nav-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(1.6rem - 7px);
+  color: #0f0f0f;
+  padding: 0;
+  transition: color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.slideshow-nav button:hover,
+.slideshow-button:hover,
+.nav-button:hover {
+  color: #ffcc00; /* Accent color on hover */
+  text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
+}
+
+/* Play/pause button specific */
+.play-pause-btn,
+.play-pause {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(1.6rem - 7px);
+  color: #0f0f0f;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.play-pause-btn:hover,
+.play-pause:hover {
+  color: #ffcc00; /* Accent color on hover */
+  text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
 }
 .info-panel {
   align-self: flex-start;
