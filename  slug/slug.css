@@ -86,7 +86,6 @@ body.title-hover .project-gallery {
   transform: translate(-50%, -150%);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  text-shadow: 0 1px 8px rgba(255, 204, 0, 0.3), 0 0 2px #ffcc00;
 }
 
 /* Main page layout */
@@ -136,14 +135,14 @@ body.title-hover .project-gallery {
   opacity: 1;
 }
 
-/* Title and nav container - FIXED to be inline */
+/* Title and nav container - UPDATED for better spacing */
 .title-nav-container {
   display: flex;
   align-items: baseline;
-  gap: 30px;
+  gap: 60px; /* Increased from 30px to 60px for more space */
   margin-bottom: 35px;
   position: relative;
-  flex-direction: row; /* Force horizontal layout */
+  flex-direction: row;
   flex-wrap: nowrap;
   width: 100%;
 }
@@ -163,9 +162,9 @@ body.title-hover .project-gallery {
   display: inline-block;
 }
 
-/* Navigation tabs */
+/* Navigation tabs - UPDATED for asterisk hover effect */
 .essay-nav {
-  display: inline-flex; /* Changed to inline-flex */
+  display: inline-flex;
   flex-wrap: nowrap;
   gap: 20px;
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -189,13 +188,18 @@ body.title-hover .project-gallery {
   margin: 0;
   flex-shrink: 0;
   display: inline-block;
+  position: relative;
 }
 
-.essay-tab:hover {
-  color: #ffcc00;
-  text-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+/* Updated hover effect - adds asterisk instead of color change */
+.essay-tab:hover:not(.active)::before {
+  content: "*";
+  position: absolute;
+  left: -15px;
+  color: #0f0f0f;
 }
 
+/* Active state keeps yellow color */
 .essay-tab.active {
   font-weight: 400;
   color: #ffcc00;
@@ -362,7 +366,7 @@ body.title-hover .project-gallery {
   align-self: flex-start;
   margin-top: 14px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px; /* Back to original smaller size */
+  font-size: 13px;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -373,7 +377,7 @@ body.title-hover .project-gallery {
   margin-top: 8px;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px; /* Back to original smaller size */
+  font-size: 13px;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -394,7 +398,7 @@ body.title-hover .project-gallery {
   align-self: flex-start;
   margin-top: 8px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px; /* Back to original smaller size */
+  font-size: 13px;
   font-weight: normal;
   text-transform: none;
   letter-spacing: 0.02em;
@@ -464,7 +468,7 @@ body.title-hover .project-gallery {
   border: none;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px; /* Smaller size to match captions */
+  font-size: 12px;
   color: #ffcc00;
   padding: 0;
   transition: color 0.3s ease;
@@ -478,7 +482,6 @@ body.title-hover .project-gallery {
 .play-pause-btn:hover,
 .play-pause:hover {
   color: #ffcc00;
-  text-shadow: 0 0 0px rgba(255, 204, 0, 0.3);
 }
 
 /* Responsive */
