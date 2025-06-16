@@ -42,7 +42,7 @@ body.title-hover .essay-sidebar {
 body.title-hover .essay-sidebar .essay-text p {
   color: #fff !important;
 }
-body.title-hover .essay-nav,
+body.title-hover .main-navigation,
 body.title-hover .essay-tab {
   color: #fff !important;
 }
@@ -100,7 +100,7 @@ body.title-hover .project-gallery {
   overflow: hidden;
 }
 
-/* Left sidebar with Swedish design lines */
+/* Left sidebar - CLEAN VERSION */
 .essay-sidebar {
   width: 36vw;
   min-width: 320px;
@@ -112,35 +112,11 @@ body.title-hover .project-gallery {
   scrollbar-width: none;
   background: #f0f5f5;
   position: relative;
-  border-right: 1px solid #0f0f0f;
 }
 
 .essay-sidebar::-webkit-scrollbar {
   width: 0;
   background: transparent;
-}
-
-/* Swedish design accent lines */
-.essay-sidebar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 60px;
-  width: 1px;
-  height: 100%;
-  background: #0f0f0f;
-  opacity: 0.2;
-}
-
-.essay-sidebar::after {
-  content: "";
-  position: absolute;
-  top: 80px;
-  left: 15px;
-  right: 15px;
-  height: 1px;
-  background: #0f0f0f;
-  opacity: 0.3;
 }
 
 /* Star scrollbar indicator */
@@ -160,19 +136,7 @@ body.title-hover .project-gallery {
   opacity: 1;
 }
 
-/* Title and nav container - MUCH MORE SPACE */
-.title-nav-container {
-  display: flex;
-  align-items: baseline;
-  gap: 120px; /* Increased to 120px for much more space */
-  margin-bottom: 35px;
-  position: relative;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  width: 100%;
-}
-
-/* Site title */
+/* SEPARATE TITLE STYLING */
 .site-title {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
@@ -181,26 +145,25 @@ body.title-hover .project-gallery {
   text-transform: uppercase;
   cursor: pointer;
   line-height: 1.08;
-  margin: 0;
+  margin: 0 0 25px 0;
   white-space: nowrap;
-  flex-shrink: 0;
-  display: inline-block;
+  display: block;
 }
 
-/* Navigation tabs - FIXED hover effect */
-.essay-nav {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  gap: 20px;
+/* SEPARATE NAVIGATION BAR */
+.main-navigation {
+  display: flex;
+  align-items: baseline;
+  gap: 25px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 7px);
   font-style: normal;
   font-weight: 400;
-  margin: 0;
+  margin: 0 0 35px 0;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  align-items: baseline;
   white-space: nowrap;
+  padding-left: 80px; /* This creates the space between SLUG and tabs */
 }
 
 .essay-tab {
@@ -239,23 +202,12 @@ body.title-hover .project-gallery {
   text-shadow: none !important;
 }
 
-/* Essay content with Swedish design elements */
+/* Essay content - CLEAN VERSION */
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
   margin-top: 20px;
   position: relative;
-}
-
-.essay-content::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -15px;
-  width: 1px;
-  height: 200px;
-  background: #ffcc00;
-  opacity: 0.6;
 }
 
 .essay-text {
@@ -265,7 +217,8 @@ body.title-hover .project-gallery {
   display: block;
 }
 
-.essay-text p {
+/* Interactive text for parting sea effect */
+.interactive-text {
   font-family: "Borgia Pro", "Arial Narrow", Arial, sans-serif;
   font-size: calc(1.6rem - 7px);
   font-weight: normal;
@@ -273,19 +226,21 @@ body.title-hover .project-gallery {
   margin-bottom: 20px;
   color: #0f0f0f;
   letter-spacing: -0.01em;
+  transition: transform 0.2s ease-out;
+  cursor: default;
 }
 
-.essay-text p strong {
+.interactive-text strong {
   font-family: "Borgia Pro", "Arial Narrow", Arial, sans-serif;
   font-weight: bold;
   letter-spacing: -0.01em;
 }
 
-.essay-text p:last-child {
+.interactive-text:last-child {
   margin-bottom: 0;
 }
 
-/* Right gallery column with Swedish design */
+/* Right gallery column - CLEAN VERSION */
 .project-gallery {
   width: calc(100vw - 36vw);
   min-width: 0;
@@ -298,28 +253,6 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-.project-gallery::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 30px;
-  width: 1px;
-  height: 100%;
-  background: #0f0f0f;
-  opacity: 0.15;
-}
-
-.project-gallery::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 30px;
-  width: 1px;
-  height: 100%;
-  background: #0f0f0f;
-  opacity: 0.1;
 }
 
 .project-gallery::-webkit-scrollbar {
@@ -374,18 +307,6 @@ body.title-hover .project-gallery {
   box-shadow: none;
   padding: 0;
   position: relative;
-}
-
-/* Swedish design accent for project blocks */
-.project-block::before {
-  content: "";
-  position: absolute;
-  top: -45px;
-  left: 0;
-  right: 200px;
-  height: 1px;
-  background: #0f0f0f;
-  opacity: 0.2;
 }
 
 /* Slideshow */
@@ -579,8 +500,8 @@ body.title-hover .project-gallery {
   .project-gallery {
     width: calc(100vw - 38vw);
   }
-  .title-nav-container {
-    gap: 80px; /* Reduce gap slightly on smaller screens */
+  .main-navigation {
+    padding-left: 60px; /* Reduce space on smaller screens */
   }
 }
 
@@ -611,9 +532,11 @@ body.title-hover .project-gallery {
   .star-scroll-indicator-gallery {
     display: none;
   }
-  .title-nav-container {
+  .main-navigation {
+    padding-left: 0; /* Remove left padding on mobile */
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 20px;
   }
   .site-title {
     font-size: calc(1.3rem - 7px);
@@ -622,7 +545,7 @@ body.title-hover .project-gallery {
     font-size: calc(1.3rem - 7px);
     gap: 20px;
   }
-  .essay-text p {
+  .interactive-text {
     font-size: calc(1.3rem - 7px);
   }
   .caption,
