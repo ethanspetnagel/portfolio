@@ -47,44 +47,132 @@ let currentMedia = null;
 let activeProject = null;
 let hoverTimeout = null;
 let mediaTransitionTimeout = null;
-const preloadedVideos = {};
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// Preload all videos during loading screen
-function preloadAllVideos() {
-    const videoPromises = [];
-    
-    Object.entries(projectMedia).forEach(([project, url]) => {
-        if (url && isVideo(url)) {
-            const video = document.createElement('video');
-            video.src = url;
-            video.muted = true;
-            video.loop = true;
-            video.playsInline = true;
-            video.autoplay = false;
-            video.preload = 'auto';
-            
-            const loadPromise = new Promise((resolve) => {
-                video.addEventListener('canplaythrough', () => {
-                    preloadedVideos[project] = video;
-                    resolve();
-                }, { once: true });
+// Video Loading System - Professional Implementation
+class VideoPreloader {
+    constructor() {
+        this.videos = {};
+        this.loadingStates = {};
+        this.videoElements = {};
+    }
+
+    // Create video element pool
+    createVideoPool() {
+        Object.entries(projectMedia).forEach(([project, url]) => {
+            if (url && isVideo(url)) {
+                // Create video element
+                const video = document.createElement('video');
+                video.src = url;
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.autoplay = false;
+                video.preload = 'auto';
+                video.style.position = 'absolute';
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.objectFit = 'cover';
+                video.style.display = 'none';
                 
-                video.addEventListener('error', () => {
-                    console.error(`Failed to preload video for ${project}`);
-                    resolve(); // Resolve anyway to not block
+                // Add to DOM immediately but hidden
+                fullscreenBg.appendChild(video);
+                
+                this.videoElements[project] = video;
+                this.loadingStates[project] = 'loading';
+                
+                // Load video data
+                video.load();
+                
+                // Track loading progress
+                video.addEventListener('loadedmetadata', () => {
+                    console.log(`${project} metadata loaded`);
                 });
-            });
+                
+                video.addEventListener('canplay', () => {
+                    console.log(`${project} can start playing`);
+                    this.loadingStates[project] = 'canplay';
+                });
+                
+                video.addEventListener('canplaythrough', () => {
+                    console.log(`${project} fully loaded`);
+                    this.loadingStates[project] = 'ready';
+                });
+                
+                video.addEventListener('error', (e) => {
+                    console.error(`${project} failed to load:`, e);
+                    this.loadingStates[project] = 'error';
+                });
+            }
+        });
+    }
+
+    // Show video instantly
+    showVideo(project) {
+        // Hide all videos first
+        Object.values(this.videoElements).forEach(video => {
+            video.style.display = 'none';
+            video.pause();
+        });
+        
+        const video = this.videoElements[project];
+        if (video && this.loadingStates[project] !== 'error') {
+            // Show and play immediately
+            video.style.display = 'block';
+            video.currentTime = 0; // Reset to start
             
-            video.load();
-            videoPromises.push(loadPromise);
+            // Force play with promise handling
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log(`${project} playing successfully`);
+                }).catch(error => {
+                    console.error(`${project} play error:`, error);
+                    // Try playing again after user interaction
+                    document.addEventListener('click', () => {
+                        video.play();
+                    }, { once: true });
+                });
+            }
+            
+            // Apply filter if needed
+            if (project !== 'church') {
+                video.style.filter = 'brightness(0.9)';
+            } else {
+                video.style.filter = 'none';
+            }
+            
+            // Show background
+            fullscreenBg.classList.add('active');
+            fullscreenBg.style.opacity = '1';
+            
+            return true;
         }
-    });
-    
-    return Promise.all(videoPromises);
+        return false;
+    }
+
+    hideAllVideos() {
+        Object.values(this.videoElements).forEach(video => {
+            video.style.display = 'none';
+            video.pause();
+        });
+        
+        fullscreenBg.classList.remove('active');
+        fullscreenBg.style.opacity = '0';
+    }
+
+    // Get loading progress
+    getLoadingProgress() {
+        const total = Object.keys(this.videoElements).length;
+        const loaded = Object.values(this.loadingStates).filter(state => state === 'ready').length;
+        return { total, loaded, percentage: total > 0 ? (loaded / total) * 100 : 100 };
+    }
 }
+
+// Initialize video preloader globally
+let videoPreloader;
 
 // Text scramble effect - letters only
 class TextScramble {
@@ -357,7 +445,7 @@ function isVideo(url) {
     return videoExtensions.some(ext => url.toLowerCase().includes(ext));
 }
 
-// Function to show fullscreen media - IMPROVED WITH PRELOADED VIDEOS
+// Function to show fullscreen media
 function showFullscreenMedia(mediaUrl) {
     if (!mediaUrl) {
         console.log('No media URL provided');
@@ -370,60 +458,22 @@ function showFullscreenMedia(mediaUrl) {
         return;
     }
     
-    if (mediaTransitionTimeout) {
-        clearTimeout(mediaTransitionTimeout);
-        mediaTransitionTimeout = null;
+    currentMedia = mediaUrl;
+    
+    // Use preloaded video if available
+    if (videoPreloader && isVideo(mediaUrl)) {
+        const project = activeProject;
+        if (videoPreloader.showVideo(project)) {
+            return; // Video shown successfully
+        }
     }
     
-    // Show immediately if we have a preloaded video
-    const project = activeProject;
-    if (preloadedVideos[project]) {
-        switchPreloadedVideo(project);
-    } else {
+    // Fallback to original loading method for images or failed videos
+    if (!isVideo(mediaUrl)) {
         hideFullscreenMedia();
         setTimeout(() => {
             switchMedia(mediaUrl);
         }, 100);
-    }
-}
-
-// Function to switch to preloaded video
-function switchPreloadedVideo(project) {
-    currentMedia = projectMedia[project];
-    
-    // Reset media elements
-    if (bgVideo) {
-        bgVideo.pause();
-        bgVideo.classList.remove('active');
-    }
-    if (bgImage) {
-        bgImage.src = '';
-        bgImage.classList.remove('active');
-    }
-    
-    // Use preloaded video
-    const preloadedVideo = preloadedVideos[project];
-    if (preloadedVideo) {
-        // Replace current video with preloaded one
-        const newVideo = preloadedVideo.cloneNode(true);
-        bgVideo.parentNode.replaceChild(newVideo, bgVideo);
-        bgVideo = newVideo;
-        
-        // Apply styles and show immediately
-        if (project !== 'church') {
-            bgVideo.style.filter = 'brightness(0.9)';
-        } else {
-            bgVideo.style.filter = 'none';
-        }
-        
-        bgVideo.classList.add('active');
-        fullscreenBg.classList.add('active');
-        fullscreenBg.style.opacity = '1';
-        
-        // Play immediately
-        bgVideo.play().catch(e => {
-            console.error('Video play error:', e);
-        });
     }
 }
 
@@ -520,17 +570,21 @@ function switchMedia(mediaUrl) {
 function hideFullscreenMedia() {
     currentMedia = null;
     
-    fullscreenBg.classList.remove('active');
-    fullscreenBg.style.opacity = '0';
-    
-    if (bgVideo && bgVideo.src) {
-        bgVideo.pause();
-        bgVideo.currentTime = 0;
-        bgVideo.src = '';
-    }
-    
-    if (bgImage) {
-        bgImage.src = '';
+    if (videoPreloader) {
+        videoPreloader.hideAllVideos();
+    } else {
+        fullscreenBg.classList.remove('active');
+        fullscreenBg.style.opacity = '0';
+        
+        if (bgVideo && bgVideo.src) {
+            bgVideo.pause();
+            bgVideo.currentTime = 0;
+            bgVideo.src = '';
+        }
+        
+        if (bgImage) {
+            bgImage.src = '';
+        }
     }
     
     setTimeout(() => {
@@ -717,12 +771,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Preload videos during loading screen
-    preloadAllVideos().then(() => {
-        console.log('All videos preloaded');
-    });
+    // Initialize video preloader immediately
+    videoPreloader = new VideoPreloader();
+    videoPreloader.createVideoPool();
     
-    // Hide loading screen after 6 seconds to ensure videos are loaded
+    // Show loading progress (optional)
+    const checkLoadingProgress = setInterval(() => {
+        const progress = videoPreloader.getLoadingProgress();
+        console.log(`Videos loaded: ${progress.loaded}/${progress.total} (${progress.percentage.toFixed(0)}%)`);
+        
+        if (progress.percentage === 100) {
+            clearInterval(checkLoadingProgress);
+            console.log('All videos ready!');
+        }
+    }, 500);
+    
+    // Hide loading screen after minimum time
     setTimeout(() => {
         console.log('Hiding loading screen');
         if (loadingScreen) {
@@ -737,7 +801,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 500);
         }
-    }, 6000); // Increased from 4000 to give videos more time to load
+    }, 4000); // Back to 4 seconds since videos load in parallel
     
     // Log all project media paths for debugging
     console.log('Project media paths:');
@@ -766,7 +830,7 @@ setTimeout(() => {
         console.log('Emergency hide loading screen');
         loadingScreen.style.display = 'none';
     }
-}, 8000); // Increased for video loading
+}, 8000);
 
 // NEW IMPROVED Page Transition System
 class PageTransition {

@@ -1,4 +1,10 @@
-// Text scramble effect class for the "OTHER PROJECTS" button/arrow
+// Smooth scroll implementation
+class SmoothScroll {
+    constructor(element, options = {}) {
+      this.element = element;
+      this.options = {
+        damping: options.damping || 0.1, // Higher = heavier feel
+        thumbFactor: options.thumbFactor || 0.5,// Text scramble effect class for the "OTHER PROJECTS" button/arrow
 class TextScramble {
     constructor(el) {
         this.el = el;
