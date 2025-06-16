@@ -73,19 +73,20 @@ body.title-hover .project-gallery {
   opacity: 0.6;
 }
 
-/* Cursor label */
+/* Cursor label - FIXED to be pure yellow */
 .cursor-label {
   position: fixed;
   pointer-events: none;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(16px, 2.8vw, 39px);
-  color: #ffcc00;
+  color: #ffcc00 !important;
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  text-shadow: none !important;
 }
 
 /* Main page layout */
@@ -99,7 +100,7 @@ body.title-hover .project-gallery {
   overflow: hidden;
 }
 
-/* Left sidebar */
+/* Left sidebar with Swedish design lines */
 .essay-sidebar {
   width: 36vw;
   min-width: 320px;
@@ -111,11 +112,35 @@ body.title-hover .project-gallery {
   scrollbar-width: none;
   background: #f0f5f5;
   position: relative;
+  border-right: 1px solid #0f0f0f;
 }
 
 .essay-sidebar::-webkit-scrollbar {
   width: 0;
   background: transparent;
+}
+
+/* Swedish design accent lines */
+.essay-sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 60px;
+  width: 1px;
+  height: 100%;
+  background: #0f0f0f;
+  opacity: 0.2;
+}
+
+.essay-sidebar::after {
+  content: "";
+  position: absolute;
+  top: 80px;
+  left: 15px;
+  right: 15px;
+  height: 1px;
+  background: #0f0f0f;
+  opacity: 0.3;
 }
 
 /* Star scrollbar indicator */
@@ -135,11 +160,11 @@ body.title-hover .project-gallery {
   opacity: 1;
 }
 
-/* Title and nav container - UPDATED for better spacing */
+/* Title and nav container - MUCH MORE SPACE */
 .title-nav-container {
   display: flex;
   align-items: baseline;
-  gap: 60px; /* Increased from 30px to 60px for more space */
+  gap: 120px; /* Increased to 120px for much more space */
   margin-bottom: 35px;
   position: relative;
   flex-direction: row;
@@ -162,7 +187,7 @@ body.title-hover .project-gallery {
   display: inline-block;
 }
 
-/* Navigation tabs - UPDATED for asterisk hover effect */
+/* Navigation tabs - FIXED hover effect */
 .essay-nav {
   display: inline-flex;
   flex-wrap: nowrap;
@@ -191,26 +216,46 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
-/* Updated hover effect - adds asterisk instead of color change */
-.essay-tab:hover:not(.active)::before {
-  content: "*";
-  position: absolute;
-  left: -15px;
+/* FIXED hover effect - asterisk directly on word */
+.essay-tab:hover:not(.active) {
   color: #0f0f0f;
 }
 
-/* Active state keeps yellow color */
+.essay-tab:hover:not(.active)::before {
+  content: "*";
+  color: #0f0f0f;
+  margin-right: 0;
+}
+
+/* Active state keeps yellow color and italic */
 .essay-tab.active {
   font-weight: 400;
-  color: #ffcc00;
+  color: #ffcc00 !important;
   font-style: italic;
 }
 
-/* Essay content */
+/* Remove any conflicting hover styles */
+.essay-tab:hover {
+  text-shadow: none !important;
+}
+
+/* Essay content with Swedish design elements */
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
   margin-top: 20px;
+  position: relative;
+}
+
+.essay-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -15px;
+  width: 1px;
+  height: 200px;
+  background: #ffcc00;
+  opacity: 0.6;
 }
 
 .essay-text {
@@ -240,7 +285,7 @@ body.title-hover .project-gallery {
   margin-bottom: 0;
 }
 
-/* Right gallery column */
+/* Right gallery column with Swedish design */
 .project-gallery {
   width: calc(100vw - 36vw);
   min-width: 0;
@@ -253,6 +298,28 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.project-gallery::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 30px;
+  width: 1px;
+  height: 100%;
+  background: #0f0f0f;
+  opacity: 0.15;
+}
+
+.project-gallery::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 30px;
+  width: 1px;
+  height: 100%;
+  background: #0f0f0f;
+  opacity: 0.1;
 }
 
 .project-gallery::-webkit-scrollbar {
@@ -306,6 +373,19 @@ body.title-hover .project-gallery {
   border: none;
   box-shadow: none;
   padding: 0;
+  position: relative;
+}
+
+/* Swedish design accent for project blocks */
+.project-block::before {
+  content: "";
+  position: absolute;
+  top: -45px;
+  left: 0;
+  right: 200px;
+  height: 1px;
+  background: #0f0f0f;
+  opacity: 0.2;
 }
 
 /* Slideshow */
@@ -361,7 +441,7 @@ body.title-hover .project-gallery {
   margin-right: 6vw;
 }
 
-/* Captions and info - BACK TO SMALLER SIZE */
+/* Captions and info */
 .caption {
   align-self: flex-start;
   margin-top: 14px;
@@ -469,11 +549,12 @@ body.title-hover .project-gallery {
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 12px;
-  color: #ffcc00;
+  color: #ffcc00 !important;
   padding: 0;
   transition: color 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-shadow: none !important;
 }
 
 .slideshow-nav button:hover,
@@ -481,7 +562,8 @@ body.title-hover .project-gallery {
 .nav-button:hover,
 .play-pause-btn:hover,
 .play-pause:hover {
-  color: #ffcc00;
+  color: #ffcc00 !important;
+  text-shadow: none !important;
 }
 
 /* Responsive */
@@ -496,6 +578,9 @@ body.title-hover .project-gallery {
   }
   .project-gallery {
     width: calc(100vw - 38vw);
+  }
+  .title-nav-container {
+    gap: 80px; /* Reduce gap slightly on smaller screens */
   }
 }
 
