@@ -11,11 +11,11 @@
 
 /* Updated selection color */
 ::selection {
-  background-color: #ffd400;
+  background-color: #ffcc00;
   color: #000000;
 }
 ::-moz-selection {
-  background-color: #ffd400;
+  background-color: #ffcc00;
   color: #000000;
 }
 
@@ -575,4 +575,4 @@ body.title-hover .project-gallery {
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
   }
-}git
+}
