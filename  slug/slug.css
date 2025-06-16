@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-/* Updated selection color */
+/* Selection color */
 ::selection {
   background-color: #ffcc00;
   color: #000000;
@@ -24,13 +24,14 @@ body {
   padding: 0;
   height: 100vh;
   overflow: hidden;
-  background-color: #f0f5f5; /* Updated background color */
+  background-color: #f0f5f5;
   color: #0f0f0f;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Title hover effects */
 body.title-hover {
   background-color: none;
 }
@@ -48,17 +49,21 @@ body.title-hover .essay-nav,
 body.title-hover .essay-tab {
   color: #fff !important;
 }
+body.title-hover .project-gallery {
+  background-color: #000000;
+}
 
+/* Projects/Home button */
 .projects-button {
   position: fixed;
-  bottom: 15px; /* Moved to bottom */
+  bottom: 15px;
   left: 15px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
   font-size: clamp(16px, 2.8vw, 39px);
   text-transform: uppercase;
   text-decoration: none;
-  color: #0f0f0f; /* Black color */
+  color: #0f0f0f;
   background: none;
   border: none;
   cursor: pointer;
@@ -71,14 +76,14 @@ body.title-hover .essay-tab {
   opacity: 0.6;
 }
 
-/* Updated cursor label color */
+/* Cursor label */
 .cursor-label {
   position: fixed;
   pointer-events: none;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(16px, 2.8vw, 39px);
-  color: #ffcc00; /* Updated accent color */
+  color: #ffcc00;
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
@@ -87,6 +92,7 @@ body.title-hover .essay-tab {
   text-shadow: 0 1px 8px rgba(255, 204, 0, 0.3), 0 0 2px #ffcc00;
 }
 
+/* Main page layout */
 .page {
   display: flex;
   width: 100vw;
@@ -97,7 +103,7 @@ body.title-hover .essay-tab {
   overflow: hidden;
 }
 
-/* Adjusted left column width for text fitting */
+/* Left sidebar */
 .essay-sidebar {
   width: 36vw;
   min-width: 320px;
@@ -105,27 +111,26 @@ body.title-hover .essay-tab {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 15px 40px 40px 15px; /* Same padding on top and left */
+  padding: calc(1.6rem + 43px) 40px 40px 15px; /* Top padding accounts for fixed nav */
   scrollbar-width: none;
-  background: #f0f5f5; /* Updated background color */
+  background: #f0f5f5;
   position: relative;
 }
 
-/* Custom star scrollbar */
 .essay-sidebar::-webkit-scrollbar {
   width: 0;
   background: transparent;
 }
 
-/* Star scrollbar indicator - updated color and slower movement */
+/* Star scrollbar indicator */
 .star-scroll-indicator {
   position: fixed;
   left: calc(36vw - 25px);
-  top: 15px; /* Adjusted for new top padding */
+  top: 15px;
   font-size: 48px;
-  color: #ffcc00; /* Updated accent color */
+  color: #ffcc00;
   opacity: 0;
-  transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
+  transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
   z-index: 100;
 }
@@ -134,87 +139,84 @@ body.title-hover .essay-tab {
   opacity: 0.8;
 }
 
-/* Title and nav container - spans across both columns */
+/* FIXED: Title and nav container */
 .title-nav-container {
   position: fixed;
   top: 15px;
   left: 15px;
-  right: 20px; /* Extends across both columns */
+  width: calc(100vw - 35px); /* Full width minus margins */
   display: flex;
   align-items: baseline;
-  gap: 30px; /* 30px space between title and tabs */
+  gap: 30px;
   z-index: 10;
-  background: #f0f5f5; /* Match background */
+  background: #f0f5f5;
   padding-right: 20px;
-  flex-wrap: nowrap; /* Prevent wrapping */
-  white-space: nowrap; /* Keep everything on one line */
+  flex-wrap: nowrap;
+  overflow-x: auto; /* Allow horizontal scroll if needed */
+  scrollbar-width: none;
 }
 
+.title-nav-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Site title */
 .site-title {
-  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed to Helvetica */
-  font-weight: bold; /* Bold */
-  font-size: calc(1.6rem - 7px); /* Same size as paragraph text */
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: bold;
+  font-size: calc(1.6rem - 7px);
   letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: pointer;
   line-height: 1.08;
-  display: inline-block;
   margin: 0;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-/* Contemporary horizontal nav - at top of page */
+/* Navigation tabs */
 .essay-nav {
   display: flex;
   flex-wrap: nowrap;
-  gap: 20px; /* Space between tabs */
-  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed to Helvetica */
-  font-size: calc(1.6rem - 7px); /* Same size as paragraph text */
+  gap: 20px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(1.6rem - 7px);
   font-style: normal;
   font-weight: 400;
   margin: 0;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   align-items: baseline;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.essay-nav::-webkit-scrollbar {
-  display: none;
+  white-space: nowrap;
 }
 
 .essay-tab {
   cursor: pointer;
   color: #0f0f0f;
   transition: all 0.3s ease;
-  position: relative;
   white-space: nowrap;
   padding: 0;
-  transform: none;
-  text-align: left;
-  display: inline-block;
   line-height: 1.08;
   margin: 0;
   flex-shrink: 0;
 }
 
 .essay-tab:hover {
-  color: #ffcc00; /* Accent color on hover */
+  color: #ffcc00;
   text-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
 }
 
 .essay-tab.active {
   font-weight: 400;
-  color: #ffcc00; /* Accent color when active */
-  font-style: italic; /* Italicized when selected */
+  color: #ffcc00;
+  font-style: italic;
 }
 
+/* Essay content */
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
-  margin-top: calc(1.6rem + 28px); /* Adjust for fixed nav */
+  margin-top: 0;
 }
 
 .essay-text {
@@ -224,7 +226,6 @@ body.title-hover .essay-tab {
   display: block;
 }
 
-/* Updated paragraph styling */
 .essay-text p {
   font-family: "Borgia Pro", "Arial Narrow", Arial, sans-serif;
   font-size: calc(1.6rem - 7px);
@@ -235,10 +236,9 @@ body.title-hover .essay-tab {
   letter-spacing: -0.01em;
 }
 
-/* Paragraph titles - serif and bold */
 .essay-text p strong {
-  font-family: "Borgia Pro", "Arial Narrow", Arial, sans-serif; /* Changed to serif */
-  font-weight: bold; /* Made bold */
+  font-family: "Borgia Pro", "Arial Narrow", Arial, sans-serif;
+  font-weight: bold;
   letter-spacing: -0.01em;
 }
 
@@ -246,26 +246,21 @@ body.title-hover .essay-tab {
   margin-bottom: 0;
 }
 
-/* Adjusted right column for more image space */
+/* Right gallery column */
 .project-gallery {
   width: calc(100vw - 36vw);
   min-width: 0;
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 15px 20px 40px 60px; /* Adjusted top padding to match left sidebar */
-  background-color: #f0f5f5; /* Updated background color */
+  padding: calc(1.6rem + 43px) 20px 40px 60px; /* Top padding accounts for fixed nav */
+  background-color: #f0f5f5;
   scrollbar-width: none;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-body.title-hover .project-gallery {
-  background-color: #000000;
-}
-
-/* Custom star scrollbar for gallery */
 .project-gallery::-webkit-scrollbar {
   width: 20px;
   background: transparent;
@@ -277,15 +272,15 @@ body.title-hover .project-gallery {
   background: transparent;
 }
 
-/* Custom star scrollbar for gallery - updated color and slower movement */
+/* Gallery star scrollbar */
 .star-scroll-indicator-gallery {
   position: fixed;
   right: 15px;
-  top: 15px; /* Adjusted for new top padding */
+  top: 15px;
   font-size: 48px;
-  color: #ffcc00; /* Updated accent color */
+  color: #ffcc00;
   opacity: 0;
-  transition: opacity 0.3s ease, top 0.2s linear; /* Slower movement */
+  transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
   z-index: 100;
 }
@@ -294,14 +289,14 @@ body.title-hover .project-gallery {
   opacity: 0.8;
 }
 
+/* Project sets and blocks */
 .project-set {
   display: none;
   width: 100%;
-  display: flex;
   flex-direction: column;
   gap: 90px 0;
-  align-items: flex-end; /* Changed to flex-end to push images right */
-  margin-top: calc(1.6rem + 28px); /* Adjust for fixed nav */
+  align-items: flex-end;
+  margin-top: 0;
 }
 
 .project-set.active {
@@ -312,7 +307,7 @@ body.title-hover .project-gallery {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Push content to right */
+  align-items: flex-end;
   margin-bottom: 0;
   background: none;
   border: none;
@@ -320,33 +315,24 @@ body.title-hover .project-gallery {
   padding: 0;
 }
 
+/* Slideshow */
 .slideshow-zone {
-  width: auto; /* Changed from 100% */
+  width: auto;
   max-width: 880px;
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Align to right */
-}
-
-.slideshow-zone .slide {
-  width: auto; /* Changed from 100% */
-}
-
-.caption,
-.info-toggle {
-  position: relative;
-  display: inline-block;
+  align-items: flex-end;
 }
 
 .slide {
   display: none;
+  width: auto;
 }
 .slide.current {
   display: block;
 }
 
-/* Maintain image sizes but ensure proper alignment */
 .slide img,
 .slide video {
   display: block;
@@ -354,22 +340,17 @@ body.title-hover .project-gallery {
   width: 78vw;
   height: auto;
   margin-bottom: 0;
-  margin-right: 0; /* Images flush to right */
+  margin-right: 0;
   background: #f0f5f5;
   box-shadow: none;
   border-radius: 0;
 }
 
-/* Specific image variations - adjusted margins */
+/* Image size variations */
 .project-block:nth-child(2) .slide img,
 .project-block:nth-child(2) .slide video {
   max-width: 550px;
   width: 49vw;
-  margin-right: 4vw; /* Right margin instead of left */
-}
-.project-block:nth-child(2) .caption,
-.project-block:nth-child(2) .info-toggle,
-.project-block:nth-child(2) .info-panel {
   margin-right: 4vw;
 }
 
@@ -386,28 +367,13 @@ body.title-hover .project-gallery {
   width: 35vw;
   margin-right: 6vw;
 }
-.project-block:nth-child(4) .caption,
-.project-block:nth-child(4) .info-toggle,
-.project-block:nth-child(4) .info-panel {
-  margin-right: 6vw;
-}
 
-.caption,
-.info-toggle,
-.info-panel {
-  margin-left: 0;
-  text-align: left;
-  padding-left: 0;
-  margin-top: 10px;
-  max-width: 100%;
-  position: relative;
-}
-
+/* Captions and info */
 .caption {
   align-self: flex-start;
   margin-top: 14px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 7px); /* Same size as tabs */
+  font-size: calc(1.6rem - 7px);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -418,18 +384,78 @@ body.title-hover .project-gallery {
   margin-top: 8px;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 7px); /* Same size as tabs */
+  font-size: calc(1.6rem - 7px);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   transition: all 0.3s ease;
 }
+
 .info-toggle:hover {
-  color: #ffcc00; /* Updated accent color */
+  color: #ffcc00;
   text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
 }
+
 .info-toggle.active {
   font-weight: bold;
+}
+
+/* Info panel */
+.info-panel {
+  align-self: flex-start;
+  margin-top: 8px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(1.6rem - 7px);
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: #0f0f0f;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.info-panel.active {
+  max-height: 500px;
+  padding: 8px 0 0 0;
+}
+
+.info-panel p {
+  margin: 0 0 8px 0;
+  padding-top: 0;
+}
+
+.info-panel p:first-child {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+
+.info-panel p strong {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  display: inline-block;
+  margin-right: 20px;
+  min-width: 120px;
+}
+
+/* Adjust margins for specific blocks */
+.project-block:nth-child(2) .caption,
+.project-block:nth-child(2) .info-toggle,
+.project-block:nth-child(2) .info-panel {
+  margin-right: 4vw;
+}
+
+.project-block:nth-child(4) .caption,
+.project-block:nth-child(4) .info-toggle,
+.project-block:nth-child(4) .info-panel {
+  margin-right: 6vw;
 }
 
 /* Slideshow navigation buttons */
@@ -442,7 +468,9 @@ body.title-hover .project-gallery {
 
 .slideshow-nav button,
 .slideshow-button,
-.nav-button {
+.nav-button,
+.play-pause-btn,
+.play-pause {
   background: none;
   border: none;
   cursor: pointer;
@@ -457,87 +485,28 @@ body.title-hover .project-gallery {
 
 .slideshow-nav button:hover,
 .slideshow-button:hover,
-.nav-button:hover {
-  color: #ffcc00; /* Accent color on hover */
-  text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
-}
-
-/* Play/pause button specific */
-.play-pause-btn,
-.play-pause {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 7px);
-  color: #0f0f0f;
-  padding: 0;
-  transition: color 0.3s ease;
-}
-
+.nav-button:hover,
 .play-pause-btn:hover,
 .play-pause:hover {
-  color: #ffcc00; /* Accent color on hover */
+  color: #ffcc00;
   text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
 }
-.info-panel {
-  align-self: flex-start;
-  margin-top: 8px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 7px); /* Same size as tabs */
-  font-weight: normal;
-  text-transform: none;
-  letter-spacing: -0.01em;
-  line-height: 1.4;
-  color: #0f0f0f;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-  background: none;
-  padding: 0;
-  box-shadow: none;
-}
-.info-panel.active {
-  max-height: 500px;
-  padding: 8px 0 0 0;
-}
-.info-panel p {
-  margin: 0 0 8px 0;
-  padding-top: 0;
-}
-.info-panel p:first-child {
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  margin-bottom: 12px;
-}
-.info-panel p strong {
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  display: inline-block;
-  margin-right: 20px;
-  min-width: 120px;
-}
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 1100px) {
   .essay-sidebar {
     min-width: 280px;
     width: 38vw;
     max-width: 420px;
   }
-  .essay-sidebar::after {
-    right: calc(38vw - 25px);
+  .star-scroll-indicator {
+    left: calc(38vw - 25px);
   }
   .project-gallery {
     width: calc(100vw - 38vw);
   }
-  .title-nav-container {
-    flex-wrap: wrap;
-    gap: 20px;
-  }
 }
+
 @media (max-width: 768px) {
   .projects-button {
     bottom: 20px;
@@ -546,7 +515,6 @@ body.title-hover .project-gallery {
   }
   .page {
     flex-direction: column;
-    margin-top: 80px;
     overflow: visible;
     position: static;
     height: auto;
@@ -556,37 +524,30 @@ body.title-hover .project-gallery {
     width: 100vw;
     height: 50vh;
     min-width: 0;
-    padding: 20px;
+    padding: 60px 20px 20px 20px;
     border-right: none;
-  }
-  .essay-sidebar::after,
-  .project-gallery::after {
-    display: none;
   }
   .essay-sidebar {
     border-bottom: 1px solid #0f0f0f;
   }
+  .star-scroll-indicator,
+  .star-scroll-indicator-gallery {
+    display: none;
+  }
   .title-nav-container {
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 0;
+    position: static;
+    width: 100%;
     flex-direction: column;
     gap: 10px;
+    padding: 15px 20px;
+    background: transparent;
   }
   .site-title {
     font-size: calc(1.3rem - 7px);
-    margin-bottom: 10px;
   }
   .essay-nav {
-    margin-bottom: 20px;
     font-size: calc(1.3rem - 7px);
     gap: 16px;
-  }
-  .essay-content,
-  .project-set {
-    margin-top: 20px;
   }
   .essay-text p,
   .caption,
@@ -595,27 +556,23 @@ body.title-hover .project-gallery {
     font-size: calc(1.3rem - 7px);
   }
   .slide img,
-  .slide video {
-    width: 100%;
-    max-width: 100vw;
-    margin-right: 0;
-  }
-  .project-block {
-    align-items: flex-start;
-  }
-  .slideshow-zone {
-    align-items: flex-start;
-  }
+  .slide video,
   .project-block:nth-child(2) .slide img,
   .project-block:nth-child(2) .slide video,
   .project-block:nth-child(3) .slide img,
   .project-block:nth-child(3) .slide video,
   .project-block:nth-child(4) .slide img,
   .project-block:nth-child(4) .slide video {
+    width: 100%;
     max-width: 100vw;
     margin-right: 0;
   }
+  .project-block,
+  .slideshow-zone {
+    align-items: flex-start;
+  }
 }
+
 @media (max-width: 480px) {
   .projects-button {
     font-size: clamp(20px, 5vw, 40px);
@@ -626,4 +583,4 @@ body.title-hover .project-gallery {
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
   }
-}
+}git
