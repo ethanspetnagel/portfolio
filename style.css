@@ -59,74 +59,6 @@ body {
   position: relative;
 }
 
-/* Loading Screen */
-.loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #fafafa;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.5s ease;
-}
-
-.loading-screen.fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.loading-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.loading-image {
-  max-width: 60%;
-  max-height: 60%;
-  object-fit: contain;
-  opacity: 0;
-  animation: fadeIn 6s ease-in-out forwards;
-}
-
-.loading-caption {
-  position: absolute;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: calc(1.6rem - 7px); /* Same as bio text */
-  color: #0f0f0f;
-  opacity: 0;
-  animation: fadeIn 6s ease-in-out forwards;
-  animation-delay: 0.5s;
-  white-space: nowrap;
-  text-align: center;
-  font-family: 'Borgia Pro', 'Courier New', serif; /* Same font as bio */
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 /* Fullscreen Background Layer */
 .fullscreen-bg {
   position: fixed;
@@ -136,9 +68,13 @@ body {
   height: 100%;
   z-index: 1;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.15s ease; /* Faster for instant feel */
   pointer-events: none;
   background-color: #fafafa;
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: opacity;
 }
 
 .fullscreen-bg.active {
@@ -154,6 +90,14 @@ body {
   height: 100%;
   object-fit: cover;
   display: none;
+  /* Hardware acceleration for videos */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Prevent flickering */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 .fullscreen-bg video.active,
@@ -172,32 +116,31 @@ body {
   image-rendering: crisp-edges;
 }
 
-/* Main Content */
+/* Main Content - Always visible */
 .main-content {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 20px 20px 120px;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.main-content.visible {
+  align-items: center;
+  z-index: 10;
   opacity: 1;
+  visibility: visible;
+  padding: 20px 20px 120px;
 }
 
-/* Projects Container - Updated with padding-top */
+/* Projects Container */
 .projects-container {
   text-align: center;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto 100px;
   line-height: 0.8;
-  padding-top: 10px; /* Added to push down project links */
+  padding-top: 10px;
 }
 
 .projects-container.hovering .project-link {
@@ -208,34 +151,22 @@ body {
   opacity: 1;
 }
 
-/* Project Links - Updated font size and hover color */
+/* Project Links */
 .project-link {
-  display: inline-block;
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
   color: #0f0f0f;
   text-decoration: none;
-  font-size: clamp(36px, 8.1vw, 99px); /* 10% smaller than original */
+  font-size: clamp(36px, 8.1vw, 99px);
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.85;
-  transition: opacity 0.2s ease, color 0.3s ease; /* Faster color transition */
+  transition: opacity 0.2s ease, color 0.3s ease;
   cursor: crosshair;
   position: relative;
-  width: auto;
-}
-
-.projects-container {
-  text-align: center;
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto 100px;
-  line-height: 0.8;
-}
-
-.projects-container a {
-  display: block;
-  width: fit-content;
-  margin: 0 auto;
+  will-change: color, opacity;
 }
 
 /* Changed hover color to yellow */
@@ -259,15 +190,16 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   color: #0f0f0f;
-  padding: 0; /* Remove padding for exact size match */
+  padding: 0;
   display: inline-block;
   text-transform: uppercase;
   line-height: 1;
+  letter-spacing: 0.02em; /* Match about-toggle */
 }
 
 /* Date text hover - background turns black, text turns white */
 .date-text:hover {
-  color: #ffffff; /* White text on hover */
+  color: #ffffff;
 }
 
 /* Special class for black background effect */
@@ -283,19 +215,19 @@ body.june-hover .bio-text,
 body.june-hover .bio-text p,
 body.june-hover .bio-text a,
 body.june-hover .contact-links a {
-  color: #ffffff; /* White text */
+  color: #ffffff;
 }
 
 .date-text.project-active {
   color: #0f0f0f;
 }
 
-/* Bio Section - Updated positioning to ensure alignment */
+/* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 40px; /* Same as website-info */
+  bottom: 40px;
   left: 20px;
-  max-width: 400px; /* Further reduced for tighter layout */
+  max-width: 400px;
   z-index: 15;
 }
 
@@ -308,25 +240,26 @@ body.june-hover .contact-links a {
   mix-blend-mode: difference;
 }
 
-/* About toggle - Match JUNE 2025 exactly */
+/* About toggle - EXACTLY match JUNE 2025 */
 .about-toggle {
   font-size: clamp(16px, 2.8vw, 39px); /* Same as date-text */
   font-weight: bold;
   cursor: pointer;
-  margin-bottom: 8px; /* Reduced by 2px to move down */
+  margin-bottom: 8px;
   transition: opacity 0.3s ease;
   position: relative;
   display: inline-block;
-  text-transform: uppercase; /* Changed to uppercase */
-  line-height: 1; /* Same line-height as date-text */
-  padding: 0; /* Remove padding to match JUNE 2025 exactly */
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0;
+  letter-spacing: 0.02em; /* Match date-text exactly */
 }
 
 .about-toggle:hover {
   opacity: 0.8;
 }
 
-/* Bio content - Updated for better visibility */
+/* Bio content */
 .bio-content {
   max-height: 0;
   overflow: hidden;
@@ -335,14 +268,14 @@ body.june-hover .contact-links a {
 }
 
 .bio-content.active {
-  max-height: 600px; /* Increased to show all content */
+  max-height: 600px;
   opacity: 1;
-  overflow: visible; /* Allow content to be visible */
+  overflow: visible;
 }
 
-/* Bio text - Changed to Borgia Pro font */
+/* Bio text */
 .bio-text {
-  font-size: calc(1.6rem - 7px); /* Reduced by 7px */
+  font-size: calc(1.6rem - 7px);
   line-height: 1.2;
   text-align: left;
   font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
@@ -371,23 +304,23 @@ body.june-hover .contact-links a {
   opacity: 0.7;
 }
 
-/* Contact links - FIXED: No yellow, no underline on hover */
+/* Contact links - FIXED: No yellow, no underline, black asterisk */
 .contact-links {
   margin-top: 20px;
-  white-space: nowrap; /* Keep links on one line */
+  white-space: nowrap;
 }
 
 .contact-links a {
   display: inline-block;
-  margin-right: 15px; /* Increased spacing */
-  font-size: calc(1.6rem - 7px); /* Reduced by 7px */
+  margin-right: 15px;
+  font-size: calc(1.6rem - 7px);
   text-decoration: none;
   transition: all 0.3s ease;
   font-style: normal;
   font-family: 'Borgia Pro', 'Courier New', monospace;
   font-weight: normal;
   position: relative;
-  color: #0f0f0f !important; /* Force black color */
+  color: #0f0f0f !important;
 }
 
 .contact-links a::before {
@@ -399,13 +332,14 @@ body.june-hover .contact-links a {
 }
 
 .contact-links a:hover {
-  color: #0f0f0f !important; /* Stay black on hover */
+  color: #0f0f0f !important; /* Stay black */
   text-decoration: none !important; /* No underline */
   font-style: italic;
 }
 
 .contact-links a:hover::before {
-  content: '*'; /* Asterisk */
+  content: '*'; /* Black asterisk */
+  color: #0f0f0f !important;
   opacity: 1;
 }
 
@@ -433,7 +367,7 @@ body.june-hover .contact-links a {
 /* Touch device styles */
 @media (hover: none) and (pointer: coarse) {
   .project-link.touch-active {
-    color: #ffff00; /* Changed to yellow */
+    color: #ffff00;
   }
 
   .projects-container.touch-hovering .project-link {
@@ -445,174 +379,7 @@ body.june-hover .contact-links a {
   }
 }
 
-/* Media Queries - Tablet */
-@media (max-width: 768px) {
-  .project-link {
-    font-size: clamp(27px, 8.1vw, 72px); /* 10% smaller */
-  }
-
-  .date-text {
-    font-size: clamp(25px, 5vw, 60px);
-  }
-
-  .about-toggle {
-    font-size: clamp(25px, 5vw, 60px); /* Match date-text */
-  }
-
-  .bio-section {
-    max-width: 300px;
-    left: 10px;
-    bottom: 10px;
-  }
-
-  .bio-preview {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .contact-links a:hover {
-    color: #0f0f0f !important;
-    text-decoration: none !important;
-  }
-}
-
-/* Media Queries - Mobile */
-@media (max-width: 480px) {
-  body {
-    overflow-y: auto;
-    min-height: 100vh;
-  }
-
-  .main-content {
-    min-height: 100vh;
-    padding: 40px 20px 20px;
-    justify-content: flex-start;
-  }
-
-  .projects-container {
-    margin-top: 60px;
-    margin-bottom: 40px;
-    line-height: 1.1;
-    padding-top: 10px; /* Maintain padding on mobile */
-  }
-
-  .project-link {
-    font-size: clamp(21.6px, 7.2vw, 40.5px); /* 10% smaller */
-    line-height: 1.2;
-    margin-bottom: 5px;
-  }
-
-  .website-info {
-    position: static;
-    bottom: auto;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin-top: 40px;
-    margin-bottom: 20px; /* Reduced margin */
-    text-align: center;
-  }
-
-  .date-text {
-    font-size: clamp(20px, 5vw, 40px);
-  }
-
-  .about-toggle {
-    font-size: clamp(20px, 5vw, 40px); /* Match date-text */
-  }
-
-  .bio-section {
-    position: static;
-    bottom: auto;
-    left: auto;
-    max-width: 100%;
-    margin: 0 auto; /* Center the section */
-    padding: 0 20px 20px;
-    text-align: center; /* Center about toggle */
-  }
-
-  .about-toggle {
-    padding: 5px 10px;
-    margin-bottom: 20px;
-  }
-
-  .bio-content {
-    max-height: none;
-    text-align: left; /* Keep bio text left-aligned */
-  }
-
-  .bio-content.active {
-    max-height: none;
-    overflow: visible;
-  }
-
-  .bio-text {
-    font-size: calc(1.3rem - 7px); /* Reduced by 7px on mobile */
-    line-height: 1.2;
-  }
-
-  .contact-links {
-    white-space: normal; /* Allow wrapping on mobile if needed */
-  }
-
-  .contact-links a {
-    font-size: calc(1.3rem - 7px); /* Reduced by 7px */
-    margin-right: 12px;
-    display: inline-block;
-    margin-bottom: 5px;
-    font-family: 'Borgia Pro', 'Courier New', monospace;
-    color: #0f0f0f !important;
-  }
-  
-  .contact-links a:hover {
-    color: #0f0f0f !important;
-    text-decoration: none !important;
-  }
-
-  .loading-caption {
-    font-size: calc(1.3rem - 7px); /* Same as bio text on mobile */
-    bottom: -30px;
-  }
-
-  .loading-caption {
-    font-size: 10px;
-    bottom: -30px;
-  }
-
-  /* Hide bio preview on mobile */
-  .bio-preview {
-    display: none !important;
-  }
-
-  /* Fix mix-blend-mode on mobile */
-  .about-toggle,
-  .bio-text,
-  .bio-text p,
-  .bio-text a,
-  .contact-links a {
-    mix-blend-mode: normal;
-    color: #0f0f0f;
-  }
-  
-}
-
-/* Main Content - always start visible */
-.main-content {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  opacity: 1;
-  visibility: visible;
-}
-
-/* NEW IMPROVED Page Transition Styles */
+/* Page Transition Styles */
 .page-transition-overlay {
   position: fixed;
   top: 0;
@@ -651,13 +418,13 @@ body.june-hover .contact-links a {
   z-index: 2;
 }
 
-/* Animation for pushing effect */
+/* Animation for pushing effect with curve */
 @keyframes pushDown {
   0% {
     transform: translateY(0) scale(1);
   }
   100% {
-    transform: translateY(100vh) scale(0.9);
+    transform: translateY(100vh) scale(0.92);
   }
 }
 
@@ -666,7 +433,7 @@ body.june-hover .contact-links a {
     transform: translateY(-100vh) translateX(0);
   }
   50% {
-    transform: translateY(-20vh) translateX(80px); /* Strong curve */
+    transform: translateY(-20vh) translateX(100px); /* Strong curve */
   }
   100% {
     transform: translateY(0) translateX(0);
@@ -686,84 +453,145 @@ body.transitioning {
   overflow: hidden;
   position: fixed;
   width: 100%;
-}/* Add these to your home page CSS for better video performance */
-
-/* Optimize fullscreen background for multiple videos */
-.fullscreen-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.15s ease; /* Faster transition */
-  pointer-events: none;
-  background-color: #fafafa;
-  /* Hardware acceleration */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: opacity;
 }
 
-/* Video elements optimization */
-.fullscreen-bg video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Hardware acceleration for videos */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  /* Prevent flickering */
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
+/* Media Queries - Tablet */
+@media (max-width: 768px) {
+  .project-link {
+    font-size: clamp(27px, 8.1vw, 72px);
+  }
+
+  .date-text {
+    font-size: clamp(25px, 5vw, 60px);
+  }
+
+  .about-toggle {
+    font-size: clamp(25px, 5vw, 60px);
+  }
+
+  .bio-section {
+    max-width: 300px;
+    left: 10px;
+    bottom: 10px;
+  }
+
+  .bio-preview {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .contact-links a:hover {
+    color: #0f0f0f !important;
+    text-decoration: none !important;
+  }
 }
 
-/* Preload hint for better performance */
-.fullscreen-bg video[preload="auto"] {
-  /* Ensures videos start loading immediately */
-}
+/* Media Queries - Mobile */
+@media (max-width: 480px) {
+  body {
+    overflow-y: auto;
+    min-height: 100vh;
+  }
 
-/* Loading state indicator (optional) */
-.video-loading-indicator {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(255, 204, 0, 0.1);
-  color: #ffcc00;
-  padding: 10px 20px;
-  font-size: 12px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 100;
-  pointer-events: none;
-}
+  .main-content {
+    position: relative;
+    min-height: 100vh;
+    padding: 40px 20px 20px;
+    justify-content: flex-start;
+  }
 
-.video-loading-indicator.active {
-  opacity: 1;
-}
+  .projects-container {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    line-height: 1.1;
+    padding-top: 10px;
+  }
 
-/* Optimize project links for instant feedback */
-.project-link {
-  /* Existing styles... */
-  /* Add will-change for smoother hovers */
-  will-change: color, opacity;
-}
+  .project-link {
+    font-size: clamp(21.6px, 7.2vw, 40.5px);
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
 
-/* Reduce motion blur during transitions */
-@media (prefers-reduced-motion: no-preference) {
-  .fullscreen-bg video {
-    /* Only apply motion optimizations if user hasn't requested reduced motion */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+  .website-info {
+    position: static;
+    bottom: auto;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .date-text {
+    font-size: clamp(20px, 5vw, 40px);
+  }
+
+  .about-toggle {
+    font-size: clamp(20px, 5vw, 40px);
+  }
+
+  .bio-section {
+    position: static;
+    bottom: auto;
+    left: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px 20px;
+    text-align: center;
+  }
+
+  .about-toggle {
+    padding: 5px 10px;
+    margin-bottom: 20px;
+  }
+
+  .bio-content {
+    max-height: none;
+    text-align: left;
+  }
+
+  .bio-content.active {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bio-text {
+    font-size: calc(1.3rem - 7px);
+    line-height: 1.2;
+  }
+
+  .contact-links {
+    white-space: normal;
+  }
+
+  .contact-links a {
+    font-size: calc(1.3rem - 7px);
+    margin-right: 12px;
+    display: inline-block;
+    margin-bottom: 5px;
+    font-family: 'Borgia Pro', 'Courier New', monospace;
+    color: #0f0f0f !important;
+  }
+  
+  .contact-links a:hover {
+    color: #0f0f0f !important;
+    text-decoration: none !important;
+  }
+
+  /* Hide bio preview on mobile */
+  .bio-preview {
+    display: none !important;
+  }
+
+  /* Fix mix-blend-mode on mobile */
+  .about-toggle,
+  .bio-text,
+  .bio-text p,
+  .bio-text a,
+  .contact-links a {
+    mix-blend-mode: normal;
+    color: #0f0f0f;
   }
 }

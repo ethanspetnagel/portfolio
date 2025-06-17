@@ -31,21 +31,32 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Title hover effects - only when hovering on .site-title */
+/* Title hover effects - SLUG turns white, background turns black */
 .site-title:hover {
   color: #fff !important;
+}
+
+.site-title a:hover {
+  color: #fff !important;
+}
+
+body.title-hover {
+  background-color: #000000 !important;
 }
 
 body.title-hover .essay-sidebar {
   background: #000 !important;
 }
+
 body.title-hover .essay-sidebar .essay-text p {
   color: #fff !important;
 }
+
 body.title-hover .nav-tabs,
 body.title-hover .essay-tab {
   color: #fff !important;
 }
+
 body.title-hover .project-gallery {
   background-color: #000000;
 }
@@ -73,7 +84,7 @@ body.title-hover .project-gallery {
   opacity: 0.6;
 }
 
-/* Cursor label - FIXED to be pure yellow */
+/* Cursor label - Pure yellow for PLAY/PAUSE/NEXT/BACK */
 .cursor-label {
   position: fixed;
   pointer-events: none;
@@ -100,7 +111,7 @@ body.title-hover .project-gallery {
   overflow: hidden;
 }
 
-/* Left sidebar - CLEAN VERSION */
+/* Left sidebar */
 .essay-sidebar {
   width: 36vw;
   min-width: 320px;
@@ -119,7 +130,7 @@ body.title-hover .project-gallery {
   background: transparent;
 }
 
-/* Star scrollbar indicator - 30% smaller */
+/* Star scrollbar indicator - 30% smaller, faster fade */
 .star-scroll-indicator {
   position: fixed;
   left: calc(36vw - 25px);
@@ -127,20 +138,21 @@ body.title-hover .project-gallery {
   font-size: 33.6px; /* 30% smaller than 48px */
   color: #ffcc00;
   opacity: 0;
-  transition: opacity 0.5s ease, top 0.2s linear; /* Faster fade */
+  transition: opacity 0.3s ease, top 0.2s linear; /* Faster fade */
   pointer-events: none;
   z-index: 100;
 }
+
 .essay-sidebar:hover ~ .star-scroll-indicator,
 .essay-sidebar.scrolling ~ .star-scroll-indicator {
   opacity: 1;
 }
 
-/* SINGLE LINE NAVIGATION WITH TITLE - REDUCED GAP */
+/* Navigation with reduced gap */
 .top-navigation {
   display: flex;
   align-items: baseline;
-  gap: 40px; /* Reduced from 80px to 40px - cut in half */
+  gap: 40px; /* Reduced from 80px - cut in half */
   margin-bottom: 35px;
   width: 100%;
 }
@@ -156,8 +168,11 @@ body.title-hover .project-gallery {
   margin: 0;
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+.site-title a {
+  color: inherit;
   text-decoration: none;
-  color: #0f0f0f;
 }
 
 .nav-tabs {
@@ -175,7 +190,7 @@ body.title-hover .project-gallery {
 
 .essay-tab {
   cursor: pointer;
-  color: #0f0f0f !important; /* Force black */
+  color: #0f0f0f !important; /* Always black */
   transition: font-style 0.3s ease;
   white-space: nowrap;
   padding: 0;
@@ -186,7 +201,7 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
-/* FIXED hover effect - NO YELLOW, asterisk directly on word */
+/* Hover effect - Black text, black asterisk, italic */
 .essay-tab:hover:not(.active) {
   color: #0f0f0f !important; /* Stay black */
   font-style: italic;
@@ -198,27 +213,27 @@ body.title-hover .project-gallery {
   margin-right: 0;
 }
 
-/* Active state gets asterisk (not star), NO UNDERLINE, and yellow color */
+/* Active state - Black text, black asterisk, italic, NO underline */
 .essay-tab.active {
   font-weight: 400;
-  color: #ffcc00 !important;
+  color: #0f0f0f !important; /* Black, not yellow */
   font-style: italic;
   text-decoration: none !important; /* No underline */
 }
 
 .essay-tab.active::before {
-  content: "*"; /* Changed from ★ to * */
-  color: #ffcc00 !important;
+  content: "*"; /* Asterisk, not star */
+  color: #0f0f0f !important; /* Black asterisk */
   margin-right: 3px;
 }
 
-/* Remove any conflicting hover styles */
+/* Remove any conflicting styles */
 .essay-tab:hover {
   text-shadow: none !important;
-  color: #0f0f0f !important; /* Force black on hover */
+  color: #0f0f0f !important;
 }
 
-/* Essay content - CLEAN VERSION */
+/* Essay content */
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
@@ -229,11 +244,12 @@ body.title-hover .project-gallery {
 .essay-text {
   display: none;
 }
+
 .essay-text.active {
   display: block;
 }
 
-/* Interactive text for word-level parting sea effect */
+/* Interactive text for word-level parting effect */
 .interactive-text {
   font-family: "Borgia Pro", "Arial Narrow", Arial, sans-serif;
   font-size: calc(1.6rem - 7px);
@@ -261,7 +277,7 @@ body.title-hover .project-gallery {
   margin-bottom: 0;
 }
 
-/* Right gallery column - CLEAN VERSION */
+/* Right gallery column */
 .project-gallery {
   width: calc(100vw - 36vw);
   min-width: 0;
@@ -280,14 +296,16 @@ body.title-hover .project-gallery {
   width: 20px;
   background: transparent;
 }
+
 .project-gallery::-webkit-scrollbar-thumb {
   background: transparent;
 }
+
 .project-gallery::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Gallery star scrollbar - 30% smaller */
+/* Gallery star scrollbar - 30% smaller, faster fade */
 .star-scroll-indicator-gallery {
   position: fixed;
   right: 15px;
@@ -295,10 +313,11 @@ body.title-hover .project-gallery {
   font-size: 33.6px; /* 30% smaller than 48px */
   color: #ffcc00;
   opacity: 0;
-  transition: opacity 0.5s ease, top 0.2s linear; /* Faster fade */
+  transition: opacity 0.3s ease, top 0.2s linear; /* Faster fade */
   pointer-events: none;
   z-index: 100;
 }
+
 .project-gallery:hover ~ .star-scroll-indicator-gallery,
 .project-gallery.scrolling ~ .star-scroll-indicator-gallery {
   opacity: 0.8;
@@ -344,6 +363,7 @@ body.title-hover .project-gallery {
   display: none;
   width: auto;
 }
+
 .slide.current {
   display: block;
 }
@@ -473,47 +493,6 @@ body.title-hover .project-gallery {
   margin-right: 6vw;
 }
 
-/* Slideshow navigation buttons */
-.slideshow-nav {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
-  align-self: flex-start;
-}
-
-.slideshow-nav button,
-.slideshow-button,
-.nav-button,
-.play-pause-btn,
-.play-pause {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 12px;
-  color: #ffcc00 !important;
-  padding: 0;
-  transition: color 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  text-shadow: none !important;
-}
-
-.slideshow-nav button:hover,
-.slideshow-button:hover,
-.nav-button:hover,
-.play-pause-btn:hover,
-.play-pause:hover {
-  color: #ffcc00 !important;
-  text-shadow: none !important;
-}
-
-/* Smooth scroll animation */
-.essay-sidebar,
-.project-gallery {
-  scroll-behavior: auto; /* We'll handle smooth scrolling with JS */
-}
-
 /* Page Entrance Animation */
 @keyframes pageSlideDown {
   0% {
@@ -623,6 +602,12 @@ body.from-transition .page > * {
   .project-block,
   .slideshow-zone {
     align-items: flex-start;
+  }
+  /* Fix tab colors on mobile */
+  .essay-tab,
+  .essay-tab.active,
+  .essay-tab:hover {
+    color: #0f0f0f !important;
   }
 }
 
