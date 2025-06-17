@@ -225,7 +225,7 @@ body.june-hover .contact-links a {
 /* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 40px;
+  bottom: 30px; /* Moved up 10px to account for ABOUT moving down */
   left: 20px;
   max-width: 400px;
   z-index: 15;
@@ -245,7 +245,7 @@ body.june-hover .contact-links a {
   font-size: clamp(16px, 2.8vw, 39px); /* Same as date-text */
   font-weight: bold;
   cursor: pointer;
-  margin-bottom: 8px;
+  margin-bottom: 18px; /* Increased from 8px to push down */
   transition: opacity 0.3s ease;
   position: relative;
   display: inline-block;
@@ -280,6 +280,7 @@ body.june-hover .contact-links a {
   text-align: left;
   font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
   cursor: default;
+  margin-top: 20px; /* Add space between HIDE/ETHAN text and bio paragraph */
 }
 
 .bio-text p {
@@ -295,24 +296,27 @@ body.june-hover .contact-links a {
 }
 
 .bio-text a {
-  text-decoration: underline;
-  transition: opacity 0.3s ease;
+  text-decoration: none; /* Remove underline */
+  transition: all 0.3s ease;
   font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
 }
 
 .bio-text a:hover {
-  opacity: 0.7;
+  color: #ffcc00; /* Yellow on hover */
+  opacity: 1; /* Full opacity */
 }
 
-/* Contact links - FIXED: No yellow, no underline, black asterisk */
+/* Contact links - FIXED: Stacked vertically */
 .contact-links {
   margin-top: 20px;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column; /* Stack vertically */
+  gap: 5px; /* Space between links */
 }
 
 .contact-links a {
-  display: inline-block;
-  margin-right: 15px;
+  display: block; /* Each link on new line */
+  margin-right: 0; /* Remove right margin */
   font-size: calc(1.6rem - 7px);
   text-decoration: none;
   transition: all 0.3s ease;
@@ -321,6 +325,7 @@ body.june-hover .contact-links a {
   font-weight: normal;
   position: relative;
   color: #0f0f0f !important;
+  width: fit-content; /* Only as wide as content */
 }
 
 .contact-links a::before {
@@ -338,7 +343,7 @@ body.june-hover .contact-links a {
 }
 
 .contact-links a:hover::before {
-  content: '*'; /* Black asterisk */
+  content: '*'; /* Asterisk not star */
   color: #0f0f0f !important;
   opacity: 1;
 }
@@ -560,17 +565,23 @@ body.transitioning {
   .bio-text {
     font-size: calc(1.3rem - 7px);
     line-height: 1.2;
+    margin-top: 15px; /* Adjust for mobile */
+  }
+
+  .bio-text a:hover {
+    color: #ffcc00; /* Yellow on hover for mobile too */
   }
 
   .contact-links {
-    white-space: normal;
+    flex-direction: column; /* Keep stacked on mobile */
+    gap: 5px;
   }
 
   .contact-links a {
     font-size: calc(1.3rem - 7px);
-    margin-right: 12px;
-    display: inline-block;
-    margin-bottom: 5px;
+    margin-right: 0;
+    display: block;
+    margin-bottom: 0;
     font-family: 'Borgia Pro', 'Courier New', monospace;
     color: #0f0f0f !important;
   }
