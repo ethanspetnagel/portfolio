@@ -43,6 +43,12 @@ body.from-transition {
 
 .page-transition-overlay.active {
   display: block;
+  pointer-events: all;
+}
+
+body.from-transition .page > * {
+  animation: none; /* Prevent double animations */
+}
   @font-face {
   font-family: "Borgia Pro";
   src: url("../BorgiaPro-Regular.woff") format("woff");
