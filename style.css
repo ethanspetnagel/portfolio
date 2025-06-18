@@ -171,8 +171,8 @@ body {
 
 /* Project links always use inverse blend mode when hovered */
 .project-link:hover {
-  mix-blend-mode: exclusion;
-  color: #ffffff; /* White with exclusion creates true inverse */
+  mix-blend-mode: difference;
+  color: #000000; /* Black text that will invert to opposite colors */
 }
 
 /* Website Info */
@@ -249,8 +249,8 @@ body.project-hovering .bio-text,
 body.project-hovering .bio-text p,
 body.project-hovering .bio-text a,
 body.project-hovering .contact-links a {
-  mix-blend-mode: exclusion !important;
-  color: #ffffff !important;
+  mix-blend-mode: difference !important;
+  color: #000000 !important; /* Black text - this will become the opposite of whatever's behind it */
   text-shadow: none !important;
 }
 
