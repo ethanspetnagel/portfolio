@@ -171,8 +171,8 @@ body {
 
 /* Project links always use inverse blend mode when hovered */
 .project-link:hover {
-  mix-blend-mode: exclusion;
-  color: #ffffff; /* White with exclusion creates strong contrast */
+  mix-blend-mode: difference;
+  color: #ffffff; /* White with difference creates true inverse */
 }
 
 /* Website Info */
@@ -249,7 +249,7 @@ body.june-hover .contact-links a {
 .projects-container.hovering ~ .bio-section .bio-text p,
 .projects-container.hovering ~ .bio-section .bio-text a,
 .projects-container.hovering ~ .bio-section .contact-links a {
-  mix-blend-mode: exclusion;
+  mix-blend-mode: difference;
   color: #ffffff;
 }
 
