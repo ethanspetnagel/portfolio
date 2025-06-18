@@ -169,7 +169,7 @@ body {
   will-change: color, opacity;
 }
 
-/* Project links use difference blend mode when hovered */
+/* Project links use inverse blend mode when hovered */
 .project-link:hover {
   mix-blend-mode: difference;
   color: #ffffff;
@@ -183,8 +183,6 @@ body {
   transform: translateX(-50%);
   text-align: center;
   z-index: 10;
-  /* Ensure proper stacking for blend mode */
-  isolation: isolate;
 }
 
 .date-text {
@@ -197,7 +195,7 @@ body {
   display: inline-block;
   text-transform: uppercase;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.02em; /* Match about-toggle */
 }
 
 /* Date text hover - background turns black, text turns white */
@@ -221,28 +219,36 @@ body.june-hover .contact-links a {
   color: #ffffff;
 }
 
+.date-text.project-active {
+  color: #0f0f0f;
+}
+
+/* Apply blend mode when project is hovered */
+body.project-hovering .date-text.project-active {
+  mix-blend-mode: difference !important;
+  color: #ffffff !important;
+}
+
 /* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 20px;
+  bottom: 20px; /* Moved down another 10px (was 30px) */
   left: 20px;
   max-width: 400px;
   z-index: 15;
-  /* Ensure proper stacking for blend mode */
-  isolation: isolate;
 }
 
-/* Default text color */
+/* Default text color without blend mode */
 .about-toggle,
 .bio-text,
 .bio-text p,
 .bio-text a,
 .contact-links a {
   color: #0f0f0f;
+  /* Remove mix-blend-mode: normal so it can blend when needed */
 }
 
-/* Apply difference blend mode when project is being hovered */
-body.project-hovering .date-text,
+/* Apply inverse blend mode when project is being hovered - using body class */
 body.project-hovering .about-toggle,
 body.project-hovering .bio-text,
 body.project-hovering .bio-text p,
@@ -250,6 +256,8 @@ body.project-hovering .bio-text a,
 body.project-hovering .contact-links a {
   mix-blend-mode: difference !important;
   color: #ffffff !important;
+  text-shadow: none !important;
+  isolation: auto !important; /* Allow blending through parent elements */
 }
 
 /* About toggle - EXACTLY match JUNE 2025 */
@@ -314,8 +322,13 @@ body.project-hovering .contact-links a {
 }
 
 .bio-text a:hover {
-  color: #ffcc00 !important; /* Yellow on hover - force with important */
+  color: #ffcc00; /* Yellow on hover */
   opacity: 1; /* Full opacity */
+}
+
+/* When project is hovering, override yellow with blend mode */
+body.project-hovering .bio-text a:hover {
+  color: #ffffff !important; /* Force white for blend mode */
 }
 
 /* Contact links - FIXED: Stacked vertically */
@@ -333,12 +346,12 @@ body.project-hovering .contact-links a {
   text-decoration: none;
   transition: all 0.3s ease;
   font-style: normal;
-  font-family: 'Borgia Pro', 'Courier New', monospace;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; /* Force Helvetica Neue */
   font-weight: normal;
   position: relative;
-  color: #0f0f0f;
+  color: #0f0f0f !important;
   width: fit-content; /* Only as wide as content */
-  padding-left: 1em; /* Add space for asterisk */
+  padding-left: 1.2em; /* Add space for asterisk */
 }
 
 .contact-links a::before {
@@ -347,18 +360,29 @@ body.project-hovering .contact-links a {
   left: 0; /* Position at start */
   opacity: 0;
   transition: opacity 0.2s ease;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; /* Ensure asterisk uses Helvetica */
 }
 
-/* Keep hover styles but ensure blend mode doesn't interfere */
 .contact-links a:hover {
+  color: #0f0f0f !important; /* Stay black */
   text-decoration: none !important; /* No underline */
   font-style: italic;
 }
 
 .contact-links a:hover::before {
   content: '*'; /* Asterisk character */
+  color: #0f0f0f !important;
   opacity: 1;
   font-style: normal; /* Keep asterisk upright */
+}
+
+/* Override hover colors when project is active */
+body.project-hovering .contact-links a:hover {
+  color: #ffffff !important; /* White for blend mode */
+}
+
+body.project-hovering .contact-links a:hover::before {
+  color: #ffffff !important; /* White asterisk for blend mode */
 }
 
 /* Bio Preview */
@@ -595,7 +619,7 @@ body.transitioning {
     margin-right: 0;
     display: block;
     margin-bottom: 0;
-    font-family: 'Borgia Pro', 'Courier New', monospace;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     color: #0f0f0f !important;
   }
   
