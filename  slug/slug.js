@@ -215,30 +215,24 @@ class TextPartingEffect {
     }
 }
 
-// Smooth Scroll with Snap Points
-class SmoothScrollSnap {
+// Smooth Scroll without Snap Points
+class SmoothScroll {
     constructor(element, options = {}) {
         this.element = element;
         this.options = {
             resistance: options.resistance || 0.8,
-            snapEvery: options.snapEvery || 3,
-            snapStrength: options.snapStrength || 0.95,
+            damping: options.damping || 0.08,
             ...options
         };
         
         this.currentScroll = 0;
         this.targetScroll = 0;
         this.isScrolling = false;
-        this.snapPoints = [];
-        this.closestSnap = 0;
         
         this.init();
     }
 
     init() {
-        // Calculate snap points based on content
-        this.calculateSnapPoints();
-        
         // Override native scroll
         this.element.style.overflow = 'hidden';
         this.element.addEventListener('wheel', this.onWheel.bind(this), { passive: false });
@@ -259,24 +253,6 @@ class SmoothScrollSnap {
         
         // Start animation loop
         this.animate();
-        
-        // Recalculate on resize
-        window.addEventListener('resize', () => this.calculateSnapPoints());
-    }
-
-    calculateSnapPoints() {
-        this.snapPoints = [];
-        const blocks = this.element.querySelectorAll('.project-block');
-        
-        blocks.forEach((block, index) => {
-            if (index % this.options.snapEvery === 0) {
-                this.snapPoints.push(block.offsetTop - 100); // Offset for better viewing
-            }
-        });
-        
-        // Add start and end points
-        this.snapPoints.unshift(0);
-        this.snapPoints.push(this.element.scrollHeight - this.element.clientHeight);
     }
 
     onWheel(e) {
@@ -296,7 +272,6 @@ class SmoothScrollSnap {
         // Clear timeout for scroll end detection
         clearTimeout(this.scrollTimeout);
         this.scrollTimeout = setTimeout(() => {
-            this.snapToClosest();
             this.isScrolling = false;
             this.element.classList.remove('scrolling');
         }, 150);
@@ -307,40 +282,74 @@ class SmoothScrollSnap {
         this.targetScroll = Math.max(0, Math.min(this.targetScroll, maxScroll));
     }
 
-    snapToClosest() {
-        // Find closest snap point
-        let closest = this.snapPoints[0];
-        let minDistance = Math.abs(this.targetScroll - closest);
-        
-        this.snapPoints.forEach(point => {
-            const distance = Math.abs(this.targetScroll - point);
-            if (distance < minDistance) {
-                minDistance = distance;
-                closest = point;
-            }
-        });
-        
-        this.closestSnap = closest;
-    }
-
     animate() {
-        // Smooth interpolation
+        // Smooth interpolation without snapping
         const diff = this.targetScroll - this.currentScroll;
-        
-        if (!this.isScrolling && this.closestSnap !== undefined) {
-            // Snap to point when not scrolling
-            const snapDiff = this.closestSnap - this.currentScroll;
-            this.currentScroll += snapDiff * 0.1 * this.options.snapStrength;
-        } else {
-            // Regular smooth scroll with resistance
-            this.currentScroll += diff * 0.08;
-        }
+        this.currentScroll += diff * this.options.damping;
         
         // Apply scroll
         this.element.scrollTop = this.currentScroll;
         
         // Continue animation
         requestAnimationFrame(this.animate.bind(this));
+    }
+}
+
+// Page Transition Class for smooth transitions both ways
+class PageTransition {
+    constructor() {
+        this.isTransitioning = false;
+        this.init();
+    }
+
+    init() {
+        this.createTransitionElements();
+        this.attachLinkHandlers();
+    }
+
+    createTransitionElements() {
+        const overlay = document.createElement('div');
+        overlay.className = 'page-transition-overlay';
+        document.body.appendChild(overlay);
+        this.overlay = overlay;
+    }
+
+    attachLinkHandlers() {
+        // Home/Back button
+        const projectsButton = document.querySelector('.projects-button');
+        if (projectsButton) {
+            projectsButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.startTransition('https://ethanspetnagel.online', 'back');
+            });
+        }
+
+        // Site title click
+        const siteTitle = document.querySelector('.site-title a');
+        if (siteTitle) {
+            siteTitle.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.startTransition('https://ethanspetnagel.online', 'back');
+            });
+        }
+    }
+
+    startTransition(targetUrl, direction = 'forward') {
+        if (this.isTransitioning) return;
+        
+        this.isTransitioning = true;
+        document.body.classList.add('transitioning');
+        
+        // Add animation based on direction
+        if (direction === 'back') {
+            document.body.style.animation = 'pageSlideUp 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards';
+        }
+        
+        this.overlay.classList.add('active');
+        
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 800);
     }
 }
 
@@ -362,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cleanUrl = window.location.pathname;
                     window.history.replaceState({}, document.title, cleanUrl);
                 }
-            }, 1200);
+            }, 800); // Faster transition
         }
     }
 
@@ -383,18 +392,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const textParting = new TextPartingEffect();
     textParting.init();
 
-    // Initialize smooth scroll with snap
-    const smoothScrollLeft = new SmoothScrollSnap(essaySidebar, { 
+    // Initialize smooth scroll WITHOUT snap
+    const smoothScrollLeft = new SmoothScroll(essaySidebar, { 
         resistance: 0.7,
-        snapEvery: 999, // Don't snap on left
-        snapStrength: 0
+        damping: 0.08
     });
     
-    const smoothScrollRight = new SmoothScrollSnap(projectGallery, { 
+    const smoothScrollRight = new SmoothScroll(projectGallery, { 
         resistance: 0.5, // Heavier feel
-        snapEvery: 3, // Snap every 3rd image
-        snapStrength: 0.95
+        damping: 0.06 // Slower damping for heavier feel
     });
+
+    // Initialize page transition
+    const pageTransition = new PageTransition();
   
     // Create star scroll indicators
     const createScrollStars = () => {

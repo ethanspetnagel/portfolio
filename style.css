@@ -225,7 +225,7 @@ body.june-hover .contact-links a {
 /* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 30px; /* Moved up 10px to account for ABOUT moving down */
+  bottom: 20px; /* Moved down another 10px (was 30px) */
   left: 20px;
   max-width: 400px;
   z-index: 15;
@@ -280,7 +280,7 @@ body.june-hover .contact-links a {
   text-align: left;
   font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
   cursor: default;
-  margin-top: 20px; /* Add space between HIDE/ETHAN text and bio paragraph */
+  margin-top: 10px; /* Cut in half from 20px */
 }
 
 .bio-text p {
@@ -308,7 +308,7 @@ body.june-hover .contact-links a {
 
 /* Contact links - FIXED: Stacked vertically */
 .contact-links {
-  margin-top: 20px;
+  margin-top: 30px; /* Increased from 20px to match space above */
   display: flex;
   flex-direction: column; /* Stack vertically */
   gap: 5px; /* Space between links */
@@ -326,12 +326,13 @@ body.june-hover .contact-links a {
   position: relative;
   color: #0f0f0f !important;
   width: fit-content; /* Only as wide as content */
+  padding-left: 1em; /* Add space for asterisk */
 }
 
 .contact-links a::before {
   content: '';
   position: absolute;
-  left: -0.5em;
+  left: 0; /* Position at start */
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -343,9 +344,10 @@ body.june-hover .contact-links a {
 }
 
 .contact-links a:hover::before {
-  content: '*'; /* Asterisk not star */
+  content: '*'; /* Asterisk character */
   color: #0f0f0f !important;
   opacity: 1;
+  font-style: normal; /* Keep asterisk upright */
 }
 
 /* Bio Preview */
@@ -446,11 +448,11 @@ body.june-hover .contact-links a {
 }
 
 .transition-clone-current.animating {
-  animation: pushDown 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: pushDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Faster: 0.8s instead of 1.2s */
 }
 
 .transition-clone-next.animating {
-  animation: slideInCurved 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideInCurved 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Faster: 0.8s instead of 1.2s */
 }
 
 /* Prevent scroll during transition */

@@ -1,4 +1,49 @@
-@font-face {
+/* Page Entrance Animation - smoother and faster */
+@keyframes pageSlideDown {
+  0% {
+    transform: translateY(-100vh) translateX(50px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Apply entrance animation when coming from transition */
+body.from-transition {
+  animation: pageSlideDown 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+/* Page exit animation - for going back */
+@keyframes pageSlideUp {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) translateX(-50px);
+    opacity: 0.8;
+  }
+}
+
+/* Transition overlay for smooth page changes */
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #f0f5f5;
+  z-index: 20000;
+  pointer-events: none;
+  display: none;
+  overflow: hidden;
+}
+
+.page-transition-overlay.active {
+  display: block;
+  @font-face {
   font-family: "Borgia Pro";
   src: url("../BorgiaPro-Regular.woff") format("woff");
 }
@@ -84,14 +129,15 @@ body.title-hover .project-gallery {
   opacity: 0.6;
 }
 
-/* Cursor label - Pure yellow for PLAY/PAUSE/NEXT/BACK */
+/* Cursor label - Inverse colors for better visibility */
 .cursor-label {
   position: fixed;
   pointer-events: none;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(16px, 2.8vw, 39px);
-  color: #ffcc00 !important;
+  mix-blend-mode: difference; /* Inverts colors */
+  color: #ffffff !important; /* White inverts to black on light backgrounds */
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
@@ -201,28 +247,27 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
-/* Hover effect - Black text, black asterisk, italic */
+/* Hover effect - Black text, NO asterisk, italic */
 .essay-tab:hover:not(.active) {
   color: #0f0f0f !important; /* Stay black */
   font-style: italic;
 }
 
+/* Remove asterisk from hover */
 .essay-tab:hover:not(.active)::before {
-  content: "*";
-  color: #0f0f0f !important;
-  margin-right: 0;
+  content: ""; /* No asterisk on hover */
 }
 
-/* Active state - Black text, black asterisk, italic, NO underline */
+/* Active state - Black text, black asterisk, NO italic, NO underline */
 .essay-tab.active {
   font-weight: 400;
   color: #0f0f0f !important; /* Black, not yellow */
-  font-style: italic;
+  font-style: normal; /* No italic on active */
   text-decoration: none !important; /* No underline */
 }
 
 .essay-tab.active::before {
-  content: "*"; /* Asterisk, not star */
+  content: "*"; /* Asterisk only on active tab */
   color: #0f0f0f !important; /* Black asterisk */
   margin-right: 3px;
 }

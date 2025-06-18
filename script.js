@@ -1,23 +1,17 @@
-// Loading images array - use local loading images
-const loadingImages = [
-    { src: './loading screen image 1.jpeg', caption: 'Image 1' },
-    { src: './loading screen image 2.png', caption: 'Image 2' }
-];
-
-// Project media mapping - CORRECTED FOR YOUR FOLDER STRUCTURE
+// Project media mapping
 const projectMedia = {
-    'slug': '', // No slug video file in your folder
+    'slug': '', 
     'church': './church video bg.mp4',
-    'talamel': '', // No video file visible
-    'fox-and-lion': '', // No video file visible
-    'cardioscape': '', // No video file visible
+    'talamel': '', 
+    'fox-and-lion': '', 
+    'cardioscape': '', 
     'lu-rose-gold': './lu rose gold video bg.mp4',
-    'green-lake-law': '', // No video file visible
-    'artwork': '', // No video file visible
-    'june-2025': '' // No video
+    'green-lake-law': '', 
+    'artwork': '', 
+    'june-2025': ''
 };
 
-// Bio link images - update these with your local images when you add them
+// Bio link images
 const bioImages = {
     'church-company': '',
     'talamel-health': '',
@@ -26,10 +20,7 @@ const bioImages = {
     'colorado': ''
 };
 
-// DOM Elements - use let for reassignment
-const loadingScreen = document.getElementById('loadingScreen');
-const loadingImage = document.getElementById('loadingImage');
-const loadingCaption = document.getElementById('loadingCaption');
+// DOM Elements
 const fullscreenBg = document.getElementById('fullscreenBg');
 let bgVideo = document.getElementById('bgVideo');
 let bgImage = document.getElementById('bgImage');
@@ -45,136 +36,117 @@ const bioPreviewImage = document.getElementById('bioPreviewImage');
 // Variables
 let currentMedia = null;
 let activeProject = null;
-let hoverTimeout = null;
-let mediaTransitionTimeout = null;
+let videoPool = {};
+let isTransitioning = false;
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// Video Loading System - Professional Implementation
-class VideoPreloader {
-    constructor() {
-        this.videos = {};
-        this.loadingStates = {};
-        this.videoElements = {};
-    }
-
-    // Create video element pool
-    createVideoPool() {
-        Object.entries(projectMedia).forEach(([project, url]) => {
-            if (url && isVideo(url)) {
-                // Create video element
-                const video = document.createElement('video');
-                video.src = url;
-                video.muted = true;
-                video.loop = true;
-                video.playsInline = true;
-                video.autoplay = false;
-                video.preload = 'auto';
-                video.style.position = 'absolute';
-                video.style.width = '100%';
-                video.style.height = '100%';
-                video.style.objectFit = 'cover';
-                video.style.display = 'none';
-                
-                // Add to DOM immediately but hidden
-                fullscreenBg.appendChild(video);
-                
-                this.videoElements[project] = video;
-                this.loadingStates[project] = 'loading';
-                
-                // Load video data
-                video.load();
-                
-                // Track loading progress
-                video.addEventListener('loadedmetadata', () => {
-                    console.log(`${project} metadata loaded`);
-                });
-                
-                video.addEventListener('canplay', () => {
-                    console.log(`${project} can start playing`);
-                    this.loadingStates[project] = 'canplay';
-                });
-                
-                video.addEventListener('canplaythrough', () => {
-                    console.log(`${project} fully loaded`);
-                    this.loadingStates[project] = 'ready';
-                });
-                
-                video.addEventListener('error', (e) => {
-                    console.error(`${project} failed to load:`, e);
-                    this.loadingStates[project] = 'error';
-                });
-            }
-        });
-    }
-
-    // Show video instantly
-    showVideo(project) {
-        // Hide all videos first
-        Object.values(this.videoElements).forEach(video => {
+// Initialize video pool for instant playback
+function initializeVideoPool() {
+    Object.entries(projectMedia).forEach(([project, url]) => {
+        if (url && url.includes('.mp4')) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.autoplay = false;
+            video.preload = 'auto';
+            video.style.position = 'absolute';
+            video.style.width = '100%';
+            video.style.height = '100%';
+            video.style.objectFit = 'cover';
             video.style.display = 'none';
-            video.pause();
-        });
-        
-        const video = this.videoElements[project];
-        if (video && this.loadingStates[project] !== 'error') {
-            // Show and play immediately
-            video.style.display = 'block';
-            video.currentTime = 0; // Reset to start
+            video.style.opacity = '0';
+            video.style.transition = 'opacity 0.15s ease';
             
-            // Force play with promise handling
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log(`${project} playing successfully`);
-                }).catch(error => {
-                    console.error(`${project} play error:`, error);
-                    // Try playing again after user interaction
-                    document.addEventListener('click', () => {
-                        video.play();
-                    }, { once: true });
-                });
-            }
+            // Hardware acceleration
+            video.style.transform = 'translateZ(0)';
+            video.style.webkitTransform = 'translateZ(0)';
             
-            // Apply filter if needed
-            if (project !== 'church') {
-                video.style.filter = 'brightness(0.9)';
-            } else {
-                video.style.filter = 'none';
-            }
+            fullscreenBg.appendChild(video);
+            videoPool[project] = video;
             
-            // Show background
-            fullscreenBg.classList.add('active');
-            fullscreenBg.style.opacity = '1';
+            // Start loading immediately
+            video.load();
             
-            return true;
+            // Log loading state
+            video.addEventListener('loadeddata', () => {
+                console.log(`${project} video ready for instant playback`);
+            });
         }
-        return false;
-    }
-
-    hideAllVideos() {
-        Object.values(this.videoElements).forEach(video => {
-            video.style.display = 'none';
-            video.pause();
-        });
-        
-        fullscreenBg.classList.remove('active');
-        fullscreenBg.style.opacity = '0';
-    }
-
-    // Get loading progress
-    getLoadingProgress() {
-        const total = Object.keys(this.videoElements).length;
-        const loaded = Object.values(this.loadingStates).filter(state => state === 'ready').length;
-        return { total, loaded, percentage: total > 0 ? (loaded / total) * 100 : 100 };
-    }
+    });
 }
 
-// Initialize video preloader globally
-let videoPreloader;
+// Show video instantly
+function showVideo(project) {
+    // Hide all videos
+    Object.values(videoPool).forEach(v => {
+        v.style.display = 'none';
+        v.style.opacity = '0';
+        v.pause();
+    });
+    
+    const video = videoPool[project];
+    if (video) {
+        // Apply filter
+        if (project !== 'church') {
+            video.style.filter = 'brightness(0.9)';
+        } else {
+            video.style.filter = 'none';
+        }
+        
+        // Show and play instantly
+        video.style.display = 'block';
+        video.currentTime = 0;
+        
+        // Force immediate playback
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.error('Playback error:', error);
+                // Retry on user interaction
+                document.addEventListener('click', () => {
+                    video.play();
+                }, { once: true });
+            });
+        }
+        
+        // Make visible
+        requestAnimationFrame(() => {
+            video.style.opacity = '1';
+            fullscreenBg.classList.add('active');
+        });
+        
+        return true;
+    }
+    return false;
+}
 
-// Text scramble effect - letters only
+// Hide all media
+function hideAllMedia() {
+    fullscreenBg.classList.remove('active');
+    
+    // Hide videos
+    Object.values(videoPool).forEach(video => {
+        video.style.opacity = '0';
+        setTimeout(() => {
+            video.style.display = 'none';
+            video.pause();
+        }, 150);
+    });
+    
+    // Hide images
+    if (bgImage) {
+        bgImage.src = '';
+        bgImage.classList.remove('active');
+    }
+    
+    currentMedia = null;
+}
+
+// Text scramble effect
 class TextScramble {
     constructor(el) {
         this.el = el;
@@ -182,12 +154,11 @@ class TextScramble {
         this.update = this.update.bind(this);
     }
     
-    setText(newText, showDesigner = false, showName = false) {
+    setText(newText, showName = false) {
         const oldText = this.el.innerText;
         const length = Math.max(oldText.length, newText.length, 15);
         const promise = new Promise((resolve) => this.resolve = resolve);
         this.queue = [];
-        this.showDesigner = showDesigner;
         this.showName = showName;
         this.targetText = newText;
         this.nameText = 'ETHAN SPETNAGEL';
@@ -213,7 +184,6 @@ class TextScramble {
         let output = '';
         let complete = 0;
         
-        // Progressive name reveal
         if (this.showName && this.frame >= 20 && !this.nameRevealComplete) {
             const nameProgress = Math.min((this.frame - 20) / 40, 1);
             const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
@@ -272,15 +242,13 @@ class TextScramble {
     }
 }
 
-// Text Parting Effect Class - Word Level
+// Text Parting Effect
 class TextPartingEffect {
     constructor() {
         this.activeElements = new Map();
-        this.rafId = null;
     }
 
     init() {
-        // First, wrap all words in spans
         this.wrapWordsInSpans();
         
         const bioTexts = document.querySelectorAll('.bio-text');
@@ -296,7 +264,6 @@ class TextPartingEffect {
         const bioTexts = document.querySelectorAll('.bio-text p, .bio-text a');
         
         bioTexts.forEach(element => {
-            // Skip if already processed
             if (element.querySelector('.word')) return;
             
             const textNodes = this.getTextNodes(element);
@@ -312,7 +279,6 @@ class TextPartingEffect {
                         span.textContent = word;
                         fragment.appendChild(span);
                     } else {
-                        // Preserve whitespace
                         fragment.appendChild(document.createTextNode(word));
                     }
                 });
@@ -379,24 +345,18 @@ class TextPartingEffect {
             const deltaX = mouseX - centerX;
             const deltaY = mouseY - centerY;
             
-            // Calculate distance from word center
             const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const maxInfluence = 150; // Influence radius in pixels
+            const maxInfluence = 150;
             
             if (distance < maxInfluence) {
-                // Calculate parting effect strength (stronger when mouse is closer)
-                const strength = (1 - distance / maxInfluence) * 25; // Max 25px displacement
-                
-                // Calculate direction to push word away from cursor
+                const strength = (1 - distance / maxInfluence) * 25;
                 const angle = Math.atan2(deltaY, deltaX);
                 const pushX = -Math.cos(angle) * strength;
                 const pushY = -Math.sin(angle) * strength;
                 
-                // Apply transform
                 word.style.transform = `translate(${pushX}px, ${pushY}px)`;
                 word.style.transition = 'transform 0.1s ease-out';
             } else {
-                // Return to original position if outside influence radius
                 word.style.transform = wordData.originalTransform;
                 word.style.transition = 'transform 0.2s ease-out';
             }
@@ -409,13 +369,11 @@ class TextPartingEffect {
         if (data) {
             data.isActive = false;
             
-            // Return all words to original positions
             data.words.forEach((wordData, word) => {
                 word.style.transition = 'transform 0.3s ease-out';
                 word.style.transform = wordData.originalTransform;
             });
             
-            // Clean up after animation
             setTimeout(() => {
                 if (!data.isActive) {
                     this.activeElements.delete(element);
@@ -425,194 +383,12 @@ class TextPartingEffect {
     }
 }
 
-// Function to get random loading image
-function getRandomLoadingImage() {
-    const lastIndex = localStorage.getItem('lastLoadingImageIndex');
-    let newIndex;
-    
-    do {
-        newIndex = Math.floor(Math.random() * loadingImages.length);
-    } while (newIndex == lastIndex && loadingImages.length > 1);
-    
-    localStorage.setItem('lastLoadingImageIndex', newIndex);
-    return loadingImages[newIndex];
-}
-
-// Function to check if URL is video
-function isVideo(url) {
-    if (!url) return false;
-    const videoExtensions = ['.mp4', '.webm', '.mov'];
-    return videoExtensions.some(ext => url.toLowerCase().includes(ext));
-}
-
-// Function to show fullscreen media
-function showFullscreenMedia(mediaUrl) {
-    if (!mediaUrl) {
-        console.log('No media URL provided');
-        return;
-    }
-    
-    console.log('showFullscreenMedia called with:', mediaUrl);
-    
-    if (currentMedia === mediaUrl && fullscreenBg.classList.contains('active')) {
-        return;
-    }
-    
-    currentMedia = mediaUrl;
-    
-    // Use preloaded video if available
-    if (videoPreloader && isVideo(mediaUrl)) {
-        const project = activeProject;
-        if (videoPreloader.showVideo(project)) {
-            return; // Video shown successfully
-        }
-    }
-    
-    // Fallback to original loading method for images or failed videos
-    if (!isVideo(mediaUrl)) {
-        hideFullscreenMedia();
-        setTimeout(() => {
-            switchMedia(mediaUrl);
-        }, 100);
-    }
-}
-
-// Function to switch media
-function switchMedia(mediaUrl) {
-    console.log('switchMedia called with:', mediaUrl);
-    currentMedia = mediaUrl;
-    
-    // Reset both media elements
-    if (bgVideo) {
-        bgVideo.pause();
-        bgVideo.classList.remove('active');
-    }
-    if (bgImage) {
-        bgImage.src = '';
-        bgImage.classList.remove('active');
-    }
-    
-    const isChurch = activeProject === 'church';
-    
-    if (isVideo(mediaUrl)) {
-        console.log('Loading video:', mediaUrl);
-        
-        // Remove all existing event listeners to prevent conflicts
-        const newVideo = bgVideo.cloneNode(false);
-        bgVideo.parentNode.replaceChild(newVideo, bgVideo);
-        bgVideo = newVideo;
-        
-        // Set video properties
-        bgVideo.src = mediaUrl;
-        bgVideo.muted = true;
-        bgVideo.loop = true;
-        bgVideo.playsInline = true;
-        bgVideo.autoplay = true;
-        bgVideo.preload = 'auto';
-        
-        if (!isChurch && mediaUrl !== projectMedia['church']) {
-            bgVideo.style.filter = 'brightness(0.9)';
-        } else {
-            bgVideo.style.filter = 'none';
-        }
-        
-        const handleCanPlay = function() {
-            console.log('Video can play through');
-            bgVideo.classList.add('active');
-            fullscreenBg.classList.add('active');
-            fullscreenBg.style.opacity = '1';
-            bgVideo.play().then(() => {
-                console.log('Video playing successfully');
-            }).catch(e => {
-                console.error('Video play error:', e);
-            });
-        };
-        
-        const handleError = function(e) {
-            console.error('Video loading error:', e);
-            console.error('Failed URL:', mediaUrl);
-            if (bgVideo.error) {
-                console.error('Error code:', bgVideo.error.code);
-                console.error('Error message:', bgVideo.error.message);
-            }
-        };
-        
-        bgVideo.addEventListener('canplaythrough', handleCanPlay, { once: true });
-        bgVideo.addEventListener('error', handleError);
-        
-        bgVideo.load();
-    } else if (mediaUrl) {
-        console.log('Loading image/GIF:', mediaUrl);
-        
-        const img = new Image();
-        img.onload = () => {
-            console.log('Image loaded successfully');
-            bgImage.src = mediaUrl;
-            bgImage.classList.add('active');
-            fullscreenBg.classList.add('active');
-            fullscreenBg.style.opacity = '1';
-            
-            if (!isChurch) {
-                bgImage.style.filter = 'brightness(0.9)';
-            } else {
-                bgImage.style.filter = 'none';
-            }
-        };
-        img.onerror = (e) => {
-            console.error('Image loading error:', e);
-            console.error('Failed URL:', mediaUrl);
-        };
-        img.src = mediaUrl;
-    }
-}
-
-// Function to hide fullscreen media
-function hideFullscreenMedia() {
-    currentMedia = null;
-    
-    if (videoPreloader) {
-        videoPreloader.hideAllVideos();
-    } else {
-        fullscreenBg.classList.remove('active');
-        fullscreenBg.style.opacity = '0';
-        
-        if (bgVideo && bgVideo.src) {
-            bgVideo.pause();
-            bgVideo.currentTime = 0;
-            bgVideo.src = '';
-        }
-        
-        if (bgImage) {
-            bgImage.src = '';
-        }
-    }
-    
-    setTimeout(() => {
-        if (bgVideo) bgVideo.classList.remove('active');
-        if (bgImage) bgImage.classList.remove('active');
-    }, 100);
-}
-
-// Improved project hover management
+// Project hover handling
 function handleProjectHover(link, isEntering) {
-    if (hoverTimeout) {
-        clearTimeout(hoverTimeout);
-        hoverTimeout = null;
-    }
-    
     if (isEntering) {
         const project = link.getAttribute('data-project');
         let projectInfo = link.getAttribute('data-info');
         const mediaUrl = projectMedia[project];
-        
-        // Update project info for specific projects
-        if (project === 'slug') {
-            projectInfo = 'PRODUCT & IDENTITY – 2024';
-        } else if (project === 'green-lake-law') {
-            projectInfo = 'UX & IDENTITY – 2025';
-        }
-        
-        console.log(`Hovering over ${project}, media URL: ${mediaUrl || 'No media'}`);
         
         activeProject = project;
         projectsContainer.classList.add('hovering');
@@ -620,8 +396,10 @@ function handleProjectHover(link, isEntering) {
         dateText.textContent = projectInfo;
         dateText.classList.add('project-active');
         
-        if (mediaUrl) {
-            showFullscreenMedia(mediaUrl);
+        if (mediaUrl && mediaUrl.includes('.mp4')) {
+            showVideo(project);
+        } else {
+            hideAllMedia();
         }
     } else {
         if (activeProject === link.getAttribute('data-project')) {
@@ -631,28 +409,23 @@ function handleProjectHover(link, isEntering) {
             dateText.textContent = 'JUNE 2025';
             dateText.classList.remove('project-active');
             
-            hideFullscreenMedia();
+            hideAllMedia();
         }
     }
 }
 
-// Initialize text parting effect
+// Initialize text effects
 const textParting = new TextPartingEffect();
-
-// About toggle functionality
 const aboutScramble = new TextScramble(aboutToggle);
 let isAboutOpen = false;
 
-aboutToggle.textContent = 'ABOUT';
-
+// About toggle functionality
 aboutToggle.addEventListener('click', function() {
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
     
     if (isAboutOpen) {
-        aboutScramble.setText('HIDE', false, true);
-        
-        // Initialize text parting effect after bio is visible
+        aboutScramble.setText('HIDE', true);
         setTimeout(() => {
             textParting.init();
         }, 100);
@@ -689,7 +462,6 @@ if (!isTouchDevice) {
             
             const project = this.getAttribute('data-project');
             const projectInfo = this.getAttribute('data-info');
-            const mediaUrl = projectMedia[project];
             
             if (lastTouchedLink === this) {
                 window.location.href = this.href;
@@ -705,8 +477,11 @@ if (!isTouchDevice) {
             dateText.textContent = projectInfo;
             dateText.classList.add('project-active');
             
-            if (mediaUrl) {
-                showFullscreenMedia(mediaUrl);
+            const mediaUrl = projectMedia[project];
+            if (mediaUrl && mediaUrl.includes('.mp4')) {
+                showVideo(project);
+            } else {
+                hideAllMedia();
             }
         });
     });
@@ -717,19 +492,18 @@ if (!isTouchDevice) {
             projectsContainer.classList.remove('touch-hovering');
             dateText.textContent = 'JUNE 2025';
             dateText.classList.remove('project-active');
-            hideFullscreenMedia();
+            hideAllMedia();
             lastTouchedLink = null;
         }
     });
 }
 
-// Date text hover event
+// Date text hover
 dateText.addEventListener('mouseenter', function() {
     if (!dateText.classList.contains('project-active')) {
         document.body.classList.add('june-hover');
-        
         if (fullscreenBg.classList.contains('active')) {
-            hideFullscreenMedia();
+            hideAllMedia();
         }
     }
 });
@@ -740,7 +514,7 @@ dateText.addEventListener('mouseleave', function() {
     }
 });
 
-// Bio link hover events
+// Bio link hover
 bioLinks.forEach(link => {
     link.addEventListener('mouseenter', function() {
         const bioType = this.getAttribute('data-bio');
@@ -758,81 +532,7 @@ bioLinks.forEach(link => {
     });
 });
 
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM Content Loaded - Initializing');
-    
-    // Set random loading image
-    const selectedImage = getRandomLoadingImage();
-    if (loadingImage && selectedImage) {
-        loadingImage.src = selectedImage.src;
-        if (loadingCaption) {
-            loadingCaption.textContent = selectedImage.caption;
-        }
-    }
-    
-    // Initialize video preloader immediately
-    videoPreloader = new VideoPreloader();
-    videoPreloader.createVideoPool();
-    
-    // Show loading progress (optional)
-    const checkLoadingProgress = setInterval(() => {
-        const progress = videoPreloader.getLoadingProgress();
-        console.log(`Videos loaded: ${progress.loaded}/${progress.total} (${progress.percentage.toFixed(0)}%)`);
-        
-        if (progress.percentage === 100) {
-            clearInterval(checkLoadingProgress);
-            console.log('All videos ready!');
-        }
-    }, 500);
-    
-    // Hide loading screen after minimum time
-    setTimeout(() => {
-        console.log('Hiding loading screen');
-        if (loadingScreen) {
-            loadingScreen.classList.add('fade-out');
-            
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                // Make sure main content is visible
-                const mainContent = document.querySelector('.main-content');
-                if (mainContent) {
-                    mainContent.classList.add('visible');
-                }
-            }, 500);
-        }
-    }, 4000); // Back to 4 seconds since videos load in parallel
-    
-    // Log all project media paths for debugging
-    console.log('Project media paths:');
-    Object.entries(projectMedia).forEach(([project, path]) => {
-        console.log(`- ${project}: ${path || 'No media'}`);
-    });
-    
-    // Initialize page transition
-    const pageTransition = new PageTransition();
-});
-
-// Fallback: Force hide loading screen
-window.addEventListener('load', () => {
-    console.log('Window fully loaded');
-    setTimeout(() => {
-        if (loadingScreen && loadingScreen.style.display !== 'none') {
-            console.log('Force hiding loading screen on window load');
-            loadingScreen.style.display = 'none';
-        }
-    }, 1000);
-});
-
-// Emergency fallback
-setTimeout(() => {
-    if (loadingScreen && loadingScreen.style.display !== 'none') {
-        console.log('Emergency hide loading screen');
-        loadingScreen.style.display = 'none';
-    }
-}, 8000);
-
-// NEW IMPROVED Page Transition System
+// Page Transition System
 class PageTransition {
     constructor() {
         this.isTransitioning = false;
@@ -840,19 +540,14 @@ class PageTransition {
     }
 
     init() {
-        // Create transition elements
         this.createTransitionElements();
-        
-        // Override default link behavior for project links
         this.attachLinkHandlers();
     }
 
     createTransitionElements() {
-        // Create overlay
         const overlay = document.createElement('div');
         overlay.className = 'page-transition-overlay';
         
-        // Create containers for cloned content
         const currentClone = document.createElement('div');
         currentClone.className = 'transition-clone-current';
         
@@ -863,7 +558,6 @@ class PageTransition {
         overlay.appendChild(nextClone);
         document.body.appendChild(overlay);
         
-        // Store references
         this.elements = {
             overlay: overlay,
             currentClone: currentClone,
@@ -876,7 +570,7 @@ class PageTransition {
         
         projectLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                if (!this.isTransitioning) {
+                if (!this.isTransitioning && !isTouchDevice) {
                     e.preventDefault();
                     const href = link.href;
                     this.startTransition(href);
@@ -889,31 +583,39 @@ class PageTransition {
         this.isTransitioning = true;
         document.body.classList.add('transitioning');
         
-        // Clone current page content
         const mainContent = document.querySelector('body').cloneNode(true);
-        // Remove transition overlay from clone
         const overlayInClone = mainContent.querySelector('.page-transition-overlay');
         if (overlayInClone) overlayInClone.remove();
         
         this.elements.currentClone.innerHTML = mainContent.innerHTML;
         
-        // Create next page content
         const nextContent = document.createElement('div');
         nextContent.innerHTML = '<div style="height: 100vh; display: flex; align-items: center; justify-content: center;"><h1 style="font-size: 4rem;">Loading...</h1></div>';
         this.elements.nextClone.appendChild(nextContent);
         
-        // Activate overlay
         this.elements.overlay.classList.add('active');
         
-        // Start animation
         setTimeout(() => {
             this.elements.currentClone.classList.add('animating');
             this.elements.nextClone.classList.add('animating');
             
-            // Navigate after animation
             setTimeout(() => {
                 window.location.href = targetUrl + '?transition=true';
             }, 1200);
         }, 50);
     }
 }
+
+// Initialize everything on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing instant video system...');
+    
+    // Initialize video pool first thing
+    initializeVideoPool();
+    
+    // Initialize page transition
+    const pageTransition = new PageTransition();
+    
+    // Log video states
+    console.log('Videos initialized:', Object.keys(videoPool));
+});
