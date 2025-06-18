@@ -393,6 +393,7 @@ function handleProjectHover(link, isEntering) {
         
         activeProject = project;
         projectsContainer.classList.add('hovering');
+        document.body.classList.add('project-hovering'); // Add body class for inverse effect
         
         dateText.textContent = projectInfo;
         dateText.classList.add('project-active');
@@ -407,6 +408,7 @@ function handleProjectHover(link, isEntering) {
     } else {
         activeProject = null;
         projectsContainer.classList.remove('hovering');
+        document.body.classList.remove('project-hovering'); // Remove body class
         
         dateText.textContent = 'JUNE 2025';
         dateText.classList.remove('project-active');
@@ -474,6 +476,7 @@ if (!isTouchDevice) {
             lastTouchedLink = this;
             this.classList.add('touch-active');
             projectsContainer.classList.add('touch-hovering');
+            document.body.classList.add('project-hovering'); // Add for touch devices too
             
             dateText.textContent = projectInfo;
             dateText.classList.add('project-active');
@@ -491,6 +494,7 @@ if (!isTouchDevice) {
         if (!e.target.closest('.project-link')) {
             projectLinks.forEach(l => l.classList.remove('touch-active'));
             projectsContainer.classList.remove('touch-hovering');
+            document.body.classList.remove('project-hovering'); // Remove for touch devices
             dateText.textContent = 'JUNE 2025';
             dateText.classList.remove('project-active');
             hideAllMedia();

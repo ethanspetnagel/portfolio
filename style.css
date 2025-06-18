@@ -242,15 +242,16 @@ body.june-hover .contact-links a {
   mix-blend-mode: normal;
 }
 
-/* Apply inverse blend mode only when any project is being hovered */
-.projects-container.hovering .about-toggle,
-.projects-container.hovering ~ .website-info .date-text,
-.projects-container.hovering ~ .bio-section .bio-text,
-.projects-container.hovering ~ .bio-section .bio-text p,
-.projects-container.hovering ~ .bio-section .bio-text a,
-.projects-container.hovering ~ .bio-section .contact-links a {
-  mix-blend-mode: difference;
-  color: #ffffff;
+/* Apply inverse blend mode when project is being hovered - using body class */
+body.project-hovering .about-toggle,
+body.project-hovering .date-text,
+body.project-hovering .bio-text,
+body.project-hovering .bio-text p,
+body.project-hovering .bio-text a,
+body.project-hovering .contact-links a {
+  mix-blend-mode: difference !important;
+  color: #ffffff !important;
+  text-shadow: none !important;
 }
 
 /* About toggle - EXACTLY match JUNE 2025 */
