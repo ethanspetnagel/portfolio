@@ -172,10 +172,7 @@ body {
 /* Project links always use inverse blend mode when hovered */
 .project-link:hover {
   mix-blend-mode: difference;
-  color: transparent;
-  background-color: #ffffff;
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: #ffffff;
 }
 
 /* Website Info */
@@ -253,11 +250,8 @@ body.project-hovering .bio-text p,
 body.project-hovering .bio-text a,
 body.project-hovering .contact-links a {
   mix-blend-mode: difference !important;
-  color: transparent !important;
-  background-color: #ffffff !important; /* White background that will invert with the video */
+  color: #ffffff !important;
   text-shadow: none !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
 }
 
 /* About toggle - EXACTLY match JUNE 2025 */
@@ -618,7 +612,7 @@ body.transitioning {
     display: none !important;
   }
 
-  /* Fix mix-blend-mode on mobisle */ 
+  /* Fix mix-blend-mode onsds mobile */
   .about-toggle,
   .bio-text,
   .bio-text p,
