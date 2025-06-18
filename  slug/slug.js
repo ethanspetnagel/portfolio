@@ -308,10 +308,20 @@ class PageTransition {
     }
 
     createTransitionElements() {
+        // Create overlay
         const overlay = document.createElement('div');
         overlay.className = 'page-transition-overlay';
+        
+        // Create container for current page clone
+        const pageClone = document.createElement('div');
+        pageClone.className = 'page-clone';
+        overlay.appendChild(pageClone);
+        
         document.body.appendChild(overlay);
-        this.overlay = overlay;
+        this.elements = {
+            overlay: overlay,
+            pageClone: pageClone
+        };
     }
 
     attachLinkHandlers() {
@@ -338,18 +348,24 @@ class PageTransition {
         if (this.isTransitioning) return;
         
         this.isTransitioning = true;
-        document.body.classList.add('transitioning');
         
-        // Add animation based on direction
-        if (direction === 'back') {
-            document.body.style.animation = 'pageSlideUp 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards';
-        }
+        // Clone current page state
+        const pageContent = document.querySelector('.page').cloneNode(true);
+        this.elements.pageClone.innerHTML = '';
+        this.elements.pageClone.appendChild(pageContent);
         
-        this.overlay.classList.add('active');
+        // Show overlay
+        this.elements.overlay.classList.add('active');
         
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 800);
+        // Add exit animation
+        requestAnimationFrame(() => {
+            document.body.classList.add('transitioning-out');
+            
+            // Navigate after animation completes
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 600);
+        });
     }
 }
 
@@ -371,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cleanUrl = window.location.pathname;
                     window.history.replaceState({}, document.title, cleanUrl);
                 }
-            }, 800); // Faster transition
+            }, 600); // Faster transition
         }
     }
 

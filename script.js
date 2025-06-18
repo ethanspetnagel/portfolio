@@ -37,13 +37,18 @@ const bioPreviewImage = document.getElementById('bioPreviewImage');
 let currentMedia = null;
 let activeProject = null;
 let videoPool = {};
-let isTransitioning = false;
+let currentActiveVideo = null;
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 // Initialize video pool for instant playback
 function initializeVideoPool() {
+    // Remove old video/image elements
+    if (bgVideo) bgVideo.remove();
+    if (bgImage) bgImage.remove();
+    
+    // Create video elements for each project
     Object.entries(projectMedia).forEach(([project, url]) => {
         if (url && url.includes('.mp4')) {
             const video = document.createElement('video');
@@ -57,23 +62,26 @@ function initializeVideoPool() {
             video.style.width = '100%';
             video.style.height = '100%';
             video.style.objectFit = 'cover';
-            video.style.display = 'none';
             video.style.opacity = '0';
-            video.style.transition = 'opacity 0.15s ease';
+            video.style.display = 'none';
+            video.style.transition = 'opacity 0.1s linear';
+            video.dataset.project = project;
             
             // Hardware acceleration
             video.style.transform = 'translateZ(0)';
             video.style.webkitTransform = 'translateZ(0)';
+            video.style.backfaceVisibility = 'hidden';
             
+            // Add to DOM
             fullscreenBg.appendChild(video);
             videoPool[project] = video;
             
-            // Start loading immediately
+            // Force load
             video.load();
             
-            // Log loading state
-            video.addEventListener('loadeddata', () => {
-                console.log(`${project} video ready for instant playback`);
+            // Ensure video is ready
+            video.addEventListener('canplaythrough', () => {
+                console.log(`${project} video ready`);
             });
         }
     });
@@ -81,66 +89,60 @@ function initializeVideoPool() {
 
 // Show video instantly
 function showVideo(project) {
-    // Hide all videos
-    Object.values(videoPool).forEach(v => {
-        v.style.display = 'none';
-        v.style.opacity = '0';
-        v.pause();
+    const video = videoPool[project];
+    if (!video) return false;
+    
+    // Hide current video if exists
+    if (currentActiveVideo && currentActiveVideo !== video) {
+        currentActiveVideo.style.opacity = '0';
+        setTimeout(() => {
+            currentActiveVideo.style.display = 'none';
+            currentActiveVideo.pause();
+        }, 100);
+    }
+    
+    // Apply filter
+    if (project !== 'church') {
+        video.style.filter = 'brightness(0.9)';
+    } else {
+        video.style.filter = 'none';
+    }
+    
+    // Show new video instantly
+    video.style.display = 'block';
+    video.play().catch(e => {
+        console.log('Play failed, retrying...', e);
+        // Retry on interaction
+        document.addEventListener('click', () => {
+            video.play();
+        }, { once: true });
     });
     
-    const video = videoPool[project];
-    if (video) {
-        // Apply filter
-        if (project !== 'church') {
-            video.style.filter = 'brightness(0.9)';
-        } else {
-            video.style.filter = 'none';
-        }
-        
-        // Show and play instantly
-        video.style.display = 'block';
-        video.currentTime = 0;
-        
-        // Force immediate playback
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                console.error('Playback error:', error);
-                // Retry on user interaction
-                document.addEventListener('click', () => {
-                    video.play();
-                }, { once: true });
-            });
-        }
-        
-        // Make visible
-        requestAnimationFrame(() => {
-            video.style.opacity = '1';
-            fullscreenBg.classList.add('active');
-        });
-        
-        return true;
-    }
-    return false;
+    // Fade in
+    requestAnimationFrame(() => {
+        video.style.opacity = '1';
+        fullscreenBg.classList.add('active');
+        fullscreenBg.style.opacity = '1';
+    });
+    
+    currentActiveVideo = video;
+    currentMedia = projectMedia[project];
+    
+    return true;
 }
 
 // Hide all media
 function hideAllMedia() {
     fullscreenBg.classList.remove('active');
+    fullscreenBg.style.opacity = '0';
     
-    // Hide videos
-    Object.values(videoPool).forEach(video => {
-        video.style.opacity = '0';
+    if (currentActiveVideo) {
+        currentActiveVideo.style.opacity = '0';
         setTimeout(() => {
-            video.style.display = 'none';
-            video.pause();
-        }, 150);
-    });
-    
-    // Hide images
-    if (bgImage) {
-        bgImage.src = '';
-        bgImage.classList.remove('active');
+            currentActiveVideo.style.display = 'none';
+            currentActiveVideo.pause();
+            currentActiveVideo = null;
+        }, 100);
     }
     
     currentMedia = null;
@@ -387,8 +389,7 @@ class TextPartingEffect {
 function handleProjectHover(link, isEntering) {
     if (isEntering) {
         const project = link.getAttribute('data-project');
-        let projectInfo = link.getAttribute('data-info');
-        const mediaUrl = projectMedia[project];
+        const projectInfo = link.getAttribute('data-info');
         
         activeProject = project;
         projectsContainer.classList.add('hovering');
@@ -396,21 +397,21 @@ function handleProjectHover(link, isEntering) {
         dateText.textContent = projectInfo;
         dateText.classList.add('project-active');
         
+        // Show video for this project
+        const mediaUrl = projectMedia[project];
         if (mediaUrl && mediaUrl.includes('.mp4')) {
             showVideo(project);
         } else {
             hideAllMedia();
         }
     } else {
-        if (activeProject === link.getAttribute('data-project')) {
-            activeProject = null;
-            projectsContainer.classList.remove('hovering');
-            
-            dateText.textContent = 'JUNE 2025';
-            dateText.classList.remove('project-active');
-            
-            hideAllMedia();
-        }
+        activeProject = null;
+        projectsContainer.classList.remove('hovering');
+        
+        dateText.textContent = 'JUNE 2025';
+        dateText.classList.remove('project-active');
+        
+        hideAllMedia();
     }
 }
 
@@ -599,23 +600,28 @@ class PageTransition {
             this.elements.currentClone.classList.add('animating');
             this.elements.nextClone.classList.add('animating');
             
+            // Navigate after animation - faster timing
             setTimeout(() => {
                 window.location.href = targetUrl + '?transition=true';
-            }, 1200);
+            }, 600); // Changed to 600ms for quicker transition
         }, 50);
     }
 }
 
 // Initialize everything on DOM load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing instant video system...');
+    console.log('Initializing video system...');
     
-    // Initialize video pool first thing
+    // Initialize video pool immediately
     initializeVideoPool();
     
     // Initialize page transition
     const pageTransition = new PageTransition();
     
-    // Log video states
-    console.log('Videos initialized:', Object.keys(videoPool));
+    // Force start videos after a brief delay
+    setTimeout(() => {
+        Object.values(videoPool).forEach(video => {
+            video.play().catch(() => {});
+        });
+    }, 1000);
 });

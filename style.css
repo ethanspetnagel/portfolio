@@ -163,15 +163,16 @@ body {
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.85;
-  transition: opacity 0.2s ease, color 0.3s ease;
+  transition: opacity 0.2s ease;
   cursor: crosshair;
   position: relative;
   will-change: color, opacity;
 }
 
-/* Changed hover color to yellow */
+/* Use exclusion blend mode on hover for maximum visibility */
 .project-link:hover {
-  color: #ffcc00;
+  mix-blend-mode: exclusion;
+  color: #ffffff; /* White with exclusion creates strong contrast */
 }
 
 /* Website Info */
@@ -448,11 +449,11 @@ body.june-hover .contact-links a {
 }
 
 .transition-clone-current.animating {
-  animation: pushDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Faster: 0.8s instead of 1.2s */
+  animation: pushDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Faster: 0.6s */
 }
 
 .transition-clone-next.animating {
-  animation: slideInCurved 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Faster: 0.8s instead of 1.2s */
+  animation: slideInCurved 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Faster: 0.6s */
 }
 
 /* Prevent scroll during transition */
