@@ -239,7 +239,7 @@ body.june-hover .contact-links a {
 .bio-text a,
 .contact-links a {
   color: #0f0f0f;
-  mix-blend-mode: normal;
+  /* Remove mix-blend-mode: normal so it can blend when needed */
 }
 
 /* Apply inverse blend mode when project is being hovered - using body class */
@@ -252,6 +252,7 @@ body.project-hovering .contact-links a {
   mix-blend-mode: difference !important;
   color: #ffffff !important;
   text-shadow: none !important;
+  isolation: auto !important; /* Allow blending through parent elements */
 }
 
 /* About toggle - EXACTLY match JUNE 2025 */
@@ -612,7 +613,7 @@ body.transitioning {
     display: none !important;
   }
 
-  /* Fix mix-blend-mode onsds mobile */
+  /* Fix mix-blend-mode on mobile */
   .about-toggle,
   .bio-text,
   .bio-text p,
