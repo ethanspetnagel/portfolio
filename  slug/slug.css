@@ -262,7 +262,6 @@ body.title-hover .project-gallery {
   white-space: nowrap;
   padding: 0;
   line-height: 1.08;
-  fon
   margin: 0;
   flex-shrink: 0;
   display: inline-block;
@@ -643,8 +642,8 @@ body.from-transition .page > * {
     font-size: calc(1.3rem - 7px);
   }
   .essay-nav {
-    font-size: calc(1.3rem - 9px);
-    gap: 15px;
+    font-size: calc(1.3rem - 13px);
+    gap: 10px;
   }
   .interactive-text {
     font-size: calc(1.3rem - 7px);
@@ -652,7 +651,7 @@ body.from-transition .page > * {
   .caption,
   .info-toggle,
   .info-panel {
-    font-size: 13px;
+    font-size: 11px;
   }
   .slide img,
   .slide video,
