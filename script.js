@@ -385,7 +385,7 @@ class TextPartingEffect {
     }
 }
 
-// Project hover handling
+// Project hover handling with inverse effect
 function handleProjectHover(link, isEntering) {
     if (isEntering) {
         const project = link.getAttribute('data-project');

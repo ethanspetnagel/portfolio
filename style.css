@@ -169,7 +169,7 @@ body {
   will-change: color, opacity;
 }
 
-/* Use exclusion blend mode on hover for maximum visibility */
+/* Project links always use inverse blend mode when hovered */
 .project-link:hover {
   mix-blend-mode: exclusion;
   color: #ffffff; /* White with exclusion creates strong contrast */
@@ -232,13 +232,25 @@ body.june-hover .contact-links a {
   z-index: 15;
 }
 
+/* Default text color without blend mode */
 .about-toggle,
 .bio-text,
 .bio-text p,
 .bio-text a,
 .contact-links a {
   color: #0f0f0f;
-  mix-blend-mode: difference;
+  mix-blend-mode: normal;
+}
+
+/* Apply inverse blend mode only when any project is being hovered */
+.projects-container.hovering .about-toggle,
+.projects-container.hovering ~ .website-info .date-text,
+.projects-container.hovering ~ .bio-section .bio-text,
+.projects-container.hovering ~ .bio-section .bio-text p,
+.projects-container.hovering ~ .bio-section .bio-text a,
+.projects-container.hovering ~ .bio-section .contact-links a {
+  mix-blend-mode: exclusion;
+  color: #ffffff;
 }
 
 /* About toggle - EXACTLY match JUNE 2025 */
