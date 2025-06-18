@@ -134,7 +134,6 @@ body.title-hover .project-gallery {
   left: 15px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
-  font-size: clamp(16px, 2.8vw, 39px);
   text-transform: uppercase;
   text-decoration: none;
   color: #0f0f0f;
@@ -642,7 +641,7 @@ body.from-transition .page > * {
     font-size: calc(1.3rem - 7px);
   }
   .essay-nav {
-    font-size: calc(1.3rem - 13px);
+    font-size: calc(1.1 rem - 13px);
     gap: 10px;
   }
   .interactive-text {
