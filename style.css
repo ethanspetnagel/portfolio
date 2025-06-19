@@ -322,7 +322,7 @@ body.project-hovering.video-light .contact-links a:hover::before {
   text-align: left;
   font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
   cursor: default;
-  margin-top: 10px; /* Cut in half from 20px */
+  margin-top: 5px; /* Reduced from 10px to make gap smaller */
 }
 
 .bio-text p {
@@ -373,13 +373,13 @@ body.project-hovering .bio-text a:hover {
   position: relative;
   color: #0f0f0f !important;
   width: fit-content; /* Only as wide as content */
-  padding-left: 1.2em; /* Add space for asterisk */
+  padding-left: 0; /* Remove padding - asterisk will be positioned absolutely */
 }
 
 .contact-links a::before {
   content: '';
   position: absolute;
-  left: 0; /* Position at start */
+  left: -0.7em; /* Position asterisk just before the text */
   opacity: 0;
   transition: opacity 0.2s ease;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; /* Ensure asterisk uses Helvetica */
