@@ -130,7 +130,7 @@ body {
   z-index: 10;
   opacity: 1;
   visibility: visible;
-  padding: 20px 20px 120px;
+  padding: 20px 20px 180px; /* Increased bottom padding to ensure bio space */
 }
 
 /* Projects Container */
@@ -138,7 +138,7 @@ body {
   text-align: center;
   max-width: 1200px;
   width: 100%;
-  margin: 0 auto 100px;
+  margin: 0 auto 60px; /* Reduced bottom margin to prevent overlap */
   line-height: 0.8;
   padding-top: 10px;
 }
@@ -158,7 +158,7 @@ body {
   margin: 0 auto;
   color: #0f0f0f;
   text-decoration: none;
-  font-size: clamp(36px, 8.1vw, 99px);
+  font-size: clamp(32.4px, 7.29vw, 89.1px); /* Reduced by 10% */
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -0.02em;
@@ -287,7 +287,7 @@ body.project-hovering.video-light .contact-links a:hover::before {
   font-size: clamp(16px, 2.8vw, 39px); /* Same as date-text */
   font-weight: bold;
   cursor: pointer;
-  margin-bottom: 18px; /* Increased from 8px to push down */
+  margin-bottom: 9px; /* Reduced by 50% from 18px */
   transition: opacity 0.3s ease;
   position: relative;
   display: inline-block;
@@ -353,49 +353,54 @@ body.project-hovering .bio-text a:hover {
   color: #ffffff !important; /* Force white for blend mode */
 }
 
-/* Contact links - FIXED: Stacked vertically */
+/* Contact links - Contemporary minimal design */
 .contact-links {
-  margin-top: 30px; /* Increased from 20px to match space above */
-  display: flex;
-  flex-direction: column; /* Stack vertically */
-  gap: 5px; /* Space between links */
+  margin-top: 20px; /* Reduced from 30px */
+  display: inline-flex; /* Changed to inline-flex for horizontal layout */
+  gap: 0; /* No gap - we'll use separators */
+  font-size: calc(1.6rem - 7px);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  align-items: baseline;
 }
 
 .contact-links a {
-  display: block; /* Each link on new line */
-  margin-right: 0; /* Remove right margin */
-  font-size: calc(1.6rem - 7px);
+  display: inline-block; /* Inline for horizontal layout */
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   font-style: normal;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; /* Force Helvetica Neue */
   font-weight: normal;
   position: relative;
   color: #0f0f0f !important;
-  width: fit-content; /* Only as wide as content */
-  padding-left: 0; /* Remove padding - asterisk will be positioned absolutely */
+  padding: 0 12px; /* Horizontal padding for spacing */
+  border-right: 1px solid #0f0f0f; /* Separator */
+}
+
+.contact-links a:last-child {
+  border-right: none; /* Remove border from last item */
+  padding-right: 0;
+}
+
+.contact-links a:first-child {
+  padding-left: 0;
 }
 
 .contact-links a::before {
-  content: '';
+  content: '*';
   position: absolute;
-  left: -0.7em; /* Position asterisk just before the text */
+  left: 0;
   opacity: 0;
-  transition: opacity 0.2s ease;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; /* Ensure asterisk uses Helvetica */
+  transition: opacity 0.15s ease;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 .contact-links a:hover {
-  color: #0f0f0f !important; /* Stay black */
-  text-decoration: none !important; /* No underline */
-  font-style: italic;
+  color: #0f0f0f !important;
+  text-decoration: none !important;
+  padding-left: 16px; /* Add space for asterisk */
 }
 
 .contact-links a:hover::before {
-  content: '*'; /* Asterisk character */
-  color: #0f0f0f !important;
   opacity: 1;
-  font-style: normal; /* Keep asterisk upright */
 }
 
 /* Override hover colors when project is active */
@@ -522,7 +527,7 @@ body.transitioning {
 /* Media Queries - Tablet */
 @media (max-width: 768px) {
   .project-link {
-    font-size: clamp(27px, 8.1vw, 72px);
+    font-size: clamp(24.3px, 7.29vw, 64.8px); /* 10% smaller on tablet too */
   }
 
   .date-text {
@@ -572,7 +577,7 @@ body.transitioning {
   }
 
   .project-link {
-    font-size: clamp(21.6px, 7.2vw, 40.5px);
+    font-size: clamp(19.44px, 6.48vw, 36.45px); /* 10% smaller on mobile too */
     line-height: 1.2;
     margin-bottom: 5px;
   }
@@ -608,7 +613,7 @@ body.transitioning {
 
   .about-toggle {
     padding: 5px 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px; /* Reduced for mobile */
   }
 
   .bio-content {
@@ -624,7 +629,7 @@ body.transitioning {
   .bio-text {
     font-size: calc(1.3rem - 7px);
     line-height: 1.2;
-    margin-top: 15px; /* Adjust for mobile */
+    margin-top: 8px; /* Adjust for mobile */
   }
 
   .bio-text a:hover {
@@ -632,22 +637,21 @@ body.transitioning {
   }
 
   .contact-links {
-    flex-direction: column; /* Keep stacked on mobile */
-    gap: 5px;
+    flex-direction: column; /* Stack vertically on mobile */
+    gap: 8px;
+    align-items: flex-start;
   }
 
   .contact-links a {
     font-size: calc(1.3rem - 7px);
-    margin-right: 0;
     display: block;
-    margin-bottom: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    color: #0f0f0f !important;
+    border-right: none; /* Remove separators on mobile */
+    padding: 0;
+    padding-left: 0 !important;
   }
   
   .contact-links a:hover {
-    color: #0f0f0f !important;
-    text-decoration: none !important;
+    padding-left: 16px !important;
   }
 
   /* Hide bio preview on mobile */
