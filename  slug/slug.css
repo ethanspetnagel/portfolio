@@ -58,7 +58,8 @@ body.transitioning-out {
   top: 0;
   left: 0;
 }
-
+  pointer-events: all;
+}
 
 body.from-transition .page > * {
   animation: none; /* Prevent double animations */
@@ -134,6 +135,7 @@ body.title-hover .project-gallery {
   left: 15px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
+  font-size: clamp(16px, 2.8vw, 39px);
   text-transform: uppercase;
   text-decoration: none;
   color: #0f0f0f;
@@ -641,8 +643,8 @@ body.from-transition .page > * {
     font-size: calc(1.3rem - 7px);
   }
   .essay-nav {
-    font-size: calc(1.1 rem - 13px);
-    gap: 10px;
+    font-size: calc(1.3rem - 7px);
+    gap: 20px;
   }
   .interactive-text {
     font-size: calc(1.3rem - 7px);
@@ -650,7 +652,7 @@ body.from-transition .page > * {
   .caption,
   .info-toggle,
   .info-panel {
-    font-size: 11px;
+    font-size: 13px;
   }
   .slide img,
   .slide video,

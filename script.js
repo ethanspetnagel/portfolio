@@ -336,16 +336,16 @@ class TextPartingEffect {
         
         if (!data || !data.isActive) return;
 
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
+        const cursorX = event.clientX;
+        const cursorY = event.clientY;
         
         data.words.forEach((wordData, word) => {
             const rect = word.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             
-            const deltaX = mouseX - centerX;
-            const deltaY = mouseY - centerY;
+            const deltaX = cursorX - centerX;
+            const deltaY = cursorY - centerY;
             
             const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
             const maxInfluence = 150;
