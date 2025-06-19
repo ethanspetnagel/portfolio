@@ -38,9 +38,55 @@ let currentMedia = null;
 let activeProject = null;
 let videoPool = {};
 let currentActiveVideo = null;
+let brightnessCheckInterval = null;
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// Function to analyze video brightness
+function getVideoBrightness(video) {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    
+    // Sample size for performance
+    canvas.width = 50;
+    canvas.height = 50;
+    
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    
+    let brightness = 0;
+    
+    // Calculate average brightness
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        // Calculate perceived brightness
+        brightness += (0.299 * r + 0.587 * g + 0.114 * b);
+    }
+    
+    brightness = brightness / (data.length / 4);
+    return brightness / 255; // Normalize to 0-1
+}
+
+// Function to update text colors based on video brightness
+function updateTextColors() {
+    if (!currentActiveVideo || currentActiveVideo.paused) return;
+    
+    const brightness = getVideoBrightness(currentActiveVideo);
+    const isDark = brightness < 0.5;
+    
+    // Apply appropriate text color class
+    if (isDark) {
+        document.body.classList.add('video-dark');
+        document.body.classList.remove('video-light');
+    } else {
+        document.body.classList.add('video-light');
+        document.body.classList.remove('video-dark');
+    }
+}
 
 // Initialize video pool for instant playback
 function initializeVideoPool() {
@@ -128,6 +174,17 @@ function showVideo(project) {
     currentActiveVideo = video;
     currentMedia = projectMedia[project];
     
+    // Start brightness monitoring
+    if (brightnessCheckInterval) {
+        clearInterval(brightnessCheckInterval);
+    }
+    
+    // Initial check after video starts playing
+    setTimeout(updateTextColors, 100);
+    
+    // Continue checking periodically
+    brightnessCheckInterval = setInterval(updateTextColors, 500);
+    
     return true;
 }
 
@@ -144,6 +201,15 @@ function hideAllMedia() {
             currentActiveVideo = null;
         }, 100);
     }
+    
+    // Clear brightness monitoring
+    if (brightnessCheckInterval) {
+        clearInterval(brightnessCheckInterval);
+        brightnessCheckInterval = null;
+    }
+    
+    // Remove video color classes
+    document.body.classList.remove('video-dark', 'video-light');
     
     currentMedia = null;
 }

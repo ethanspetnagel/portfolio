@@ -169,10 +169,9 @@ body {
   will-change: color, opacity;
 }
 
-/* Project links use inverse blend mode when hovered */
+/* Project links - no blend mode, will be handled by video brightness */
 .project-link:hover {
-  mix-blend-mode: difference;
-  color: #ffffff;
+  /* Color will be set by video-dark/video-light classes */
 }
 
 /* Website Info */
@@ -245,19 +244,42 @@ body.project-hovering .date-text.project-active {
 .bio-text a,
 .contact-links a {
   color: #0f0f0f;
-  /* Remove mix-blend-mode: normal so it can blend when needed */
 }
 
-/* Apply inverse blend mode when project is being hovered - using body class */
-body.project-hovering .about-toggle,
-body.project-hovering .bio-text,
-body.project-hovering .bio-text p,
-body.project-hovering .bio-text a,
-body.project-hovering .contact-links a {
-  mix-blend-mode: difference !important;
+/* Dynamic color based on video brightness */
+body.project-hovering.video-dark .project-link:hover,
+body.project-hovering.video-dark .date-text.project-active,
+body.project-hovering.video-dark .about-toggle,
+body.project-hovering.video-dark .bio-text,
+body.project-hovering.video-dark .bio-text p,
+body.project-hovering.video-dark .bio-text a,
+body.project-hovering.video-dark .contact-links a {
   color: #ffffff !important;
-  text-shadow: none !important;
-  isolation: auto !important; /* Allow blending through parent elements */
+}
+
+body.project-hovering.video-light .project-link:hover,
+body.project-hovering.video-light .date-text.project-active,
+body.project-hovering.video-light .about-toggle,
+body.project-hovering.video-light .bio-text,
+body.project-hovering.video-light .bio-text p,
+body.project-hovering.video-light .bio-text a,
+body.project-hovering.video-light .contact-links a {
+  color: #0f0f0f !important;
+}
+
+/* Ensure hover states work with dynamic colors */
+body.project-hovering.video-dark .bio-text a:hover {
+  color: #ffcc00 !important;
+}
+
+body.project-hovering.video-light .bio-text a:hover {
+  color: #ffcc00 !important;
+}
+
+body.project-hovering.video-dark .contact-links a:hover::before,
+body.project-hovering.video-light .contact-links a:hover::before {
+  color: inherit !important;
+  opacity: 1;
 }
 
 /* About toggle - EXACTLY match JUNE 2025 */
