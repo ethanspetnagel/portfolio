@@ -185,7 +185,7 @@ body {
 }
 
 .date-text {
-  font-size: clamp(16px, 2.8vw, 39px);
+  font-size: clamp(8px, 1.4vw, 19.5px); /* Half the size */
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -284,7 +284,7 @@ body.project-hovering.video-light .contact-links a:hover::before {
 
 /* About toggle - EXACTLY match JUNE 2025 */
 .about-toggle {
-  font-size: clamp(16px, 2.8vw, 39px); /* Same as date-text */
+  font-size: clamp(8px, 1.4vw, 19.5px); /* Half the size */
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 9px; /* Reduced by 50% from 18px */
@@ -372,7 +372,7 @@ body.project-hovering .bio-text a:hover {
   position: relative;
   color: #0f0f0f !important;
   padding: 0 10px; /* Horizontal padding for spacing */
-  border-right: 1px solid #0f0f0f; /* Separator */
+  border-right: 1px solid #d7ddff; /* Separator in light blue color */
 }
 
 .contact-links a:last-child {
@@ -520,11 +520,11 @@ body.transitioning {
   }
 
   .date-text {
-    font-size: clamp(25px, 5vw, 60px);
+    font-size: clamp(12.5px, 2.5vw, 30px); /* Half size on tablet */
   }
 
   .about-toggle {
-    font-size: clamp(25px, 5vw, 60px);
+    font-size: clamp(12.5px, 2.5vw, 30px); /* Half size on tablet */
   }
 
   .bio-section {
@@ -584,11 +584,11 @@ body.transitioning {
   }
 
   .date-text {
-    font-size: clamp(20px, 5vw, 40px);
+    font-size: clamp(10px, 2.5vw, 20px); /* Half size on mobile */
   }
 
   .about-toggle {
-    font-size: clamp(20px, 5vw, 40px);
+    font-size: clamp(10px, 2.5vw, 20px); /* Half size on mobile */
   }
 
   .bio-section {
