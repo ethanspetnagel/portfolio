@@ -545,7 +545,12 @@ class PageTransition {
 }
 
 // Main initialization
+// Remove page loading state when page is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Remove loading state
+    document.body.classList.remove('page-navigating');
+    
+    // Existing DOMContentLoaded code...
     // FIXED Page Entrance Animation Handler - Prevent Flash
     function handlePageEntrance() {
         const urlParams = new URLSearchParams(window.location.search);

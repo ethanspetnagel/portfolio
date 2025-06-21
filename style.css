@@ -59,6 +59,17 @@ body {
   position: relative;
 }
 
+/* Page loading state - prevents flash during navigation */
+body.page-navigating {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Prevent flash during navigation */
+body.page-navigating * {
+  visibility: hidden !important;
+}
+
 /* Fullscreen Background Layer */
 .fullscreen-bg {
   position: fixed;

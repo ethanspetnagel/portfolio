@@ -91,6 +91,17 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Page loading state - prevents flash during navigation */
+body.page-navigating {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Prevent flash during navigation */
+body.page-navigating * {
+  visibility: hidden !important;
+}
+
 /* Title hover effects - SLUG turns white, background turns black */
 .site-title:hover {
   color: #fff !important;
