@@ -349,11 +349,11 @@ body.project-hovering .bio-text a:hover {
   color: #ffffff !important; /* Force white for blend mode */
 }
 
-/* Contact links - Contemporary minimal design */
+/* Contact links - Updated with oval effect like tabs */
 .contact-links {
   margin-top: (10.8px, 2.43vw, 29.7px); /* Reduced from 30px */
   display: inline-flex; /* Changed to inline-flex for horizontal layout */
-  gap: 0; /* No gap - we'll use separators */
+  gap: 20px; /* Space between links */
   font-size: calc(1.4rem - 7px); /* Reduced font size */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   align-items: baseline;
@@ -362,39 +362,57 @@ body.project-hovering .bio-text a:hover {
 .contact-links a {
   display: inline-block; /* Inline for horizontal layout */
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-style: normal;
   font-weight: normal;
   position: relative;
   color: #0f0f0f !important;
-  padding: 0 10px; /* Horizontal padding for spacing */
-  border-right: 1px solid #d7ddff; /* Separator in light blue color */
+  padding: 8px 0; /* Vertical padding for oval effect */
+  cursor: pointer;
 }
 
-.contact-links a:last-child {
-  border-right: none; /* Remove border from last item */
-  padding-right: 0;
+/* Oval effect for contact links - same as tabs */
+.contact-links a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border: 2px solid #0f0f0f; /* Black border like tabs */
+  border-radius: 50%; /* Perfect circle that gets stretched */
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.contact-links a:first-child {
-  padding-left: 0;
+.contact-links a:hover::after {
+  opacity: 1;
+  width: calc(100% + 30px); /* Creates the ellipse */
+  height: 20px; /* Smaller height for contact links */
 }
 
 .contact-links a:hover {
   color: #0f0f0f !important;
   text-decoration: none !important;
-  font-weight: bold; /* Bold on hover instead of asterisk */
+  transform: translateY(2px); /* Same downward movement as tabs */
 }
 
 /* Override hover colors when project is active */
 body.project-hovering .contact-links a:hover {
   color: #ffffff !important; /* White for blend mode */
-  font-weight: bold;
+}
+
+body.project-hovering .contact-links a:hover::after {
+  border-color: #ffffff !important; /* White oval for blend mode */
 }
 
 body.project-hovering.video-light .contact-links a:hover {
   color: #0f0f0f !important; /* Black for light videos */
-  font-weight: bold;
+}
+
+body.project-hovering.video-light .contact-links a:hover::after {
+  border-color: #0f0f0f !important; /* Black oval for light videos */
 }
 
 /* Bio Preview */
@@ -625,7 +643,7 @@ body.transitioning {
 
   .contact-links {
     flex-direction: column; /* Stack vertically on mobile */
-    gap: 8px;
+    gap: 15px; /* Increased gap for mobile */
     align-items: flex-start;
     font-size: calc(1.2rem - 7px); /* Smaller on mobile */
   }
@@ -633,12 +651,16 @@ body.transitioning {
   .contact-links a {
     font-size: calc(1.2rem - 7px);
     display: block;
-    border-right: none; /* Remove separators on mobile */
-    padding: 0;
+    padding: 5px 0; /* Smaller padding on mobile */
+  }
+
+  .contact-links a:hover::after {
+    width: calc(100% + 20px); /* Smaller oval on mobile */
+    height: 18px;
   }
   
   .contact-links a:hover {
-    font-weight: bold; /* Bold on hover for mobile too */
+    transform: translateY(1px); /* Smaller movement on mobile */
   }
 
   /* Hide bio preview on mobile */
