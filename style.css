@@ -185,7 +185,7 @@ body {
 }
 
 .date-text {
-  font-size: clamp(10.8px, 2.43vw, 29.7px); /* 1/3 of project link size */
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
