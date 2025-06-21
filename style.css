@@ -337,7 +337,7 @@ body.project-hovering.video-light .contact-links a:hover::before {
 }
 /* Bio text links - UPDATED to lime green */
 .bio-text a {
-  color: #b3d100; /* Changed to lime green */
+  color: black; /* Changed to lime green */
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Helvetica Neue", Arial, sans-serif;
