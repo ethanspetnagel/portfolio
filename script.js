@@ -1,11 +1,20 @@
-// Project media mapping
+// Project media mapping with brightness info
 const projectMedia = {
-    'slug': '', 
-    'church': './church video bg.mp4',
+    'slug': {
+        url: './church video bg.mp4',
+        isDark: false  // slug video appears to be dark
+    }, 
+    'church': {
+        url: './church video bg.mp4',
+        isDark: true  // Church video appears to be dark
+    },
     'talamel': '', 
     'fox-and-lion': '', 
     'cardioscape': '', 
-    'lu-rose-gold': './lu rose gold video bg.mp4',
+    'lu-rose-gold': {
+        url: './lu rose gold video bg.mp4',
+        isDark: false  // Lu Rose Gold video appears to be light
+    },
     'green-lake-law': '', 
     'artwork': '', 
     'june-2025': ''
@@ -38,55 +47,9 @@ let currentMedia = null;
 let activeProject = null;
 let videoPool = {};
 let currentActiveVideo = null;
-let brightnessCheckInterval = null;
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-// Function to analyze video brightness
-function getVideoBrightness(video) {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    
-    // Sample size for performance
-    canvas.width = 50;
-    canvas.height = 50;
-    
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-    
-    let brightness = 0;
-    
-    // Calculate average brightness
-    for (let i = 0; i < data.length; i += 4) {
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-        // Calculate perceived brightness
-        brightness += (0.299 * r + 0.587 * g + 0.114 * b);
-    }
-    
-    brightness = brightness / (data.length / 4);
-    return brightness / 255; // Normalize to 0-1
-}
-
-// Function to update text colors based on video brightness
-function updateTextColors() {
-    if (!currentActiveVideo || currentActiveVideo.paused) return;
-    
-    const brightness = getVideoBrightness(currentActiveVideo);
-    const isDark = brightness < 0.5;
-    
-    // Apply appropriate text color class
-    if (isDark) {
-        document.body.classList.add('video-dark');
-        document.body.classList.remove('video-light');
-    } else {
-        document.body.classList.add('video-light');
-        document.body.classList.remove('video-dark');
-    }
-}
 
 // Initialize video pool for instant playback
 function initializeVideoPool() {
@@ -95,7 +58,8 @@ function initializeVideoPool() {
     if (bgImage) bgImage.remove();
     
     // Create video elements for each project
-    Object.entries(projectMedia).forEach(([project, url]) => {
+    Object.entries(projectMedia).forEach(([project, mediaInfo]) => {
+        const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
         if (url && url.includes('.mp4')) {
             const video = document.createElement('video');
             video.src = url;
@@ -174,16 +138,17 @@ function showVideo(project) {
     currentActiveVideo = video;
     currentMedia = projectMedia[project];
     
-    // Start brightness monitoring
-    if (brightnessCheckInterval) {
-        clearInterval(brightnessCheckInterval);
+    // Apply text color based on video brightness
+    const mediaInfo = projectMedia[project];
+    if (mediaInfo && typeof mediaInfo === 'object' && mediaInfo.isDark !== undefined) {
+        if (mediaInfo.isDark) {
+            document.body.classList.add('video-dark');
+            document.body.classList.remove('video-light');
+        } else {
+            document.body.classList.add('video-light');
+            document.body.classList.remove('video-dark');
+        }
     }
-    
-    // Initial check after video starts playing
-    setTimeout(updateTextColors, 100);
-    
-    // Continue checking periodically
-    brightnessCheckInterval = setInterval(updateTextColors, 500);
     
     return true;
 }
@@ -200,12 +165,6 @@ function hideAllMedia() {
             currentActiveVideo.pause();
             currentActiveVideo = null;
         }, 100);
-    }
-    
-    // Clear brightness monitoring
-    if (brightnessCheckInterval) {
-        clearInterval(brightnessCheckInterval);
-        brightnessCheckInterval = null;
     }
     
     // Remove video color classes
@@ -466,7 +425,8 @@ function handleProjectHover(link, isEntering) {
         
         // Show video for this project
         const mediaUrl = projectMedia[project];
-        if (mediaUrl && mediaUrl.includes('.mp4')) {
+        const url = typeof mediaUrl === 'string' ? mediaUrl : mediaUrl?.url;
+        if (url && url.includes('.mp4')) {
             showVideo(project);
         } else {
             hideAllMedia();
@@ -548,7 +508,8 @@ if (!isTouchDevice) {
             dateText.classList.add('project-active');
             
             const mediaUrl = projectMedia[project];
-            if (mediaUrl && mediaUrl.includes('.mp4')) {
+            const url = typeof mediaUrl === 'string' ? mediaUrl : mediaUrl?.url;
+            if (url && url.includes('.mp4')) {
                 showVideo(project);
             } else {
                 hideAllMedia();
@@ -603,7 +564,7 @@ bioLinks.forEach(link => {
     });
 });
 
-// Page Transition System
+// UPDATED Page Transition System - Circle Shrink Effect
 class PageTransition {
     constructor() {
         this.isTransitioning = false;
@@ -611,29 +572,7 @@ class PageTransition {
     }
 
     init() {
-        this.createTransitionElements();
         this.attachLinkHandlers();
-    }
-
-    createTransitionElements() {
-        const overlay = document.createElement('div');
-        overlay.className = 'page-transition-overlay';
-        
-        const currentClone = document.createElement('div');
-        currentClone.className = 'transition-clone-current';
-        
-        const nextClone = document.createElement('div');
-        nextClone.className = 'transition-clone-next';
-        
-        overlay.appendChild(currentClone);
-        overlay.appendChild(nextClone);
-        document.body.appendChild(overlay);
-        
-        this.elements = {
-            overlay: overlay,
-            currentClone: currentClone,
-            nextClone: nextClone
-        };
     }
 
     attachLinkHandlers() {
@@ -644,37 +583,46 @@ class PageTransition {
                 if (!this.isTransitioning && !isTouchDevice) {
                     e.preventDefault();
                     const href = link.href;
-                    this.startTransition(href);
+                    this.startCircleTransition(href);
                 }
             });
         });
     }
 
-    startTransition(targetUrl) {
+    startCircleTransition(targetUrl) {
+        if (this.isTransitioning) return;
+        
         this.isTransitioning = true;
-        document.body.classList.add('transitioning');
         
-        const mainContent = document.querySelector('body').cloneNode(true);
-        const overlayInClone = mainContent.querySelector('.page-transition-overlay');
-        if (overlayInClone) overlayInClone.remove();
+        // Create black circle overlay
+        const circleOverlay = document.createElement('div');
+        circleOverlay.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: #000;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30000;
+            pointer-events: none;
+        `;
         
-        this.elements.currentClone.innerHTML = mainContent.innerHTML;
+        document.body.appendChild(circleOverlay);
         
-        const nextContent = document.createElement('div');
-        nextContent.innerHTML = '<div style="height: 100vh; display: flex; align-items: center; justify-content: center;"><h1 style="font-size: 4rem;">Loading...</h1></div>';
-        this.elements.nextClone.appendChild(nextContent);
+        // Force reflow
+        circleOverlay.offsetHeight;
         
-        this.elements.overlay.classList.add('active');
+        // Animate circle expansion
+        circleOverlay.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        circleOverlay.style.width = '300vw';
+        circleOverlay.style.height = '300vh';
         
+        // Navigate after circle fully covers screen
         setTimeout(() => {
-            this.elements.currentClone.classList.add('animating');
-            this.elements.nextClone.classList.add('animating');
-            
-            // Navigate after animation - faster timing
-            setTimeout(() => {
-                window.location.href = targetUrl + '?transition=true';
-            }, 600); // Changed to 600ms for quicker transition
-        }, 50);
+            window.location.href = targetUrl;
+        }, 1000);
     }
 }
 
@@ -685,7 +633,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize video pool immediately
     initializeVideoPool();
     
-    // Initialize page transition
+    // Initialize page transition with circle effect
     const pageTransition = new PageTransition();
     
     // Force start videos after a brief delay
