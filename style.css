@@ -185,7 +185,7 @@ body {
 }
 
 .date-text {
-  font-size: 20px;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -355,7 +355,7 @@ body.project-hovering .bio-text a:hover {
 
 /* Contact links - Contemporary minimal design */
 .contact-links {
-  margin-top: 20px; /* Reduced from 30px */
+  margin-top: (10.8px, 2.43vw, 29.7px); /* Reduced from 30px */
   display: inline-flex; /* Changed to inline-flex for horizontal layout */
   gap: 0; /* No gap - we'll use separators */
   font-size: calc(1.4rem - 7px); /* Reduced font size */
