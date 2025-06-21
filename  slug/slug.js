@@ -396,6 +396,8 @@ class PageTransition {
                 transform: translate(-50%, -50%);
                 overflow: hidden;
                 z-index: 2;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
             `;
             
             // Create image from canvas
@@ -495,6 +497,8 @@ class PageTransition {
             border-radius: 50%;
             transform: translate(-50%, -50%);
             z-index: 2;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         `;
         
         transitionContainer.appendChild(homePageFrame);
