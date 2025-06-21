@@ -564,7 +564,7 @@ bioLinks.forEach(link => {
     });
 });
 
-// UPDATED Page Transition System - Circle Shrink Effect
+// UPDATED Page Transition System - Video Circle Effect
 class PageTransition {
     constructor() {
         this.isTransitioning = false;
@@ -583,25 +583,92 @@ class PageTransition {
                 if (!this.isTransitioning && !isTouchDevice) {
                     e.preventDefault();
                     const href = link.href;
-                    this.startCircleTransition(href);
+                    const project = link.getAttribute('data-project');
+                    this.startVideoCircleTransition(href, project);
                 }
             });
         });
     }
 
-    startCircleTransition(targetUrl) {
+    startVideoCircleTransition(targetUrl, project) {
         if (this.isTransitioning) return;
         
         this.isTransitioning = true;
         
-        // Create black circle overlay
+        // Get the video for this project
+        const projectVideo = videoPool[project];
+        if (!projectVideo) {
+            // Fallback to black circle if no video
+            this.startBlackCircleTransition(targetUrl);
+            return;
+        }
+        
+        // Create video circle container - START FULL SCREEN
+        const videoCircleContainer = document.createElement('div');
+        videoCircleContainer.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 300vw;
+            height: 300vh;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30000;
+            pointer-events: none;
+            overflow: hidden;
+        `;
+        
+        // Clone the video for the transition
+        const transitionVideo = projectVideo.cloneNode(true);
+        transitionVideo.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300vw;
+            height: 300vh;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        `;
+        
+        // Apply same filter as original video
+        if (project !== 'church') {
+            transitionVideo.style.filter = 'brightness(0.9)';
+        } else {
+            transitionVideo.style.filter = 'none';
+        }
+        
+        // Start playing the video
+        transitionVideo.muted = true;
+        transitionVideo.loop = true;
+        transitionVideo.play().catch(() => {});
+        
+        videoCircleContainer.appendChild(transitionVideo);
+        document.body.appendChild(videoCircleContainer);
+        
+        // Force reflow
+        videoCircleContainer.offsetHeight;
+        
+        // Animate circle SHRINKING to center point
+        videoCircleContainer.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        videoCircleContainer.style.width = '0';
+        videoCircleContainer.style.height = '0';
+        
+        // Navigate after circle fully shrinks
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 1000);
+    }
+    
+    // Fallback method for projects without videos - ALSO REVERSE
+    startBlackCircleTransition(targetUrl) {
         const circleOverlay = document.createElement('div');
         circleOverlay.style.cssText = `
             position: fixed;
             top: 50%;
             left: 50%;
-            width: 0;
-            height: 0;
+            width: 300vw;
+            height: 300vh;
             background: #000;
             border-radius: 50%;
             transform: translate(-50%, -50%);
@@ -610,16 +677,12 @@ class PageTransition {
         `;
         
         document.body.appendChild(circleOverlay);
-        
-        // Force reflow
         circleOverlay.offsetHeight;
         
-        // Animate circle expansion
         circleOverlay.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        circleOverlay.style.width = '300vw';
-        circleOverlay.style.height = '300vh';
+        circleOverlay.style.width = '0';
+        circleOverlay.style.height = '0';
         
-        // Navigate after circle fully covers screen
         setTimeout(() => {
             window.location.href = targetUrl;
         }, 1000);
