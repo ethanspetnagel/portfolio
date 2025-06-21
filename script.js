@@ -649,18 +649,25 @@ class PageTransition {
         // Force reflow
         videoCircleContainer.offsetHeight;
         
-        // Animate circle SHRINKING to center point
-        videoCircleContainer.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        // Animate circle SHRINKING to center point - SLOWER (2 seconds)
+        videoCircleContainer.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         videoCircleContainer.style.width = '0';
         videoCircleContainer.style.height = '0';
         
-        // Navigate after circle fully shrinks
+        // Navigate EARLIER to allow smooth connection (1.8 seconds)
         setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 1000);
+            window.location.href = targetUrl + '?from_transition=true';
+        }, 1800);
+        
+        // Clean up after full animation completes
+        setTimeout(() => {
+            if (videoCircleContainer.parentNode) {
+                videoCircleContainer.remove();
+            }
+        }, 2200);
     }
     
-    // Fallback method for projects without videos - ALSO REVERSE
+    // Fallback method for projects without videos - ALSO SLOWER
     startBlackCircleTransition(targetUrl) {
         const circleOverlay = document.createElement('div');
         circleOverlay.style.cssText = `
@@ -679,13 +686,20 @@ class PageTransition {
         document.body.appendChild(circleOverlay);
         circleOverlay.offsetHeight;
         
-        circleOverlay.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        circleOverlay.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         circleOverlay.style.width = '0';
         circleOverlay.style.height = '0';
         
         setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 1000);
+            window.location.href = targetUrl + '?from_transition=true';
+        }, 1800);
+        
+        // Clean up
+        setTimeout(() => {
+            if (circleOverlay.parentNode) {
+                circleOverlay.remove();
+            }
+        }, 2200);
     }
 }
 
@@ -696,8 +710,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize video pool immediately
     initializeVideoPool();
     
-    // Initialize page transition with circle effect
+    // Initialize page transition with video circle effect
     const pageTransition = new PageTransition();
+    
+    // Check if we came from a transition to enable smooth return
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('from_transition') === 'true') {
+        // Remove the parameter from URL without refresh
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+        
+        // Ensure transition system is ready for next click
+        setTimeout(() => {
+            pageTransition.isTransitioning = false;
+        }, 100);
+    }
     
     // Force start videos after a brief delay
     setTimeout(() => {
