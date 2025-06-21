@@ -1,10 +1,3 @@
-// Add html2canvas library dynamically if not already included
-if (!window.html2canvas) {
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-    document.head.appendChild(script);
-}
-
 // Text scramble effect class for the "OTHER PROJECTS" button/arrow
 class TextScramble {
     constructor(el) {
@@ -302,279 +295,12 @@ class SmoothScroll {
     }
 }
 
-// UPDATED Page Transition Class with Screenshot Circle Effect
-class PageTransition {
-    constructor() {
-        this.isTransitioning = false;
-        this.init();
-    }
-
-    init() {
-        this.attachLinkHandlers();
-    }
-
-    attachLinkHandlers() {
-        // Home/Back button (bottom-left)
-        const projectsButton = document.querySelector('.projects-button');
-        if (projectsButton) {
-            projectsButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.startScreenshotCircleTransition('../index.html');
-            });
-        }
-
-        // Site title click (top-left SLUG)
-        const siteTitle = document.querySelector('.site-title a');
-        if (siteTitle) {
-            siteTitle.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.startScreenshotCircleTransition('../index.html');
-            });
-        }
-    }
-
-    async startScreenshotCircleTransition(targetUrl) {
-        if (this.isTransitioning) return;
-        
-        this.isTransitioning = true;
-        
-        try {
-            // Wait for html2canvas to load if needed
-            if (!window.html2canvas) {
-                await this.waitForHtml2Canvas();
-            }
-            
-            // Capture screenshot of current page
-            const canvas = await html2canvas(document.body, {
-                allowTaint: true,
-                useCORS: true,
-                scale: 0.5, // Reduce quality for performance
-                logging: false,
-                backgroundColor: null
-            });
-            
-            // Create full-screen container
-            const transitionContainer = document.createElement('div');
-            transitionContainer.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 30000;
-                pointer-events: none;
-            `;
-            
-            // Create background iframe to load the HOME page
-            const homePageFrame = document.createElement('iframe');
-            homePageFrame.src = targetUrl;
-            homePageFrame.style.cssText = `
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border: none;
-                opacity: 0;
-                background: transparent;
-                pointer-events: none;
-            `;
-            
-            // Prevent iframe interactions that cause glitches
-            homePageFrame.setAttribute('scrolling', 'no');
-            homePageFrame.setAttribute('seamless', 'seamless');
-            
-            // Create screenshot circle container - START FULL SCREEN AS ELLIPSE
-            const screenshotCircleContainer = document.createElement('div');
-            screenshotCircleContainer.style.cssText = `
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 400vw;
-                height: 200vh;
-                border-radius: 50%;
-                transform: translate(-50%, -50%);
-                overflow: hidden;
-                z-index: 2;
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-            `;
-            
-            // Create image from canvas
-            const screenshotImage = document.createElement('img');
-            screenshotImage.src = canvas.toDataURL('image/jpeg', 0.8);
-            screenshotImage.style.cssText = `
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                opacity: 1;
-            `;
-            
-            screenshotCircleContainer.appendChild(screenshotImage);
-            transitionContainer.appendChild(homePageFrame);
-            transitionContainer.appendChild(screenshotCircleContainer);
-            document.body.appendChild(transitionContainer);
-            
-            // Show home page background after iframe loads (or after 500ms)
-            const showHomePage = () => {
-                homePageFrame.style.opacity = '1';
-            };
-            
-            homePageFrame.onload = showHomePage;
-            setTimeout(showHomePage, 500); // Fallback
-            
-            // Force reflow
-            screenshotCircleContainer.offsetHeight;
-            
-            // Animate circle SHRINKING to center point - 2 seconds
-            screenshotCircleContainer.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            screenshotCircleContainer.style.width = '0';
-            screenshotCircleContainer.style.height = '0';
-            
-            // Navigate when circle is almost gone
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 1900);
-            
-            // Clean up after navigation
-            setTimeout(() => {
-                if (transitionContainer.parentNode) {
-                    transitionContainer.remove();
-                }
-                this.isTransitioning = false;
-            }, 2200);
-            
-        } catch (error) {
-            console.log('Screenshot failed, using black circle fallback');
-            this.startBlackCircleTransition(targetUrl);
-        }
-    }
-    
-    // Fallback method if screenshot fails - WITH HOME PAGE BACKGROUND
-    startBlackCircleTransition(targetUrl) {
-        // Create full-screen container
-        const transitionContainer = document.createElement('div');
-        transitionContainer.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 30000;
-            pointer-events: none;
-        `;
-        
-        // Create background iframe for home page
-        const homePageFrame = document.createElement('iframe');
-        homePageFrame.src = targetUrl;
-        homePageFrame.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            opacity: 0;
-            background: transparent;
-            pointer-events: none;
-        `;
-        
-        homePageFrame.setAttribute('scrolling', 'no');
-        homePageFrame.setAttribute('seamless', 'seamless');
-        
-        // Create black circle overlay AS ELLIPSE
-        const circleOverlay = document.createElement('div');
-        circleOverlay.style.cssText = `
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 400vw;
-            height: 200vh;
-            background: #000;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        `;
-        
-        transitionContainer.appendChild(homePageFrame);
-        transitionContainer.appendChild(circleOverlay);
-        document.body.appendChild(transitionContainer);
-        
-        // Show home page background
-        const showHomePage = () => {
-            homePageFrame.style.opacity = '1';
-        };
-        
-        homePageFrame.onload = showHomePage;
-        setTimeout(showHomePage, 500);
-        
-        circleOverlay.offsetHeight;
-        
-        circleOverlay.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        circleOverlay.style.width = '0';
-        circleOverlay.style.height = '0';
-        
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 1900);
-        
-        setTimeout(() => {
-            if (transitionContainer.parentNode) {
-                transitionContainer.remove();
-            }
-            this.isTransitioning = false;
-        }, 2200);
-    }
-    
-    // Wait for html2canvas library to load
-    waitForHtml2Canvas() {
-        return new Promise((resolve) => {
-            const checkInterval = setInterval(() => {
-                if (window.html2canvas) {
-                    clearInterval(checkInterval);
-                    resolve();
-                }
-            }, 100);
-        });
-    }
-}
-
 // Main initialization
 // Remove page loading state when page is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Remove loading state
     document.body.classList.remove('page-navigating');
     
-    // Existing DOMContentLoaded code...
-    // FIXED Page Entrance Animation Handler - Prevent Flash
-    function handlePageEntrance() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const fromTransition = urlParams.get('from_transition') === 'true';
-        
-        // Clean URL immediately to prevent flash
-        if (urlParams.get('from_transition') || urlParams.get('transition')) {
-            const cleanUrl = window.location.pathname;
-            window.history.replaceState({}, document.title, cleanUrl);
-        }
-        
-        // Only apply transition class if specifically from home transition
-        if (fromTransition) {
-            document.body.classList.add('from-transition');
-            
-            setTimeout(() => {
-                document.body.classList.remove('from-transition');
-            }, 100); // Much faster to prevent flash
-        }
-    }
-
-    // Call entrance animation handler IMMEDIATELY
-    handlePageEntrance();
-
     // Get DOM elements
     const tabs = document.querySelectorAll('.essay-tab');
     const essays = document.querySelectorAll('.essay-text');
@@ -599,9 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
         resistance: 0.5, // Heavier feel
         damping: 0.06 // Slower damping for heavier feel
     });
-
-    // Initialize UPDATED page transition with screenshot effect
-    const pageTransition = new PageTransition();
   
     // Create star scroll indicators
     const createScrollStars = () => {
@@ -639,8 +362,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 50);
     });
 
-    // Site title click to go home - REMOVED OLD NAVIGATION
-    // Now handled by PageTransition class
+    // Simple navigation without transitions
+    projectsButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = '../index.html';
+    });
+
+    // Site title click to go home
+    const siteTitleLink = document.querySelector('.site-title a');
+    if (siteTitleLink) {
+        siteTitleLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '../index.html';
+        });
+    }
   
     // Site title hover effect - background turns black
     let isOverTitle = false;
