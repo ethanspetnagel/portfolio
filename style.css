@@ -151,12 +151,12 @@ body {
   opacity: 1;
 }
 
-/* Project Links */
+/* Project Links - UPDATED COLOR */
 .project-link {
   display: block;
   width: fit-content;
   margin: 0 auto;
-  color: #0f0f0f;
+  color: #282c33; /* Changed from #0f0f0f to darker gray */
   text-decoration: none;
   font-size: clamp(32.4px, 7.29vw, 89.1px); /* Reduced by 10% */
   font-weight: bold;
@@ -185,7 +185,7 @@ body {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: #0f0f0f;
+  color: #424751; /* Changed from #0f0f0f to medium gray */
   padding: 0;
   display: inline-block;
   text-transform: uppercase;
@@ -215,7 +215,7 @@ body.june-hover .contact-links a {
 }
 
 .date-text.project-active {
-  color: #0f0f0f;
+  color: #424751; /* Changed from #0f0f0f to medium gray */
 }
 
 /* Apply blend mode when project is hovered */
@@ -233,13 +233,13 @@ body.project-hovering .date-text.project-active {
   z-index: 15;
 }
 
-/* Default text color without blend mode */
+/* Default text color without blend mode - UPDATED COLORS */
 .about-toggle,
 .bio-text,
 .bio-text p,
 .bio-text a,
 .contact-links a {
-  color: #0f0f0f;
+  color: #424751; /* Changed from #0f0f0f to medium gray */
 }
 
 /* Dynamic color based on video brightness */
@@ -278,7 +278,7 @@ body.project-hovering.video-light .contact-links a:hover::before {
   opacity: 1;
 }
 
-/* About toggle - 1/3 size of project links */
+/* About toggle - 1/3 size of project links - UPDATED COLOR */
 .about-toggle {
   font-size: clamp(10.8px, 2.43vw, 29.7px); /* 1/3 of project link size */
   font-weight: bold;
@@ -291,6 +291,7 @@ body.project-hovering.video-light .contact-links a:hover::before {
   line-height: 1;
   padding: 0;
   letter-spacing: 0.02em; /* Match date-text exactly */
+  color: #424751; /* Changed from #0f0f0f to medium gray */
 }
 
 .about-toggle:hover {
@@ -311,7 +312,7 @@ body.project-hovering.video-light .contact-links a:hover::before {
   overflow: visible;
 }
 
-/* Bio text - UPDATED to match Slug page exactly */
+/* Bio text - UPDATED to match Slug page exactly and COLOR */
 .bio-text {
   font-family: "Helvetica Neue", Arial, sans-serif; /* Changed from Borgia Pro */
   font-size: calc(1.6rem - 9px); /* Changed to match Slug page */
@@ -321,12 +322,14 @@ body.project-hovering.video-light .contact-links a:hover::before {
   cursor: default;
   margin-top: 5px;
   letter-spacing: -0.01em; /* Added to match Slug page */
+  color: #424751; /* Changed from #0f0f0f to medium gray */
 }
 
 .bio-text p {
   margin-bottom: 10px;
   font-family: "Helvetica Neue", Arial, sans-serif; /* Changed from Borgia Pro */
   font-weight: normal; /* Added to match Slug page */
+  color: #424751; /* Changed from #0f0f0f to medium gray */
 }
 
 /* Add word span styling for text parting effect */
@@ -335,9 +338,10 @@ body.project-hovering.video-light .contact-links a:hover::before {
   transition: transform 0.1s ease-out;
   margin-right: 0.3em;
 }
+
 /* Bio text links - UPDATED to lime green */
 .bio-text a {
-  color: black; /* Changed to lime green */
+  color: #b3d100; /* Changed to lime green */
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -358,7 +362,7 @@ body.project-hovering .bio-text a:hover {
   opacity: 0.7 !important;
 }
 
-/* Contact links - Updated with oval effect like tabs */
+/* Contact links - Updated with oval effect like tabs - UPDATED COLOR */
 .contact-links {
   margin-top: (10.8px, 2.43vw, 29.7px); /* Reduced from 30px */
   display: inline-flex; /* Changed to inline-flex for horizontal layout */
@@ -375,12 +379,12 @@ body.project-hovering .bio-text a:hover {
   font-style: normal;
   font-weight: normal;
   position: relative;
-  color: #0f0f0f !important;
+  color: #424751 !important; /* Changed from #0f0f0f to medium gray */
   padding: 8px 0; /* Vertical padding for oval effect */
   cursor: pointer;
 }
 
-/* Oval effect for contact links - same as tabs */
+/* Oval effect for contact links - same as tabs - UPDATED COLOR */
 .contact-links a::after {
   content: '';
   position: absolute;
@@ -389,7 +393,7 @@ body.project-hovering .bio-text a:hover {
   transform: translate(-50%, -50%);
   width: 0;
   height: 0;
-  border: 2px solid #0f0f0f; /* Black border like tabs */
+  border: 2px solid #424751; /* Changed from #0f0f0f to medium gray */
   border-radius: 50%; /* Perfect circle that gets stretched */
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -402,7 +406,7 @@ body.project-hovering .bio-text a:hover {
 }
 
 .contact-links a:hover {
-  color: #0f0f0f !important;
+  color: #424751 !important; /* Changed from #0f0f0f to medium gray */
   text-decoration: none !important;
   transform: translateY(2px); /* Same downward movement as tabs */
 }
@@ -562,7 +566,7 @@ body.transitioning {
   }
   
   .contact-links a:hover {
-    color: #0f0f0f !important;
+    color: #424751 !important; /* Changed from #0f0f0f to medium gray */
     text-decoration: none !important;
   }
 }
@@ -677,13 +681,13 @@ body.transitioning {
     display: none !important;
   }
 
-  /* Fix mix-blend-mode on mobile */
+  /* Fix mix-blend-mode on mobile - UPDATED COLOR */
   .about-toggle,
   .bio-text,
   .bio-text p,
   .bio-text a,
   .contact-links a {
     mix-blend-mode: normal;
-    color: #0f0f0f;
+    color: #424751; /* Changed from #0f0f0f to medium gray */
   }
 }
