@@ -134,7 +134,7 @@ body.title-hover .project-gallery {
   left: 15px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
-  font-size: 20px; /* FIXED AT 20PX */
+  font-size: clamp(10.8px, 2.43vw, 29.7px); /* NEW SIZE */
   text-transform: uppercase;
   text-decoration: none;
   color: #0f0f0f;
@@ -242,25 +242,26 @@ body.title-hover .project-gallery {
   text-decoration: none;
 }
 
+/* UPDATED NEURAL TABS - Contemporary Minimal */
 .nav-tabs {
   display: flex;
-  align-items: baseline;
-  gap: 25px;
+  gap: 40px;
+  position: relative;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 7px);
-  font-style: normal;
-  font-weight: 400;
+  font-size: calc(1.6rem - 9px); /* Smaller than original */
+  font-weight: normal;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   white-space: nowrap;
+  padding: 30px 0;
 }
 
 .essay-tab {
   cursor: pointer;
-  color: #0f0f0f !important; /* Always black */
-  transition: font-style 0.3s ease;
+  color: #0f0f0f !important; /* Black text */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   white-space: nowrap;
-  padding: 0;
+  padding: 18px 0;
   line-height: 1.08;
   margin: 0;
   flex-shrink: 0;
@@ -268,29 +269,40 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
-/* Hover effect - Black text, NO asterisk, italic */
-.essay-tab:hover:not(.active) {
-  color: #0f0f0f !important; /* Stay black */
-  font-style: italic;
+/* Outer ellipse ring that appears on hover/active - stretched circle like the image */
+.essay-tab::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border: 2px solid #999999; /* Light grey like the image */
+  border-radius: 50%; /* Perfect circle that gets stretched */
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Remove asterisk from hover */
-.essay-tab:hover:not(.active)::before {
-  content: ""; /* No asterisk on hover */
+.essay-tab:hover::after {
+  opacity: 1;
+  width: calc(100% + 40px); /* Creates the ellipse */
+  height: 24px; /* Much smaller height creates the stretched circle effect */
 }
 
-/* Active state - Black text, black asterisk, NO italic, NO underline */
+.essay-tab.active::after {
+  opacity: 1;
+  width: calc(100% + 40px); /* Creates the ellipse */
+  height: 24px; /* Much smaller height creates the stretched circle effect */
+  border-color: #999999; /* Keep same grey */
+}
+
+.essay-tab:hover {
+  transform: translateY(-2px);
+}
+
 .essay-tab.active {
-  font-weight: 400;
-  color: #0f0f0f !important; /* Black, not yellow */
-  font-style: normal; /* No italic on active */
-  text-decoration: none !important; /* No underline */
-}
-
-.essay-tab.active::before {
-  content: "*"; /* Asterisk only on active tab */
-  color: #0f0f0f !important; /* Black asterisk */
-  margin-right: 3px;
+  font-weight: normal; /* Keep same weight */
 }
 
 /* Remove any conflicting styles */
@@ -581,7 +593,7 @@ body.title-hover .project-gallery {
   .projects-button {
     bottom: 20px;
     left: 10px;
-    font-size: 20px; /* FIXED AT 20PX FOR MOBILE TOO */
+    font-size: clamp(10.8px, 2.43vw, 29.7px); /* CONSISTENT SIZE */
   }
   .page {
     flex-direction: column;
@@ -612,6 +624,7 @@ body.title-hover .project-gallery {
   .nav-tabs {
     gap: 20px;
     margin-bottom: 20px;
+    padding: 15px 0; /* Reduced padding for mobile */
   }
   .site-title {
     font-size: calc(1.3rem - 7px);
@@ -654,7 +667,7 @@ body.title-hover .project-gallery {
 
 @media (max-width: 480px) {
   .projects-button {
-    font-size: 20px; /* KEEP CONSISTENT AT 20PX */
+    font-size: clamp(10.8px, 2.43vw, 29.7px); /* KEEP CONSISTENT */
   }
   .site-title {
     font-size: calc(1.3rem - 7px);
