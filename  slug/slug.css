@@ -10,26 +10,26 @@
   }
 }
 
-/* Page Exit Animation - going back to home */
+/* Page Exit Animation - going back to home - UPDATED */
 @keyframes pageSlideDown {
   0% {
     transform: translateY(0);
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh);
+    transform: translateY(-100vh);
     opacity: 1;
   }
 }
 
 /* Apply entrance animation when coming from transition */
 body.from-transition {
-  animation: pageSlideUp 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  animation: pageSlideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-/* Apply exit animation when going back */
+/* Apply exit animation when going back - UPDATED */
 body.transitioning-out {
-  animation: pageSlideDown 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+  animation: pageSlideDown 0.8s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
 }
 
 /* Transition overlay for smooth page changes */
@@ -58,13 +58,12 @@ body.transitioning-out {
   top: 0;
   left: 0;
 }
-  pointer-events: all;
-}
 
 body.from-transition .page > * {
   animation: none; /* Prevent double animations */
 }
-  @font-face {
+
+@font-face {
   font-family: "Borgia Pro";
   src: url("../BorgiaPro-Regular.woff") format("woff");
 }
@@ -128,14 +127,14 @@ body.title-hover .project-gallery {
   background-color: #000000;
 }
 
-/* Projects/Home button */
+/* Projects/Home button - UPDATED FONT SIZE */
 .projects-button {
   position: fixed;
   bottom: 15px;
   left: 15px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
-  font-size: clamp(16px, 2.8vw, 39px);
+  font-size: 20px; /* FIXED AT 20PX */
   text-transform: uppercase;
   text-decoration: none;
   color: #0f0f0f;
@@ -560,31 +559,6 @@ body.title-hover .project-gallery {
   margin-right: 6vw;
 }
 
-/* Page Entrance Animation */
-@keyframes pageSlideDown {
-  0% {
-    transform: translateY(-100vh) translateX(50px);
-    opacity: 0.8;
-  }
-  70% {
-    transform: translateY(0) translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0) translateX(0);
-    opacity: 1;
-  }
-}
-
-/* Apply entrance animation when coming from transition */
-body.from-transition {
-  animation: pageSlideDown 1.2s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-}
-
-body.from-transition .page > * {
-  animation: none; /* Prevent double animations */
-}
-
 /* Responsive */
 @media (max-width: 1100px) {
   .essay-sidebar {
@@ -607,7 +581,7 @@ body.from-transition .page > * {
   .projects-button {
     bottom: 20px;
     left: 10px;
-    font-size: clamp(25px, 5vw, 60px);
+    font-size: 20px; /* FIXED AT 20PX FOR MOBILE TOO */
   }
   .page {
     flex-direction: column;
@@ -680,7 +654,7 @@ body.from-transition .page > * {
 
 @media (max-width: 480px) {
   .projects-button {
-    font-size: clamp(20px, 5vw, 40px);
+    font-size: 20px; /* KEEP CONSISTENT AT 20PX */
   }
   .site-title {
     font-size: calc(1.3rem - 7px);
