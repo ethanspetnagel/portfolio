@@ -365,6 +365,25 @@ class PageTransition {
                 pointer-events: none;
             `;
             
+            // Create background iframe to load the HOME page
+            const homePageFrame = document.createElement('iframe');
+            homePageFrame.src = targetUrl;
+            homePageFrame.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                opacity: 0;
+                background: transparent;
+                pointer-events: none;
+            `;
+            
+            // Prevent iframe interactions that cause glitches
+            homePageFrame.setAttribute('scrolling', 'no');
+            homePageFrame.setAttribute('seamless', 'seamless');
+            
             // Create screenshot circle container - START FULL SCREEN
             const screenshotCircleContainer = document.createElement('div');
             screenshotCircleContainer.style.cssText = `
@@ -393,8 +412,17 @@ class PageTransition {
             `;
             
             screenshotCircleContainer.appendChild(screenshotImage);
+            transitionContainer.appendChild(homePageFrame);
             transitionContainer.appendChild(screenshotCircleContainer);
             document.body.appendChild(transitionContainer);
+            
+            // Show home page background after iframe loads (or after 500ms)
+            const showHomePage = () => {
+                homePageFrame.style.opacity = '1';
+            };
+            
+            homePageFrame.onload = showHomePage;
+            setTimeout(showHomePage, 500); // Fallback
             
             // Force reflow
             screenshotCircleContainer.offsetHeight;
@@ -423,11 +451,42 @@ class PageTransition {
         }
     }
     
-    // Fallback method if screenshot fails
+    // Fallback method if screenshot fails - WITH HOME PAGE BACKGROUND
     startBlackCircleTransition(targetUrl) {
+        // Create full-screen container
+        const transitionContainer = document.createElement('div');
+        transitionContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 30000;
+            pointer-events: none;
+        `;
+        
+        // Create background iframe for home page
+        const homePageFrame = document.createElement('iframe');
+        homePageFrame.src = targetUrl;
+        homePageFrame.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0;
+            background: transparent;
+            pointer-events: none;
+        `;
+        
+        homePageFrame.setAttribute('scrolling', 'no');
+        homePageFrame.setAttribute('seamless', 'seamless');
+        
+        // Create black circle overlay
         const circleOverlay = document.createElement('div');
         circleOverlay.style.cssText = `
-            position: fixed;
+            position: absolute;
             top: 50%;
             left: 50%;
             width: 300vw;
@@ -435,11 +494,21 @@ class PageTransition {
             background: #000;
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            z-index: 30000;
-            pointer-events: none;
+            z-index: 2;
         `;
         
-        document.body.appendChild(circleOverlay);
+        transitionContainer.appendChild(homePageFrame);
+        transitionContainer.appendChild(circleOverlay);
+        document.body.appendChild(transitionContainer);
+        
+        // Show home page background
+        const showHomePage = () => {
+            homePageFrame.style.opacity = '1';
+        };
+        
+        homePageFrame.onload = showHomePage;
+        setTimeout(showHomePage, 500);
+        
         circleOverlay.offsetHeight;
         
         circleOverlay.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -451,8 +520,8 @@ class PageTransition {
         }, 1900);
         
         setTimeout(() => {
-            if (circleOverlay.parentNode) {
-                circleOverlay.remove();
+            if (transitionContainer.parentNode) {
+                transitionContainer.remove();
             }
             this.isTransitioning = false;
         }, 2200);
