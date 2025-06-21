@@ -320,7 +320,7 @@ body.title-hover .project-gallery {
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
-  margin-top: 5px; /* Further reduced from 10px to 5px */
+  margin-top: 0px; /* Further reduced from 10px to 5px */
   position: relative;
 }
 
@@ -630,7 +630,7 @@ body.title-hover .project-gallery {
   }
   .nav-tabs {
     gap: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 15px 0; /* Reduced padding for mobile */
   }
   .site-title {

@@ -320,7 +320,7 @@ body.title-hover .project-gallery {
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
-  margin-top: 5px; /* Further reduced from 10px to 5px */
+  margin-top: 0px; /* Further reduced from 10px to 5px */
   position: relative;
 }
 
@@ -338,7 +338,7 @@ body.title-hover .project-gallery {
   font-size: calc(1.6rem - 9px); /* Changed to match tabs font size */
   font-weight: normal;
   line-height: 1.08;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: #424751; /* Changed from #0f0f0f to dark gray */
   letter-spacing: -0.01em;
   cursor: default;
