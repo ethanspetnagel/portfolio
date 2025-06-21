@@ -1,3 +1,10 @@
+// Add html2canvas library dynamically if not already included
+if (!window.html2canvas) {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    document.head.appendChild(script);
+}
+
 // Text scramble effect class for the "OTHER PROJECTS" button/arrow
 class TextScramble {
     constructor(el) {
@@ -295,7 +302,7 @@ class SmoothScroll {
     }
 }
 
-// Page Transition Class for smooth transitions both ways
+// UPDATED Page Transition Class with Screenshot Circle Effect
 class PageTransition {
     constructor() {
         this.isTransitioning = false;
@@ -303,95 +310,191 @@ class PageTransition {
     }
 
     init() {
-        this.createTransitionElements();
         this.attachLinkHandlers();
     }
 
-    createTransitionElements() {
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'page-transition-overlay';
-        
-        // Create container for current page clone
-        const pageClone = document.createElement('div');
-        pageClone.className = 'page-clone';
-        overlay.appendChild(pageClone);
-        
-        document.body.appendChild(overlay);
-        this.elements = {
-            overlay: overlay,
-            pageClone: pageClone
-        };
-    }
-
     attachLinkHandlers() {
-        // Home/Back button
+        // Home/Back button (bottom-left)
         const projectsButton = document.querySelector('.projects-button');
         if (projectsButton) {
             projectsButton.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.startTransition('https://ethanspetnagel.online', 'back');
+                this.startScreenshotCircleTransition('../index.html');
             });
         }
 
-        // Site title click
+        // Site title click (top-left SLUG)
         const siteTitle = document.querySelector('.site-title a');
         if (siteTitle) {
             siteTitle.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.startTransition('https://ethanspetnagel.online', 'back');
+                this.startScreenshotCircleTransition('../index.html');
             });
         }
     }
 
-    startTransition(targetUrl, direction = 'forward') {
+    async startScreenshotCircleTransition(targetUrl) {
         if (this.isTransitioning) return;
         
         this.isTransitioning = true;
         
-        // Clone current page state
-        const pageContent = document.querySelector('.page').cloneNode(true);
-        this.elements.pageClone.innerHTML = '';
-        this.elements.pageClone.appendChild(pageContent);
-        
-        // Show overlay
-        this.elements.overlay.classList.add('active');
-        
-        // Add exit animation
-        requestAnimationFrame(() => {
-            document.body.classList.add('transitioning-out');
+        try {
+            // Wait for html2canvas to load if needed
+            if (!window.html2canvas) {
+                await this.waitForHtml2Canvas();
+            }
             
-            // Navigate after animation completes
+            // Capture screenshot of current page
+            const canvas = await html2canvas(document.body, {
+                allowTaint: true,
+                useCORS: true,
+                scale: 0.5, // Reduce quality for performance
+                logging: false,
+                backgroundColor: null
+            });
+            
+            // Create full-screen container
+            const transitionContainer = document.createElement('div');
+            transitionContainer.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 30000;
+                pointer-events: none;
+            `;
+            
+            // Create screenshot circle container - START FULL SCREEN
+            const screenshotCircleContainer = document.createElement('div');
+            screenshotCircleContainer.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 300vw;
+                height: 300vh;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                overflow: hidden;
+                z-index: 2;
+            `;
+            
+            // Create image from canvas
+            const screenshotImage = document.createElement('img');
+            screenshotImage.src = canvas.toDataURL('image/jpeg', 0.8);
+            screenshotImage.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 1;
+            `;
+            
+            screenshotCircleContainer.appendChild(screenshotImage);
+            transitionContainer.appendChild(screenshotCircleContainer);
+            document.body.appendChild(transitionContainer);
+            
+            // Force reflow
+            screenshotCircleContainer.offsetHeight;
+            
+            // Animate circle SHRINKING to center point - 2 seconds
+            screenshotCircleContainer.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            screenshotCircleContainer.style.width = '0';
+            screenshotCircleContainer.style.height = '0';
+            
+            // Navigate when circle is almost gone
             setTimeout(() => {
                 window.location.href = targetUrl;
-            }, 600);
+            }, 1900);
+            
+            // Clean up after navigation
+            setTimeout(() => {
+                if (transitionContainer.parentNode) {
+                    transitionContainer.remove();
+                }
+                this.isTransitioning = false;
+            }, 2200);
+            
+        } catch (error) {
+            console.log('Screenshot failed, using black circle fallback');
+            this.startBlackCircleTransition(targetUrl);
+        }
+    }
+    
+    // Fallback method if screenshot fails
+    startBlackCircleTransition(targetUrl) {
+        const circleOverlay = document.createElement('div');
+        circleOverlay.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 300vw;
+            height: 300vh;
+            background: #000;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30000;
+            pointer-events: none;
+        `;
+        
+        document.body.appendChild(circleOverlay);
+        circleOverlay.offsetHeight;
+        
+        circleOverlay.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        circleOverlay.style.width = '0';
+        circleOverlay.style.height = '0';
+        
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 1900);
+        
+        setTimeout(() => {
+            if (circleOverlay.parentNode) {
+                circleOverlay.remove();
+            }
+            this.isTransitioning = false;
+        }, 2200);
+    }
+    
+    // Wait for html2canvas library to load
+    waitForHtml2Canvas() {
+        return new Promise((resolve) => {
+            const checkInterval = setInterval(() => {
+                if (window.html2canvas) {
+                    clearInterval(checkInterval);
+                    resolve();
+                }
+            }, 100);
         });
     }
 }
 
 // Main initialization
 document.addEventListener('DOMContentLoaded', () => {
-    // Page Entrance Animation Handler
+    // FIXED Page Entrance Animation Handler - Prevent Flash
     function handlePageEntrance() {
         const urlParams = new URLSearchParams(window.location.search);
-        const fromTransition = urlParams.get('transition') === 'true' || 
-            (document.referrer && document.referrer.includes(window.location.hostname));
+        const fromTransition = urlParams.get('from_transition') === 'true';
         
+        // Clean URL immediately to prevent flash
+        if (urlParams.get('from_transition') || urlParams.get('transition')) {
+            const cleanUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+        }
+        
+        // Only apply transition class if specifically from home transition
         if (fromTransition) {
             document.body.classList.add('from-transition');
             
             setTimeout(() => {
                 document.body.classList.remove('from-transition');
-                
-                if (urlParams.get('transition')) {
-                    const cleanUrl = window.location.pathname;
-                    window.history.replaceState({}, document.title, cleanUrl);
-                }
-            }, 600); // Faster transition
+            }, 100); // Much faster to prevent flash
         }
     }
 
-    // Call entrance animation handler first
+    // Call entrance animation handler IMMEDIATELY
     handlePageEntrance();
 
     // Get DOM elements
@@ -419,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
         damping: 0.06 // Slower damping for heavier feel
     });
 
-    // Initialize page transition
+    // Initialize UPDATED page transition with screenshot effect
     const pageTransition = new PageTransition();
   
     // Create star scroll indicators
@@ -458,11 +561,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 50);
     });
 
-    // Site title click to go home
-    siteTitle.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = 'https://ethanspetnagel.online';
-    });
+    // Site title click to go home - REMOVED OLD NAVIGATION
+    // Now handled by PageTransition class
   
     // Site title hover effect - background turns black
     let isOverTitle = false;
