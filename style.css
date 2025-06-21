@@ -311,19 +311,22 @@ body.project-hovering.video-light .contact-links a:hover::before {
   overflow: visible;
 }
 
-/* Bio text */
+/* Bio text - UPDATED to match Slug page exactly */
 .bio-text {
-  font-size: calc(1.6rem - 7px);
-  line-height: 1.2;
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed from Borgia Pro */
+  font-size: calc(1.6rem - 9px); /* Changed to match Slug page */
+  font-weight: normal; /* Added to match Slug page */
+  line-height: 1.08; /* Changed to match Slug page - was 1.2 */
   text-align: left;
-  font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
   cursor: default;
-  margin-top: 5px; /* Reduced from 10px to make gap smaller */
+  margin-top: 5px;
+  letter-spacing: -0.01em; /* Added to match Slug page */
 }
 
 .bio-text p {
   margin-bottom: 10px;
-  font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed from Borgia Pro */
+  font-weight: normal; /* Added to match Slug page */
 }
 
 /* Add word span styling for text parting effect */

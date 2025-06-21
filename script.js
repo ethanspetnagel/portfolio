@@ -641,14 +641,14 @@ class PageTransition {
         targetPageFrame.setAttribute('scrolling', 'no');
         targetPageFrame.setAttribute('seamless', 'seamless');
         
-        // Create video circle container - START FULL SCREEN
+        // Create video circle container - START FULL SCREEN AS ELLIPSE
         const videoCircleContainer = document.createElement('div');
         videoCircleContainer.style.cssText = `
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 300vw;
-            height: 300vh;
+            width: 400vw;
+            height: 200vh;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             overflow: hidden;
@@ -744,14 +744,14 @@ class PageTransition {
             opacity: 0;
         `;
         
-        // Create black circle overlay
+        // Create black circle overlay AS ELLIPSE
         const circleOverlay = document.createElement('div');
         circleOverlay.style.cssText = `
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 300vw;
-            height: 300vh;
+            width: 400vw;
+            height: 200vh;
             background: #000;
             border-radius: 50%;
             transform: translate(-50%, -50%);

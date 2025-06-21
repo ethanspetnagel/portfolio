@@ -68,15 +68,15 @@ body.from-transition .page > * {
   box-sizing: border-box;
 }
 
-/* Selection color */
+/* Selection color - UPDATED to match home page */
 ::selection {
-  background-color: #ffcc00;
-  color: #000000;
+  background-color: #00233f; /* Dark blue background */
+  color: #c0e7ff; /* Light blue text */
 }
 
 ::-moz-selection {
-  background-color: #ffcc00;
-  color: #000000;
+  background-color: #00233f; /* Dark blue background */
+  color: #c0e7ff; /* Light blue text */
 }
 
 body {
@@ -191,13 +191,13 @@ body.title-hover .project-gallery {
   background: transparent;
 }
 
-/* Star scrollbar indicator - 30% smaller, faster fade */
+/* Star scrollbar indicator - UPDATED to dark blue */
 .star-scroll-indicator {
   position: fixed;
   left: calc(36vw - 25px);
   top: 15px;
   font-size: 33.6px; /* 30% smaller than 48px */
-  color: #ffcc00;
+  color: #00233f; /* Changed from #ffcc00 to dark blue */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Faster fade */
   pointer-events: none;
@@ -377,13 +377,13 @@ body.title-hover .project-gallery {
   background: transparent;
 }
 
-/* Gallery star scrollbar - 30% smaller, faster fade */
+/* Gallery star scrollbar - UPDATED to dark blue */
 .star-scroll-indicator-gallery {
   position: fixed;
   right: 15px;
   top: 15px;
   font-size: 33.6px; /* 30% smaller than 48px */
-  color: #ffcc00;
+  color: #00233f; /* Changed from #ffcc00 to dark blue */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Faster fade */
   pointer-events: none;
@@ -475,26 +475,28 @@ body.title-hover .project-gallery {
   margin-right: 6vw;
 }
 
-/* Captions and info */
+/* Captions and info - UPDATED to match bio-text styling */
 .caption {
   align-self: flex-start;
   margin-top: 14px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px; /* Back to smaller size to actually match tab visual size */
-  font-weight: 400;
-  text-transform: none; /* Changed from uppercase to none */
-  letter-spacing: 0.05em;
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
+  font-size: calc(1.6rem - 9px); /* Matches bio-text */
+  font-weight: normal; /* Matches bio-text */
+  text-transform: none; /* Removed all caps */
+  letter-spacing: -0.01em; /* Matches bio-text */
+  line-height: 1.08; /* Matches bio-text */
 }
 
 .info-toggle {
   align-self: flex-start;
   margin-top: 8px;
   cursor: pointer;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px; /* Back to smaller size to actually match tab visual size */
-  font-weight: 400;
-  text-transform: none; /* Changed from uppercase to none */
-  letter-spacing: 0.05em;
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
+  font-size: calc(1.6rem - 9px); /* Matches bio-text */
+  font-weight: normal; /* Matches bio-text */
+  text-transform: none; /* Removed all caps */
+  letter-spacing: -0.01em; /* Matches bio-text */
+  line-height: 1.08; /* Matches bio-text */
   transition: all 0.3s ease;
 }
 
@@ -507,16 +509,16 @@ body.title-hover .project-gallery {
   font-weight: bold;
 }
 
-/* Info panel */
+/* Info panel - UPDATED to match bio-text styling */
 .info-panel {
   align-self: flex-start;
   margin-top: 8px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px; /* Back to smaller size to actually match tab visual size */
-  font-weight: normal;
-  text-transform: none; /* Already set to none - no uppercase */
-  letter-spacing: 0.02em;
-  line-height: 1.4;
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
+  font-size: calc(1.6rem - 9px); /* Matches bio-text */
+  font-weight: normal; /* Matches bio-text */
+  text-transform: none; /* Removed all caps */
+  letter-spacing: -0.01em; /* Matches bio-text */
+  line-height: 1.08; /* Matches bio-text */
   color: #0f0f0f;
   max-height: 0;
   overflow: hidden;
@@ -538,15 +540,15 @@ body.title-hover .project-gallery {
 
 .info-panel p:first-child {
   font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  text-transform: none; /* Removed uppercase */
+  letter-spacing: -0.01em; /* Matches bio-text */
   margin-bottom: 12px;
 }
 
 .info-panel p strong {
   font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: none; /* Removed uppercase */
+  letter-spacing: -0.01em; /* Matches bio-text */
   display: inline-block;
   margin-right: 20px;
   min-width: 120px;
@@ -633,7 +635,7 @@ body.title-hover .project-gallery {
   .caption,
   .info-toggle,
   .info-panel {
-    font-size: 13px; /* Back to smaller size */
+    font-size: calc(1.3rem - 7px); /* Matches mobile bio-text size */
   }
   .slide img,
   .slide video,
