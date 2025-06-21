@@ -130,7 +130,7 @@ body {
   z-index: 10;
   opacity: 1;
   visibility: visible;
-  padding: 20px 20px 180px; /* Increased bottom padding to ensure bio space */
+  padding: 20px;
 }
 
 /* Projects Container */
@@ -138,10 +138,9 @@ body {
   text-align: center;
   max-width: 1200px;
   width: 100%;
-  margin: 0 auto 40px; /* Further reduced to prevent overlap */
+  margin: 0 auto;
   line-height: 0.8;
   padding-top: 10px;
-  padding-bottom: 200px; /* Add padding to ensure space for bio */
 }
 
 .projects-container.hovering .project-link {
