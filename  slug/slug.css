@@ -1,32 +1,470 @@
-/* Page Entrance Animation - Circle Shrink from Black */
-@keyframes circleShrinkReveal {
-  0% {
-    width: 300%;
-    height: 300%;
-  }
-  100% {
-    width: 0;
-    height: 0;
-  }
+/* Font Face Declaration for Borgia Pro */
+@font-face {
+  font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  src: url('HelveticaNeue.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-/* Apply entrance animation when page loads */
-body.page-loading::before {
-  content: '';
+@font-face {
+ font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  src: url('HelveticaNeue.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+   font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  src: url('HelveticaNeue.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+   font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  src: url('HelveticaNeue.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Selection Highlight Colors - Modern Blue Shades */
+::selection {
+  background-color: #00233f; /* Dark blue background */
+  color: #c0e7ff; /* Light blue text */
+}
+
+::-moz-selection {
+  background-color: #00233f; /* Dark blue background */
+  color: #c0e7ff; /* Light blue text */
+}
+
+/* For specific elements if needed */
+.project-link::selection,
+.bio-text::selection,
+.date-text::selection {
+  background-color: #00233f;
+  color: #c0e7ff;
+}
+
+body {
+  background-color: #f0f5f5;
+  color: #0f0f0f;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+}
+
+/* Fullscreen Background Layer */
+.fullscreen-bg {
   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.15s ease; /* Faster for instant feel */
+  pointer-events: none;
+  background-color: #fafafa;
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: opacity;
+}
+
+.fullscreen-bg.active {
+  opacity: 1;
+}
+
+.fullscreen-bg video,
+.fullscreen-bg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  /* Hardware acceleration for videos */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Prevent flickering */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.fullscreen-bg video.active,
+.fullscreen-bg img.active {
+  display: block;
+}
+
+/* Add filter for images only, not church video */
+.fullscreen-bg img.active {
+  filter: brightness(0.9);
+}
+
+/* Better video quality */
+.fullscreen-bg video.active {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Main Content - Always visible */
+.main-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  padding: 20px;
+}
+
+/* Projects Container */
+.projects-container {
+  text-align: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 0.8;
+  padding-top: 10px;
+}
+
+.projects-container.hovering .project-link {
+  opacity: 0.25;
+}
+
+.projects-container.hovering .project-link:hover {
+  opacity: 1;
+}
+
+/* Project Links - UPDATED COLOR */
+.project-link {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  color: #282c33; /* Changed from #0f0f0f to darker gray */
+  text-decoration: none;
+  font-size: clamp(32.4px, 7.29vw, 89.1px); /* Reduced by 10% */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  transition: opacity 0.2s ease;
+  cursor: crosshair;
+  position: relative;
+  will-change: color, opacity;
+}
+
+
+/* Website Info */
+.website-info {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.date-text {
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #424751; /* Changed from #0f0f0f to medium gray */
+  padding: 0;
+  display: inline-block;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.02em; /* Match about-toggle */
+}
+
+/* Date text hover - background turns black, text turns white */
+.date-text:hover {
+  color: #ffffff;
+}
+
+/* Special class for black background effect */
+body.june-hover {
+  background-color: #000000;
+  transition: background-color 0.3s ease;
+}
+
+body.june-hover .project-link,
+body.june-hover .date-text,
+body.june-hover .about-toggle,
+body.june-hover .bio-text,
+body.june-hover .bio-text p,
+body.june-hover .bio-text a,
+body.june-hover .contact-links a {
+  color: #ffffff;
+}
+
+.date-text.project-active {
+  color: #424751; /* Changed from #0f0f0f to medium gray */
+}
+
+/* Apply blend mode when project is hovered */
+body.project-hovering .date-text.project-active {
+  mix-blend-mode: difference !important;
+  color: #ffffff !important;
+}
+
+/* Bio Section */
+.bio-section {
+  position: fixed;
+  bottom: 20px; /* Moved down another 10px (was 30px) */
+  left: 20px;
+  max-width: 400px;
+  z-index: 15;
+}
+
+/* Default text color without blend mode - UPDATED COLORS */
+.about-toggle,
+.bio-text,
+.bio-text p,
+.bio-text a,
+.contact-links a {
+  color: #424751; /* Changed from #0f0f0f to medium gray */
+}
+
+/* Dynamic color based on video brightness */
+body.project-hovering.video-dark .project-link:hover,
+body.project-hovering.video-dark .date-text.project-active,
+body.project-hovering.video-dark .about-toggle,
+body.project-hovering.video-dark .bio-text,
+body.project-hovering.video-dark .bio-text p,
+body.project-hovering.video-dark .bio-text a,
+body.project-hovering.video-dark .contact-links a {
+  color: #ffffff !important;
+}
+
+body.project-hovering.video-light .project-link:hover,
+body.project-hovering.video-light .date-text.project-active,
+body.project-hovering.video-light .about-toggle,
+body.project-hovering.video-light .bio-text,
+body.project-hovering.video-light .bio-text p,
+body.project-hovering.video-light .bio-text a,
+body.project-hovering.video-light .contact-links a {
+  color: #0f0f0f !important;
+}
+
+/* Ensure hover states work with dynamic colors */
+body.project-hovering.video-dark .bio-text a:hover {
+  color: #ffcc00 !important;
+}
+
+body.project-hovering.video-light .bio-text a:hover {
+  color: #ffcc00 !important;
+}
+
+body.project-hovering.video-dark .contact-links a:hover::before,
+body.project-hovering.video-light .contact-links a:hover::before {
+  color: inherit !important;
+  opacity: 1;
+}
+
+/* About toggle - 1/3 size of project links - UPDATED COLOR */
+.about-toggle {
+  font-size: clamp(10.8px, 2.43vw, 29.7px); /* 1/3 of project link size */
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 9px; /* Reduced by 50% from 18px */
+  transition: opacity 0.3s ease;
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0;
+  letter-spacing: 0.02em; /* Match date-text exactly */
+  color: #424751; /* Changed from #0f0f0f to medium gray */
+}
+
+.about-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Bio content */
+.bio-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+.bio-content.active {
+  max-height: 600px;
+  opacity: 1;
+  overflow: visible;
+}
+
+/* Bio text - UPDATED to match Slug page exactly and COLOR */
+.bio-text {
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed from Borgia Pro */
+  font-size: calc(1.6rem - 9px); /* Changed to match Slug page */
+  font-weight: normal; /* Added to match Slug page */
+  line-height: 1.08; /* Changed to match Slug page - was 1.2 */
+  text-align: left;
+  cursor: default;
+  margin-top: 5px;
+  letter-spacing: -0.01em; /* Added to match Slug page */
+  color: #424751; /* Changed from #0f0f0f to medium gray */
+}
+
+.bio-text p {
+  margin-bottom: 10px;
+  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed from Borgia Pro */
+  font-weight: normal; /* Added to match Slug page */
+  color: #424751; /* Changed from #0f0f0f to medium gray */
+}
+
+/* Add word span styling for text parting effect */
+.bio-text .word {
+  display: inline-block;
+  transition: transform 0.1s ease-out;
+  margin-right: 0.3em;
+}
+
+/* Bio text links - UPDATED to lime green */
+.bio-text a {
+  color: #b3d100; /* Changed to lime green */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.bio-text a:hover {
+  color: #b3d100; /* Keep same lime green on hover */
+  opacity: 0.7; /* Slightly transparent on hover instead of yellow */
+}
+
+/* When project is hovering, override with blend mode */
+body.project-hovering .bio-text a {
+  color: #b3d100 !important; /* Keep lime green even during video hover */
+}
+
+body.project-hovering .bio-text a:hover {
+  color: #b3d100 !important;
+  opacity: 0.7 !important;
+}
+
+/* Contact links - Updated with oval effect like tabs - UPDATED COLOR */
+.contact-links {
+  margin-top: (10.8px, 2.43vw, 29.7px); /* Reduced from 30px */
+  display: inline-flex; /* Changed to inline-flex for horizontal layout */
+  gap: 20px; /* Space between links */
+  font-size: calc(1.4rem - 7px); /* Reduced font size */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  align-items: baseline;
+}
+
+.contact-links a {
+  display: inline-block; /* Inline for horizontal layout */
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  font-style: normal;
+  font-weight: normal;
+  position: relative;
+  color: #424751 !important; /* Changed from #0f0f0f to medium gray */
+  padding: 8px 0; /* Vertical padding for oval effect */
+  cursor: pointer;
+}
+
+/* Oval effect for contact links - same as tabs - UPDATED COLOR */
+.contact-links a::after {
+  content: '';
+  position: absolute;
   top: 50%;
   left: 50%;
-  width: 300%;
-  height: 300%;
-  background: #000;
-  border-radius: 50%;
   transform: translate(-50%, -50%);
-  z-index: 20000;
-  animation: circleShrinkReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  pointer-events: none;
+  width: 0;
+  height: 0;
+  border: 2px solid #424751; /* Changed from #0f0f0f to medium gray */
+  border-radius: 50%; /* Perfect circle that gets stretched */
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Transition overlay for smooth page changes */
+.contact-links a:hover::after {
+  opacity: 1;
+  width: calc(100% + 30px); /* Creates the ellipse */
+  height: 20px; /* Smaller height for contact links */
+}
+
+.contact-links a:hover {
+  color: #424751 !important; /* Changed from #0f0f0f to medium gray */
+  text-decoration: none !important;
+  transform: translateY(2px); /* Same downward movement as tabs */
+}
+
+/* Override hover colors when project is active */
+body.project-hovering .contact-links a:hover {
+  color: #ffffff !important; /* White for blend mode */
+}
+
+body.project-hovering .contact-links a:hover::after {
+  border-color: #ffffff !important; /* White oval for blend mode */
+}
+
+body.project-hovering.video-light .contact-links a:hover {
+  color: #0f0f0f !important; /* Black for light videos */
+}
+
+body.project-hovering.video-light .contact-links a:hover::after {
+  border-color: #0f0f0f !important; /* Black oval for light videos */
+}
+
+/* Bio Preview */
+.bio-preview {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 150px;
+  height: 150px;
+  display: none;
+  z-index: 14;
+}
+
+.bio-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bio-preview.active {
+  display: block;
+}
+
+/* Touch device styles */
+@media (hover: none) and (pointer: coarse) {
+  .project-link.touch-active {
+    color: #ffff00;
+  }
+
+  .projects-container.touch-hovering .project-link {
+    opacity: 0.25;
+  }
+
+  .projects-container.touch-hovering .project-link.touch-active {
+    opacity: 1;
+  }
+}
+
+/* Page Transition Styles */
 .page-transition-overlay {
   position: fixed;
   top: 0;
@@ -45,630 +483,211 @@ body.page-loading::before {
   pointer-events: all;
 }
 
-.page-clone {
+/* Cloned content containers */
+.transition-clone-current,
+.transition-clone-next {
+  position: absolute;
   width: 100%;
   height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-body.from-transition .page > * {
-  animation: none; /* Prevent double animations */
-}
-
-@font-face {
-  font-family: "Borgia Pro";
-  src: url("../BorgiaPro-Regular.woff") format("woff");
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Selection color - UPDATED to match home page */
-::selection {
-  background-color: #00233f; /* Dark blue background */
-  color: #c0e7ff; /* Light blue text */
-}
-
-::-moz-selection {
-  background-color: #00233f; /* Dark blue background */
-  color: #c0e7ff; /* Light blue text */
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #f0f5f5;
-  color: #424751; /* Changed from #0f0f0f to dark gray */
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  position: relative;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Title hover effects - SLUG turns white, background turns black */
-.site-title:hover {
-  color: #fff !important;
-}
-
-.site-title a:hover {
-  color: #fff !important;
-}
-
-body.title-hover {
-  background-color: #000000 !important;
-}
-
-body.title-hover .essay-sidebar {
-  background: #000 !important;
-}
-
-body.title-hover .essay-sidebar .essay-text p {
-  color: #fff !important;
-}
-
-body.title-hover .nav-tabs,
-body.title-hover .essay-tab {
-  color: #fff !important;
-}
-
-body.title-hover .project-gallery {
-  background-color: #000000;
-}
-
-/* Projects/Home button - UPDATED FONT SIZE */
-.projects-button {
-  position: fixed;
-  bottom: 15px;
-  left: 15px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: 900;
-  font-size: clamp(10.8px, 2.43vw, 29.7px); /* NEW SIZE */
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #424751; /* Changed from #0f0f0f to dark gray */
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
-  letter-spacing: 0.02em;
-  transition: opacity 0.3s ease;
-}
-
-.projects-button:hover {
-  opacity: 0.6;
-}
-
-/* Cursor label - Inverse colors for better visibility */
-.cursor-label {
-  position: fixed;
-  pointer-events: none;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: bold;
-  font-size: clamp(16px, 2.8vw, 39px);
-  mix-blend-mode: difference; /* Inverts colors */
-  color: #ffffff !important; /* White inverts to black on light backgrounds */
-  z-index: 999;
-  display: none;
-  transform: translate(-50%, -150%);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  text-shadow: none !important;
-}
-
-/* Main page layout */
-.page {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
   left: 0;
   overflow: hidden;
 }
 
-/* Left sidebar */
-.essay-sidebar {
-  width: 36vw;
-  min-width: 320px;
-  max-width: 580px;
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  padding: 0 40px 40px 15px; /* Removed top padding completely */
-  scrollbar-width: none;
-  background: #f0f5f5;
-  position: relative;
+.transition-clone-current {
+  top: 0;
+  z-index: 1;
 }
 
-.essay-sidebar::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
+.transition-clone-next {
+  top: -100vh;
+  z-index: 2;
 }
 
-/* Star scrollbar indicator - UPDATED to light blue-gray */
-.star-scroll-indicator {
-  position: fixed;
-  left: calc(36vw - 25px);
-  top: 15px;
-  font-size: 33.6px; /* 30% smaller than 48px */
-  color: #e4e8f2; /* Changed to light blue-gray */
-  opacity: 0;
-  transition: opacity 0.3s ease, top 0.2s linear; /* Faster fade */
-  pointer-events: none;
-  z-index: 100;
+/* Animation for pushing effect with curve */
+@keyframes pushDown {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(100vh) scale(0.92);
+  }
 }
 
-.essay-sidebar:hover ~ .star-scroll-indicator,
-.essay-sidebar.scrolling ~ .star-scroll-indicator {
-  opacity: 1;
+@keyframes slideInCurved {
+  0% {
+    transform: translateY(-100vh) translateX(0);
+  }
+  50% {
+    transform: translateY(-20vh) translateX(100px); /* Strong curve */
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
 }
 
-/* Navigation with reduced gap */
-.top-navigation {
-  display: flex;
-  align-items: baseline;
-  gap: 40px; /* Reduced from 80px - cut in half */
-  margin-bottom: 8px; /* Further reduced from 15px to 8px */
-  width: 100%;
+.transition-clone-current.animating {
+  animation: pushDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Faster: 0.6s */
 }
 
-.site-title {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: bold;
-  font-size: calc(1.6rem - 7px);
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  cursor: pointer;
-  line-height: 1.08;
-  margin: 0;
-  white-space: nowrap;
-  flex-shrink: 0;
+.transition-clone-next.animating {
+  animation: slideInCurved 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Faster: 0.6s */
 }
 
-.site-title a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* UPDATED NEURAL TABS - Contemporary Minimal */
-.nav-tabs {
-  display: flex;
-  gap: 40px;
-  position: relative;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 9px); /* Smaller than original */
-  font-weight: normal;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  padding: 8px 0; /* Further reduced from 15px to 8px */
-}
-
-.essay-tab {
-  cursor: pointer;
-  color: #424751; /* Changed from #0f0f0f to dark gray */
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  white-space: nowrap;
-  padding: 18px 0;
-  line-height: 1.08;
-  margin: 0;
-  flex-shrink: 0;
-  display: inline-block;
-  position: relative;
-}
-
-/* Outer ellipse ring that appears on hover/active - stretched circle like the image */
-.essay-tab::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 0;
-  height: 0;
-  border: 2px solid #424751; /* Changed from #0f0f0f to dark gray */
-  border-radius: 50%; /* Perfect circle that gets stretched */
-  opacity: 0;
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.essay-tab:hover::after {
-  opacity: 1;
-  width: calc(100% + 40px); /* Creates the ellipse */
-  height: 24px; /* Much smaller height creates the stretched circle effect */
-}
-
-.essay-tab.active::after {
-  opacity: 1;
-  width: calc(100% + 40px); /* Creates the ellipse */
-  height: 24px; /* Much smaller height creates the stretched circle effect */
-  border-color: #424751; /* Changed from #0f0f0f to dark gray */
-}
-
-.essay-tab:hover {
-  transform: translateY(2px); /* Changed from -2px to 2px - moves down instead of up */
-}
-
-.essay-tab.active {
-  font-weight: normal; /* Keep same weight */
-}
-
-/* Remove any conflicting styles */
-.essay-tab:hover {
-  text-shadow: none !important;
-  color: #424751 !important; /* Changed from #0f0f0f to dark gray */
-}
-
-/* Essay content */
-.essay-content {
-  padding-right: 20px;
-  max-width: 100%;
-  margin-top: 5px; /* Further reduced from 10px to 5px */
-  position: relative;
-}
-
-.essay-text {
-  display: none;
-}
-
-.essay-text.active {
-  display: block;
-}
-
-/* Interactive text for word-level parting effect */
-.interactive-text {
-  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed from Borgia Pro to Helvetica Neue */
-  font-size: calc(1.6rem - 9px); /* Changed to match tabs font size */
-  font-weight: normal;
-  line-height: 1.08;
-  margin-bottom: 20px;
-  color: #424751; /* Changed from #0f0f0f to dark gray */
-  letter-spacing: -0.01em;
-  cursor: default;
-}
-
-.interactive-text .word {
-  display: inline-block;
-  transition: transform 0.1s ease-out;
-  margin-right: 0.3em;
-}
-
-.interactive-text strong {
-  font-family: "Helvetica Neue", Arial, sans-serif; /* Changed from Borgia Pro to Helvetica Neue */
-  font-weight: bold;
-  letter-spacing: -0.01em;
-}
-
-.interactive-text:last-child {
-  margin-bottom: 0;
-}
-
-/* Right gallery column */
-.project-gallery {
-  width: calc(100vw - 36vw);
-  min-width: 0;
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  padding: 15px 20px 40px 60px;
-  background-color: #f0f5f5;
-  scrollbar-width: none;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.project-gallery::-webkit-scrollbar {
-  width: 20px;
-  background: transparent;
-}
-
-.project-gallery::-webkit-scrollbar-thumb {
-  background: transparent;
-}
-
-.project-gallery::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Gallery star scrollbar - UPDATED to light blue-gray */
-.star-scroll-indicator-gallery {
-  position: fixed;
-  right: 15px;
-  top: 15px;
-  font-size: 33.6px; /* 30% smaller than 48px */
-  color: #e4e8f2; /* Changed to light blue-gray */
-  opacity: 0;
-  transition: opacity 0.3s ease, top 0.2s linear; /* Faster fade */
-  pointer-events: none;
-  z-index: 100;
-}
-
-.project-gallery:hover ~ .star-scroll-indicator-gallery,
-.project-gallery.scrolling ~ .star-scroll-indicator-gallery {
-  opacity: 0.8;
-}
-
-/* Project sets and blocks */
-.project-set {
-  display: none;
-  width: 100%;
-  flex-direction: column;
-  gap: 90px 0;
-  align-items: flex-end;
-}
-
-.project-set.active {
-  display: flex;
-}
-
-.project-block {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-bottom: 0;
-  background: none;
-  border: none;
-  box-shadow: none;
-  padding: 0;
-  position: relative;
-}
-
-/* Slideshow */
-.slideshow-zone {
-  width: auto;
-  max-width: 880px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.slide {
-  display: none;
-  width: auto;
-}
-
-.slide.current {
-  display: block;
-}
-
-.slide img,
-.slide video {
-  display: block;
-  max-width: 700px;
-  width: 78vw;
-  height: auto;
-  margin-bottom: 0;
-  margin-right: 0;
-  background: #f0f5f5;
-  box-shadow: none;
-  border-radius: 0;
-}
-
-/* Image size variations */
-.project-block:nth-child(2) .slide img,
-.project-block:nth-child(2) .slide video {
-  max-width: 550px;
-  width: 49vw;
-  margin-right: 4vw;
-}
-
-.project-block:nth-child(3) .slide img,
-.project-block:nth-child(3) .slide video {
-  max-width: 800px;
-  width: 65vw;
-  margin-right: 0;
-}
-
-.project-block:nth-child(4) .slide img,
-.project-block:nth-child(4) .slide video {
-  max-width: 600px;
-  width: 35vw;
-  margin-right: 6vw;
-}
-
-/* Captions and info - UPDATED to match bio-text styling */
-.caption {
-  align-self: flex-start;
-  margin-top: 14px;
-  font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
-  font-size: calc(1.6rem - 9px); /* Matches bio-text */
-  font-weight: normal; /* Matches bio-text */
-  text-transform: none; /* Removed all caps */
-  letter-spacing: -0.01em; /* Matches bio-text */
-  line-height: 1.08; /* Matches bio-text */
-}
-
-.info-toggle {
-  align-self: flex-start;
-  margin-top: 8px;
-  cursor: pointer;
-  font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
-  font-size: calc(1.6rem - 9px); /* Matches bio-text */
-  font-weight: normal; /* Matches bio-text */
-  text-transform: none; /* Removed all caps */
-  letter-spacing: -0.01em; /* Matches bio-text */
-  line-height: 1.08; /* Matches bio-text */
-  transition: all 0.3s ease;
-}
-
-.info-toggle:hover {
-  color: #ffcc00;
-  text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
-}
-
-.info-toggle.active {
-  font-weight: bold;
-}
-
-/* Info panel - UPDATED to match bio-text styling */
-.info-panel {
-  align-self: flex-start;
-  margin-top: 8px;
-  font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
-  font-size: calc(1.6rem - 9px); /* Matches bio-text */
-  font-weight: normal; /* Matches bio-text */
-  text-transform: none; /* Removed all caps */
-  letter-spacing: -0.01em; /* Matches bio-text */
-  line-height: 1.08; /* Matches bio-text */
-  color: #424751; /* Changed from #0f0f0f to dark gray */
-  max-height: 0;
+/* Prevent scroll during transition */
+body.transitioning {
   overflow: hidden;
-  transition: max-height 0.3s ease-out;
-  background: none;
-  padding: 0;
-  box-shadow: none;
+  position: fixed;
+  width: 100%;
 }
 
-.info-panel.active {
-  max-height: 500px;
-  padding: 8px 0 0 0;
-}
-
-.info-panel p {
-  margin: 0 0 8px 0;
-  padding-top: 0;
-}
-
-.info-panel p:first-child {
-  font-weight: 400;
-  text-transform: none; /* Removed uppercase */
-  letter-spacing: -0.01em; /* Matches bio-text */
-  margin-bottom: 12px;
-}
-
-.info-panel p strong {
-  font-weight: 400;
-  text-transform: none; /* Removed uppercase */
-  letter-spacing: -0.01em; /* Matches bio-text */
-  display: inline-block;
-  margin-right: 20px;
-  min-width: 120px;
-}
-
-/* Adjust margins for specific blocks */
-.project-block:nth-child(2) .caption,
-.project-block:nth-child(2) .info-toggle,
-.project-block:nth-child(2) .info-panel {
-  margin-right: 4vw;
-}
-
-.project-block:nth-child(4) .caption,
-.project-block:nth-child(4) .info-toggle,
-.project-block:nth-child(4) .info-panel {
-  margin-right: 6vw;
-}
-
-/* Responsive */
-@media (max-width: 1100px) {
-  .essay-sidebar {
-    min-width: 280px;
-    width: 38vw;
-    max-width: 420px;
-  }
-  .star-scroll-indicator {
-    left: calc(38vw - 25px);
-  }
-  .project-gallery {
-    width: calc(100vw - 38vw);
-  }
-  .top-navigation {
-    gap: 30px; /* Adjusted proportionally */
-  }
-}
-
+/* Media Queries - Tablet */
 @media (max-width: 768px) {
-  .projects-button {
-    bottom: 20px;
+  .project-link {
+    font-size: clamp(24.3px, 7.29vw, 64.8px); /* 10% smaller on tablet too */
+  }
+
+  .date-text {
+    font-size: clamp(8.1px, 2.43vw, 21.6px); /* 1/3 of project link size on tablet */
+  }
+
+  .about-toggle {
+    font-size: clamp(8.1px, 2.43vw, 21.6px); /* 1/3 of project link size on tablet */
+  }
+
+  .bio-section {
+    max-width: 300px;
     left: 10px;
-    font-size: clamp(10.8px, 2.43vw, 29.7px); /* CONSISTENT SIZE */
+    bottom: 10px;
   }
-  .page {
-    flex-direction: column;
-    overflow: visible;
-    position: static;
-    height: auto;
+
+  .bio-preview {
+    width: 100px;
+    height: 100px;
   }
-  .essay-sidebar,
-  .project-gallery {
-    width: 100vw;
-    height: 50vh;
-    min-width: 0;
-    padding: 20px;
-    border-right: none;
-  }
-  .essay-sidebar {
-    border-bottom: 1px solid #0f0f0f;
-  }
-  .star-scroll-indicator,
-  .star-scroll-indicator-gallery {
-    display: none;
-  }
-  .top-navigation {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .nav-tabs {
-    gap: 20px;
-    margin-bottom: 20px;
-    padding: 15px 0; /* Reduced padding for mobile */
-  }
-  .site-title {
-    font-size: calc(1.3rem - 7px);
-  }
-  .essay-nav {
-    font-size: calc(1.3rem - 7px);
-    gap: 20px;
-  }
-  .interactive-text {
-    font-size: calc(1.3rem - 7px);
-  }
-  .caption,
-  .info-toggle,
-  .info-panel {
-    font-size: calc(1.3rem - 7px); /* Matches mobile bio-text size */
-  }
-  .slide img,
-  .slide video,
-  .project-block:nth-child(2) .slide img,
-  .project-block:nth-child(2) .slide video,
-  .project-block:nth-child(3) .slide img,
-  .project-block:nth-child(3) .slide video,
-  .project-block:nth-child(4) .slide img,
-  .project-block:nth-child(4) .slide video {
-    width: 100%;
-    max-width: 100vw;
-    margin-right: 0;
-  }
-  .project-block,
-  .slideshow-zone {
-    align-items: flex-start;
-  }
-  /* Fix tab colors on mobile */
-  .essay-tab,
-  .essay-tab.active,
-  .essay-tab:hover {
-    color: #424751 !important; /* Changed from #0f0f0f to dark gray */
+  
+  .contact-links a:hover {
+    color: #424751 !important; /* Changed from #0f0f0f to medium gray */
+    text-decoration: none !important;
   }
 }
 
+/* Media Queries - Mobile */
 @media (max-width: 480px) {
-  .projects-button {
-    font-size: clamp(10.8px, 2.43vw, 29.7px); /* KEEP CONSISTENT */
+  body {
+    overflow-y: auto;
+    min-height: 100vh;
   }
-  .site-title {
+
+  .main-content {
+    position: relative;
+    min-height: 100vh;
+    padding: 40px 20px 20px;
+    justify-content: flex-start;
+  }
+
+  .projects-container {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    line-height: 1.1;
+    padding-top: 10px;
+    padding-bottom: 0; /* Reset padding on mobile */
+  }
+
+  .project-link {
+    font-size: clamp(19.44px, 6.48vw, 36.45px); /* 10% smaller on mobile too */
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+
+  .website-info {
+    position: static;
+    bottom: auto;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .date-text {
+    font-size: clamp(6.48px, 2.16vw, 12.15px); /* 1/3 of project link size on mobile */
+  }
+
+  .about-toggle {
+    font-size: clamp(6.48px, 2.16vw, 12.15px); /* 1/3 of project link size on mobile */
+  }
+
+  .bio-section {
+    position: static;
+    bottom: auto;
+    left: auto;
+    max-width: 100%;
+    max-height: none; /* Remove height limit on mobile */
+    margin: 0 auto;
+    padding: 0 20px 20px;
+    text-align: center;
+  }
+
+  .about-toggle {
+    padding: 5px 10px;
+    margin-bottom: 10px; /* Reduced for mobile */
+  }
+
+  .bio-content {
+    max-height: none;
+    text-align: left;
+  }
+
+  .bio-content.active {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bio-text {
     font-size: calc(1.3rem - 7px);
+    line-height: 1.2;
+    margin-top: 8px; /* Adjust for mobile */
   }
-  .cursor-label {
-    font-size: clamp(20px, 5vw, 40px);
+
+  .bio-text a:hover {
+    color: #ffcc00; /* Yellow on hover for mobile too */
+  }
+
+  .contact-links {
+    flex-direction: column; /* Stack vertically on mobile */
+    gap: 15px; /* Increased gap for mobile */
+    align-items: flex-start;
+    font-size: calc(1.2rem - 7px); /* Smaller on mobile */
+  }
+
+  .contact-links a {
+    font-size: calc(1.2rem - 7px);
+    display: block;
+    padding: 5px 0; /* Smaller padding on mobile */
+  }
+
+  .contact-links a:hover::after {
+    width: calc(100% + 20px); /* Smaller oval on mobile */
+    height: 18px;
+  }
+  
+  .contact-links a:hover {
+    transform: translateY(1px); /* Smaller movement on mobile */
+  }
+
+  /* Hide bio preview on mobile */
+  .bio-preview {
+    display: none !important;
+  }
+
+  /* Fix mix-blend-mode on mobile - UPDATED COLOR */
+  .about-toggle,
+  .bio-text,
+  .bio-text p,
+  .bio-text a,
+  .contact-links a {
+    mix-blend-mode: normal;
+    color: #424751; /* Changed from #0f0f0f to medium gray */
   }
 }
