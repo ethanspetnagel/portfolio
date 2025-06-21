@@ -85,7 +85,7 @@ body {
   height: 100vh;
   overflow: hidden;
   background-color: #f0f5f5;
-  color: #0f0f0f;
+  color: #424751; /* Changed from #0f0f0f to dark gray */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -131,7 +131,7 @@ body.title-hover .project-gallery {
   font-size: clamp(10.8px, 2.43vw, 29.7px); /* NEW SIZE */
   text-transform: uppercase;
   text-decoration: none;
-  color: #0f0f0f;
+  color: #424751; /* Changed from #0f0f0f to dark gray */
   background: none;
   border: none;
   cursor: pointer;
@@ -252,7 +252,7 @@ body.title-hover .project-gallery {
 
 .essay-tab {
   cursor: pointer;
-  color: #0f0f0f !important; /* Black text */
+  color: #424751; /* Changed from #0f0f0f to dark gray */
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   white-space: nowrap;
   padding: 18px 0;
@@ -272,7 +272,7 @@ body.title-hover .project-gallery {
   transform: translate(-50%, -50%);
   width: 0;
   height: 0;
-  border: 2px solid #0f0f0f; /* Changed from #999999 to black */
+  border: 2px solid #424751; /* Changed from #0f0f0f to dark gray */
   border-radius: 50%; /* Perfect circle that gets stretched */
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -288,7 +288,7 @@ body.title-hover .project-gallery {
   opacity: 1;
   width: calc(100% + 40px); /* Creates the ellipse */
   height: 24px; /* Much smaller height creates the stretched circle effect */
-  border-color: #0f0f0f; /* Changed from #999999 to black */
+  border-color: #424751; /* Changed from #0f0f0f to dark gray */
 }
 
 .essay-tab:hover {
@@ -302,7 +302,7 @@ body.title-hover .project-gallery {
 /* Remove any conflicting styles */
 .essay-tab:hover {
   text-shadow: none !important;
-  color: #0f0f0f !important;
+  color: #424751 !important; /* Changed from #0f0f0f to dark gray */
 }
 
 /* Essay content */
@@ -328,7 +328,7 @@ body.title-hover .project-gallery {
   font-weight: normal;
   line-height: 1.08;
   margin-bottom: 20px;
-  color: #0f0f0f;
+  color: #424751; /* Changed from #0f0f0f to dark gray */
   letter-spacing: -0.01em;
   cursor: default;
 }
@@ -519,7 +519,7 @@ body.title-hover .project-gallery {
   text-transform: none; /* Removed all caps */
   letter-spacing: -0.01em; /* Matches bio-text */
   line-height: 1.08; /* Matches bio-text */
-  color: #0f0f0f;
+  color: #424751; /* Changed from #0f0f0f to dark gray */
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
@@ -657,7 +657,7 @@ body.title-hover .project-gallery {
   .essay-tab,
   .essay-tab.active,
   .essay-tab:hover {
-    color: #0f0f0f !important;
+    color: #424751 !important; /* Changed from #0f0f0f to dark gray */
   }
 }
 
