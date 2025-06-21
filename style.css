@@ -335,21 +335,27 @@ body.project-hovering.video-light .contact-links a:hover::before {
   transition: transform 0.1s ease-out;
   margin-right: 0.3em;
 }
-
+/* Bio text links - UPDATED to lime green */
 .bio-text a {
-  text-decoration: none; /* Remove underline */
+  color: #b3d100; /* Changed to lime green */
+  text-decoration: none;
   transition: all 0.3s ease;
-  font-family: 'Borgia Pro', 'Quadrant', 'Courier New', serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .bio-text a:hover {
-  color: #ffcc00; /* Yellow on hover */
-  opacity: 1; /* Full opacity */
+  color: #b3d100; /* Keep same lime green on hover */
+  opacity: 0.7; /* Slightly transparent on hover instead of yellow */
 }
 
-/* When project is hovering, override yellow with blend mode */
+/* When project is hovering, override with blend mode */
+body.project-hovering .bio-text a {
+  color: #b3d100 !important; /* Keep lime green even during video hover */
+}
+
 body.project-hovering .bio-text a:hover {
-  color: #ffffff !important; /* Force white for blend mode */
+  color: #b3d100 !important;
+  opacity: 0.7 !important;
 }
 
 /* Contact links - Updated with oval effect like tabs */

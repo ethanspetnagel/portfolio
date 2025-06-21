@@ -191,13 +191,13 @@ body.title-hover .project-gallery {
   background: transparent;
 }
 
-/* Star scrollbar indicator - UPDATED to dark blue */
+/* Star scrollbar indicator - UPDATED to light blue-gray */
 .star-scroll-indicator {
   position: fixed;
   left: calc(36vw - 25px);
   top: 15px;
   font-size: 33.6px; /* 30% smaller than 48px */
-  color: #00233f; /* Changed from #ffcc00 to dark blue */
+  color: #e4e8f2; /* Changed to light blue-gray */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Faster fade */
   pointer-events: none;
@@ -377,13 +377,13 @@ body.title-hover .project-gallery {
   background: transparent;
 }
 
-/* Gallery star scrollbar - UPDATED to dark blue */
+/* Gallery star scrollbar - UPDATED to light blue-gray */
 .star-scroll-indicator-gallery {
   position: fixed;
   right: 15px;
   top: 15px;
   font-size: 33.6px; /* 30% smaller than 48px */
-  color: #00233f; /* Changed from #ffcc00 to dark blue */
+  color: #e4e8f2; /* Changed to light blue-gray */
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear; /* Faster fade */
   pointer-events: none;
