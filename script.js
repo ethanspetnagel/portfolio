@@ -642,16 +642,15 @@ class PageTransition {
             z-index: 2;
         `;
         
-        // Clone the video for the transition
+        // Clone the video for the transition - MATCH BACKGROUND VIDEO SIZE
         const transitionVideo = projectVideo.cloneNode(true);
         transitionVideo.style.cssText = `
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300vw;
-            height: 300vh;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            transform: translate(-50%, -50%);
             opacity: 1;
         `;
         
@@ -693,11 +692,13 @@ class PageTransition {
             window.location.href = targetUrl;
         }, 1900);
         
-        // Clean up after navigation
+        // Clean up after navigation - RESET TRANSITION STATE
         setTimeout(() => {
             if (transitionContainer.parentNode) {
                 transitionContainer.remove();
             }
+            // Reset transition state for next use
+            this.isTransitioning = false;
         }, 2200);
     }
     
@@ -764,11 +765,13 @@ class PageTransition {
             window.location.href = targetUrl;
         }, 1900);
         
-        // Clean up
+        // Clean up - RESET TRANSITION STATE
         setTimeout(() => {
             if (transitionContainer.parentNode) {
                 transitionContainer.remove();
             }
+            // Reset transition state for next use
+            this.isTransitioning = false;
         }, 2200);
     }
 }
@@ -783,18 +786,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize page transition with video circle effect
     const pageTransition = new PageTransition();
     
-    // Check if we came from a transition to enable smooth return
+    // Check if we came from a transition - ALWAYS reset transition state
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('from_transition') === 'true') {
         // Remove the parameter from URL without refresh
         const cleanUrl = window.location.pathname;
         window.history.replaceState({}, document.title, cleanUrl);
-        
-        // Ensure transition system is ready for next click
-        setTimeout(() => {
-            pageTransition.isTransitioning = false;
-        }, 100);
     }
+    
+    // ALWAYS ensure transition system is ready - reset after any page load
+    setTimeout(() => {
+        pageTransition.isTransitioning = false;
+    }, 100);
     
     // Force start videos after a brief delay
     setTimeout(() => {
