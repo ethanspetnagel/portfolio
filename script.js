@@ -595,9 +595,16 @@ class PageTransition {
         
         this.isTransitioning = true;
         
+        // Debug logging for Slug
+        console.log('Transition for project:', project);
+        console.log('Project media:', projectMedia[project]);
+        
         // Get the video for this project
         const projectVideo = videoPool[project];
+        console.log('Video element found:', !!projectVideo);
+        
         if (!projectVideo) {
+            console.log('No video found, using black circle fallback');
             // Fallback to black circle if no video
             this.startBlackCircleTransition(targetUrl);
             return;
@@ -615,7 +622,7 @@ class PageTransition {
             pointer-events: none;
         `;
         
-        // Create background iframe to load the target page
+        // Create background iframe to load the target page - PREVENT GLITCHES
         const targetPageFrame = document.createElement('iframe');
         targetPageFrame.src = targetUrl;
         targetPageFrame.style.cssText = `
@@ -626,7 +633,13 @@ class PageTransition {
             height: 100%;
             border: none;
             opacity: 0;
+            background: transparent;
+            pointer-events: none;
         `;
+        
+        // Prevent iframe interactions that cause glitches
+        targetPageFrame.setAttribute('scrolling', 'no');
+        targetPageFrame.setAttribute('seamless', 'seamless');
         
         // Create video circle container - START FULL SCREEN
         const videoCircleContainer = document.createElement('div');
@@ -654,8 +667,8 @@ class PageTransition {
             opacity: 1;
         `;
         
-        // Apply same filter as original video
-        if (project !== 'church') {
+        // Apply same filter as original video - FIX SLUG FILTER
+        if (project === 'slug' || project !== 'church') {
             transitionVideo.style.filter = 'brightness(0.9)';
         } else {
             transitionVideo.style.filter = 'none';
@@ -664,7 +677,9 @@ class PageTransition {
         // Start playing the video
         transitionVideo.muted = true;
         transitionVideo.loop = true;
-        transitionVideo.play().catch(() => {});
+        transitionVideo.play().catch((e) => {
+            console.log('Video play failed:', e);
+        });
         
         videoCircleContainer.appendChild(transitionVideo);
         transitionContainer.appendChild(targetPageFrame);
