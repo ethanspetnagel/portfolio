@@ -486,9 +486,9 @@ body.title-hover .project-gallery {
   align-self: flex-start;
   margin-top: 14px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px;
+  font-size: calc(1.6rem - 9px); /* Changed to match tab text size */
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: none; /* Changed from uppercase to none */
   letter-spacing: 0.05em;
 }
 
@@ -497,9 +497,9 @@ body.title-hover .project-gallery {
   margin-top: 8px;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px;
+  font-size: calc(1.6rem - 9px); /* Changed to match tab text size */
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: none; /* Changed from uppercase to none */
   letter-spacing: 0.05em;
   transition: all 0.3s ease;
 }
@@ -520,7 +520,7 @@ body.title-hover .project-gallery {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px); /* Changed to match tab text size */
   font-weight: normal;
-  text-transform: none;
+  text-transform: none; /* Already set to none - no uppercase */
   letter-spacing: 0.02em;
   line-height: 1.4;
   color: #0f0f0f;
@@ -639,7 +639,7 @@ body.title-hover .project-gallery {
   .caption,
   .info-toggle,
   .info-panel {
-    font-size: 13px;
+    font-size: calc(1.6rem - 9px); /* Updated to match tab text size */
   }
   .slide img,
   .slide video,

@@ -1,28 +1,28 @@
 /* Font Face Declaration for Borgia Pro */
 @font-face {
-  font-family: 'Borgia Pro';
-  src: url('BorgiaPro-Regular.woff') format('woff');
+  font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  src: url('HelveticaNeue.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Borgia Pro';
-  src: url('BorgiaPro-Bold.woff') format('woff');
+ font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  src: url('HelveticaNeue.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Borgia Pro';
-  src: url('BorgiaPro-Italic.woff') format('woff');
+   font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  src: url('HelveticaNeue.woff') format('woff');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Borgia Pro';
-  src: url('BorgiaPro-BoldItalic.woff') format('woff');
+   font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  src: url('HelveticaNeue.woff') format('woff');
   font-weight: bold;
   font-style: italic;
 }
@@ -169,10 +169,6 @@ body {
   will-change: color, opacity;
 }
 
-/* Project links - no blend mode, will be handled by video brightness */
-.project-link:hover {
-  /* Color will be set by video-dark/video-light classes */
-}
 
 /* Website Info */
 .website-info {
