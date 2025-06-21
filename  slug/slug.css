@@ -186,7 +186,7 @@ body.title-hover .project-gallery {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 5px 40px 40px 15px; /* Reduced top padding from 15px to 5px */
+  padding: 0 40px 40px 15px; /* Removed top padding completely */
   scrollbar-width: none;
   background: #f0f5f5;
   position: relative;
@@ -220,7 +220,7 @@ body.title-hover .project-gallery {
   display: flex;
   align-items: baseline;
   gap: 40px; /* Reduced from 80px - cut in half */
-  margin-bottom: 15px; /* Reduced from 35px to 15px */
+  margin-bottom: 8px; /* Further reduced from 15px to 8px */
   width: 100%;
 }
 
@@ -253,7 +253,7 @@ body.title-hover .project-gallery {
   text-transform: uppercase;
   letter-spacing: -0.01em;
   white-space: nowrap;
-  padding: 15px 0; /* Reduced from 30px to 15px */
+  padding: 8px 0; /* Further reduced from 15px to 8px */
 }
 
 .essay-tab {
@@ -315,7 +315,7 @@ body.title-hover .project-gallery {
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
-  margin-top: 10px; /* Reduced from 20px to 10px */
+  margin-top: 5px; /* Further reduced from 10px to 5px */
   position: relative;
 }
 
@@ -518,7 +518,7 @@ body.title-hover .project-gallery {
   align-self: flex-start;
   margin-top: 8px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px;
+  font-size: calc(1.6rem - 9px); /* Changed to match tab text size */
   font-weight: normal;
   text-transform: none;
   letter-spacing: 0.02em;
