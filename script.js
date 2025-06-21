@@ -603,19 +603,43 @@ class PageTransition {
             return;
         }
         
+        // Create full-screen container for the entire transition
+        const transitionContainer = document.createElement('div');
+        transitionContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 30000;
+            pointer-events: none;
+        `;
+        
+        // Create background iframe to load the target page
+        const targetPageFrame = document.createElement('iframe');
+        targetPageFrame.src = targetUrl;
+        targetPageFrame.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0;
+        `;
+        
         // Create video circle container - START FULL SCREEN
         const videoCircleContainer = document.createElement('div');
         videoCircleContainer.style.cssText = `
-            position: fixed;
+            position: absolute;
             top: 50%;
             left: 50%;
             width: 300vw;
             height: 300vh;
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            z-index: 30000;
-            pointer-events: none;
             overflow: hidden;
+            z-index: 2;
         `;
         
         // Clone the video for the transition
@@ -644,34 +668,70 @@ class PageTransition {
         transitionVideo.play().catch(() => {});
         
         videoCircleContainer.appendChild(transitionVideo);
-        document.body.appendChild(videoCircleContainer);
+        transitionContainer.appendChild(targetPageFrame);
+        transitionContainer.appendChild(videoCircleContainer);
+        document.body.appendChild(transitionContainer);
+        
+        // Show target page background after iframe loads (or after 500ms)
+        const showTargetPage = () => {
+            targetPageFrame.style.opacity = '1';
+        };
+        
+        targetPageFrame.onload = showTargetPage;
+        setTimeout(showTargetPage, 500); // Fallback
         
         // Force reflow
         videoCircleContainer.offsetHeight;
         
-        // Animate circle SHRINKING to center point - SLOWER (2 seconds)
+        // Animate circle SHRINKING to center point - 2 seconds
         videoCircleContainer.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         videoCircleContainer.style.width = '0';
         videoCircleContainer.style.height = '0';
         
-        // Navigate EARLIER to allow smooth connection (1.8 seconds)
+        // Navigate when circle is almost gone (1.9 seconds)
         setTimeout(() => {
-            window.location.href = targetUrl + '?from_transition=true';
-        }, 1800);
+            window.location.href = targetUrl;
+        }, 1900);
         
-        // Clean up after full animation completes
+        // Clean up after navigation
         setTimeout(() => {
-            if (videoCircleContainer.parentNode) {
-                videoCircleContainer.remove();
+            if (transitionContainer.parentNode) {
+                transitionContainer.remove();
             }
         }, 2200);
     }
     
-    // Fallback method for projects without videos - ALSO SLOWER
+    // Fallback method for projects without videos - WITH TARGET PAGE BACKGROUND
     startBlackCircleTransition(targetUrl) {
+        // Create full-screen container
+        const transitionContainer = document.createElement('div');
+        transitionContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 30000;
+            pointer-events: none;
+        `;
+        
+        // Create background iframe for target page
+        const targetPageFrame = document.createElement('iframe');
+        targetPageFrame.src = targetUrl;
+        targetPageFrame.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0;
+        `;
+        
+        // Create black circle overlay
         const circleOverlay = document.createElement('div');
         circleOverlay.style.cssText = `
-            position: fixed;
+            position: absolute;
             top: 50%;
             left: 50%;
             width: 300vw;
@@ -679,11 +739,21 @@ class PageTransition {
             background: #000;
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            z-index: 30000;
-            pointer-events: none;
+            z-index: 2;
         `;
         
-        document.body.appendChild(circleOverlay);
+        transitionContainer.appendChild(targetPageFrame);
+        transitionContainer.appendChild(circleOverlay);
+        document.body.appendChild(transitionContainer);
+        
+        // Show target page background
+        const showTargetPage = () => {
+            targetPageFrame.style.opacity = '1';
+        };
+        
+        targetPageFrame.onload = showTargetPage;
+        setTimeout(showTargetPage, 500);
+        
         circleOverlay.offsetHeight;
         
         circleOverlay.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -691,13 +761,13 @@ class PageTransition {
         circleOverlay.style.height = '0';
         
         setTimeout(() => {
-            window.location.href = targetUrl + '?from_transition=true';
-        }, 1800);
+            window.location.href = targetUrl;
+        }, 1900);
         
         // Clean up
         setTimeout(() => {
-            if (circleOverlay.parentNode) {
-                circleOverlay.remove();
+            if (transitionContainer.parentNode) {
+                transitionContainer.remove();
             }
         }, 2200);
     }
