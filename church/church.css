@@ -549,12 +549,13 @@ body.title-hover .project-gallery {
 
 /* Caption container for layout */
 .caption-container {
-  align-self: stretch; /* Changed to stretch full width */
-  width: 50%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row; /* keep this so date + caption stay on same line */
   align-items: baseline;
-  margin-top: 10px;
+  justify-content: space-between;
+  align-self: flex-start; /* instead of stretch */
+  width: fit-content; /* makes it only as wide as its content (image) */
+  margin-top: 14px;
 }
 
 /* Captions and info - UPDATED to match bio-text styling */
