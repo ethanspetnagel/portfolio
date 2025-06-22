@@ -1,8 +1,8 @@
 // Project media mapping with brightness info
 const projectMedia = {
     'slug': {
-        url: './church video bg.mp4',
-        isDark: false  // slug video appears to be dark
+        url: './slug.mp4',
+        isDark: true  // slug video appears to be dark
     }, 
     'church': {
         url: './church video bg.mp4',
