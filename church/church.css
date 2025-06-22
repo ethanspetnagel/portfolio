@@ -466,8 +466,8 @@ body.title-hover .project-gallery {
 
 /* FIX FOR POMADE VIDEOS - Ensure they match other videos */
 .pomade-video {
-  max-width: 400px !important;
-  width: 30vw !important;
+  max-width: 380px !important;
+  width: 27vw !important;
 }
 
 /* Image size variations */
@@ -480,22 +480,22 @@ body.title-hover .project-gallery {
 
 .project-block:nth-child(3) .slide img,
 .project-block:nth-child(3) .slide video {
-  max-width: 440px;
-  width: 35.75vw;
+  max-width:302.5px;
+  width: 27vw;
   margin-left: 0;
 }
 
 .project-block:nth-child(4) .slide img,
 .project-block:nth-child(4) .slide video {
-  max-width: 330px;
-  width: 19.25vw;
+  max-width: 530px;
+  width: 40vw;
   margin-left: 6vw;
 }
 
 /* Special case: Botanical Barbershop video */
 .project-set[data-index="1"] .project-block:last-child .slide video {
-  max-width: 700px;
-  width: 78vw;
+  max-width: 750px;
+  width: 90vw;
   margin-left: 0;
 }
 
