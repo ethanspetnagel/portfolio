@@ -465,13 +465,13 @@ body.title-hover .project-gallery {
 
 .skincare-video {
   max-width: 700px !important;
-  width: 68vw !important;
+  width: 78vw !important;
 }
 
 /* Video Tab - Project 2: Pomade Campaign */
 .pomade-campaign-slideshow {
-  max-width: 700px;
-  width: 78vw;
+  max-width: 400px;
+  width: 38vw;
 }
 
 .pomade-video {
@@ -490,26 +490,27 @@ body.title-hover .project-gallery {
   width: 78vw !important;
 }
 
+
 /* Video Tab - Project 4: Blender Models */
-.blender-models-slideshow {
-  max-width: 700px;
-  width: 78vw;
+.blender-models {
+  max-width: none;
+  width: 85vw;
 }
 
-.blender-models-img {
-  max-width: 700px !important;
-  width: 78vw !important;
+.blender-models img {
+  max-width: none !important;
+  width: 85vw !important;
 }
 
 /* Video Tab - Project 5: Botanical Barbershop */
-.botanical-barbershop-slideshow {
-  max-width: 700px;
-  width: 78vw;
+.botanical-barbershop {
+  max-width: none;
+  width: 90vw;
 }
 
-.botanical-barbershop-video {
-  max-width: 700px !important;
-  width: 78vw !important;
+.botanical-barbershop video {
+  max-width: none !important;
+  width: 90vw !important;
 }
 
 /* OTHER TAB - Projects with named classes */
