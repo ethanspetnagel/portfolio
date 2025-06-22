@@ -780,8 +780,8 @@ ul.interactive-text li {
     font-size: clamp(20px, 5vw, 40px);
   }
   .floating-logo {
-    width: 30px;
-    height: 30px;
+    width: 150px;
+    height: 150px;
   }
 }
 
