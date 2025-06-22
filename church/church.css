@@ -1,6 +1,6 @@
 /* Full, updated CSS for Church California
- * Fixes caption alignment and ensures proper image sizing
- * Updated: 2025-06-22
+ * With fixes for captions and image sizing
+ * Last updated: 2025-06-22
  */
 
 @font-face {
@@ -496,11 +496,11 @@ body.title-hover .project-gallery {
 
 /* CAPTION CONTAINER - FIXED to align with images/videos */
 .caption-container {
-  width: auto; /* Let it size naturally to match content */
-  max-width: 100%;
+  width: 100%; /* Take full width of parent container */
+  max-width: 100%; /* Don't exceed parent width */
   display: flex;
-  flex-direction: column; /* Changed to column for better spacing */
-  align-items: flex-start; /* Left-align for consistency */
+  flex-direction: column;
+  align-items: flex-start; /* Left-align text */
   margin-top: 14px;
   padding: 0;
 }
@@ -513,6 +513,8 @@ body.title-hover .project-gallery {
   text-transform: none; /* Removed all caps */
   letter-spacing: -0.01em; /* Matches bio-text */
   line-height: 1.08; /* Matches bio-text */
+  width: 100%; /* Full width of container */
+  word-break: break-word; /* Allow words to break if necessary */
 }
 
 /* Date styling */
@@ -539,7 +541,7 @@ body.title-hover .project-gallery {
   letter-spacing: -0.01em; /* Matches bio-text */
   line-height: 1.08; /* Matches bio-text */
   transition: all 0.3s ease;
-  width: auto; /* Match content width */
+  width: 100%; /* Match slideshow zone width */
 }
 
 .info-toggle:hover {
@@ -554,7 +556,7 @@ body.title-hover .project-gallery {
 /* Info panel - UPDATED to match bio-text styling */
 .info-panel {
   align-self: flex-start; /* Left align to match other elements */
-  width: auto; /* Size to content */
+  width: 100%; /* Match slideshow zone width */
   max-width: 100%;
   margin-top: 8px;
   font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
@@ -598,12 +600,11 @@ body.title-hover .project-gallery {
   min-width: 120px;
 }
 
-/* Ensure .project-block, .caption-container, .info-toggle, 
-   and .info-panel have matching widths to images */
-.project-block .caption-container,
-.project-block .info-toggle,
-.project-block .info-panel {
-  width: auto;
+/* Skincare and Pomade campaign specific width restrictions */
+.project-set[data-index="1"] .project-block:first-child .slideshow-zone,
+.project-set[data-index="1"] .project-block:nth-child(2) .slideshow-zone {
+  max-width: 500px;
+  width: 100%;
 }
 
 /* Lists in interactive text */
