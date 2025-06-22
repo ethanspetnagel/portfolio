@@ -105,10 +105,10 @@ body.title-hover .corner-logo {
 /* Corner logo */
 .corner-logo {
   position: fixed;
-  bottom: 100px;
+  bottom: 130px;
   right: 35px; /* Moved 30px to the left from original 15px */
   z-index: 999;
-  width: 360px; /* 5x bigger than original 60px */
+  width: 500px; /* 5x bigger than original 60px */
   height: 50px; /* 5x bigger than original 60px */
   opacity: 1; /* Full opacity always, no transitions */
 }
