@@ -494,23 +494,23 @@ body.title-hover .project-gallery {
 /* Video Tab - Project 4: Blender Models */
 .blender-models {
   max-width: none;
-  width: 85vw;
+  width: 55vw;
 }
 
 .blender-models img {
   max-width: none !important;
-  width: 85vw !important;
+  width: 55vw !important;
 }
 
 /* Video Tab - Project 5: Botanical Barbershop */
 .botanical-barbershop {
   max-width: none;
-  width: 90vw;
+  width: 60vw;
 }
 
 .botanical-barbershop video {
   max-width: none !important;
-  width: 90vw !important;
+  width: 60vw !important;
 }
 
 /* OTHER TAB - Projects with named classes */
