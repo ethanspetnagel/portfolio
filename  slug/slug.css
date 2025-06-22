@@ -484,7 +484,7 @@ body.title-hover .project-gallery {
   object-fit: contain;
 }
 
-/* Caption styling */
+/* Caption styling - UPDATED to match paragraph text */
 .caption {
   width: 100%;
   max-width: 100%;
@@ -500,16 +500,17 @@ body.title-hover .project-gallery {
   letter-spacing: -0.01em;
   line-height: 1.08;
   word-break: break-word;
+  color: #424751;
 }
 
-/* Info toggle */
+/* Info toggle - UPDATED to match paragraph text */
 .info-toggle {
   align-self: flex-start;
   margin-top: 8px;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 7px);
-  font-weight: 300;
+  font-size: calc(1.6rem - 9px);
+  font-weight: normal;
   text-transform: none;
   letter-spacing: -0.01em;
   line-height: 1.08;
@@ -530,7 +531,7 @@ body.title-hover .project-gallery {
   opacity: 1;
 }
 
-/* Info panel */
+/* Info panel - UPDATED to match paragraph text */
 .info-panel {
   align-self: flex-start;
   width: 100%;
@@ -541,7 +542,7 @@ body.title-hover .project-gallery {
   font-weight: normal;
   text-transform: none;
   letter-spacing: -0.01em;
-  line-height: 1.5;
+  line-height: 1.08;
   color: #424751;
   max-height: 0;
   overflow: hidden;
@@ -559,10 +560,11 @@ body.title-hover .project-gallery {
 .info-panel p {
   margin: 0 0 8px 0;
   padding-top: 0;
+  line-height: 1.08;
 }
 
 .info-panel p:first-child {
-  font-weight: 400;
+  font-weight: normal;
   text-transform: none;
   letter-spacing: -0.01em;
   margin-bottom: 12px;
