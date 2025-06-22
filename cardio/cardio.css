@@ -105,7 +105,7 @@ body.title-hover .corner-logo {
 /* Corner logo */
 .corner-logo {
   position: fixed;
-  bottom: 130px;
+  bottom: 100px;
   right: 35px; /* Moved 30px to the left from original 15px */
   z-index: 999;
   width: 500px; /* 5x bigger than original 60px */
@@ -114,7 +114,7 @@ body.title-hover .corner-logo {
 }
 
 .corner-logo:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 /* Cursor label */
