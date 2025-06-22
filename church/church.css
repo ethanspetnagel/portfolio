@@ -1,6 +1,6 @@
 /* Full, updated CSS for Church California
- * With fixes for captions, image sizing, and styling
- * Last updated: 2025-06-22 17:20:57
+ * With named targeting classes for all videos and elements
+ * Last updated: 2025-06-22 17:26:36
  */
 
 @font-face {
@@ -47,21 +47,15 @@ body.page-navigating * {
   visibility: hidden !important;
 }
 
-/* Floating logo in bottom right corner - 5x BIGGER */
+/* Floating logo in bottom right corner - UPDATED POSITION AND REMOVED EFFECTS */
 .floating-logo {
   position: fixed;
   bottom: 15px;
-  right: 15px;
+  right: 45px; /* Moved 30px to the left from original 15px */
   z-index: 999;
   width: 300px; /* 5x bigger than original 60px */
   height: 300px; /* 5x bigger than original 60px */
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-}
-
-.floating-logo:hover {
-  opacity: 1;
-  /* No color change on hover */
+  opacity: 1; /* Full opacity always, no transitions */
 }
 
 .floating-logo img {
@@ -423,60 +417,106 @@ body.title-hover .project-gallery {
   align-items: flex-start;
 }
 
-/* Set specific widths for slideshow zones to match their image widths */
-.project-block:nth-child(1) .slideshow-zone {
+/* ABOUT TAB - Projects with named classes */
+/* About Tab - Project 1: Slug Soap */
+.slug-soap-slideshow {
   max-width: 385px;
   width: 43vw;
 }
 
-.project-block:nth-child(2) .slideshow-zone {
+/* About Tab - Project 2: CSS Project */
+.css-project-slideshow {
   max-width: 302.5px;
   width: 27vw;
   margin-left: 4vw;
 }
 
-.project-block:nth-child(3) .slideshow-zone {
+/* About Tab - Project 3: Video Scroll */
+.video-scroll-slideshow {
   max-width: 440px;
   width: 35.75vw;
 }
 
-.project-block:nth-child(4) .slideshow-zone {
+/* About Tab - Project 4: Algorithm Study */
+.algorithm-slideshow {
   max-width: 330px;
   width: 19.25vw;
   margin-left: 6vw;
 }
 
-.project-block:nth-child(5) .slideshow-zone,
-.project-block:nth-child(6) .slideshow-zone {
+/* About Tab - Project 5: Physical Translation */
+.physical-translation-slideshow {
   max-width: 385px;
   width: 43vw;
 }
 
-/* RESTORED VIDEO TAB SIZING - Returning to original working state */
-/* First two videos in the VIDEO tab */
-.project-set[data-index="1"] .project-block:nth-child(1) .slideshow-zone,
-.project-set[data-index="1"] .project-block:nth-child(2) .slideshow-zone {
+/* About Tab - Project 6: Collaborative Doc */
+.collaborative-doc-slideshow {
+  max-width: 385px;
+  width: 43vw;
+}
+
+/* VIDEO TAB - Projects with named classes */
+/* Video Tab - Project 1: Skincare Campaign */
+.skincare-campaign-slideshow {
   max-width: 700px;
   width: 78vw;
 }
 
-/* First two videos themselves */
-.project-set[data-index="1"] .project-block:nth-child(1) .slide video,
-.project-set[data-index="1"] .project-block:nth-child(2) .slide video {
+.skincare-video {
   max-width: 700px !important;
   width: 78vw !important;
 }
 
-/* Botanical Barbershop video at the end */
-.project-set[data-index="1"] .project-block:last-child .slideshow-zone {
+/* Video Tab - Project 2: Pomade Campaign */
+.pomade-campaign-slideshow {
   max-width: 700px;
   width: 78vw;
 }
 
-.project-set[data-index="1"] .project-block:last-child .slide video {
+.pomade-video {
+  max-width: 700px !important;
+  width: 78vw !important;
+}
+
+/* Video Tab - Project 3: Brand Identity */
+.brand-identity-slideshow {
   max-width: 700px;
   width: 78vw;
-  margin-left: 0;
+}
+
+.brand-identity-video {
+  max-width: 700px !important;
+  width: 78vw !important;
+}
+
+/* Video Tab - Project 4: Blender Models */
+.blender-models-slideshow {
+  max-width: 700px;
+  width: 78vw;
+}
+
+.blender-models-img {
+  max-width: 700px !important;
+  width: 78vw !important;
+}
+
+/* Video Tab - Project 5: Botanical Barbershop */
+.botanical-barbershop-slideshow {
+  max-width: 700px;
+  width: 78vw;
+}
+
+.botanical-barbershop-video {
+  max-width: 700px !important;
+  width: 78vw !important;
+}
+
+/* OTHER TAB - Projects with named classes */
+/* Other Tab - Project 1: Web Design */
+.web-design-slideshow {
+  max-width: 700px;
+  width: 78vw;
 }
 
 .slide {
@@ -508,29 +548,7 @@ body.title-hover .project-gallery {
   object-fit: contain;
 }
 
-/* Image size variations */
-.project-block:nth-child(2) .slide img,
-.project-block:nth-child(2) .slide video {
-  max-width: 302.5px;
-  width: 27vw;
-  margin-left: 4vw;
-}
-
-.project-block:nth-child(3) .slide img,
-.project-block:nth-child(3) .slide video {
-  max-width: 440px;
-  width: 35.75vw;
-  margin-left: 0;
-}
-
-.project-block:nth-child(4) .slide img,
-.project-block:nth-child(4) .slide video {
-  max-width: 330px;
-  width: 19.25vw;
-  margin-left: 6vw;
-}
-
-/* CAPTION CONTAINER - FIXED */
+/* CAPTION CONTAINER */
 .caption-container {
   width: 100%;
   max-width: 100%;
@@ -553,7 +571,7 @@ body.title-hover .project-gallery {
   word-break: break-word;
 }
 
-/* UPDATED: Info toggle changed to em dash */
+/* Info toggle changed to em dash */
 .info-toggle {
   align-self: flex-start;
   margin-top: 8px;
@@ -658,6 +676,7 @@ ul.interactive-text li {
   .floating-logo {
     width: 200px;
     height: 200px;
+    right: 45px; /* Keep consistent with desktop */
   }
 }
 
@@ -671,7 +690,7 @@ ul.interactive-text li {
     width: 150px;
     height: 150px;
     bottom: 60px;
-    right: 10px;
+    right: 45px; /* Keep consistent with desktop */
   }
   .page {
     flex-direction: column;
@@ -719,34 +738,37 @@ ul.interactive-text li {
   .info-panel {
     font-size: calc(1.3rem - 7px);
   }
-  .project-block:nth-child(1) .slideshow-zone,
-  .project-block:nth-child(2) .slideshow-zone,
-  .project-block:nth-child(3) .slideshow-zone,
-  .project-block:nth-child(4) .slideshow-zone,
-  .project-block:nth-child(5) .slideshow-zone,
-  .project-block:nth-child(6) .slideshow-zone,
-  .project-set[data-index="1"] .project-block:nth-child(1) .slideshow-zone,
-  .project-set[data-index="1"] .project-block:nth-child(2) .slideshow-zone,
-  .project-set[data-index="1"] .project-block:last-child .slideshow-zone {
+  /* Make all slideshows responsive on mobile */
+  .slug-soap-slideshow, 
+  .css-project-slideshow,
+  .video-scroll-slideshow,
+  .algorithm-slideshow,
+  .physical-translation-slideshow,
+  .collaborative-doc-slideshow,
+  .skincare-campaign-slideshow,
+  .pomade-campaign-slideshow,
+  .brand-identity-slideshow,
+  .blender-models-slideshow,
+  .botanical-barbershop-slideshow,
+  .web-design-slideshow {
     max-width: 100%;
     width: 100%;
     margin-left: 0;
   }
+  
+  /* Make all videos/images responsive on mobile */
   .slide img,
   .slide video,
-  .project-block:nth-child(2) .slide img,
-  .project-block:nth-child(2) .slide video,
-  .project-block:nth-child(3) .slide img,
-  .project-block:nth-child(3) .slide video,
-  .project-block:nth-child(4) .slide img,
-  .project-block:nth-child(4) .slide video,
-  .project-set[data-index="1"] .project-block:nth-child(1) .slide video,
-  .project-set[data-index="1"] .project-block:nth-child(2) .slide video,
-  .project-set[data-index="1"] .project-block:last-child .slide video {
+  .skincare-video,
+  .pomade-video,
+  .brand-identity-video,
+  .blender-models-img,
+  .botanical-barbershop-video {
     width: 100%;
     max-width: 100vw !important;
     margin-left: 0;
   }
+  
   .project-block,
   .slideshow-zone {
     align-items: flex-start;
@@ -771,6 +793,7 @@ ul.interactive-text li {
   .floating-logo {
     width: 120px;
     height: 120px;
+    right: 45px; /* Keep consistent with desktop */
   }
 }
 
