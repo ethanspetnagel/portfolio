@@ -300,95 +300,231 @@ class VideoInfoManager {
     constructor() {
         this.videoInfo = {
             'skincare 1.mp4': {
-                title: 'BOTANICAL CLAY CLEANSER ADVERTISEMENT',
-                details: `SOFTWARE: AFTER EFFECTS, PREMIERE PRO<br>
-                DURATION: 15s, 30s, 60s CUTS<br>
+                title: 'botanical clay cleanser advertisement',
+                details: `<strong>botanical clay cleanser advertisement</strong><br>
                 <br>
-                This campaign piece features imagery captured in the Marin Headlands, establishing a direct visual connection between our products and their natural origins. The juxtaposition of raw landscape footage with refined product shots creates a narrative that reinforces our commitment to botanical ingredients. I developed custom logo animations in After Effects, employing organic motion curves that mirror the fluidity of natural elements while maintaining brand sophistication.`
+                software: after effects, premiere pro<br>
+                duration: 15s, 30s, 60s cuts<br>
+                <br>
+                this campaign piece features imagery captured in<br>
+                the marin headlands, establishing a direct visual<br>
+                connection between our products and their natural<br>
+                origins. the juxtaposition of raw landscape footage<br>
+                with refined product shots creates a narrative that<br>
+                reinforces our commitment to botanical ingredients.<br>
+                <br>
+                i developed custom logo animations in after effects,<br>
+                employing organic motion curves that mirror the<br>
+                fluidity of natural elements while maintaining<br>
+                brand sophistication.`
             },
             'skincare 2.mp4': {
-                title: 'SHAMPOO & CONDITIONER BAR CAMPAIGN',
-                details: `SOFTWARE: AFTER EFFECTS<br>
-                PLATFORM: INSTAGRAM REELS, STORIES<br>
+                title: 'shampoo & conditioner bar campaign',
+                details: `<strong>shampoo & conditioner bar campaign</strong><br>
                 <br>
-                This video demonstrates the practical application of our solid haircare products while reinforcing our all-natural brand identity. Created entirely in After Effects, the piece combines product demonstration with lifestyle messaging. The animation techniques employed create a seamless narrative flow that educates consumers on product usage while building emotional connection to the brand's sustainable ethos.`
+                software: after effects<br>
+                platform: instagram reels, stories<br>
+                <br>
+                this video demonstrates the practical application<br>
+                of our solid haircare products while reinforcing<br>
+                our all-natural brand identity. created entirely<br>
+                in after effects, the piece combines product<br>
+                demonstration with lifestyle messaging.<br>
+                <br>
+                the animation techniques employed create a seamless<br>
+                narrative flow that educates consumers on product<br>
+                usage while building emotional connection to the<br>
+                brand's sustainable ethos.`
             },
             'skincare 3.mp4': {
-                title: 'MULTI-PRODUCT SHOWCASE',
-                details: `SOFTWARE: AFTER EFFECTS, PREMIERE PRO<br>
-                CONCEPT: NATURE-PRODUCT SYNTHESIS<br>
+                title: 'multi-product showcase',
+                details: `<strong>multi-product showcase</strong><br>
                 <br>
-                A comprehensive brand piece showcasing our complete skincare line against natural backdrops. This Instagram-optimized content weaves together product beauty shots with environmental footage, creating a visual metaphor for our farm-to-face philosophy. The editing rhythm and color grading establish a cohesive aesthetic that has become synonymous with Church California's digital presence.`
+                software: after effects, premiere pro<br>
+                concept: nature-product synthesis<br>
+                <br>
+                a comprehensive brand piece showcasing our complete<br>
+                skincare line against natural backdrops. this<br>
+                instagram-optimized content weaves together product<br>
+                beauty shots with environmental footage, creating<br>
+                a visual metaphor for our farm-to-face philosophy.<br>
+                <br>
+                the editing rhythm and color grading establish<br>
+                a cohesive aesthetic that has become synonymous<br>
+                with church california's digital presence.`
             },
             'skincare 4.mp4': {
-                title: 'INTEGRATED CAMPAIGN SPOT',
-                details: `SOFTWARE: AFTER EFFECTS, PREMIERE PRO<br>
-                DEPLOYMENT: MULTI-PLATFORM<br>
+                title: 'integrated campaign spot',
+                details: `<strong>integrated campaign spot</strong><br>
                 <br>
-                This versatile campaign asset features advanced motion graphics created in After Effects, combined with editorial finesse in Premiere Pro. The spot serves multiple strategic purposes—from social media engagement to conversion-focused advertising. The visual effects reinforce product benefits while maintaining the authentic, artisanal quality that defines our brand.`
+                software: after effects, premiere pro<br>
+                deployment: multi-platform<br>
+                <br>
+                this versatile campaign asset features advanced<br>
+                motion graphics created in after effects, combined<br>
+                with editorial finesse in premiere pro. the spot<br>
+                serves multiple strategic purposes—from social<br>
+                media engagement to conversion-focused advertising.<br>
+                <br>
+                the visual effects reinforce product benefits<br>
+                while maintaining the authentic, artisanal<br>
+                quality that defines our brand.`
             },
             'pomade 1.mp4': {
-                title: 'CUSTOMER TESTIMONIAL ANIMATION',
-                details: `SOFTWARE: AFTER EFFECTS<br>
-                PLATFORMS: INSTAGRAM, GOOGLE ADS, YOUTUBE<br>
+                title: 'customer testimonial animation',
+                details: `<strong>customer testimonial animation</strong><br>
                 <br>
-                As my inaugural project for Church California, this testimonial-driven advertisement leverages authentic customer reviews to build trust and credibility. The kinetic typography treatment emphasizes key product benefits while maintaining readability across multiple viewing contexts. Strategic pacing and hierarchical animation create moments of emphasis that align with conversion-focused messaging.`
+                software: after effects<br>
+                platforms: instagram, google ads, youtube<br>
+                <br>
+                as my inaugural project for church california,<br>
+                this testimonial-driven advertisement leverages<br>
+                authentic customer reviews to build trust and<br>
+                credibility. the kinetic typography treatment<br>
+                emphasizes key product benefits while maintaining<br>
+                readability across multiple viewing contexts.<br>
+                <br>
+                strategic pacing and hierarchical animation<br>
+                create moments of emphasis that align with<br>
+                conversion-focused messaging.`
             },
             'pomade 2.mp4': {
-                title: '3D PRODUCT VISUALIZATION',
-                details: `SOFTWARE: BLENDER, AFTER EFFECTS<br>
-                TECHNIQUE: 3D MOTION GRAPHICS<br>
+                title: '3d product visualization',
+                details: `<strong>3d product visualization</strong><br>
                 <br>
-                These 3D pomade renderings were meticulously crafted in Blender before being integrated into After Effects for animation. The piece showcases press recognition and editorial features, lending third-party credibility to our products. The photorealistic 3D elements elevate the production value while maintaining consistency with our premium positioning in the grooming market.`
+                software: blender, after effects<br>
+                technique: 3d motion graphics<br>
+                <br>
+                these 3d pomade renderings were meticulously<br>
+                crafted in blender before being integrated into<br>
+                after effects for animation. the piece showcases<br>
+                press recognition and editorial features, lending<br>
+                third-party credibility to our products.<br>
+                <br>
+                the photorealistic 3d elements elevate the<br>
+                production value while maintaining consistency<br>
+                with our premium positioning in the grooming market.`
             },
             'pomade 3.mp4': {
-                title: 'CYCLICAL BRAND ANIMATION',
-                details: `SOFTWARE: AFTER EFFECTS<br>
-                PURPOSE: INSTAGRAM BRAND CONTENT<br>
+                title: 'cyclical brand animation',
+                details: `<strong>cyclical brand animation</strong><br>
                 <br>
-                This looping motion design piece serves as evergreen content for our social channels. The cyclical nature of the animation mirrors the habitual use of our products while incorporating our pomade tagline. Created entirely in After Effects, this piece demonstrates how strategic motion design can reinforce brand messaging through visual rhythm and repetition.`
+                software: after effects<br>
+                purpose: instagram brand content<br>
+                <br>
+                this looping motion design piece serves as<br>
+                evergreen content for our social channels.<br>
+                the cyclical nature of the animation mirrors<br>
+                the habitual use of our products while<br>
+                incorporating our pomade tagline.<br>
+                <br>
+                created entirely in after effects, this piece<br>
+                demonstrates how strategic motion design can<br>
+                reinforce brand messaging through visual<br>
+                rhythm and repetition.`
             },
             'pomade 4.mp4': {
-                title: 'RAPID-FIRE PRODUCT SHOWCASE',
-                details: `SOFTWARE: AFTER EFFECTS<br>
-                FORMAT: QUICK-CUT MONTAGE<br>
+                title: 'rapid-fire product showcase',
+                details: `<strong>rapid-fire product showcase</strong><br>
                 <br>
-                These attention-grabbing still image animations are optimized for short-form content consumption. By creating dynamic movement from static product photography, these pieces maximize engagement in the critical first seconds of viewing. The technique proves particularly effective for social media algorithms that favor high-engagement content.`
+                software: after effects<br>
+                format: quick-cut montage<br>
+                <br>
+                these attention-grabbing still image animations<br>
+                are optimized for short-form content consumption.<br>
+                by creating dynamic movement from static product<br>
+                photography, these pieces maximize engagement<br>
+                in the critical first seconds of viewing.<br>
+                <br>
+                the technique proves particularly effective for<br>
+                social media algorithms that favor<br>
+                high-engagement content.`
             },
             'pomade 5.mp4': {
-                title: 'KINETIC PRODUCT PHOTOGRAPHY',
-                details: `SOFTWARE: AFTER EFFECTS<br>
-                STRATEGY: SCROLL-STOPPING CONTENT<br>
+                title: 'kinetic product photography',
+                details: `<strong>kinetic product photography</strong><br>
                 <br>
-                Continuing our quick-cut series, this piece transforms product stills into compelling motion content. The rapid transitions and dynamic effects are calibrated to capture attention in crowded social feeds while maintaining brand sophistication. Each frame is designed to work as both a standalone image and part of the kinetic whole.`
+                software: after effects<br>
+                strategy: scroll-stopping content<br>
+                <br>
+                continuing our quick-cut series, this piece<br>
+                transforms product stills into compelling motion<br>
+                content. the rapid transitions and dynamic effects<br>
+                are calibrated to capture attention in crowded<br>
+                social feeds while maintaining brand sophistication.<br>
+                <br>
+                each frame is designed to work as both a<br>
+                standalone image and part of the kinetic whole.`
             },
             'pomade 6.mp4': {
-                title: 'PRODUCT APPLICATION DEMONSTRATION',
-                details: `SOFTWARE: AFTER EFFECTS<br>
-                FOCUS: USER EXPERIENCE<br>
+                title: 'product application demonstration',
+                details: `<strong>product application demonstration</strong><br>
                 <br>
-                This piece combines intimate product shots with real-world application footage. Created in After Effects, the advertisement bridges the gap between aspiration and practical use. Close-up texture shots highlight product quality while usage demonstrations build consumer confidence in the application process.`
+                software: after effects<br>
+                focus: user experience<br>
+                <br>
+                this piece combines intimate product shots with<br>
+                real-world application footage. created in after<br>
+                effects, the advertisement bridges the gap between<br>
+                aspiration and practical use.<br>
+                <br>
+                close-up texture shots highlight product quality<br>
+                while usage demonstrations build consumer<br>
+                confidence in the application process.`
             },
             'brand 1.mp4': {
-                title: 'BARBERSHOP DOCUMENTARY SERIES',
-                details: `SOFTWARE: AFTER EFFECTS, PREMIERE PRO<br>
-                CONCEPT: PRODUCT AUTHENTICITY NARRATIVE<br>
+                title: 'barbershop documentary series',
+                details: `<strong>barbershop documentary series</strong><br>
                 <br>
-                This brand film showcases the symbiotic relationship between Church California products and the barbershop where they're conceived and tested. Through dynamic zoom transitions created in After Effects, the piece weaves together the dual narratives of craftsmanship and commerce. The documentary approach legitimizes our "made by barbers, for everyone" positioning while highlighting the rigorous product development process that occurs within the shop's walls.`
+                software: after effects, premiere pro<br>
+                concept: product authenticity narrative<br>
+                <br>
+                this brand film showcases the symbiotic<br>
+                relationship between church california products<br>
+                and the barbershop where they're conceived and<br>
+                tested. through dynamic zoom transitions created<br>
+                in after effects, the piece weaves together the<br>
+                dual narratives of craftsmanship and commerce.<br>
+                <br>
+                the documentary approach legitimizes our<br>
+                "made by barbers, for everyone" positioning<br>
+                while highlighting the rigorous product<br>
+                development process that occurs within<br>
+                the shop's walls.`
             },
             'brand 2.mov': {
-                title: 'BARBER TUTORIAL SERIES',
-                details: `SOFTWARE: PREMIERE PRO, AFTER EFFECTS<br>
-                FEATURING: CAM - CHURCH BARBER<br>
+                title: 'barber tutorial series',
+                details: `<strong>barber tutorial series</strong><br>
                 <br>
-                This tutorial features Cam, one of our senior barbers, demonstrating professional pomade application techniques. The piece serves dual purposes—educating consumers while reinforcing product credibility through professional endorsement. By showcasing actual barbers using our products in their daily practice, we substantiate our claim of professional-grade quality.`
+                software: premiere pro, after effects<br>
+                featuring: cam - church barber<br>
+                <br>
+                this tutorial features cam, one of our senior<br>
+                barbers, demonstrating professional pomade<br>
+                application techniques. the piece serves dual<br>
+                purposes—educating consumers while reinforcing<br>
+                product credibility through professional endorsement.<br>
+                <br>
+                by showcasing actual barbers using our products<br>
+                in their daily practice, we substantiate our<br>
+                claim of professional-grade quality.`
             },
             'brand 3.mp4': {
-                title: 'BARBERSHOP LIFESTYLE MONTAGE',
-                details: `SOFTWARE: AFTER EFFECTS<br>
-                SOURCE: BRAND PHOTOSHOOT ARCHIVES<br>
+                title: 'barbershop lifestyle montage',
+                details: `<strong>barbershop lifestyle montage</strong><br>
                 <br>
-                This rapid-cut brand piece leverages our extensive photography archive to create a dynamic snapshot of barbershop culture. The editing style captures the energy and authenticity of our retail environment while reinforcing the message that Church products are born from professional expertise. Each frame is carefully selected to balance product visibility with lifestyle authenticity.`
+                software: after effects<br>
+                source: brand photoshoot archives<br>
+                <br>
+                this rapid-cut brand piece leverages our extensive<br>
+                photography archive to create a dynamic snapshot<br>
+                of barbershop culture. the editing style captures<br>
+                the energy and authenticity of our retail<br>
+                environment while reinforcing the message that<br>
+                church products are born from professional expertise.<br>
+                <br>
+                each frame is carefully selected to balance<br>
+                product visibility with lifestyle authenticity.`
             }
         };
     }
@@ -404,7 +540,7 @@ class VideoInfoManager {
         const info = this.videoInfo[filename];
         
         if (info) {
-            infoPanel.innerHTML = `<p>${info.title}<br>${info.details}</p>`;
+            infoPanel.innerHTML = `<p>${info.details}</p>`;
         }
     }
 }

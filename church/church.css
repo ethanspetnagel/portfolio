@@ -360,6 +360,18 @@ body.title-hover .project-gallery {
   margin-bottom: 0;
 }
 
+/* Daniel Castro link styling */
+.interactive-text a {
+  color: #424751; /* Same as text color */
+  text-decoration: none;
+  font-style: italic; /* Italicized */
+  transition: color 0.3s ease;
+}
+
+.interactive-text a:hover {
+  color: #99dd2c; /* Green on hover */
+}
+
 /* Right gallery column */
 .project-gallery {
   width: calc(100vw - 36vw);
@@ -451,11 +463,12 @@ body.title-hover .project-gallery {
   display: block;
 }
 
+/* Updated video sizing - 45% smaller */
 .slide img,
 .slide video {
   display: block;
-  max-width: 700px;
-  width: 78vw;
+  max-width: 385px; /* 45% smaller than 700px */
+  width: 43vw; /* 45% smaller than 78vw */
   height: auto;
   margin-bottom: 0;
   margin-right: 0;
@@ -470,38 +483,64 @@ body.title-hover .project-gallery {
   object-fit: contain;
 }
 
-/* Image size variations */
+/* Image size variations - all 45% smaller */
 .project-block:nth-child(2) .slide img,
 .project-block:nth-child(2) .slide video {
-  max-width: 550px;
-  width: 49vw;
+  max-width: 302.5px; /* 45% smaller than 550px */
+  width: 27vw; /* 45% smaller than 49vw */
   margin-right: 4vw;
 }
 
 .project-block:nth-child(3) .slide img,
 .project-block:nth-child(3) .slide video {
-  max-width: 800px;
-  width: 65vw;
+  max-width: 440px; /* 45% smaller than 800px */
+  width: 35.75vw; /* 45% smaller than 65vw */
   margin-right: 0;
 }
 
 .project-block:nth-child(4) .slide img,
 .project-block:nth-child(4) .slide video {
-  max-width: 600px;
-  width: 35vw;
+  max-width: 330px; /* 45% smaller than 600px */
+  width: 19.25vw; /* 45% smaller than 35vw */
   margin-right: 6vw;
+}
+
+/* Special case: Botanical Barbershop video stays the same size */
+.project-set[data-index="1"] .project-block:last-child .slide video {
+  max-width: 700px; /* Original size */
+  width: 78vw; /* Original size */
+}
+
+/* Caption container for layout */
+.caption-container {
+  align-self: flex-start;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 14px;
 }
 
 /* Captions and info - UPDATED to match bio-text styling */
 .caption {
-  align-self: flex-start;
-  margin-top: 14px;
   font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
   font-size: calc(1.6rem - 9px); /* Matches bio-text */
   font-weight: normal; /* Matches bio-text */
   text-transform: none; /* Removed all caps */
   letter-spacing: -0.01em; /* Matches bio-text */
   line-height: 1.08; /* Matches bio-text */
+}
+
+/* Date styling */
+.date {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(1.6rem - 9px);
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  color: #424751;
+  opacity: 0.7;
 }
 
 .info-toggle {
@@ -518,8 +557,8 @@ body.title-hover .project-gallery {
 }
 
 .info-toggle:hover {
-  color: #ffcc00;
-  text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
+  color: #99dd2c; /* Updated to requested green color */
+  text-shadow: 0 0 6px rgba(153, 221, 44, 0.3);
 }
 
 .info-toggle.active {
@@ -535,7 +574,7 @@ body.title-hover .project-gallery {
   font-weight: normal; /* Matches bio-text */
   text-transform: none; /* Removed all caps */
   letter-spacing: -0.01em; /* Matches bio-text */
-  line-height: 1.08; /* Matches bio-text */
+  line-height: 1.5; /* Increased for better readability */
   color: #424751; /* Changed from #0f0f0f to dark gray */
   max-height: 0;
   overflow: hidden;
@@ -563,7 +602,7 @@ body.title-hover .project-gallery {
 }
 
 .info-panel p strong {
-  font-weight: 400;
+  font-weight: bold;
   text-transform: none; /* Removed uppercase */
   letter-spacing: -0.01em; /* Matches bio-text */
   display: inline-block;
@@ -571,14 +610,14 @@ body.title-hover .project-gallery {
   min-width: 120px;
 }
 
-/* Adjust margins for specific blocks */
-.project-block:nth-child(2) .caption,
+/* Adjust margins for specific blocks to align captions with left edge */
+.project-block:nth-child(2) .caption-container,
 .project-block:nth-child(2) .info-toggle,
 .project-block:nth-child(2) .info-panel {
   margin-right: 4vw;
 }
 
-.project-block:nth-child(4) .caption,
+.project-block:nth-child(4) .caption-container,
 .project-block:nth-child(4) .info-toggle,
 .project-block:nth-child(4) .info-panel {
   margin-right: 6vw;
