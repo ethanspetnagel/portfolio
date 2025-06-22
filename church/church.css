@@ -1,14 +1,4 @@
 /* Page Entrance Animation - Circle Shrink from Black */
-@keyframes circleShrinkReveal {
-  0% {
-    width: 300%;
-    height: 300%;
-  }
-  100% {
-    width: 0;
-    height: 0;
-  }
-}
 
 /* Apply entrance animation when page loads */
 body.page-loading::before {
@@ -776,7 +766,7 @@ body.title-hover .project-gallery {
   flex-direction: row;
   align-items: baseline;
   justify-content: space-between;
-  width: 100%; /* now relative to wrapper */
+  width: 50%; /* now relative to wrapper */
   margin-top: 14px;
 }
 
