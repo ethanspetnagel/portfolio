@@ -74,6 +74,11 @@ body.title-hover .project-gallery {
   background-color: #000000;
 }
 
+/* Corner logo filter for title hover */
+body.title-hover .corner-logo {
+  filter: invert(1);
+}
+
 /* Projects/Home button */
 .projects-button {
   position: fixed;
@@ -95,6 +100,21 @@ body.title-hover .project-gallery {
 
 .projects-button:hover {
   opacity: 0.6;
+}
+
+/* Corner logo */
+.corner-logo {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 120px;
+  height: auto;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.corner-logo:hover {
+  opacity: 0.8;
 }
 
 /* Cursor label */
@@ -614,6 +634,11 @@ ul.interactive-text li {
     left: 10px;
     font-size: clamp(10.8px, 2.43vw, 29.7px);
   }
+  .corner-logo {
+    width: 80px;
+    bottom: 20px;
+    right: 10px;
+  }
   .page {
     flex-direction: column;
     overflow: visible;
@@ -695,6 +720,9 @@ ul.interactive-text li {
   }
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
+  }
+  .corner-logo {
+    width: 60px;
   }
 }
 
