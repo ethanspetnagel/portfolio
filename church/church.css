@@ -1,6 +1,6 @@
 /* Full, updated CSS for Church California
  * With fixes for captions, image sizing, and styling
- * Last updated: 2025-06-22 17:01:07
+ * Last updated: 2025-06-22 17:20:57
  */
 
 @font-face {
@@ -47,20 +47,21 @@ body.page-navigating * {
   visibility: hidden !important;
 }
 
-/* Floating logo in bottom right corner */
+/* Floating logo in bottom right corner - 5x BIGGER */
 .floating-logo {
   position: fixed;
   bottom: 15px;
   right: 15px;
   z-index: 999;
-  width: 60px;
-  height: 60px;
+  width: 300px; /* 5x bigger than original 60px */
+  height: 300px; /* 5x bigger than original 60px */
   opacity: 0.7;
   transition: opacity 0.3s ease;
 }
 
 .floating-logo:hover {
   opacity: 1;
+  /* No color change on hover */
 }
 
 .floating-logo img {
@@ -451,50 +452,31 @@ body.title-hover .project-gallery {
   width: 43vw;
 }
 
-/* VIDEO TAB - Updated sizes for all videos */
-/* #1 - Skincare Campaign - Keep size */
-.skincare-campaign {
+/* RESTORED VIDEO TAB SIZING - Returning to original working state */
+/* First two videos in the VIDEO tab */
+.project-set[data-index="1"] .project-block:nth-child(1) .slideshow-zone,
+.project-set[data-index="1"] .project-block:nth-child(2) .slideshow-zone {
   max-width: 700px;
   width: 78vw;
 }
 
-/* #2 - Pomade Campaign - Keep size */
-.pomade-campaign {
-  max-width: 700px;
-  width: 78vw;
-}
-
-/* #3 - Brand Campaign - Match first two */
-.brand-campaign {
-  max-width: 700px;
-  width: 78vw;
-}
-
-.brand-video {
+/* First two videos themselves */
+.project-set[data-index="1"] .project-block:nth-child(1) .slide video,
+.project-set[data-index="1"] .project-block:nth-child(2) .slide video {
   max-width: 700px !important;
   width: 78vw !important;
 }
 
-/* #4 - Blender Models - A lot bigger */
-.blender-models {
-  max-width: 900px;
-  width: 85vw;
+/* Botanical Barbershop video at the end */
+.project-set[data-index="1"] .project-block:last-child .slideshow-zone {
+  max-width: 700px;
+  width: 78vw;
 }
 
-.blender-img {
-  max-width: 900px !important;
-  width: 85vw !important;
-}
-
-/* #5 - Botanical Barbershop - A little bigger */
-.botanical-barbershop {
-  max-width: 780px;
-  width: 80vw;
-}
-
-.botanical-video {
-  max-width: 780px !important;
-  width: 80vw !important;
+.project-set[data-index="1"] .project-block:last-child .slide video {
+  max-width: 700px;
+  width: 78vw;
+  margin-left: 0;
 }
 
 .slide {
@@ -673,6 +655,10 @@ ul.interactive-text li {
   .top-navigation {
     gap: 30px;
   }
+  .floating-logo {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -682,10 +668,10 @@ ul.interactive-text li {
     font-size: clamp(10.8px, 2.43vw, 29.7px);
   }
   .floating-logo {
-    width: 40px;
-    height: 40px;
-    bottom: 20px;
-    right: 20px;
+    width: 150px;
+    height: 150px;
+    bottom: 60px;
+    right: 10px;
   }
   .page {
     flex-direction: column;
@@ -739,21 +725,24 @@ ul.interactive-text li {
   .project-block:nth-child(4) .slideshow-zone,
   .project-block:nth-child(5) .slideshow-zone,
   .project-block:nth-child(6) .slideshow-zone,
-  .skincare-campaign,
-  .pomade-campaign,
-  .brand-campaign,
-  .blender-models,
-  .botanical-barbershop {
+  .project-set[data-index="1"] .project-block:nth-child(1) .slideshow-zone,
+  .project-set[data-index="1"] .project-block:nth-child(2) .slideshow-zone,
+  .project-set[data-index="1"] .project-block:last-child .slideshow-zone {
     max-width: 100%;
     width: 100%;
     margin-left: 0;
   }
   .slide img,
   .slide video,
-  .pomade-video,
-  .brand-video,
-  .blender-img,
-  .botanical-video {
+  .project-block:nth-child(2) .slide img,
+  .project-block:nth-child(2) .slide video,
+  .project-block:nth-child(3) .slide img,
+  .project-block:nth-child(3) .slide video,
+  .project-block:nth-child(4) .slide img,
+  .project-block:nth-child(4) .slide video,
+  .project-set[data-index="1"] .project-block:nth-child(1) .slide video,
+  .project-set[data-index="1"] .project-block:nth-child(2) .slide video,
+  .project-set[data-index="1"] .project-block:last-child .slide video {
     width: 100%;
     max-width: 100vw !important;
     margin-left: 0;
@@ -780,8 +769,8 @@ ul.interactive-text li {
     font-size: clamp(20px, 5vw, 40px);
   }
   .floating-logo {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
   }
 }
 
