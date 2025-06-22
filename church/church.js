@@ -295,6 +295,120 @@ class SmoothScroll {
     }
 }
 
+// Video Info Manager - Manages dynamic info panels for video slideshows
+class VideoInfoManager {
+    constructor() {
+        this.videoInfo = {
+            'skincare 1.mp4': {
+                title: 'BOTANICAL CLAY CLEANSER ADVERTISEMENT',
+                details: `SOFTWARE: AFTER EFFECTS, PREMIERE PRO<br>
+                DURATION: 15s, 30s, 60s CUTS<br>
+                <br>
+                This campaign piece features imagery captured in the Marin Headlands, establishing a direct visual connection between our products and their natural origins. The juxtaposition of raw landscape footage with refined product shots creates a narrative that reinforces our commitment to botanical ingredients. I developed custom logo animations in After Effects, employing organic motion curves that mirror the fluidity of natural elements while maintaining brand sophistication.`
+            },
+            'skincare 2.mp4': {
+                title: 'SHAMPOO & CONDITIONER BAR CAMPAIGN',
+                details: `SOFTWARE: AFTER EFFECTS<br>
+                PLATFORM: INSTAGRAM REELS, STORIES<br>
+                <br>
+                This video demonstrates the practical application of our solid haircare products while reinforcing our all-natural brand identity. Created entirely in After Effects, the piece combines product demonstration with lifestyle messaging. The animation techniques employed create a seamless narrative flow that educates consumers on product usage while building emotional connection to the brand's sustainable ethos.`
+            },
+            'skincare 3.mp4': {
+                title: 'MULTI-PRODUCT SHOWCASE',
+                details: `SOFTWARE: AFTER EFFECTS, PREMIERE PRO<br>
+                CONCEPT: NATURE-PRODUCT SYNTHESIS<br>
+                <br>
+                A comprehensive brand piece showcasing our complete skincare line against natural backdrops. This Instagram-optimized content weaves together product beauty shots with environmental footage, creating a visual metaphor for our farm-to-face philosophy. The editing rhythm and color grading establish a cohesive aesthetic that has become synonymous with Church California's digital presence.`
+            },
+            'skincare 4.mp4': {
+                title: 'INTEGRATED CAMPAIGN SPOT',
+                details: `SOFTWARE: AFTER EFFECTS, PREMIERE PRO<br>
+                DEPLOYMENT: MULTI-PLATFORM<br>
+                <br>
+                This versatile campaign asset features advanced motion graphics created in After Effects, combined with editorial finesse in Premiere Pro. The spot serves multiple strategic purposes—from social media engagement to conversion-focused advertising. The visual effects reinforce product benefits while maintaining the authentic, artisanal quality that defines our brand.`
+            },
+            'pomade 1.mp4': {
+                title: 'CUSTOMER TESTIMONIAL ANIMATION',
+                details: `SOFTWARE: AFTER EFFECTS<br>
+                PLATFORMS: INSTAGRAM, GOOGLE ADS, YOUTUBE<br>
+                <br>
+                As my inaugural project for Church California, this testimonial-driven advertisement leverages authentic customer reviews to build trust and credibility. The kinetic typography treatment emphasizes key product benefits while maintaining readability across multiple viewing contexts. Strategic pacing and hierarchical animation create moments of emphasis that align with conversion-focused messaging.`
+            },
+            'pomade 2.mp4': {
+                title: '3D PRODUCT VISUALIZATION',
+                details: `SOFTWARE: BLENDER, AFTER EFFECTS<br>
+                TECHNIQUE: 3D MOTION GRAPHICS<br>
+                <br>
+                These 3D pomade renderings were meticulously crafted in Blender before being integrated into After Effects for animation. The piece showcases press recognition and editorial features, lending third-party credibility to our products. The photorealistic 3D elements elevate the production value while maintaining consistency with our premium positioning in the grooming market.`
+            },
+            'pomade 3.mp4': {
+                title: 'CYCLICAL BRAND ANIMATION',
+                details: `SOFTWARE: AFTER EFFECTS<br>
+                PURPOSE: INSTAGRAM BRAND CONTENT<br>
+                <br>
+                This looping motion design piece serves as evergreen content for our social channels. The cyclical nature of the animation mirrors the habitual use of our products while incorporating our pomade tagline. Created entirely in After Effects, this piece demonstrates how strategic motion design can reinforce brand messaging through visual rhythm and repetition.`
+            },
+            'pomade 4.mp4': {
+                title: 'RAPID-FIRE PRODUCT SHOWCASE',
+                details: `SOFTWARE: AFTER EFFECTS<br>
+                FORMAT: QUICK-CUT MONTAGE<br>
+                <br>
+                These attention-grabbing still image animations are optimized for short-form content consumption. By creating dynamic movement from static product photography, these pieces maximize engagement in the critical first seconds of viewing. The technique proves particularly effective for social media algorithms that favor high-engagement content.`
+            },
+            'pomade 5.mp4': {
+                title: 'KINETIC PRODUCT PHOTOGRAPHY',
+                details: `SOFTWARE: AFTER EFFECTS<br>
+                STRATEGY: SCROLL-STOPPING CONTENT<br>
+                <br>
+                Continuing our quick-cut series, this piece transforms product stills into compelling motion content. The rapid transitions and dynamic effects are calibrated to capture attention in crowded social feeds while maintaining brand sophistication. Each frame is designed to work as both a standalone image and part of the kinetic whole.`
+            },
+            'pomade 6.mp4': {
+                title: 'PRODUCT APPLICATION DEMONSTRATION',
+                details: `SOFTWARE: AFTER EFFECTS<br>
+                FOCUS: USER EXPERIENCE<br>
+                <br>
+                This piece combines intimate product shots with real-world application footage. Created in After Effects, the advertisement bridges the gap between aspiration and practical use. Close-up texture shots highlight product quality while usage demonstrations build consumer confidence in the application process.`
+            },
+            'brand 1.mp4': {
+                title: 'BARBERSHOP DOCUMENTARY SERIES',
+                details: `SOFTWARE: AFTER EFFECTS, PREMIERE PRO<br>
+                CONCEPT: PRODUCT AUTHENTICITY NARRATIVE<br>
+                <br>
+                This brand film showcases the symbiotic relationship between Church California products and the barbershop where they're conceived and tested. Through dynamic zoom transitions created in After Effects, the piece weaves together the dual narratives of craftsmanship and commerce. The documentary approach legitimizes our "made by barbers, for everyone" positioning while highlighting the rigorous product development process that occurs within the shop's walls.`
+            },
+            'brand 2.mov': {
+                title: 'BARBER TUTORIAL SERIES',
+                details: `SOFTWARE: PREMIERE PRO, AFTER EFFECTS<br>
+                FEATURING: CAM - CHURCH BARBER<br>
+                <br>
+                This tutorial features Cam, one of our senior barbers, demonstrating professional pomade application techniques. The piece serves dual purposes—educating consumers while reinforcing product credibility through professional endorsement. By showcasing actual barbers using our products in their daily practice, we substantiate our claim of professional-grade quality.`
+            },
+            'brand 3.mp4': {
+                title: 'BARBERSHOP LIFESTYLE MONTAGE',
+                details: `SOFTWARE: AFTER EFFECTS<br>
+                SOURCE: BRAND PHOTOSHOOT ARCHIVES<br>
+                <br>
+                This rapid-cut brand piece leverages our extensive photography archive to create a dynamic snapshot of barbershop culture. The editing style captures the energy and authenticity of our retail environment while reinforcing the message that Church products are born from professional expertise. Each frame is carefully selected to balance product visibility with lifestyle authenticity.`
+            }
+        };
+    }
+
+    updateInfoPanel(slideElement, infoPanel) {
+        const video = slideElement.querySelector('video');
+        if (!video) return;
+        
+        const source = video.querySelector('source');
+        if (!source) return;
+        
+        const filename = source.src.split('/').pop();
+        const info = this.videoInfo[filename];
+        
+        if (info) {
+            infoPanel.innerHTML = `<p>${info.title}<br>${info.details}</p>`;
+        }
+    }
+}
+
 // Main initialization
 // Remove page loading state when page is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -314,6 +428,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize text parting effect
     const textParting = new TextPartingEffect();
     textParting.init();
+
+    // Initialize video info manager
+    const videoInfoManager = new VideoInfoManager();
 
     // Initialize smooth scroll WITHOUT snap
     const smoothScrollLeft = new SmoothScroll(essaySidebar, { 
@@ -422,12 +539,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 textParting.init();
             }, 100);
             
-            // Auto-play first video in new section
+            // Auto-play all videos in new section
             if (currentProject) {
-                const firstVideo = currentProject.querySelector('video');
-                if (firstVideo) {
-                    firstVideo.play();
-                }
+                const videos = currentProject.querySelectorAll('video');
+                videos.forEach(video => {
+                    video.play().catch(e => console.log('Video autoplay prevented:', e));
+                });
             }
         });
     });
@@ -452,8 +569,13 @@ document.addEventListener('DOMContentLoaded', () => {
             toggle.classList.toggle('active');
             panel.classList.toggle('active');
   
-            // Smooth content shift
+            // Update info panel content for videos
             if (!isActive) {
+                const slideshow = toggle.closest('.slideshow-zone');
+                const currentSlide = slideshow.querySelector('.slide.current');
+                if (currentSlide && currentSlide.querySelector('video')) {
+                    videoInfoManager.updateInfoPanel(currentSlide, panel);
+                }
                 panel.style.maxHeight = panel.scrollHeight + 'px';
             } else {
                 panel.style.maxHeight = '0';
@@ -461,21 +583,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
   
-    // SLIDESHOW + VIDEO CONTROLS
+    // ENHANCED SLIDESHOW + VIDEO CONTROLS
     document.querySelectorAll('.slideshow-zone').forEach(zone => {
         const slides = zone.querySelectorAll('.slide');
         let currentIndex = 0;
-        let isPlaying = false;
+        let isPlaying = true; // Videos auto-play by default
   
         function showSlide(i) {
-            slides.forEach(s => s.classList.remove('current'));
+            // Hide all slides
+            slides.forEach(s => {
+                s.classList.remove('current');
+                // Pause any videos in hidden slides
+                const video = s.querySelector('video');
+                if (video) {
+                    video.pause();
+                }
+            });
+            
+            // Show current slide
             slides[i].classList.add('current');
             
             // Auto-play video if it's the current slide
             const video = slides[i].querySelector('video');
             if (video) {
-                video.play();
+                video.play().catch(e => console.log('Video autoplay prevented:', e));
                 isPlaying = true;
+            }
+            
+            // Update info panel if it's open
+            const infoToggle = zone.querySelector('.info-toggle');
+            const infoPanel = zone.querySelector('.info-panel');
+            if (infoToggle && infoToggle.classList.contains('active') && infoPanel) {
+                videoInfoManager.updateInfoPanel(slides[i], infoPanel);
             }
         }
   
@@ -507,28 +646,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentVideo = getCurrentVideo();
   
                 if (currentVideo) {
-                    if (isPlaying) {
-                        currentVideo.pause();
-                        isPlaying = false;
-                    } else {
-                        currentVideo.play();
-                        isPlaying = true;
-                    }
-                } else {
-                    // Navigate slides
+                    // For videos, clicking on the right advances to next slide
+                    // clicking on the left goes to previous slide
+                    // No pause/play functionality - videos always play
                     if (mouseX > midpoint) {
                         currentIndex = (currentIndex + 1) % slides.length;
                     } else {
                         currentIndex = (currentIndex - 1 + slides.length) % slides.length;
                     }
-  
                     showSlide(currentIndex);
-  
-                    const newVideo = getCurrentVideo();
-                    if (newVideo) {
-                        isPlaying = false;
-                        newVideo.pause();
+                } else {
+                    // Navigate slides for images
+                    if (mouseX > midpoint) {
+                        currentIndex = (currentIndex + 1) % slides.length;
+                    } else {
+                        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
                     }
+                    showSlide(currentIndex);
                 }
             }
         });
@@ -551,9 +685,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentVideo = getCurrentVideo();
   
                 let label = '';
-                if (currentVideo) {
-                    label = isPlaying ? 'PAUSE' : 'PLAY';
-                } else if (slides.length > 1) {
+                if (slides.length > 1) {
+                    // Always show NEXT/BACK for videos and images when multiple slides
                     label = mouseX > midpoint ? 'NEXT' : 'BACK';
                 }
   
@@ -570,16 +703,18 @@ document.addEventListener('DOMContentLoaded', () => {
   
         zone.addEventListener('mouseleave', () => {
             cursorLabel.style.display = 'none';
-  
-            const currentVideo = getCurrentVideo();
-            if (currentVideo && isPlaying) {
-                currentVideo.pause();
-                isPlaying = false;
-            }
         });
   
         // Initialize first slide and auto-play video
         showSlide(currentIndex);
+        
+        // Ensure all videos in the slideshow have proper attributes
+        zone.querySelectorAll('video').forEach(video => {
+            video.setAttribute('loop', '');
+            video.setAttribute('muted', '');
+            video.setAttribute('autoplay', '');
+            video.setAttribute('playsinline', '');
+        });
     });
   
     // Star scrollbar functionality with 2-second fade
@@ -628,7 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Keyboard navigation for slideshows
     document.addEventListener('keydown', (e) => {
-        const activeZone = document.querySelector('.project-set.active .slideshow-zone');
+        const activeZone = document.querySelector('.project-set.active .slideshow-zone:hover');
         if (!activeZone) return;
   
         const slides = activeZone.querySelectorAll('.slide');
@@ -636,12 +771,24 @@ document.addEventListener('DOMContentLoaded', () => {
   
         if (e.key === 'ArrowRight') {
             currentIndex = (currentIndex + 1) % slides.length;
-            slides.forEach(s => s.classList.remove('current'));
+            slides.forEach(s => {
+                s.classList.remove('current');
+                const video = s.querySelector('video');
+                if (video) video.pause();
+            });
             slides[currentIndex].classList.add('current');
+            const newVideo = slides[currentIndex].querySelector('video');
+            if (newVideo) newVideo.play();
         } else if (e.key === 'ArrowLeft') {
             currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-            slides.forEach(s => s.classList.remove('current'));
+            slides.forEach(s => {
+                s.classList.remove('current');
+                const video = s.querySelector('video');
+                if (video) video.pause();
+            });
             slides[currentIndex].classList.add('current');
+            const newVideo = slides[currentIndex].querySelector('video');
+            if (newVideo) newVideo.play();
         }
     });
   
@@ -655,11 +802,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (firstEssay) firstEssay.classList.add('active');
         if (firstProject) {
             firstProject.classList.add('active');
-            // Auto-play first video
-            const firstVideo = firstProject.querySelector('video');
-            if (firstVideo) {
-                firstVideo.play();
-            }
+            // Auto-play all videos in the active section
+            const videos = firstProject.querySelectorAll('video');
+            videos.forEach(video => {
+                video.play().catch(e => console.log('Video autoplay prevented:', e));
+            });
         }
     }
   
@@ -682,7 +829,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 250);
     });
   
-    // Preload images
+    // Preload images and ensure videos are ready
     function preloadImage(url) {
         const img = new Image();
         img.src = url;
@@ -690,5 +837,17 @@ document.addEventListener('DOMContentLoaded', () => {
   
     document.querySelectorAll('.slide img').forEach(img => {
         preloadImage(img.src);
+    });
+    
+    // Ensure all videos have proper attributes for autoplay
+    document.querySelectorAll('video').forEach(video => {
+        video.setAttribute('loop', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('autoplay', '');
+        video.setAttribute('playsinline', '');
+        // Try to play videos that are visible
+        if (video.closest('.slide.current')) {
+            video.play().catch(e => console.log('Video autoplay prevented:', e));
+        }
     });
 });
