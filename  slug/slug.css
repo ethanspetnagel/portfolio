@@ -1,70 +1,4 @@
-/*
-  This is your complete original CSS with all original code kept,
-  plus the changes you asked for:
-
-  1. Accent color on info-toggle is already b3d100 (kept)
-  2. Videos smaller (max-width: 500px)
-  3. Captions positioned bottom left of video
-  4. All "text-transform: uppercase" removed (projects-button, cursor-label, site-title, nav-tabs, essay-tab)
-  5. All animations, layout, star indicators, smooth scrolling, media queries, etc. left intact
-*/
-
-/* Page Entrance Animation - Circle Shrink from Black */
-@keyframes circleShrinkReveal {
-  0% {
-    width: 300%;
-    height: 300%;
-  }
-  100% {
-    width: 0;
-    height: 0;
-  }
-}
-
-body.page-loading::before {
-  content: '';
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 300%;
-  height: 300%;
-  background: #000;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20000;
-  animation: circleShrinkReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  pointer-events: none;
-}
-
-.page-transition-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: #f0f5f5;
-  z-index: 20000;
-  pointer-events: none;
-  display: none;
-  overflow: hidden;
-}
-
-.page-transition-overlay.active {
-  display: block;
-  pointer-events: all;
-}
-
-.page-clone {
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-body.from-transition .page > * {
-  animation: none;
-}
+/* Slug Soap CSS - Adapted from Church California styling */
 
 @font-face {
   font-family: "Borgia Pro";
@@ -77,9 +11,10 @@ body.from-transition .page > * {
   box-sizing: border-box;
 }
 
+/* Selection color */
 ::selection {
-  background-color: #00233f;
-  color: #c0e7ff;
+  background-color: #00233f; 
+  color: #c0e7ff; 
 }
 
 ::-moz-selection {
@@ -99,6 +34,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Page loading state */
 body.page-navigating {
   opacity: 0 !important;
   pointer-events: none !important;
@@ -108,6 +44,7 @@ body.page-navigating * {
   visibility: hidden !important;
 }
 
+/* Title hover effects */
 .site-title:hover {
   color: #fff !important;
 }
@@ -137,6 +74,7 @@ body.title-hover .project-gallery {
   background-color: #000000;
 }
 
+/* Projects/Home button */
 .projects-button {
   position: fixed;
   bottom: 15px;
@@ -144,6 +82,7 @@ body.title-hover .project-gallery {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
+  text-transform: uppercase;
   text-decoration: none;
   color: #424751;
   background: none;
@@ -158,6 +97,7 @@ body.title-hover .project-gallery {
   opacity: 0.6;
 }
 
+/* Cursor label */
 .cursor-label {
   position: fixed;
   pointer-events: none;
@@ -169,10 +109,12 @@ body.title-hover .project-gallery {
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
+  text-transform: uppercase;
   letter-spacing: 0.02em;
   text-shadow: none !important;
 }
 
+/* Main page layout */
 .page {
   display: flex;
   width: 100vw;
@@ -183,6 +125,7 @@ body.title-hover .project-gallery {
   overflow: hidden;
 }
 
+/* Left sidebar */
 .essay-sidebar {
   width: 36vw;
   min-width: 320px;
@@ -201,6 +144,7 @@ body.title-hover .project-gallery {
   background: transparent;
 }
 
+/* Star scrollbar indicator */
 .star-scroll-indicator {
   position: fixed;
   left: calc(36vw - 25px);
@@ -218,6 +162,7 @@ body.title-hover .project-gallery {
   opacity: 1;
 }
 
+/* Navigation with reduced gap */
 .top-navigation {
   display: flex;
   align-items: baseline;
@@ -231,6 +176,7 @@ body.title-hover .project-gallery {
   font-weight: bold;
   font-size: calc(1.6rem - 7px);
   letter-spacing: -0.01em;
+  text-transform: uppercase;
   cursor: pointer;
   line-height: 1.08;
   margin: 0;
@@ -243,6 +189,7 @@ body.title-hover .project-gallery {
   text-decoration: none;
 }
 
+/* UPDATED NEURAL TABS */
 .nav-tabs {
   display: flex;
   gap: 40px;
@@ -250,6 +197,7 @@ body.title-hover .project-gallery {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
+  text-transform: uppercase;
   letter-spacing: -0.01em;
   white-space: nowrap;
   padding: 8px 0;
@@ -268,6 +216,7 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
+/* Outer ellipse ring that appears on hover/active */
 .essay-tab::after {
   content: '';
   position: absolute;
@@ -282,11 +231,17 @@ body.title-hover .project-gallery {
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.essay-tab:hover::after,
+.essay-tab:hover::after {
+  opacity: 1;
+  width: calc(100% + 40px);
+  height: 24px;
+}
+
 .essay-tab.active::after {
   opacity: 1;
   width: calc(100% + 40px);
   height: 24px;
+  border-color: #424751;
 }
 
 .essay-tab:hover {
@@ -297,10 +252,17 @@ body.title-hover .project-gallery {
   font-weight: normal;
 }
 
+/* Remove any conflicting styles */
+.essay-tab:hover {
+  text-shadow: none !important;
+  color: #424751 !important;
+}
+
+/* Essay content */
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
-  margin-top: -19px;
+  margin-top: -29px;
   position: relative;
 }
 
@@ -312,12 +274,13 @@ body.title-hover .project-gallery {
   display: block;
 }
 
+/* Interactive text for word-level parting effect */
 .interactive-text {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
   line-height: 1.08;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   color: #424751;
   letter-spacing: -0.01em;
   cursor: default;
@@ -335,6 +298,23 @@ body.title-hover .project-gallery {
   letter-spacing: -0.01em;
 }
 
+.interactive-text:last-child {
+  margin-bottom: 0;
+}
+
+/* Links in text */
+.interactive-text a {
+  color: #424751;
+  text-decoration: none;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+.interactive-text a:hover {
+  color: #b3d100;
+}
+
+/* Right gallery column */
 .project-gallery {
   width: calc(100vw - 36vw);
   min-width: 0;
@@ -349,6 +329,20 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
+.project-gallery::-webkit-scrollbar {
+  width: 20px;
+  background: transparent;
+}
+
+.project-gallery::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.project-gallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Gallery star scrollbar */
 .star-scroll-indicator-gallery {
   position: fixed;
   right: 15px;
@@ -361,34 +355,97 @@ body.title-hover .project-gallery {
   z-index: 100;
 }
 
+.project-gallery:hover ~ .star-scroll-indicator-gallery,
+.project-gallery.scrolling ~ .star-scroll-indicator-gallery {
+  opacity: 0.8;
+}
+
+/* Project sets and blocks */
 .project-set {
   display: none;
   width: 100%;
   flex-direction: column;
   gap: 90px 0;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .project-set.active {
   display: flex;
 }
 
+/* PROJECT BLOCKS */
 .project-block {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   margin-bottom: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
   position: relative;
 }
 
+/* Slideshow */
 .slideshow-zone {
-  width: auto;
-  max-width: 880px;
+  width: 100%;
+  max-width: none;
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
+}
+
+/* Project sizing - default sizes for Slug content */
+.project-block:nth-child(1) .slideshow-zone {
+  max-width: 385px;
+  width: 43vw;
+}
+
+.project-block:nth-child(2) .slideshow-zone {
+  max-width: 302.5px;
+  width: 27vw;
+  margin-left: 4vw;
+}
+
+.project-block:nth-child(3) .slideshow-zone {
+  max-width: 440px;
+  width: 35.75vw;
+}
+
+.project-block:nth-child(4) .slideshow-zone {
+  max-width: 330px;
+  width: 19.25vw;
+  margin-left: 6vw;
+}
+
+.project-block:nth-child(5) .slideshow-zone {
+  max-width: 385px;
+  width: 43vw;
+}
+
+.project-block:nth-child(6) .slideshow-zone {
+  max-width: 385px;
+  width: 43vw;
+}
+
+/* Special sizing for SOAP tab */
+.project-set[data-index="1"] .project-block:nth-child(1) .slideshow-zone {
+  max-width: 700px;
+  width: 78vw;
+}
+
+.project-set[data-index="1"] .project-block:nth-child(2) .slideshow-zone {
+  max-width: 400px;
+  width: 38vw;
+}
+
+/* Special sizing for WEB and GRAPHICS tabs */
+.project-set[data-index="2"] .slideshow-zone,
+.project-set[data-index="3"] .slideshow-zone {
+  max-width: 700px;
+  width: 78vw;
 }
 
 .slide {
@@ -398,64 +455,100 @@ body.title-hover .project-gallery {
 
 .slide.current {
   display: block;
-  position: relative;
 }
 
+/* Image and video sizing */
 .slide img,
 .slide video {
   display: block;
-  max-width: 500px;
-  width: 55vw;
+  max-width: 385px;
+  width: 43vw;
   height: auto;
   margin-bottom: 0;
-  margin-right: 0;
+  margin-left: 0;
   background: #f0f5f5;
   box-shadow: none;
   border-radius: 0;
+  cursor: pointer;
 }
 
+/* Match parent slideshow width */
+.slideshow-zone .slide img,
+.slideshow-zone .slide video {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Ensure videos maintain aspect ratio */
+.slide video {
+  object-fit: contain;
+}
+
+/* Caption styling */
 .caption {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: rgba(255,255,255,0.7);
-  padding: 4px 8px;
-  border-radius: 3px;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 14px;
+  padding: 0;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
+  text-transform: none;
   letter-spacing: -0.01em;
   line-height: 1.08;
-  color: #424751;
+  word-break: break-word;
 }
 
+/* Info toggle */
 .info-toggle {
   align-self: flex-start;
   margin-top: 8px;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 9px);
-  font-weight: normal;
+  font-size: calc(1.6rem - 7px);
+  font-weight: 300;
+  text-transform: none;
   letter-spacing: -0.01em;
   line-height: 1.08;
   transition: all 0.3s ease;
+  width: auto;
+  opacity: 0.7;
+  color: #424751;
 }
 
 .info-toggle:hover {
   color: #b3d100;
+  text-shadow: 0 0 6px rgba(179, 209, 0, 0.3);
+  opacity: 1;
 }
 
+.info-toggle.active {
+  color: #b3d100;
+  opacity: 1;
+}
+
+/* Info panel */
 .info-panel {
   align-self: flex-start;
+  width: 100%;
+  max-width: 100%;
   margin-top: 8px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
-  line-height: 1.08;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
   color: #424751;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
+  background: none;
+  padding: 0;
+  box-shadow: none;
 }
 
 .info-panel.active {
@@ -470,12 +563,140 @@ body.title-hover .project-gallery {
 
 .info-panel p:first-child {
   font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
   margin-bottom: 12px;
 }
 
 .info-panel p strong {
-  font-weight: 400;
+  font-weight: bold;
+  text-transform: none;
+  letter-spacing: -0.01em;
   display: inline-block;
   margin-right: 20px;
   min-width: 120px;
+}
+
+/* Lists in interactive text */
+ul.interactive-text {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+ul.interactive-text li {
+  margin-bottom: 5px;
+}
+
+/* Responsive styles */
+@media (max-width: 1100px) {
+  .essay-sidebar {
+    min-width: 280px;
+    width: 38vw;
+    max-width: 420px;
+  }
+  .star-scroll-indicator {
+    left: calc(38vw - 25px);
+  }
+  .project-gallery {
+    width: calc(100vw - 38vw);
+  }
+  .top-navigation {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-button {
+    bottom: 20px;
+    left: 10px;
+    font-size: clamp(10.8px, 2.43vw, 29.7px);
+  }
+  .page {
+    flex-direction: column;
+    overflow: visible;
+    position: static;
+    height: auto;
+  }
+  .essay-sidebar,
+  .project-gallery {
+    width: 100vw;
+    height: 50vh;
+    min-width: 0;
+    padding: 20px;
+    border-right: none;
+  }
+  .essay-sidebar {
+    border-bottom: 1px solid #0f0f0f;
+  }
+  .star-scroll-indicator,
+  .star-scroll-indicator-gallery {
+    display: none;
+  }
+  .top-navigation {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .nav-tabs {
+    gap: 20px;
+    margin-bottom: 10px;
+    padding: 15px 0;
+  }
+  .site-title {
+    font-size: calc(1.3rem - 7px);
+  }
+  .essay-nav {
+    font-size: calc(1.3rem - 7px);
+    gap: 20px;
+  }
+  .interactive-text {
+    font-size: calc(1.3rem - 7px);
+  }
+  .caption,
+  .info-toggle,
+  .info-panel {
+    font-size: calc(1.3rem - 7px);
+  }
+  /* Make all slideshows responsive on mobile */
+  .slideshow-zone {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  /* Make all videos/images responsive on mobile */
+  .slide img,
+  .slide video {
+    width: 100%;
+    max-width: 100vw !important;
+    margin-left: 0;
+  }
+  
+  .project-block,
+  .slideshow-zone {
+    align-items: flex-start;
+  }
+  .essay-tab,
+  .essay-tab.active,
+  .essay-tab:hover {
+    color: #424751 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-button {
+    font-size: clamp(10.8px, 2.43vw, 29.7px);
+  }
+  .site-title {
+    font-size: calc(1.3rem - 7px);
+  }
+  .cursor-label {
+    font-size: clamp(20px, 5vw, 40px);
+  }
+}
+
+/* Page transition state */
+body.from-transition .page > * {
+  animation: none;
 }
