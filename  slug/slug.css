@@ -82,6 +82,7 @@ body.title-hover .project-gallery {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
+  text-transform: uppercase;
   text-decoration: none;
   color: #424751;
   background: none;
@@ -108,6 +109,7 @@ body.title-hover .project-gallery {
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
+  text-transform: uppercase;
   letter-spacing: 0.02em;
   text-shadow: none !important;
 }
@@ -174,6 +176,7 @@ body.title-hover .project-gallery {
   font-weight: bold;
   font-size: calc(1.6rem - 7px);
   letter-spacing: -0.01em;
+  text-transform: uppercase;
   cursor: pointer;
   line-height: 1.08;
   margin: 0;
@@ -194,6 +197,7 @@ body.title-hover .project-gallery {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
+  text-transform: uppercase;
   letter-spacing: -0.01em;
   white-space: nowrap;
   padding: 8px 0;
@@ -480,20 +484,22 @@ body.title-hover .project-gallery {
   object-fit: contain;
 }
 
-/* Caption styling - positioned on image like Church */
+/* Caption styling */
 .caption {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: rgba(255,255,255,0.7);
-  padding: 4px 8px;
-  border-radius: 3px;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 14px;
+  padding: 0;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
+  text-transform: none;
   letter-spacing: -0.01em;
   line-height: 1.08;
-  color: #424751;
+  word-break: break-word;
 }
 
 /* Info toggle */
