@@ -462,6 +462,12 @@ body.title-hover .project-gallery {
   background: #f0f5f5;
   box-shadow: none;
   border-radius: 0;
+  cursor: pointer; /* Add cursor pointer for clickable videos */
+}
+
+/* Ensure videos maintain aspect ratio and don't stretch */
+.slide video {
+  object-fit: contain;
 }
 
 /* Image size variations */
