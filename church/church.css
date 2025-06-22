@@ -466,8 +466,8 @@ body.title-hover .project-gallery {
 
 /* FIX FOR POMADE VIDEOS - Ensure they match other videos */
 .pomade-video {
-  max-width: 700px !important;
-  width: 50vw !important;
+  max-width: 400px !important;
+  width: 30vw !important;
 }
 
 /* Image size variations */
