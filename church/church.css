@@ -550,11 +550,11 @@ body.title-hover .project-gallery {
 /* Caption container for layout */
 .caption-container {
   align-self: stretch; /* Changed to stretch full width */
-  width: 100%;
+  width: 50%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
 /* Captions and info - UPDATED to match bio-text styling */
@@ -604,7 +604,7 @@ body.title-hover .project-gallery {
 /* Info panel - UPDATED to match bio-text styling and stretch full image width */
 .info-panel {
   align-self: stretch; /* Changed from flex-start to stretch */
-  width: 100%; /* Full width of slideshow zone */
+  width: 50%; /* Full width of slideshow zone */
   margin-top: 8px;
   font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
   font-size: calc(1.6rem - 9px); /* Matches bio-text */
