@@ -424,7 +424,7 @@ body.title-hover .project-gallery {
   width: 100%;
   flex-direction: column;
   gap: 90px 0;
-  align-items: flex-end;
+  align-items: flex-start; /* Changed from flex-end to flex-start */
 }
 
 .project-set.active {
@@ -435,7 +435,7 @@ body.title-hover .project-gallery {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start; /* Changed from flex-end to flex-start */
   margin-bottom: 0;
   background: none;
   border: none;
@@ -444,14 +444,49 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
-/* Slideshow */
+/* Slideshow - Updated to match image widths */
 .slideshow-zone {
-  width: auto;
-  max-width: 680px;
+  width: 100%; /* Full width to contain images and info panels */
+  max-width: none; /* Remove max-width constraint */
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start; /* Changed from flex-end to flex-start */
+}
+
+/* Set specific widths for slideshow zones to match their image widths */
+.project-block:nth-child(1) .slideshow-zone {
+  max-width: 385px; /* Match default image width */
+  width: 43vw;
+}
+
+.project-block:nth-child(2) .slideshow-zone {
+  max-width: 302.5px; /* Match second block image width */
+  width: 27vw;
+  margin-left: 4vw;
+}
+
+.project-block:nth-child(3) .slideshow-zone {
+  max-width: 440px; /* Match third block image width */
+  width: 35.75vw;
+}
+
+.project-block:nth-child(4) .slideshow-zone {
+  max-width: 330px; /* Match fourth block image width */
+  width: 19.25vw;
+  margin-left: 6vw;
+}
+
+.project-block:nth-child(5) .slideshow-zone,
+.project-block:nth-child(6) .slideshow-zone {
+  max-width: 385px; /* Match default image width */
+  width: 43vw;
+}
+
+/* Special case for botanical barbershop */
+.project-set[data-index="1"] .project-block:last-child .slideshow-zone {
+  max-width: 700px; /* Original size */
+  width: 78vw;
 }
 
 .slide {
@@ -471,7 +506,7 @@ body.title-hover .project-gallery {
   width: 43vw; /* 45% smaller than 78vw */
   height: auto;
   margin-bottom: 0;
-  margin-right: 0;
+  margin-left: 0; /* Changed from margin-right to margin-left */
   background: #f0f5f5;
   box-shadow: none;
   border-radius: 0;
@@ -488,32 +523,33 @@ body.title-hover .project-gallery {
 .project-block:nth-child(2) .slide video {
   max-width: 302.5px; /* 45% smaller than 550px */
   width: 27vw; /* 45% smaller than 49vw */
-  margin-right: 4vw;
+  margin-left: 4vw; /* Changed from margin-right to margin-left */
 }
 
 .project-block:nth-child(3) .slide img,
 .project-block:nth-child(3) .slide video {
   max-width: 440px; /* 45% smaller than 800px */
   width: 35.75vw; /* 45% smaller than 65vw */
-  margin-right: 0;
+  margin-left: 0;
 }
 
 .project-block:nth-child(4) .slide img,
 .project-block:nth-child(4) .slide video {
   max-width: 330px; /* 45% smaller than 600px */
   width: 19.25vw; /* 45% smaller than 35vw */
-  margin-right: 6vw;
+  margin-left: 6vw; /* Changed from margin-right to margin-left */
 }
 
 /* Special case: Botanical Barbershop video stays the same size */
 .project-set[data-index="1"] .project-block:last-child .slide video {
   max-width: 700px; /* Original size */
   width: 78vw; /* Original size */
+  margin-left: 0; /* Left aligned */
 }
 
 /* Caption container for layout */
 .caption-container {
-  align-self: flex-start;
+  align-self: stretch; /* Changed to stretch full width */
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -544,7 +580,7 @@ body.title-hover .project-gallery {
 }
 
 .info-toggle {
-  align-self: flex-start;
+  align-self: flex-start; /* Keep left alignment */
   margin-top: 8px;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
@@ -565,9 +601,10 @@ body.title-hover .project-gallery {
   font-weight: bold;
 }
 
-/* Info panel - UPDATED to match bio-text styling */
+/* Info panel - UPDATED to match bio-text styling and stretch full image width */
 .info-panel {
-  align-self: flex-start;
+  align-self: stretch; /* Changed from flex-start to stretch */
+  width: 100%; /* Full width of slideshow zone */
   margin-top: 8px;
   font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
   font-size: calc(1.6rem - 9px); /* Matches bio-text */
@@ -610,17 +647,13 @@ body.title-hover .project-gallery {
   min-width: 120px;
 }
 
-/* Adjust margins for specific blocks to align captions with left edge */
-.project-block:nth-child(2) .caption-container,
-.project-block:nth-child(2) .info-toggle,
-.project-block:nth-child(2) .info-panel {
-  margin-right: 4vw;
-}
-
-.project-block:nth-child(4) .caption-container,
-.project-block:nth-child(4) .info-toggle,
-.project-block:nth-child(4) .info-panel {
-  margin-right: 6vw;
+/* Remove the adjusted margins for specific blocks - info panels now stretch full width */
+.project-block .caption-container,
+.project-block .info-toggle,
+.project-block .info-panel {
+  width: 100%; /* Full width of slideshow zone */
+  margin-left: 0;
+  margin-right: 0;
 }
 
 /* Responsive */
@@ -693,6 +726,17 @@ body.title-hover .project-gallery {
   .info-panel {
     font-size: calc(1.3rem - 7px); /* Matches mobile bio-text size */
   }
+  .project-block:nth-child(1) .slideshow-zone,
+  .project-block:nth-child(2) .slideshow-zone,
+  .project-block:nth-child(3) .slideshow-zone,
+  .project-block:nth-child(4) .slideshow-zone,
+  .project-block:nth-child(5) .slideshow-zone,
+  .project-block:nth-child(6) .slideshow-zone,
+  .project-set[data-index="1"] .project-block:last-child .slideshow-zone {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+  }
   .slide img,
   .slide video,
   .project-block:nth-child(2) .slide img,
@@ -703,11 +747,11 @@ body.title-hover .project-gallery {
   .project-block:nth-child(4) .slide video {
     width: 100%;
     max-width: 100vw;
-    margin-right: 0;
+    margin-left: 0; /* Changed from margin-right to margin-left */
   }
   .project-block,
   .slideshow-zone {
-    align-items: flex-start;
+    align-items: flex-start; /* Keep left alignment on mobile */
   }
   /* Fix tab colors on mobile */
   .essay-tab,
