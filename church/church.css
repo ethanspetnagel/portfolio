@@ -1,7 +1,7 @@
-
-body.from-transition .page > * {
-  animation: none; /* Prevent double animations */
-}
+/* Full, updated CSS for Church California
+ * Fixes caption alignment and ensures proper image sizing
+ * Updated: 2025-06-22
+ */
 
 @font-face {
   font-family: "Borgia Pro";
@@ -377,11 +377,12 @@ body.title-hover .project-gallery {
   display: flex;
 }
 
+/* PROJECT BLOCKS - UPDATED for caption alignment */
 .project-block {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Changed from flex-end to flex-start */
+  align-items: flex-start; /* Keep left-aligned for consistency */
   margin-bottom: 0;
   background: none;
   border: none;
@@ -397,7 +398,7 @@ body.title-hover .project-gallery {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Changed from flex-end to flex-start */
+  align-items: flex-start; /* Keep left-aligned for consistency */
 }
 
 /* Set specific widths for slideshow zones to match their image widths */
@@ -493,14 +494,15 @@ body.title-hover .project-gallery {
   margin-left: 0; /* Left aligned */
 }
 
-/* Caption container for layout */
+/* CAPTION CONTAINER - FIXED to align with images/videos */
 .caption-container {
-  align-self: stretch; /* Changed to stretch full width */
-  width: 100%;
+  width: auto; /* Let it size naturally to match content */
+  max-width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  flex-direction: column; /* Changed to column for better spacing */
+  align-items: flex-start; /* Left-align for consistency */
   margin-top: 14px;
+  padding: 0;
 }
 
 /* Captions and info - UPDATED to match bio-text styling */
@@ -525,6 +527,7 @@ body.title-hover .project-gallery {
   opacity: 0.7;
 }
 
+/* INFO TOGGLE AND PANEL - Aligned to match images */
 .info-toggle {
   align-self: flex-start; /* Keep left alignment */
   margin-top: 8px;
@@ -536,6 +539,7 @@ body.title-hover .project-gallery {
   letter-spacing: -0.01em; /* Matches bio-text */
   line-height: 1.08; /* Matches bio-text */
   transition: all 0.3s ease;
+  width: auto; /* Match content width */
 }
 
 .info-toggle:hover {
@@ -547,10 +551,11 @@ body.title-hover .project-gallery {
   font-weight: bold;
 }
 
-/* Info panel - UPDATED to match bio-text styling and stretch full image width */
+/* Info panel - UPDATED to match bio-text styling */
 .info-panel {
-  align-self: stretch; /* Changed from flex-start to stretch */
-  width: 100%; /* Full width of slideshow zone */
+  align-self: flex-start; /* Left align to match other elements */
+  width: auto; /* Size to content */
+  max-width: 100%;
   margin-top: 8px;
   font-family: "Helvetica Neue", Arial, sans-serif; /* Matches bio-text */
   font-size: calc(1.6rem - 9px); /* Matches bio-text */
@@ -593,13 +598,23 @@ body.title-hover .project-gallery {
   min-width: 120px;
 }
 
-/* Remove the adjusted margins for specific blocks - info panels now stretch full width */
+/* Ensure .project-block, .caption-container, .info-toggle, 
+   and .info-panel have matching widths to images */
 .project-block .caption-container,
 .project-block .info-toggle,
 .project-block .info-panel {
-  width: 100%; /* Full width of slideshow zone */
-  margin-left: 0;
-  margin-right: 0;
+  width: auto;
+}
+
+/* Lists in interactive text */
+ul.interactive-text {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+ul.interactive-text li {
+  margin-bottom: 5px;
 }
 
 /* Responsive */
@@ -717,14 +732,9 @@ body.title-hover .project-gallery {
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
   }
-}.caption-container, .info-toggle, .info-panel {
-  width: fit-content;
-  max-width: 100%;
-  margin-top: 0.5rem;
 }
 
-.project-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Page transition state */
+body.from-transition .page > * {
+  animation: none; /* Prevent double animations */
 }
