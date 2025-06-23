@@ -9,8 +9,9 @@ const projectMedia = {
         isDark: true  // Church video appears to be dark
     },
     'talamel': '', 
-    'fox-and-lion': '', 
-    'cardioscape': './cardio.mp4', 
+    'fox-and-lion': { url:'./foxlionbg.mp4', isdark: false }, 
+    'ecoscan': '',
+    'cardioscape': { url:'./cardio.mp4', isdark: true },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
         isDark: false  // Lu Rose Gold video appears to be light

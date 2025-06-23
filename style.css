@@ -232,7 +232,7 @@ body.june-hover .contact-links a {
 /* Apply blend mode when project is hovered */
 body.project-hovering .date-text.project-active {
   mix-blend-mode: difference !important;
-  color: #ffffff !important;
+  color: #ffff00 !important;
 }
 
 /* Bio Section */

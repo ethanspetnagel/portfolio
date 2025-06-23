@@ -299,248 +299,103 @@ class SmoothScroll {
 class VideoInfoManager {
     constructor() {
         this.videoInfo = {
-            'skincare 1.mp4': {
-                title: 'botanical clay cleanser advertisement',
-                details: `<strong>botanical clay cleanser advertisement</strong><br>
+            // Fox & Lion specific videos
+            'fox4.mp4': {
+                title: 'interactive wine experience',
+                details: `<strong>interactive wine experience</strong><br>
                 <br>
-                software: after effects, premiere pro<br>
-                duration: 15s, 30s, 60s cuts<br>
+                software: three.js, blender<br>
+                interaction: click-based navigation<br>
                 <br>
-                this campaign piece features imagery captured in<br>
-                the marin headlands, establishing a direct visual<br>
-                connection between our products and their natural<br>
-                origins. the juxtaposition of raw landscape footage<br>
-                with refined product shots creates a narrative that<br>
-                reinforces our commitment to botanical ingredients.<br>
-                <br>
-                i developed custom logo animations in after effects,<br>
-                employing organic motion curves that mirror the<br>
-                fluidity of natural elements while maintaining<br>
-                brand sophistication.`
+                this interactive 3d environment allows users<br>
+                to explore fox & lion's wine selection as if<br>
+                they were physically present in the space.<br>
+                the experience prioritizes intuitive navigation<br>
+                while maintaining visual fidelity to the<br>
+                actual bakery interior.`
             },
-            'skincare 2.mp4': {
-                title: 'shampoo & conditioner bar campaign',
-                details: `<strong>shampoo & conditioner bar campaign</strong><br>
+            // Placeholder entries for potential future videos
+            'fox5.mp4': {
+                title: '3d development process',
+                details: `<strong>3d development process</strong><br>
                 <br>
-                software: after effects<br>
-                platform: instagram reels, stories<br>
+                technical pipeline: meshy → blender → three.js<br>
+                textures: custom illustrator designs<br>
                 <br>
-                this video demonstrates the practical application<br>
-                of our solid haircare products while reinforcing<br>
-                our all-natural brand identity. created entirely<br>
-                in after effects, the piece combines product<br>
-                demonstration with lifestyle messaging.<br>
-                <br>
-                the animation techniques employed create a seamless<br>
-                narrative flow that educates consumers on product<br>
-                usage while building emotional connection to the<br>
-                brand's sustainable ethos.`
+                the development process involved generating<br>
+                base models with ai, refining geometry and<br>
+                materials in blender, and implementing<br>
+                interactive elements in three.js. custom<br>
+                textures were created to match the bakery's<br>
+                aesthetic while optimizing for web performance.`
             },
-            'skincare 3.mp4': {
-                title: 'multi-product showcase',
-                details: `<strong>multi-product showcase</strong><br>
+            // Additional image info for slideshows
+            'FOX1.png': {
+                title: 'interior space documentation',
+                details: `<strong>spatial analysis</strong><br>
                 <br>
-                software: after effects, premiere pro<br>
-                concept: nature-product synthesis<br>
+                photography: digital capture<br>
+                purpose: reference documentation<br>
                 <br>
-                a comprehensive brand piece showcasing our complete<br>
-                skincare line against natural backdrops. this<br>
-                instagram-optimized content weaves together product<br>
-                beauty shots with environmental footage, creating<br>
-                a visual metaphor for our farm-to-face philosophy.<br>
-                <br>
-                the editing rhythm and color grading establish<br>
-                a cohesive aesthetic that has become synonymous<br>
-                with church california's digital presence.`
+                these photographs document the physical space<br>
+                that inspired the digital recreation. each image<br>
+                captures key elements that define fox & lion's<br>
+                unique atmosphere—from the curated wine selection<br>
+                to the thoughtful interior design choices.`
             },
-            'skincare 4.mp4': {
-                title: 'integrated campaign spot',
-                details: `<strong>integrated campaign spot</strong><br>
+            'FOX2.png': {
+                title: 'wine shelf display',
+                details: `<strong>wine curation showcase</strong><br>
                 <br>
-                software: after effects, premiere pro<br>
-                deployment: multi-platform<br>
+                focus: product arrangement<br>
+                detail: shelf organization<br>
                 <br>
-                this versatile campaign asset features advanced<br>
-                motion graphics created in after effects, combined<br>
-                with editorial finesse in premiere pro. the spot<br>
-                serves multiple strategic purposes—from social<br>
-                media engagement to conversion-focused advertising.<br>
-                <br>
-                the visual effects reinforce product benefits<br>
-                while maintaining the authentic, artisanal<br>
-                quality that defines our brand.`
+                documentation of the wine display system,<br>
+                highlighting the careful curation and<br>
+                presentation methods that make fox & lion's<br>
+                beverage selection stand out. this reference<br>
+                was crucial for accurate 3d modeling.`
             },
-            'pomade 1.mp4': {
-                title: 'customer testimonial animation',
-                details: `<strong>customer testimonial animation</strong><br>
+            'FOX 3.png': {
+                title: 'beverage refrigerator',
+                details: `<strong>cold storage display</strong><br>
                 <br>
-                software: after effects<br>
-                platforms: instagram, google ads, youtube<br>
+                equipment: commercial refrigeration<br>
+                content: beer and non-alcoholic drinks<br>
                 <br>
-                as my inaugural project for church california,<br>
-                this testimonial-driven advertisement leverages<br>
-                authentic customer reviews to build trust and<br>
-                credibility. the kinetic typography treatment<br>
-                emphasizes key product benefits while maintaining<br>
-                readability across multiple viewing contexts.<br>
-                <br>
-                strategic pacing and hierarchical animation<br>
-                create moments of emphasis that align with<br>
-                conversion-focused messaging.`
-            },
-            'pomade 2.mp4': {
-                title: '3d product visualization',
-                details: `<strong>3d product visualization</strong><br>
-                <br>
-                software: blender, after effects<br>
-                technique: 3d motion graphics<br>
-                <br>
-                these 3d pomade renderings were meticulously<br>
-                crafted in blender before being integrated into<br>
-                after effects for animation. the piece showcases<br>
-                press recognition and editorial features, lending<br>
-                third-party credibility to our products.<br>
-                <br>
-                the photorealistic 3d elements elevate the<br>
-                production value while maintaining consistency<br>
-                with our premium positioning in the grooming market.`
-            },
-            'pomade 3.mp4': {
-                title: 'cyclical brand animation',
-                details: `<strong>cyclical brand animation</strong><br>
-                <br>
-                software: after effects<br>
-                purpose: instagram brand content<br>
-                <br>
-                this looping motion design piece serves as<br>
-                evergreen content for our social channels.<br>
-                the cyclical nature of the animation mirrors<br>
-                the habitual use of our products while<br>
-                incorporating our pomade tagline.<br>
-                <br>
-                created entirely in after effects, this piece<br>
-                demonstrates how strategic motion design can<br>
-                reinforce brand messaging through visual<br>
-                rhythm and repetition.`
-            },
-            'pomade 4.mp4': {
-                title: 'rapid-fire product showcase',
-                details: `<strong>rapid-fire product showcase</strong><br>
-                <br>
-                software: after effects<br>
-                format: quick-cut montage<br>
-                <br>
-                these attention-grabbing still image animations<br>
-                are optimized for short-form content consumption.<br>
-                by creating dynamic movement from static product<br>
-                photography, these pieces maximize engagement<br>
-                in the critical first seconds of viewing.<br>
-                <br>
-                the technique proves particularly effective for<br>
-                social media algorithms that favor<br>
-                high-engagement content.`
-            },
-            'pomade 5.mp4': {
-                title: 'kinetic product photography',
-                details: `<strong>kinetic product photography</strong><br>
-                <br>
-                software: after effects<br>
-                strategy: scroll-stopping content<br>
-                <br>
-                continuing our quick-cut series, this piece<br>
-                transforms product stills into compelling motion<br>
-                content. the rapid transitions and dynamic effects<br>
-                are calibrated to capture attention in crowded<br>
-                social feeds while maintaining brand sophistication.<br>
-                <br>
-                each frame is designed to work as both a<br>
-                standalone image and part of the kinetic whole.`
-            },
-            'pomade 6.mp4': {
-                title: 'product application demonstration',
-                details: `<strong>product application demonstration</strong><br>
-                <br>
-                software: after effects<br>
-                focus: user experience<br>
-                <br>
-                this piece combines intimate product shots with<br>
-                real-world application footage. created in after<br>
-                effects, the advertisement bridges the gap between<br>
-                aspiration and practical use.<br>
-                <br>
-                close-up texture shots highlight product quality<br>
-                while usage demonstrations build consumer<br>
-                confidence in the application process.`
-            },
-            'brand 1.mp4': {
-                title: 'barbershop documentary series',
-                details: `<strong>barbershop documentary series</strong><br>
-                <br>
-                software: after effects, premiere pro<br>
-                concept: product authenticity narrative<br>
-                <br>
-                this brand film showcases the symbiotic<br>
-                relationship between church california products<br>
-                and the barbershop where they're conceived and<br>
-                tested. through dynamic zoom transitions created<br>
-                in after effects, the piece weaves together the<br>
-                dual narratives of craftsmanship and commerce.<br>
-                <br>
-                the documentary approach legitimizes our<br>
-                "made by barbers, for everyone" positioning<br>
-                while highlighting the rigorous product<br>
-                development process that occurs within<br>
-                the shop's walls.`
-            },
-            'brand 2.mov': {
-                title: 'barber tutorial series',
-                details: `<strong>barber tutorial series</strong><br>
-                <br>
-                software: premiere pro, after effects<br>
-                featuring: cam - church barber<br>
-                <br>
-                this tutorial features cam, one of our senior<br>
-                barbers, demonstrating professional pomade<br>
-                application techniques. the piece serves dual<br>
-                purposes—educating consumers while reinforcing<br>
-                product credibility through professional endorsement.<br>
-                <br>
-                by showcasing actual barbers using our products<br>
-                in their daily practice, we substantiate our<br>
-                claim of professional-grade quality.`
-            },
-            'brand 3.mp4': {
-                title: 'barbershop lifestyle montage',
-                details: `<strong>barbershop lifestyle montage</strong><br>
-                <br>
-                software: after effects<br>
-                source: brand photoshoot archives<br>
-                <br>
-                this rapid-cut brand piece leverages our extensive<br>
-                photography archive to create a dynamic snapshot<br>
-                of barbershop culture. the editing style captures<br>
-                the energy and authenticity of our retail<br>
-                environment while reinforcing the message that<br>
-                church products are born from professional expertise.<br>
-                <br>
-                each frame is carefully selected to balance<br>
-                product visibility with lifestyle authenticity.`
+                the refrigerated displays complement the wine<br>
+                selection, offering a full range of beverage<br>
+                options. the lighting and glass surfaces<br>
+                presented unique challenges for 3d recreation.`
             }
         };
     }
 
     updateInfoPanel(slideElement, infoPanel) {
+        // Check for video first
         const video = slideElement.querySelector('video');
-        if (!video) return;
+        if (video) {
+            const source = video.querySelector('source');
+            if (source) {
+                const filename = source.src.split('/').pop();
+                const info = this.videoInfo[filename];
+                
+                if (info) {
+                    infoPanel.innerHTML = `<p>${info.details}</p>`;
+                }
+                return;
+            }
+        }
         
-        const source = video.querySelector('source');
-        if (!source) return;
-        
-        const filename = source.src.split('/').pop();
-        const info = this.videoInfo[filename];
-        
-        if (info) {
-            infoPanel.innerHTML = `<p>${info.details}</p>`;
+        // Check for images
+        const img = slideElement.querySelector('img');
+        if (img) {
+            const filename = img.src.split('/').pop();
+            const info = this.videoInfo[filename];
+            
+            if (info) {
+                infoPanel.innerHTML = `<p>${info.details}</p>`;
+            }
         }
     }
 }
@@ -618,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Simple navigation without transitions
     projectsButton.addEventListener('click', (e) => {
         e.preventDefault();
-        window.location.href = '../index.html';
+        window.location.href = 'https://ethanspetnagel.online';
     });
 
     // Site title click to go home
@@ -626,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (siteTitleLink) {
         siteTitleLink.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = '../index.html';
+            window.location.href = 'https://ethanspetnagel.online';
         });
     }
   
@@ -643,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('title-hover');
     });
   
-    // TAB SWITCHING - FIXED
+    // TAB SWITCHING - Updated for only 2 tabs
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const index = tab.dataset.index;
@@ -985,5 +840,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if (video.closest('.slide.current')) {
             video.play().catch(e => console.log('Video autoplay prevented:', e));
         }
+    });
+    
+    // Additional slideshow enhancement for image info panels
+    document.querySelectorAll('.slideshow-zone').forEach(zone => {
+        const infoToggle = zone.querySelector('.info-toggle');
+        const infoPanel = zone.querySelector('.info-panel');
+        
+        // Update info panel when slideshow changes
+        zone.addEventListener('slideChanged', () => {
+            if (infoToggle && infoToggle.classList.contains('active') && infoPanel) {
+                const currentSlide = zone.querySelector('.slide.current');
+                videoInfoManager.updateInfoPanel(currentSlide, infoPanel);
+            }
+        });
+    });
+    
+    // Dispatch custom event when slide changes
+    function dispatchSlideChanged(zone) {
+        zone.dispatchEvent(new CustomEvent('slideChanged'));
+    }
+    
+    // Update all slideshow click handlers to dispatch event
+    document.querySelectorAll('.slideshow-zone').forEach(zone => {
+        const originalClickHandler = zone.onclick;
+        zone.onclick = function(e) {
+            if (originalClickHandler) originalClickHandler.call(this, e);
+            setTimeout(() => dispatchSlideChanged(zone), 100);
+        };
     });
 });

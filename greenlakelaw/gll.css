@@ -123,7 +123,7 @@ body.title-hover .project-gallery {
   pointer-events: none;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
-  font-size: clamp(16px, 2.8vw, 39px);
+  font-size: clamp (8px, 2.8vw, 39px);
   mix-blend-mode: difference;
   color: #ffffff !important;
   z-index: 999;
