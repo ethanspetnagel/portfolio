@@ -729,4 +729,74 @@ ul.interactive-text li {
 /* Page transition state */
 body.from-transition .page > * {
   animation: none;
+}/* Add these CSS rules to your existing cardio.css file */
+
+/* ABOUT TAB SLIDESHOWS */
+/* First video slideshow on About tab */
+.about-slideshow-1 {
+  max-width: 600px;
+  width: 67vw;
 }
+
+/* SPLASH SCREEN TAB SLIDESHOWS */
+/* 1st slideshow - Initial sketches */
+.splash-slideshow-1 {
+  max-width: 500px;
+  width: 56vw;
+}
+
+/* 2nd slideshow - Prototyping tools (Blender & p5.js) */
+.splash-slideshow-2 {
+  max-width: 450px;
+  width: 50vw;
+  margin-left: 3vw;
+}
+
+/* 3rd slideshow - Alternative heart concepts */
+.splash-slideshow-3 {
+  max-width: 400px;
+  width: 45vw;
+}
+
+/* 4th slideshow - Unity integration test */
+.splash-slideshow-4 {
+  max-width: 400px;
+  width: 45vw;
+  margin-left: 5vw;
+}
+
+/* 5th slideshow - Unity C# animations */
+.splash-slideshow-5 {
+  max-width: 550px;
+  width: 61vw;
+}
+
+/* 6th slideshow - VR implementation */
+.splash-slideshow-6 {
+  max-width: 500px;
+  width: 56vw;
+  margin-left: 3vw;
+}
+
+/* 7th slideshow - Final implementation */
+.splash-slideshow-7 {
+  max-width: 600px;
+  width: 67vw;
+}
+
+/* Responsive adjustments for splash screen slideshows */
+@media (max-width: 768px) {
+  .about-slideshow-1,
+  .splash-slideshow-1,
+  .splash-slideshow-2,
+  .splash-slideshow-3,
+  .splash-slideshow-4,
+  .splash-slideshow-5,
+  .splash-slideshow-6,
+  .splash-slideshow-7 {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+  }
+}
+

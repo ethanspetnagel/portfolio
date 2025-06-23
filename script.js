@@ -10,7 +10,7 @@ const projectMedia = {
     },
     'talamel': '', 
     'fox-and-lion': '', 
-    'cardioscape': '', 
+    'cardioscape': './cardio.mp4', 
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
         isDark: false  // Lu Rose Gold video appears to be light
