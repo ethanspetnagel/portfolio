@@ -50,12 +50,12 @@ body.page-navigating * {
 /* Floating logo in bottom right corner - NOW IN BACKGROUND */
 .floating-logo {
   position: fixed;
-  bottom: 15px;
-  right: 45px;
-  z-index: 1; /* Changed from 999 to 1 - now behind content */
-  width: 300px;
-  height: 300px;
-  opacity: 0.3; /* Reduced opacity so it's subtle in background */
+  bottom: 35px; /* Moved up 20px from 15px */
+  right: 15px; /* Moved left 30px from 45px */
+  z-index: 1; /* Behind content */
+  width: 100px; /* 1/3 of original 300px */
+  height: 100px; /* 1/3 of original 300px */
+  opacity: 1; /* Full opacity */
 }
 
 .floating-logo img {
@@ -409,7 +409,7 @@ body.title-hover .project-gallery {
   position: relative;
 }
 
-/* Slideshow - Fixed dimensions to prevent jumping */
+/* Slideshow - Natural flow without fixed dimensions */
 .slideshow-zone {
   width: 100%;
   max-width: none;
@@ -417,7 +417,6 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 500px; /* Set minimum height to prevent vertical jumping */
 }
 
 /* ABOUT TAB - Projects with named classes for Fox & Lion */
@@ -427,9 +426,14 @@ body.title-hover .project-gallery {
   width: 67vw;
 }
 
+.interior-space-slideshow .slide {
+  width: 600px;
+  max-width: 67vw;
+}
+
 .interior-space-slideshow .slide img {
-  max-width: 600px !important;
-  width: 67vw !important;
+  width: 100% !important;
+  height: auto !important;
 }
 
 /* About Tab - Project 2: Interactive Wine Experience */
@@ -439,9 +443,14 @@ body.title-hover .project-gallery {
   margin-left: 2vw;
 }
 
+.wine-experience-slideshow .slide {
+  width: 700px;
+  max-width: 78vw;
+}
+
 .wine-experience-video {
-  max-width: 700px !important;
-  width: 78vw !important;
+  width: 100% !important;
+  height: auto !important;
 }
 
 /* UI/UX TAB - Projects with named classes */
@@ -451,41 +460,38 @@ body.title-hover .project-gallery {
   width: 78vw;
 }
 
+.development-process-slideshow .slide {
+  width: 700px;
+  max-width: 78vw;
+}
+
 .development-process-video {
-  max-width: 700px !important;
-  width: 78vw !important;
+  width: 100% !important;
+  height: auto !important;
 }
 
 .slide {
   display: none;
   width: 100%;
-  height: 100%;
-  position: absolute; /* Make slides absolute positioned */
-  top: 0;
-  left: 0;
 }
 
 .slide.current {
-  display: flex;
-  position: relative; /* Current slide is relative to take up space */
-  justify-content: center;
-  align-items: center;
+  display: block;
 }
 
-/* Image and video sizing - maintain aspect ratio within container */
+/* Image and video sizing - left-aligned */
 .slide img,
 .slide video {
   display: block;
   max-width: 100%;
-  max-height: 500px; /* Match the slideshow min-height */
-  width: auto;
+  width: 100%; /* Fill container width */
   height: auto;
-  margin: 0 auto;
+  margin: 0; /* Left alignment */
   background: transparent;
   box-shadow: none;
   border-radius: 0;
   cursor: pointer;
-  object-fit: contain; /* Ensure images/videos fit within bounds */
+  object-fit: contain;
 }
 
 /* Ensure videos maintain aspect ratio */
@@ -500,7 +506,7 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 520px; /* Position below the fixed height slideshow */
+  margin-top: 14px; /* Restored original spacing */
   padding: 0;
 }
 
@@ -619,9 +625,9 @@ ul.interactive-text li {
     gap: 30px;
   }
   .floating-logo {
-    width: 200px;
-    height: 200px;
-    right: 45px;
+    width: 67px; /* 1/3 of 200px */
+    height: 67px;
+    right: 15px; /* Keep consistent */
   }
 }
 
@@ -632,10 +638,10 @@ ul.interactive-text li {
     font-size: clamp(10.8px, 2.43vw, 29.7px);
   }
   .floating-logo {
-    width: 150px;
-    height: 150px;
-    bottom: 60px;
-    right: 45px;
+    width: 50px; /* 1/3 of 150px */
+    height: 50px;
+    bottom: 80px; /* Adjusted for mobile */
+    right: 15px; /* Keep consistent */
   }
   .page {
     flex-direction: column;
@@ -684,14 +690,20 @@ ul.interactive-text li {
   .info-panel {
     font-size: calc(1.3rem - 7px);
   }
-  /* Make all slideshows responsive on mobile */
+  /* Make slideshows responsive on mobile */
   .interior-space-slideshow, 
   .wine-experience-slideshow,
   .development-process-slideshow {
     max-width: 100%;
     width: 100%;
     margin-left: 0;
-    min-height: 300px; /* Smaller height on mobile */
+  }
+  
+  .interior-space-slideshow .slide,
+  .wine-experience-slideshow .slide,
+  .development-process-slideshow .slide {
+    width: 100%;
+    max-width: 100%;
   }
   
   /* Make all videos/images responsive on mobile */
@@ -700,14 +712,9 @@ ul.interactive-text li {
   .interior-space-slideshow .slide img,
   .wine-experience-video,
   .development-process-video {
-    width: 100%;
+    width: 100% !important;
     max-width: 100vw !important;
-    max-height: 300px;
     margin-left: 0;
-  }
-  
-  .caption-container {
-    margin-top: 320px; /* Adjust for mobile */
   }
   
   .project-block,
@@ -732,9 +739,9 @@ ul.interactive-text li {
     font-size: clamp(20px, 5vw, 40px);
   }
   .floating-logo {
-    width: 120px;
-    height: 120px;
-    right: 45px;
+    width: 40px; /* 1/3 of 120px */
+    height: 40px;
+    right: 15px; /* Keep consistent */
   }
 }
 
