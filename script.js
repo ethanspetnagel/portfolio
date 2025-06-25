@@ -1,26 +1,21 @@
-// Project media mapping with brightness info
+// Project media mapping - brightness will be detected automatically
 const projectMedia = {
     'slug': {
-        url: './slug.mp4',
-        isDark: true  // slug video appears to be dark
+        url: './slug.mp4'
     }, 
     'church': {
-        url: './church video bg.mp4',
-        isDark: true  // Church video appears to be dark
+        url: './church video bg.mp4'
     },
     'talamel': '', 
     'fox-and-lion': { 
-        url: './foxlionbg.mp4', 
-        isDark: false  // Fixed: isDark capitalization
+        url: './foxlionbg.mp4'
     }, 
     'ecoscan': '',
     'cardioscape': { 
-        url: './cardio.mp4', 
-        isDark: true  // Fixed: isDark capitalization
+        url: './cardio.mp4'
     },
     'lu-rose-gold': {
-        url: './lu rose gold video bg.mp4',
-        isDark: false  // Lu Rose Gold video appears to be light
+        url: './lu rose gold video bg.mp4'
     },
     'green-lake-law': '', 
     'artwork': '', 
@@ -53,9 +48,52 @@ let activeProject = null;
 let videoPool = {};
 let currentActiveVideo = null;
 let isTransitioning = false;
+let videoBrightness = {}; // Store brightness values for each video
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// Analyze video brightness
+function analyzeVideoBrightness(video, project) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Sample video at a smaller size for performance
+    canvas.width = 160;
+    canvas.height = 90;
+    
+    // Wait for video to have enough data
+    if (video.readyState >= 2) {
+        try {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            let brightness = 0;
+            let pixelCount = 0;
+            
+            // Sample every 10th pixel for performance
+            for (let i = 0; i < data.length; i += 40) { // 4 channels * 10 pixels
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                // Calculate perceived brightness
+                const pixelBrightness = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                brightness += pixelBrightness;
+                pixelCount++;
+            }
+            
+            const avgBrightness = brightness / pixelCount;
+            videoBrightness[project] = avgBrightness < 0.5; // true if dark, false if light
+            
+            console.log(`${project} brightness:`, avgBrightness, 'isDark:', avgBrightness < 0.5);
+        } catch (e) {
+            console.log('Could not analyze video brightness:', e);
+            // Default to dark if analysis fails
+            videoBrightness[project] = true;
+        }
+    }
+}
 
 // Initialize video pool for instant playback
 function initializeVideoPool() {
@@ -77,10 +115,7 @@ function initializeVideoPool() {
             video.style.opacity = '0';
             video.style.visibility = 'hidden';
             
-            // Add filter for non-church videos
-            if (project !== 'church') {
-                video.style.filter = 'brightness(0.9)';
-            }
+            // NO FILTER - removed brightness filter
             
             // Add to DOM
             fullscreenBg.appendChild(video);
@@ -89,16 +124,39 @@ function initializeVideoPool() {
             // Force load
             video.load();
             
-            // Prestart videos for instant playback
+            // Analyze brightness when video loads
             video.addEventListener('loadeddata', () => {
                 // Play and immediately pause to have frame ready
                 video.play().then(() => {
                     video.pause();
                     video.currentTime = 0;
+                    // Analyze brightness after first frame is ready
+                    setTimeout(() => {
+                        analyzeVideoBrightness(video, project);
+                    }, 100);
                 }).catch(() => {});
+            });
+            
+            // Re-analyze if video seeks (in case brightness changes)
+            video.addEventListener('seeked', () => {
+                analyzeVideoBrightness(video, project);
             });
         }
     });
+}
+
+// Update text colors based on video brightness
+function updateTextColors(project) {
+    // Get brightness for this video (default to dark if not analyzed yet)
+    const isDark = videoBrightness[project] !== undefined ? videoBrightness[project] : true;
+    
+    if (isDark) {
+        document.body.classList.add('video-dark');
+        document.body.classList.remove('video-light');
+    } else {
+        document.body.classList.add('video-light');
+        document.body.classList.remove('video-dark');
+    }
 }
 
 // Show video instantly
@@ -133,6 +191,9 @@ function showVideo(project) {
                 video.classList.add('active');
                 fullscreenBg.classList.add('active');
                 isTransitioning = false;
+                
+                // Update text colors based on video brightness
+                updateTextColors(project);
             });
         }).catch(error => {
             console.log('Play failed:', error);
@@ -141,23 +202,14 @@ function showVideo(project) {
             video.classList.add('active');
             fullscreenBg.classList.add('active');
             isTransitioning = false;
+            
+            // Update text colors
+            updateTextColors(project);
         });
     }
     
     currentActiveVideo = video;
     currentMedia = projectMedia[project];
-    
-    // Apply text color based on video brightness
-    const mediaInfo = projectMedia[project];
-    if (mediaInfo && typeof mediaInfo === 'object' && mediaInfo.isDark !== undefined) {
-        if (mediaInfo.isDark) {
-            document.body.classList.add('video-dark');
-            document.body.classList.remove('video-light');
-        } else {
-            document.body.classList.add('video-light');
-            document.body.classList.remove('video-dark');
-        }
-    }
     
     return true;
 }
@@ -595,4 +647,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { once: true });
+    
+    // Periodically re-analyze brightness for playing videos
+    setInterval(() => {
+        if (currentActiveVideo && activeProject) {
+            analyzeVideoBrightness(currentActiveVideo, activeProject);
+            updateTextColors(activeProject);
+        }
+    }, 1000); // Check every second
 });

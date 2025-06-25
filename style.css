@@ -167,9 +167,9 @@ body.page-navigating * {
   will-change: color, opacity;
 }
 
-/* Project link hover - YELLOW */
+/* Project link hover - BRIGHT HIGHLIGHTER YELLOW */
 .project-link:hover {
-  color: #ffcc00 !important; /* Yellow on hover */
+  color: #ffff00 !important; /* Bright highlighter yellow on hover */
 }
 
 /* Website Info */
@@ -429,7 +429,7 @@ body.project-hovering.video-light .contact-links a:hover::after {
 /* Touch device styles */
 @media (hover: none) and (pointer: coarse) {
   .project-link.touch-active {
-    color: #ffcc00; /* Yellow for touch active */
+    color: #ffff00; /* Bright highlighter yellow for touch active */
   }
 
   .projects-container.touch-hovering .project-link {
