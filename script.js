@@ -115,6 +115,7 @@ function initializeVideoPool() {
             // Start with videos hidden
             video.style.opacity = '0';
             video.style.visibility = 'hidden';
+            video.style.zIndex = '1'; // Default z-index
             
             // NO FILTER - removed brightness filter
             
@@ -169,13 +170,14 @@ function showVideo(project) {
     
     isTransitioning = true;
     
-    // Hide current video if exists (but keep background black)
-    if (currentActiveVideo && currentActiveVideo !== video) {
-        currentActiveVideo.style.opacity = '0';
-        currentActiveVideo.style.visibility = 'hidden';
-        // Don't wait for transition - immediately pause
-        currentActiveVideo.pause();
+    // Don't hide current video yet - keep it playing until new one is ready
+    const previousVideo = currentActiveVideo;
+    
+    // Set z-index for layering
+    if (previousVideo) {
+        previousVideo.style.zIndex = '1';
     }
+    video.style.zIndex = '2'; // New video on top
     
     // Show new video instantly
     video.style.visibility = 'visible';
@@ -186,11 +188,23 @@ function showVideo(project) {
     
     if (playPromise !== undefined) {
         playPromise.then(() => {
-            // Once playing, fade in
+            // Once playing, fade in new video
             requestAnimationFrame(() => {
                 video.style.opacity = '1';
                 video.classList.add('active');
                 fullscreenBg.classList.add('active');
+                
+                // After new video is visible, hide the previous one
+                setTimeout(() => {
+                    if (previousVideo && previousVideo !== video) {
+                        previousVideo.style.opacity = '0';
+                        previousVideo.style.visibility = 'hidden';
+                        previousVideo.pause();
+                        previousVideo.classList.remove('active');
+                        previousVideo.style.zIndex = '1';
+                    }
+                }, 100); // Small delay to ensure smooth transition
+                
                 isTransitioning = false;
                 
                 // Update text colors based on video brightness
@@ -202,6 +216,16 @@ function showVideo(project) {
             video.style.opacity = '1';
             video.classList.add('active');
             fullscreenBg.classList.add('active');
+            
+            // Hide previous video
+            if (previousVideo && previousVideo !== video) {
+                previousVideo.style.opacity = '0';
+                previousVideo.style.visibility = 'hidden';
+                previousVideo.pause();
+                previousVideo.classList.remove('active');
+                previousVideo.style.zIndex = '1';
+            }
+            
             isTransitioning = false;
             
             // Update text colors
@@ -224,6 +248,7 @@ function hideAllMedia() {
         currentActiveVideo.style.visibility = 'hidden';
         currentActiveVideo.pause();
         currentActiveVideo.classList.remove('active');
+        currentActiveVideo.style.zIndex = '1'; // Reset z-index
         currentActiveVideo = null;
     }
     
@@ -496,6 +521,10 @@ function handleProjectHover(link, isEntering) {
         if (url && url.includes('.mp4')) {
             showVideo(project);
         } else {
+            // Reset all videos if no video for this project
+            Object.values(videoPool).forEach(v => {
+                v.style.zIndex = '1';
+            });
             hideAllMedia();
         }
     } else {
@@ -511,6 +540,11 @@ function handleProjectHover(link, isEntering) {
                 
                 dateText.textContent = 'JUNE 2025';
                 dateText.classList.remove('project-active');
+                
+                // Reset all video z-indices before hiding
+                Object.values(videoPool).forEach(v => {
+                    v.style.zIndex = '1';
+                });
                 
                 hideAllMedia();
             }
@@ -593,6 +627,10 @@ if (!isTouchDevice) {
             if (url && url.includes('.mp4')) {
                 showVideo(project);
             } else {
+                // Reset all videos if no video for this project
+                Object.values(videoPool).forEach(v => {
+                    v.style.zIndex = '1';
+                });
                 hideAllMedia();
             }
         });
@@ -607,6 +645,12 @@ if (!isTouchDevice) {
                 document.body.classList.remove('project-hovering');
                 dateText.textContent = 'JUNE 2025';
                 dateText.classList.remove('project-active');
+                
+                // Reset all video z-indices
+                Object.values(videoPool).forEach(v => {
+                    v.style.zIndex = '1';
+                });
+                
                 hideAllMedia();
                 lastTouchedLink = null;
             }, 50);
