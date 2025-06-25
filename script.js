@@ -17,7 +17,7 @@ const projectMedia = {
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4'
     },
-    'green-lake-law': '', 
+    'green-lake-law': './greenlake.mp4', 
     'artwork': '', 
     'june-2025': ''
 };
