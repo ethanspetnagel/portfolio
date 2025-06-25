@@ -262,18 +262,18 @@ function hideAllMedia() {
 class TextScramble {
     constructor(el) {
         this.el = el;
-        this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        this.chars = 'ABCDEFGHIXYZ0123456789@#$%?';
         this.update = this.update.bind(this);
     }
     
     setText(newText, showName = false) {
         const oldText = this.el.innerText;
-        const length = Math.max(oldText.length, newText.length, 15);
+        const length = Math.max(oldText.length, newText.length, 5);
         const promise = new Promise((resolve) => this.resolve = resolve);
         this.queue = [];
         this.showName = showName;
         this.targetText = newText;
-        this.nameText = 'ETHAN SPETNAGEL';
+        this.nameText = 'ABOUT';
         
         for (let i = 0; i < length; i++) {
             const from = oldText[i] || '';
