@@ -48,6 +48,8 @@ let videoPool = {};
 let currentActiveVideo = null;
 let isTransitioning = false;
 let videoBrightness = {}; // Store brightness values for each video
+let hideMediaTimeout = null; // Timeout for hiding media
+let isHoveringProject = false; // Track if hovering over any project
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -167,7 +169,7 @@ function showVideo(project) {
     
     isTransitioning = true;
     
-    // Hide current video if exists
+    // Hide current video if exists (but keep background black)
     if (currentActiveVideo && currentActiveVideo !== video) {
         currentActiveVideo.style.opacity = '0';
         currentActiveVideo.style.visibility = 'hidden';
@@ -471,6 +473,13 @@ class TextPartingEffect {
 // Project hover handling
 function handleProjectHover(link, isEntering) {
     if (isEntering) {
+        // Clear any pending hide timeout
+        if (hideMediaTimeout) {
+            clearTimeout(hideMediaTimeout);
+            hideMediaTimeout = null;
+        }
+        
+        isHoveringProject = true;
         const project = link.getAttribute('data-project');
         const projectInfo = link.getAttribute('data-info');
         
@@ -490,14 +499,22 @@ function handleProjectHover(link, isEntering) {
             hideAllMedia();
         }
     } else {
-        activeProject = null;
-        projectsContainer.classList.remove('hovering');
-        document.body.classList.remove('project-hovering');
+        isHoveringProject = false;
         
-        dateText.textContent = 'JUNE 2025';
-        dateText.classList.remove('project-active');
-        
-        hideAllMedia();
+        // Add a small delay before hiding to check if hovering another project
+        hideMediaTimeout = setTimeout(() => {
+            // Only hide if not hovering any project
+            if (!isHoveringProject) {
+                activeProject = null;
+                projectsContainer.classList.remove('hovering');
+                document.body.classList.remove('project-hovering');
+                
+                dateText.textContent = 'JUNE 2025';
+                dateText.classList.remove('project-active');
+                
+                hideAllMedia();
+            }
+        }, 50); // 50ms delay to allow for transitions between links
     }
 }
 
@@ -583,13 +600,16 @@ if (!isTouchDevice) {
     
     document.addEventListener('touchstart', function(e) {
         if (!e.target.closest('.project-link')) {
-            projectLinks.forEach(l => l.classList.remove('touch-active'));
-            projectsContainer.classList.remove('touch-hovering');
-            document.body.classList.remove('project-hovering');
-            dateText.textContent = 'JUNE 2025';
-            dateText.classList.remove('project-active');
-            hideAllMedia();
-            lastTouchedLink = null;
+            // Add delay for touch devices too
+            setTimeout(() => {
+                projectLinks.forEach(l => l.classList.remove('touch-active'));
+                projectsContainer.classList.remove('touch-hovering');
+                document.body.classList.remove('project-hovering');
+                dateText.textContent = 'JUNE 2025';
+                dateText.classList.remove('project-active');
+                hideAllMedia();
+                lastTouchedLink = null;
+            }, 50);
         }
     });
 }
@@ -597,6 +617,12 @@ if (!isTouchDevice) {
 // Date text hover
 dateText.addEventListener('mouseenter', function() {
     if (!dateText.classList.contains('project-active')) {
+        // Clear any pending hide timeout
+        if (hideMediaTimeout) {
+            clearTimeout(hideMediaTimeout);
+            hideMediaTimeout = null;
+        }
+        
         document.body.classList.add('june-hover');
         if (fullscreenBg.classList.contains('active')) {
             hideAllMedia();
@@ -654,4 +680,11 @@ document.addEventListener('DOMContentLoaded', function() {
             updateTextColors(activeProject);
         }
     }, 1000); // Check every second
+});
+
+// Clean up on page unload
+window.addEventListener('beforeunload', function() {
+    if (hideMediaTimeout) {
+        clearTimeout(hideMediaTimeout);
+    }
 });
