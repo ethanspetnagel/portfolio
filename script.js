@@ -6,7 +6,7 @@ const projectMedia = {
     'church': {
         url: './church video bg.mp4'
     },
-    'talamel': '', 
+    'talamel': 'talamel.mp4', 
     'fox-and-lion': { 
         url: './foxlionbg.mp4'
     }, 
