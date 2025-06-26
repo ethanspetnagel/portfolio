@@ -48,8 +48,8 @@
 .project-link::selection,
 .bio-text::selection,
 .date-text::selection {
-  background-color: #ffff00;
-  color: #85b4ff;
+  background-color: #1d1d1c;
+  color: #2d2f32;
 }
 
 body {
@@ -326,9 +326,8 @@ body.project-hovering.video-light .contact-links a {
 .bio-text .word {
   display: inline-block;
   transition: transform 0.1s ease-out;
-  margin-right: 0.3em;
+  margin-right: 0em;
 }
-
 /* Bio text links */
 .bio-text a {
   color: #2d2f32; /* Default medium gray like other text */
