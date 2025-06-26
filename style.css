@@ -337,13 +337,13 @@ body.project-hovering.video-light .contact-links a {
 }
 
 .bio-text a:hover {
-  color: #b3d100 !important; /* Lime green on hover */
+  color: #0008ff !important; /* Lime green on hover */
 }
 
 /* Maintain hover color even when video is playing */
 body.project-hovering.video-dark .bio-text a:hover,
 body.project-hovering.video-light .bio-text a:hover {
-  color: #b3d100 !important; /* Lime green on hover */
+  color: #0015ff !important; /* Lime green on hover */
 }
 
 /* Contact links */

@@ -89,12 +89,12 @@ body.title-hover .corner-logo {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   text-transform: uppercase;
   text-decoration: none;
-  color: #4d2f32;
+  color: #161515;
   background: none;
   border: none;
   cursor: pointer;
   z-index: 1000;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.0em;
   transition: opacity 0.3s ease;
 }
 
@@ -123,14 +123,14 @@ body.title-hover .corner-logo {
   pointer-events: none;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
-  font-size: clamp(16px, 2.8vw, 39px);
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
   mix-blend-mode: difference;
   color: #ffffff !important;
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.0em;
   text-shadow: none !important;
 }
 
@@ -309,7 +309,7 @@ body.title-hover .corner-logo {
 .interactive-text .word {
   display: inline-block;
   transition: transform 0.1s ease-out;
-  margin-right: 0.3em;
+  margin-right: 0em;
 }
 
 .interactive-text strong {
@@ -331,7 +331,7 @@ body.title-hover .corner-logo {
 }
 
 .interactive-text a:hover {
-  color: #b3d100;
+  color: hsl(237, 100%, 50%);
 }
 
 /* Right gallery column */
@@ -538,7 +538,7 @@ body.title-hover .corner-logo {
   letter-spacing: -0.01em;
   line-height: 1.08;
   word-break: break-word;
-  color: #424751;
+  color: #222426;
 }
 
 /* Info toggle */
@@ -555,17 +555,17 @@ body.title-hover .corner-logo {
   transition: all 0.3s ease;
   width: auto;
   opacity: 0.7;
-  color: #424751;
+  color: #2e3034;
 }
 
 .info-toggle:hover {
-  color: #b3d100;
+  color: #1500ff;
   text-shadow: 0 0 6px rgba(179, 209, 0, 0.3);
   opacity: 1;
 }
 
 .info-toggle.active {
-  color: #b3d100;
+  color: #0004ff;
   opacity: 1;
 }
 
