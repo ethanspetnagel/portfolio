@@ -170,7 +170,7 @@ body.title-hover .corner-logo {
   left: calc(36vw - 25px);
   top: 15px;
   font-size: 33.6px;
-  color: #d4d4d4;
+  color: hsl(0, 0%, 95%);
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
@@ -559,13 +559,13 @@ body.title-hover .corner-logo {
 }
 
 .info-toggle:hover {
-  color: #1500ff;
+  color: #e3e3e3;
   text-shadow: 0 0 6px rgba(179, 209, 0, 0.3);
   opacity: 1;
 }
 
 .info-toggle.active {
-  color: #0004ff;
+  color: #e3e3e3;
   opacity: 1;
 }
 
