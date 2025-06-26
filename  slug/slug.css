@@ -114,7 +114,7 @@ body.title-hover .corner-logo {
 }
 
 .corner-logo:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 /* Cursor label */
@@ -653,9 +653,9 @@ ul.interactive-text li {
     font-size: clamp(10.8px, 2.43vw, 29.7px);
   }
   .corner-logo {
-    width: 80px;
-    bottom: 20px;
-    right: 10px;
+    width: 30px;
+    bottom: 2px;
+    right: 2px;
   }
   .page {
     flex-direction: column;
@@ -740,7 +740,7 @@ ul.interactive-text li {
     font-size: clamp(20px, 5vw, 40px);
   }
   .corner-logo {
-    width: 60px;
+    width: 30px;
   }
 }
 
