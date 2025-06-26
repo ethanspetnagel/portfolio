@@ -187,7 +187,7 @@ body.page-navigating * {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: #424751; /* Default medium gray */
+  color: #2d2f32; /* Default medium gray */
   padding: 0;
   display: inline-block;
   text-transform: uppercase;
@@ -218,7 +218,7 @@ body.june-hover .contact-links a {
 
 /* Date text when project is active - adapts to video brightness */
 .date-text.project-active {
-  color: #424751; /* Default color */
+  color: #2d2f32; /* Default color */
 }
 
 /* When video is dark - white text */
@@ -246,7 +246,7 @@ body.project-hovering.video-light .date-text.project-active {
 .bio-text p,
 .bio-text a,
 .contact-links a {
-  color: #424751; /* Default medium gray */
+  color: #2d2f32; /* Default medium gray */
 }
 
 /* About toggle */
@@ -262,7 +262,7 @@ body.project-hovering.video-light .date-text.project-active {
   line-height: 1;
   padding: 0;
   letter-spacing: 0.02em;
-  color: #424751; /* Default medium gray */
+  color: #2d2f32; /* Default medium gray */
 }
 
 .about-toggle:hover {
@@ -312,14 +312,14 @@ body.project-hovering.video-light .contact-links a {
   cursor: default;
   margin-top: 5px;
   letter-spacing: -0.01em;
-  color: #424751;
+  color: #2d2f32;
 }
 
 .bio-text p {
   margin-bottom: 10px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: normal;
-  color: #424751;
+  color: #2d2f32;
 }
 
 /* Word span styling for text parting effect */
@@ -331,7 +331,7 @@ body.project-hovering.video-light .contact-links a {
 
 /* Bio text links */
 .bio-text a {
-  color: #424751; /* Default medium gray like other text */
+  color: #2d2f32; /* Default medium gray like other text */
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -364,7 +364,7 @@ body.project-hovering.video-light .bio-text a:hover {
   font-style: normal;
   font-weight: normal;
   position: relative;
-  color: #424751 !important;
+  color: #2d2f32 !important;
   padding: 8px 0;
   cursor: pointer;
 }
@@ -378,7 +378,7 @@ body.project-hovering.video-light .bio-text a:hover {
   transform: translate(-50%, -50%);
   width: 0;
   height: 0;
-  border: 2px solid #424751;
+  border: 2px solid #2d2f32;
   border-radius: 50%;
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -391,7 +391,7 @@ body.project-hovering.video-light .bio-text a:hover {
 }
 
 .contact-links a:hover {
-  color: #424751 !important;
+  color: #2d2f32 !important;
   text-decoration: none !important;
   transform: translateY(2px);
 }
@@ -543,7 +543,7 @@ body.transitioning {
   }
   
   .contact-links a:hover {
-    color: #424751 !important;
+    color: #2d2f32 !important;
     text-decoration: none !important;
   }
 }
@@ -664,6 +664,6 @@ body.transitioning {
   .bio-text p,
   .bio-text a,
   .contact-links a {
-    color: #424751;
+    color: #2d2f32;
   }
 }
