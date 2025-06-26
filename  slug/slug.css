@@ -13,13 +13,13 @@
 
 /* Selection color */
 ::selection {
-  background-color: #00233f; 
-  color: #c0e7ff; 
+  background-color: #121212; 
+  color: #292c2e; 
 }
 
 ::-moz-selection {
-  background-color: #00233f;
-  color: #c0e7ff;
+  background-color: #141516;
+  color: #353c40;
 }
 
 body {
@@ -28,7 +28,7 @@ body {
   height: 100vh;
   overflow: hidden;
   background-color: #fbfcfc;
-  color: #424751;
+  color: #2d2f32;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -89,7 +89,7 @@ body.title-hover .corner-logo {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   text-transform: uppercase;
   text-decoration: none;
-  color: #424751;
+  color: #4d2f32;
   background: none;
   border: none;
   cursor: pointer;
@@ -155,7 +155,7 @@ body.title-hover .corner-logo {
   overflow-x: hidden;
   padding: 0 40px 40px 15px;
   scrollbar-width: none;
-  background: #e8e8e8;
+  background: #fbfcfc;
   position: relative;
 }
 
@@ -225,7 +225,7 @@ body.title-hover .corner-logo {
 
 .essay-tab {
   cursor: pointer;
-  color: #424751;
+  color: #2d2f32;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   white-space: nowrap;
   padding: 18px 0;
@@ -245,7 +245,7 @@ body.title-hover .corner-logo {
   transform: translate(-50%, -50%);
   width: 0;
   height: 0;
-  border: 2px solid #424751;
+  border: 2px solid #2d2f32;
   border-radius: 50%;
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -261,7 +261,7 @@ body.title-hover .corner-logo {
   opacity: 1;
   width: calc(100% + 40px);
   height: 24px;
-  border-color: #424751;
+  border-color: #2d2f32;
 }
 
 .essay-tab:hover {
@@ -342,7 +342,7 @@ body.title-hover .corner-logo {
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 15px 20px 40px 60px;
-  background-color: #e8e8e8;
+  background-color: #fbfcfc;
   scrollbar-width: none;
   display: flex;
   flex-direction: column;
@@ -515,7 +515,7 @@ body.title-hover .corner-logo {
   height: auto;
   margin-bottom: 0;
   margin-left: 0;
-  background: #e8e8e8;
+  background: #fbfcfc;
   box-shadow: none;
   border-radius: 0;
   cursor: pointer;
