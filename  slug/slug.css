@@ -27,7 +27,7 @@ body {
   padding: 0;
   height: 100vh;
   overflow: hidden;
-  background-color: #f0f5f5;
+  background-color: #fafcfc;
   color: #424751;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
@@ -105,12 +105,12 @@ body.title-hover .corner-logo {
 /* Corner logo */
 .corner-logo {
   position: fixed;
-  bottom: 70px;
-  right: 65px; /* Moved 30px to the left from original 15px */
+  bottom: 90px;
+  right: 65px;
   z-index: 999;
-  width: 260px; /* 5x bigger than original 60px */
-  height: 100px; /* 5x bigger than original 60px */
-  opacity: 1; /* Full opacity always, no transitions */
+  width: 260px;
+  height: 100px;
+  opacity: 1;
 }
 
 .corner-logo:hover {
@@ -155,7 +155,7 @@ body.title-hover .corner-logo {
   overflow-x: hidden;
   padding: 0 40px 40px 15px;
   scrollbar-width: none;
-  background: #f0f5f5;
+  background: #e8e8e8;
   position: relative;
 }
 
@@ -170,7 +170,7 @@ body.title-hover .corner-logo {
   left: calc(36vw - 25px);
   top: 15px;
   font-size: 33.6px;
-  color: #e4e8f2;
+  color: #d4d4d4;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
@@ -342,7 +342,7 @@ body.title-hover .corner-logo {
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 15px 20px 40px 60px;
-  background-color: #f0f5f5;
+  background-color: #e8e8e8;
   scrollbar-width: none;
   display: flex;
   flex-direction: column;
@@ -368,7 +368,7 @@ body.title-hover .corner-logo {
   right: 15px;
   top: 15px;
   font-size: 33.6px;
-  color: #e4e8f2;
+  color: #d4d4d4;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
@@ -417,57 +417,87 @@ body.title-hover .corner-logo {
   align-items: flex-start;
 }
 
-/* Project sizing - default sizes for Slug content */
-.project-block:nth-child(1) .slideshow-zone {
-  max-width: 385px;
-  width: 43vw;
+/* ============================================
+   EASY SIZE CONTROL SYSTEM
+   ============================================
+   To adjust any image/video size, just change 
+   the width value in the corresponding class below.
+   The max-width is calculated automatically.
+   ============================================ */
+
+/* SIZE PRESETS - Edit these values to change image/video sizes */
+:root {
+  /* Small sizes */
+  --size-xs: 19.25vw;    /* Extra small */
+  --size-s: 27vw;        /* Small */
+  
+  /* Medium sizes */
+  --size-m: 35.75vw;     /* Medium */
+  --size-default: 43vw;  /* Default/Standard */
+  
+  /* Large sizes */
+  --size-l: 60vw;        /* Large */
+  --size-xl: 78vw;       /* Extra large */
+  --size-full: 100vw;    /* Full width */
 }
 
-.project-block:nth-child(2) .slideshow-zone {
-  max-width: 302.5px;
-  width: 27vw;
+/* Apply sizes using data attributes */
+[data-size="xs"] .slideshow-zone {
+  width: var(--size-xs);
+  max-width: calc(var(--size-xs) * 2.2);
+}
+
+[data-size="s"] .slideshow-zone {
+  width: var(--size-s);
+  max-width: calc(var(--size-s) * 2.2);
+}
+
+[data-size="m"] .slideshow-zone {
+  width: var(--size-m);
+  max-width: calc(var(--size-m) * 2.2);
+}
+
+[data-size="default"] .slideshow-zone,
+.project-block .slideshow-zone {  /* Default if no size specified */
+  width: var(--size-default);
+  max-width: calc(var(--size-default) * 2.2);
+}
+
+[data-size="l"] .slideshow-zone {
+  width: var(--size-l);
+  max-width: calc(var(--size-l) * 2.2);
+}
+
+[data-size="xl"] .slideshow-zone {
+  width: var(--size-xl);
+  max-width: calc(var(--size-xl) * 2.2);
+}
+
+[data-size="full"] .slideshow-zone {
+  width: var(--size-full);
+  max-width: 100%;
+}
+
+/* Custom sizes for specific items (if needed) */
+[data-custom-size] .slideshow-zone {
+  width: var(--custom-width);
+  max-width: var(--custom-max-width);
+}
+
+/* Offset/margin control */
+[data-offset="small"] .slideshow-zone {
   margin-left: 4vw;
 }
 
-.project-block:nth-child(3) .slideshow-zone {
-  max-width: 440px;
-  width: 35.75vw;
-}
-
-.project-block:nth-child(4) .slideshow-zone {
-  max-width: 330px;
-  width: 19.25vw;
+[data-offset="medium"] .slideshow-zone {
   margin-left: 6vw;
 }
 
-.project-block:nth-child(5) .slideshow-zone {
-  max-width: 385px;
-  width: 43vw;
+[data-offset="large"] .slideshow-zone {
+  margin-left: 8vw;
 }
 
-.project-block:nth-child(6) .slideshow-zone {
-  max-width: 385px;
-  width: 43vw;
-}
-
-/* Special sizing for SOAP tab */
-.project-set[data-index="1"] .project-block:nth-child(1) .slideshow-zone {
-  max-width: 700px;
-  width: 78vw;
-}
-
-.project-set[data-index="1"] .project-block:nth-child(2) .slideshow-zone {
-  max-width: 400px;
-  width: 38vw;
-}
-
-/* Special sizing for WEB and GRAPHICS tabs */
-.project-set[data-index="2"] .slideshow-zone,
-.project-set[data-index="3"] .slideshow-zone {
-  max-width: 700px;
-  width: 78vw;
-}
-
+/* Images and videos inherit parent size */
 .slide {
   display: none;
   width: auto;
@@ -477,34 +507,22 @@ body.title-hover .corner-logo {
   display: block;
 }
 
-/* Image and video sizing */
 .slide img,
 .slide video {
   display: block;
-  max-width: 385px;
-  width: 43vw;
+  width: 100%;
+  max-width: 100%;
   height: auto;
   margin-bottom: 0;
   margin-left: 0;
-  background: #f0f5f5;
+  background: #e8e8e8;
   box-shadow: none;
   border-radius: 0;
   cursor: pointer;
-}
-
-/* Match parent slideshow width */
-.slideshow-zone .slide img,
-.slideshow-zone .slide video {
-  max-width: 100%;
-  width: 100%;
-}
-
-/* Ensure videos maintain aspect ratio */
-.slide video {
   object-fit: contain;
 }
 
-/* Caption styling - UPDATED to match paragraph text */
+/* Caption styling */
 .caption {
   width: 100%;
   max-width: 100%;
@@ -523,7 +541,7 @@ body.title-hover .corner-logo {
   color: #424751;
 }
 
-/* Info toggle - UPDATED to match paragraph text */
+/* Info toggle */
 .info-toggle {
   align-self: flex-start;
   margin-top: 8px;
@@ -551,7 +569,7 @@ body.title-hover .corner-logo {
   opacity: 1;
 }
 
-/* Info panel - UPDATED to match paragraph text */
+/* Info panel */
 .info-panel {
   align-self: flex-start;
   width: 100%;
@@ -687,9 +705,9 @@ ul.interactive-text li {
   }
   /* Make all slideshows responsive on mobile */
   .slideshow-zone {
-    max-width: 100%;
-    width: 100%;
-    margin-left: 0;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
   }
   
   /* Make all videos/images responsive on mobile */

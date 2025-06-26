@@ -35,21 +35,21 @@
 
 /* Selection Highlight Colors - Modern Blue Shades */
 ::selection {
-  background-color: #00233f; /* Dark blue background */
-  color: #c0e7ff; /* Light blue text */
+  background-color: #ffff00; /* Dark blue background */
+  color: #85b4ff; /* Light blue text */
 }
 
 ::-moz-selection {
-  background-color: #00233f; /* Dark blue background */
-  color: #c0e7ff; /* Light blue text */
+  background-color: #ffff00; /* Dark blue background */
+  color: #85b4ff; /* Light blue text */
 }
 
 /* For specific elements if needed */
 .project-link::selection,
 .bio-text::selection,
 .date-text::selection {
-  background-color: #00233f;
-  color: #c0e7ff;
+  background-color: #ffff00;
+  color: #85b4ff;
 }
 
 body {
