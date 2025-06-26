@@ -35,13 +35,13 @@
 
 /* Selection Highlight Colors - Modern Blue Shades */
 ::selection {
-  background-color: #ffff00; /* Dark blue background */
-  color: #85b4ff; /* Light blue text */
+  background-color: #262626; /* Dark blue background */
+  color: #36373a; /* Light blue text */
 }
 
 ::-moz-selection {
-  background-color: #ffff00; /* Dark blue background */
-  color: #85b4ff; /* Light blue text */
+  background-color: #262626; /* Dark blue background */
+  color: #36373a; /* Light blue text */
 }
 
 /* For specific elements if needed */
