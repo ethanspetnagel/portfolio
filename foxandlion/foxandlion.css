@@ -309,7 +309,7 @@ body.title-hover .project-gallery {
 .interactive-text .word {
   display: inline-block;
   transition: transform 0.1s ease-out;
-  margin-right: 0.3em;
+  margin-right: 0em;
 }
 
 .interactive-text strong {
@@ -322,7 +322,7 @@ body.title-hover .project-gallery {
   margin-bottom: 0;
 }
 
-/* Link styling */
+/* Links in text */
 .interactive-text a {
   color: #424751;
   text-decoration: none;
@@ -418,7 +418,82 @@ body.title-hover .project-gallery {
   align-items: flex-start;
 }
 
-/* Slide system */
+/* ============================================
+   EASY SIZE CONTROL SYSTEM
+   ============================================
+   To adjust any image/video size, just change 
+   the width value in the corresponding class below.
+   The max-width is calculated automatically.
+   ============================================ */
+
+/* SIZE PRESETS - Edit these values to change image/video sizes */
+:root {
+  --size-xs: 19.25vw;
+  --size-s: 27vw;
+  --size-m: 35.75vw;
+  --size-default: 43vw;
+  --size-l: 60vw;
+  --size-xl: 78vw;
+  --size-full: 100vw;
+}
+
+/* Apply sizes using data attributes */
+[data-size="xs"] .slideshow-zone {
+  width: var(--size-xs);
+  max-width: calc(var(--size-xs) * 2.2);
+}
+
+[data-size="s"] .slideshow-zone {
+  width: var(--size-s);
+  max-width: calc(var(--size-s) * 2.2);
+}
+
+[data-size="m"] .slideshow-zone {
+  width: var(--size-m);
+  max-width: calc(var(--size-m) * 2.2);
+}
+
+[data-size="default"] .slideshow-zone,
+.project-block .slideshow-zone {
+  width: var(--size-default);
+  max-width: calc(var(--size-default) * 2.2);
+}
+
+[data-size="l"] .slideshow-zone {
+  width: var(--size-l);
+  max-width: calc(var(--size-l) * 2.2);
+}
+
+[data-size="xl"] .slideshow-zone {
+  width: var(--size-xl);
+  max-width: calc(var(--size-xl) * 2.2);
+}
+
+[data-size="full"] .slideshow-zone {
+  width: var(--size-full);
+  max-width: 100%;
+}
+
+/* Custom sizes for specific items (if needed) */
+[data-custom-size] .slideshow-zone {
+  width: var(--custom-width);
+  max-width: var(--custom-max-width);
+}
+
+/* Offset/margin control */
+[data-offset="small"] .slideshow-zone {
+  margin-left: 4vw;
+}
+
+[data-offset="medium"] .slideshow-zone {
+  margin-left: 6vw;
+}
+
+[data-offset="large"] .slideshow-zone {
+  margin-left: 8vw;
+}
+
+/* Images and videos inherit parent size */
 .slide {
   display: none;
   width: auto;
@@ -667,11 +742,6 @@ ul.interactive-text li {
   }
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
-  }
-  .floating-logo {
-    width: 40px;
-    height: 40px;
-    right: 15px;
   }
 }
 
