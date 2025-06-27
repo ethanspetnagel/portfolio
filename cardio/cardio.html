@@ -31,64 +31,39 @@
         <div class="essay-text active" data-index="0">
           <p class="interactive-text"><strong></strong></p>
           <p class="interactive-text">
-            CardioScape, a division of Microscape, is a group of software developers, game developers, and research scientists based out of the Michelson Center for Convergent Biosciences at the University of Southern California. They hired me to design and implement interactive splash screens for their application.
+            CardioScape, a division of Microscape based at the Michelson Center for Convergent Biosciences at USC, hired me to design and implement an interactive splash screen for their medical visualization application. Their platform digitizes heart specimens into 3D models, enabling medical professionals to explore and understand congenital heart defects through desktop and VR interfaces.
           </p>
           <p class="interactive-text">
-            CardioScape digitizes heart specimens into 3D models, allowing medical professionals to explore and understand congenital heart defects through desktop and VR interfaces. My role was to design the first thing users encounter when launching their app—an engaging splash screen that functions smoothly across both platforms.
+            I was brought on specifically to design the splash screen, focusing on interaction design (IxD) and creating an engaging entry point that works seamlessly across both desktop and immersive VR environments. My goal was to build a first impression that reflected CardioScape's professional, collaborative, and high-tech aesthetic while enhancing user engagement during loading sequences.
           </p>
           <p class="interactive-text">
-            The final designs center around a distinctive cubic 3D heart model which I prototyped in Blender before developing and integrating it into their Unity application. For web browsers, I also coded the heart animation in p5.js. The VR version allows users to move around and examine the heart in immersive space. During initialization, the heart rotates, transitions from white to red, and pulses with a heartbeat animation.
+            The final design centers on a distinctive cubic 3D heart model, which I prototyped in Blender before integrating into their Unity application. For web browsers, I also coded the heart animation in p5.js to ensure consistency across platforms. The splash screen features a rotating heart that transitions from white to red and pulses with a heartbeat animation, with VR functionality allowing users to move around and examine the heart in immersive space.
           </p>
-          <p class="interactive-text"><strong>Design Objectives:</strong></p>
+          <p class="interactive-text"><strong>Key objectives included:</strong></p>
+          <ul class="interactive-text">
+            <li>Designing an interactive splash screen that engages users while the application initializes</li>
+            <li>Ensuring compatibility across Unity and web environments</li>
+            <li>Supporting desktop mouse interaction and VR spatial exploration</li>
+            <li>Creating a 3D animated heart with intuitive, meaningful interactions</li>
+            <li>Designing flexible animations to accommodate variable loading durations (5–30 seconds)</li>
+            <li>Aligning visuals and interactions with CardioScape's medical and research-focused brand</li>
+          </ul>
           <p class="interactive-text">
-            - Enhance user engagement during application loading sequences<br>
-            - Ensure compatibility with both Unity game engine and web environments<br>
-            - Support desktop platforms with mouse interaction and VR compatibility<br>
-            - Include a 3D animated heart with spatial interactivity<br>
-            - Align with CardioScape's professional, collaborative, and high-tech aesthetic<br>
-            - Design for flexible loading durations ranging from 5 to 30 seconds
+            This project combined 3D modeling, animation, and interaction design for VR/AR to create an impactful and seamless user experience from the moment the app launches.
           </p>
         </div>
         
         <!-- SPLASH SCREEN TAB CONTENT -->
         <div class="essay-text" data-index="1">
-          <p class="interactive-text"><strong>My Design Process</strong></p>
-          
-          <p class="interactive-text"><strong>1. Ideation</strong></p>
+          <p class="interactive-text"><strong></strong></p>
           <p class="interactive-text">
-            I like to start out with pen and paper when I am creating concepts for a new design. By identifying and listing out the most important requirements for the splash screen, I have a visual reference of what I'm trying to accomplish as I go forward.
+            For this project, I began by defining key requirements based on a vision call with the co-founders, then quickly sketched multiple concepts to explore different directions for the splash screen's design and interaction.
           </p>
           <p class="interactive-text">
-            Based on a vision call with the co-founders, I started with three sketches (ⓐ, ⓑ ,ⓒ), each reflecting different approaches to the splash screen's design and interaction.
-          </p>
-          
-          <p class="interactive-text"><strong>2. Prototyping</strong></p>
-          <p class="interactive-text">
-            Then, I prototyped the idea I like the most. In this case, it was the "Minecraft" heart. I used Blender to create the 3D model and apply textures (ⓓ), then developed a simple heartbeat animation that mimicked human heartbeat.
+            From these, I selected the strongest concept — a voxel-style "Minecraft" heart — and built an initial prototype in Blender, creating the 3D model, applying textures, and developing a heartbeat animation to reflect human rhythm. To ensure cross-platform performance, I recreated the animation in p5.js for web testing and validated seamless integration into Unity, the app's development platform. I also modeled the other proposed concepts in Blender to provide the team with multiple functional options for review.
           </p>
           <p class="interactive-text">
-            To ensure the design performed well across both web and Unity (the platform where their app is developed), I recreated the animation in p5.js (ⓔ). This allowed me to verify that the visuals and interactions remained smooth and engaging across different environments.
-          </p>
-          <p class="interactive-text">
-            After I finished the first concept, I also modeled the other two (ⓕ, ⓖ) in Blender so I had multiple functional prototypes to show the team in our next meeting for comparison. I also ensured I could move the heart design from Blender into Unity (ⓗ) seamlessly.
-          </p>
-          
-          <p class="interactive-text"><strong>3. Iterations</strong></p>
-          <p class="interactive-text">
-            After the first iteration, I revised the design based on feedback from my team. I used Unity and leveraged C# scripting to enhance interactivity, spatial control, and platform performance. For this second iteration, I decided to add the animation to my with C# scripting directly in Unity instead of Blender, which allowed me to create more complex and smooth animations (ⓘ, ⓙ, ⓚ).
-          </p>
-          
-          <p class="interactive-text"><strong>4. Implementation</strong></p>
-          <p class="interactive-text">
-            Lastly, I worked with Cardioscape's software development team to integrate our favorite animations into the application. This required me learn how their application was structured and adapt the code to ensure my designs work well with their code. (ⓛ)
-          </p>
-          
-          <p class="interactive-text"><strong>Note</strong></p>
-          <p class="interactive-text">
-            This project was both a challenging and rewarding experience—I had a lot of fun, learned a ton, and really enjoyed working with the Cardioscape team throughout the entire design and development process.
-          </p>
-          <p class="interactive-text">
-            See my design in action, download the Cardioscape app.
+            After gathering feedback, I iterated on the design within Unity, using C# scripting to build smoother, more complex animations and enhance interactivity and spatial control. Finally, I worked closely with Cardioscape's software development team to integrate the chosen animation into the application, adapting my code to align with their existing architecture for reliable performance.
           </p>
         </div>
       </div>
