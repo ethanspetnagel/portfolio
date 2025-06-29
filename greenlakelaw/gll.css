@@ -65,14 +65,6 @@ body.page-navigating * {
 }
 
 /* Title hover effects */
-.site-title:hover {
-  color: #fff !important;
-}
-
-.site-title a:hover {
-  color: #fff !important;
-}
-
 body.title-hover {
   background-color: #000000 !important;
 }

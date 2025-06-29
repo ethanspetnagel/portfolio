@@ -671,6 +671,6 @@ body.transitioning {
 
 /* Project hovering styles */
 body.project-hovering .about-toggle,
-body.project-hovering .date-text {
+body.project-hovering .website-info .date-text {
   color: #fff !important;
 }
