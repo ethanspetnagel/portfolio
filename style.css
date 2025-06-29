@@ -108,10 +108,12 @@ body.page-navigating * {
   /* Prevent flickering */
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  filter: grayscale(1) brightness(0.45) contrast(1.1);
 }
 
 .fullscreen-bg video.active {
   opacity: 1;
+  filter: grayscale(1) brightness(0.45) contrast(1.1);
 }
 
 /* Main Content - Always visible */
