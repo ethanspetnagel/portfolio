@@ -108,12 +108,12 @@ body.page-navigating * {
   /* Prevent flickering */
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  filter: grayscale(0.99) brightness(0.80) contrast(1.1);
+  filter: grayscale(0.99) brightness(0.95) contrast(1);
 }
 
 .fullscreen-bg video.active {
   opacity: 1;
-  filter: grayscale(0.99) brightness(0.85) contrast(1.1);
+  filter: grayscale(0.99) brightness(0.95) contrast(1);
 }
 
 /* Main Content - Always visible */
@@ -667,4 +667,10 @@ body.transitioning {
   .contact-links a {
     color: #2d2f32;
   }
+}
+
+/* Project hovering styles */
+body.project-hovering .about-toggle,
+body.project-hovering .date-text {
+  color: #fff !important;
 }
