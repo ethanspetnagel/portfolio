@@ -295,7 +295,7 @@ function hideAllMedia() {
     currentMedia = null;
 }
 
-// Text scramble effect
+// Text scramble effect with font variations
 class TextScramble {
     constructor(el) {
         this.el = el;
@@ -434,88 +434,6 @@ class TextScramble {
     
     randomChar() {
         return this.chars[Math.floor(Math.random() * this.chars.length)];
-    }
-}
-
-    originalTransform: word.style.transform || '',
-                    originalFontFamily: word.style.fontFamily || getComputedStyle(word).fontFamily,
-                    isActive: true,
-                    assignedFont: null
-                });
-            });
-            
-            this.activeElements.set(element, {
-                words: wordData,
-                isActive: true
-            });
-        }
-    }
-
-    updateParting(event) {
-        const element = event.target.closest('.bio-text');
-        const data = this.activeElements.get(element);
-        
-        if (!data || !data.isActive) return;
-
-        const cursorX = event.clientX;
-        const cursorY = event.clientY;
-        
-        data.words.forEach((wordData, word) => {
-            const rect = word.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const deltaX = cursorX - centerX;
-            const deltaY = cursorY - centerY;
-            
-            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const maxInfluence = 150;
-            
-            if (distance < maxInfluence) {
-                const strength = (1 - distance / maxInfluence) * 25;
-                const angle = Math.atan2(deltaY, deltaX);
-                const pushX = -Math.cos(angle) * strength;
-                const pushY = -Math.sin(angle) * strength;
-                
-                // Apply transform
-                word.style.transform = `translate(${pushX}px, ${pushY}px)`;
-                word.style.transition = 'transform 0.1s ease-out, font-family 0.1s ease-out';
-                
-                // Apply random font if not already assigned or change it occasionally
-                if (!wordData.assignedFont || Math.random() < 0.1) {
-                    wordData.assignedFont = this.getRandomFont();
-                }
-                word.style.fontFamily = wordData.assignedFont;
-                
-            } else {
-                // Reset transform and font when outside influence
-                word.style.transform = wordData.originalTransform;
-                word.style.fontFamily = wordData.originalFontFamily;
-                word.style.transition = 'transform 0.2s ease-out, font-family 0.2s ease-out';
-                wordData.assignedFont = null;
-            }
-        });
-    }
-
-    endParting(element) {
-        const data = this.activeElements.get(element);
-        
-        if (data) {
-            data.isActive = false;
-            
-            data.words.forEach((wordData, word) => {
-                word.style.transition = 'transform 0.3s ease-out, font-family 0.3s ease-out';
-                word.style.transform = wordData.originalTransform;
-                word.style.fontFamily = wordData.originalFontFamily;
-                wordData.assignedFont = null;
-            });
-            
-            setTimeout(() => {
-                if (!data.isActive) {
-                    this.activeElements.delete(element);
-                }
-            }, 300);
-        }
     }
 }
 
