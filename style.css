@@ -264,16 +264,11 @@ body.june-hover .contact-links a {
 
 /* Bio content */
 .bio-content {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  display: none;
 }
 
 .bio-content.active {
-  max-height: 600px;
-  opacity: 1;
-  overflow: visible;
+  display: block;
 }
 
 /* Bio text */

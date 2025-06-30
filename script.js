@@ -492,7 +492,7 @@ class TextPartingEffect {
                 
                 node.parentNode.replaceChild(fragment, node);
             });
-        });
+        }
     }
 
     getTextNodes(element) {
@@ -590,6 +590,64 @@ class TextPartingEffect {
     }
 }
 
+// Font Flip Effect
+class FontFlip {
+    constructor(el) {
+        this.el = el;
+        this.fonts = [
+            'Impact, fantasy',
+            'Times New Roman, serif',
+            'Courier New, monospace',
+            'Arial Black, sans-serif',
+            'Verdana, sans-serif',
+            'Georgia, serif',
+            'Comic Sans MS, cursive',
+            'Trebuchet MS, sans-serif',
+            'Lucida Console, monospace',
+            'Tahoma, sans-serif'
+        ];
+        this.originalFont = window.getComputedStyle(el).fontFamily;
+        this.originalFontSize = window.getComputedStyle(el).fontSize;
+        this.originalFontWeight = window.getComputedStyle(el).fontWeight;
+        this.originalLineHeight = window.getComputedStyle(el).lineHeight;
+    }
+
+    setText(newText) {
+        this.text = newText;
+        this.frame = 0;
+        this.letterFontIndices = Array.from({length: newText.length}, () => 0);
+        this.animating = true;
+        this.animate();
+    }
+
+    animate() {
+        if (!this.animating) return;
+        this.el.innerHTML = '';
+        let done = true;
+        for (let i = 0; i < this.text.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = this.text[i];
+            span.style.display = 'inline-block';
+            span.style.fontSize = this.originalFontSize;
+            span.style.fontWeight = this.originalFontWeight;
+            span.style.lineHeight = this.originalLineHeight;
+            // Animate font for first 20 frames per letter, staggered
+            if (this.frame < 20 + i * 2) {
+                span.style.fontFamily = this.fonts[(this.letterFontIndices[i]) % this.fonts.length];
+                this.letterFontIndices[i]++;
+                done = false;
+            } else {
+                span.style.fontFamily = this.originalFont;
+            }
+            this.el.appendChild(span);
+        }
+        this.frame++;
+        if (!done) {
+            requestAnimationFrame(() => this.animate());
+        }
+    }
+}
+
 // Project hover handling
 function handleProjectHover(link, isEntering) {
     if (isEntering) {
@@ -643,40 +701,39 @@ function handleProjectHover(link, isEntering) {
 
 // Initialize text effects
 const textParting = new TextPartingEffect();
-const aboutScramble = new TextScramble(aboutToggle);
+const aboutFlip = new FontFlip(aboutToggle);
 let isAboutOpen = false;
 
 // FIXED About toggle functionality
 aboutToggle.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
-    
-    // Toggle the bio content
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
-    
-    // Update button text with animation
+
+    // Fallback: force display block/none if transition doesn't work
+    if (bioContent.classList.contains('active')) {
+        bioContent.style.display = 'block';
+    } else {
+        bioContent.style.display = 'none';
+    }
+
     if (isAboutOpen) {
-        aboutScramble.setText('HIDE', true);
-        // Initialize text parting effect after content is visible
+        aboutFlip.setText('HIDE');
         setTimeout(() => {
             textParting.init();
         }, 300);
     } else {
-        aboutScramble.setText('ABOUT', false);
+        aboutFlip.setText('ABOUT');
     }
-    
-    console.log('About clicked, isOpen:', isAboutOpen); // Debug log
 });
 
 // About toggle hover effect
 aboutToggle.addEventListener('mouseenter', function() {
-    if (!aboutScramble.isActive) { // Only animate if not already animating
-        if (!isAboutOpen) {
-            aboutScramble.setText('ABOUT');
-        } else {
-            aboutScramble.setText('HIDE');
-        }
+    if (!isAboutOpen) {
+        aboutFlip.setText('ABOUT');
+    } else {
+        aboutFlip.setText('HIDE');
     }
 });
 
