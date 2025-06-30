@@ -3,15 +3,15 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: {
-            left: '33%',  // Position so "SLUG" text in video aligns with top-left
-            top: '25%'
+            left: '38%',  // Position so "SLUG" text in video aligns with top-left
+            top: '30%'
         }
     }, 
     'church': {
         url: './church video bg.mp4',
         position: {
             left: '50%',  // Right side
-            top: '5%'
+            top: '1%'
         }
     },
     'talamel': {
@@ -32,8 +32,8 @@ const projectMedia = {
     'cardioscape': { 
         url: './cardio.mp4',
         position: {
-            left: '1%',  // Center-left
-            top: '20%'
+            left: '0%',  // Center-left
+            top: '22%'
         }
     },
     'lu-rose-gold': {
