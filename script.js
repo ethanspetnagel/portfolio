@@ -211,7 +211,7 @@ function hideAllMedia() {
     currentMedia = null;
 }
 
-// Font Flip Effect (no letter scramble)
+// Font Flip Effect (with letter scramble)
 class FontFlip {
     constructor(el) {
         this.el = el;
@@ -232,35 +232,47 @@ class FontFlip {
         this._animateLetter(0);
     }
 
+    // Fisher-Yates shuffle
+    _shuffle(array) {
+        let arr = array.slice();
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
     _animateLetter(index) {
         if (index >= this.text.length) {
             this._renderWord(-1, -1);
             this._isAnimating = false;
             return;
         }
+        // Shuffle font order for this letter
+        const shuffledFonts = this._shuffle(this.fonts);
         let fontFrame = 0;
         const animateFont = () => {
-            if (fontFrame < this.fonts.length) {
-                this._renderWord(index, fontFrame);
+            if (fontFrame < shuffledFonts.length) {
+                this._renderWord(index, fontFrame, shuffledFonts);
                 fontFrame++;
-                this._timeout = setTimeout(animateFont, 150); // 150ms per font
+                this._timeout = setTimeout(animateFont, 150);
             } else {
-                this._renderWord(index, -1);
-                this._timeout = setTimeout(() => this._animateLetter(index + 1), 75); // 75ms between letters
+                this._renderWord(index, -1, shuffledFonts);
+                this._timeout = setTimeout(() => this._animateLetter(index + 1), 75);
             }
         };
         this._isAnimating = true;
         animateFont();
     }
 
-    _renderWord(activeIndex, fontFrame) {
+    _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
         this.el.innerHTML = '';
         for (let i = 0; i < this.text.length; i++) {
             const span = document.createElement('span');
             span.textContent = this.text[i];
             span.style.display = 'inline-block';
             if (i === activeIndex && fontFrame >= 0) {
-                span.style.fontFamily = this.fonts[fontFrame];
+                span.style.fontFamily = fontList[fontFrame];
             } else {
                 span.style.fontFamily = this.originalFont;
             }
