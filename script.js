@@ -3,15 +3,15 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: {
-            left: '55%',  // Position so "SLUG" text in video aligns with top-left
-            top: '10%'
+            left: '30%',  // Position so "SLUG" text in video aligns with top-left
+            top: '20%'
         }
     }, 
     'church': {
         url: './church video bg.mp4',
         position: {
-            left: '45%',  // Right side
-            top: '25%'
+            left: '50%',  // Right side
+            top: '5%'
         }
     },
     'talamel': {
@@ -32,15 +32,15 @@ const projectMedia = {
     'cardioscape': { 
         url: './cardio.mp4',
         position: {
-            left: '5%',  // Center-left
+            left: '1%',  // Center-left
             top: '20%'
         }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
         position: {
-            left: '55%',  // Right side
-            top: '35%'
+            left: '65%',  // Right side
+            top: '37%'
         }
     },
     'green-lake-law': {
