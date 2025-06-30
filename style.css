@@ -47,6 +47,7 @@
 /* For specific elements if needed */
 .project-link::selection,
 .bio-text::selection,
+.about-toggle::selection
 .date-text::selection {
   background-color: #1d1d1c;
   color: #ffffff;
@@ -196,7 +197,7 @@ body.page-navigating * {
 
 /* Date text hover - keep default color */
 .date-text:hover {
-  color: #ffffff !important;
+  color: #2d2f32 !important;
 }
 
 /* Special class for black background effect */
@@ -254,7 +255,7 @@ body.june-hover .contact-links a {
 }
 
 .about-toggle:hover {
-  color: #ffffff !important; /* White on hover */
+  color: #2d2f32 !important; /* White on hover */
 }
 
 /* Bio section elements maintain default colors */
