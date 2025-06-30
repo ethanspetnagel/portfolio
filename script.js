@@ -2,53 +2,32 @@
 const projectMedia = {
     'slug': {
         url: './slug.mp4',
-        position: {
-            left: '12%',
-            top: '0%'
-        }
+        position: { left: '12%', top: '0%' }
     }, 
     'church': {
         url: './church video bg.mp4',
-        position: {
-            left: '34.5%',
-            top: '39%'
-        }
+        position: { left: '34.5%', top: '39%' }
     },
     'talamel': {
         url: './talamel1.mp4',
-        position: {
-            left: '16%',
-            top: '7%'
-        }
+        position: { left: '16%', top: '7%' }
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
-        position: {
-            left: '45%',
-            top: '15%'
-        }
+        position: { left: '45%', top: '15%' }
     }, 
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
-        position: {
-            left: '5%',
-            top: '22%'
-        }
+        position: { left: '5%', top: '22%' }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
-        position: {
-            left: '50%',
-            top: '30.5%'
-        }
+        position: { left: '50%', top: '30.5%' }
     },
     'green-lake-law': {
         url: './greenlake.mp4',
-        position: {
-            left: '0%',
-            top: '20%'
-        }
+        position: { left: '0%', top: '20%' }
     }, 
     'june-2025': ''
 };
@@ -90,19 +69,15 @@ const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 function analyzeVideoBrightness(video, project) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    
     canvas.width = 160;
     canvas.height = 90;
-    
     if (video.readyState >= 2) {
         try {
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
-            
             let brightness = 0;
             let pixelCount = 0;
-            
             for (let i = 0; i < data.length; i += 40) {
                 const r = data[i];
                 const g = data[i + 1];
@@ -111,13 +86,9 @@ function analyzeVideoBrightness(video, project) {
                 brightness += pixelBrightness;
                 pixelCount++;
             }
-            
             const avgBrightness = brightness / pixelCount;
             videoBrightness[project] = avgBrightness < 0.5;
-            
-            console.log(`${project} brightness:`, avgBrightness, 'isDark:', avgBrightness < 0.5);
         } catch (e) {
-            console.log('Could not analyze video brightness:', e);
             videoBrightness[project] = true;
         }
     }
@@ -137,16 +108,12 @@ function initializeVideoPool() {
             video.preload = 'auto';
             video.className = 'bg-video';
             video.dataset.project = project;
-            
             video.style.opacity = '0';
             video.style.visibility = 'hidden';
             video.style.zIndex = '1';
-            
             fullscreenBg.appendChild(video);
             videoPool[project] = video;
-            
             video.load();
-            
             video.addEventListener('loadeddata', () => {
                 video.play().then(() => {
                     video.pause();
@@ -156,7 +123,6 @@ function initializeVideoPool() {
                     }, 100);
                 }).catch(() => {});
             });
-            
             video.addEventListener('seeked', () => {
                 analyzeVideoBrightness(video, project);
             });
@@ -167,7 +133,6 @@ function initializeVideoPool() {
 // Update text colors based on video brightness
 function updateTextColors(project) {
     const isDark = videoBrightness[project] !== undefined ? videoBrightness[project] : true;
-    
     if (isDark) {
         document.body.classList.add('video-dark');
         document.body.classList.remove('video-light');
@@ -180,37 +145,25 @@ function updateTextColors(project) {
 // Show video instantly with custom position
 function showVideo(project) {
     if (isTransitioning) return false;
-    
     const video = videoPool[project];
     if (!video) return false;
-    
     const mediaInfo = projectMedia[project];
     if (!mediaInfo || !mediaInfo.position) return false;
-    
     isTransitioning = true;
-    
     const previousVideo = currentActiveVideo;
-    
-    if (previousVideo) {
-        previousVideo.style.zIndex = '1';
-    }
+    if (previousVideo) previousVideo.style.zIndex = '1';
     video.style.zIndex = '2';
-    
     video.style.left = mediaInfo.position.left;
     video.style.top = mediaInfo.position.top;
-    
     video.style.visibility = 'visible';
     video.currentTime = 0;
-    
     const playPromise = video.play();
-    
     if (playPromise !== undefined) {
         playPromise.then(() => {
             requestAnimationFrame(() => {
                 video.style.opacity = '1';
                 video.classList.add('active');
                 fullscreenBg.classList.add('active');
-                
                 setTimeout(() => {
                     if (previousVideo && previousVideo !== video) {
                         previousVideo.style.opacity = '0';
@@ -220,16 +173,13 @@ function showVideo(project) {
                         previousVideo.style.zIndex = '1';
                     }
                 }, 100);
-                
                 isTransitioning = false;
                 updateTextColors(project);
             });
-        }).catch(error => {
-            console.log('Play failed:', error);
+        }).catch(() => {
             video.style.opacity = '1';
             video.classList.add('active');
             fullscreenBg.classList.add('active');
-            
             if (previousVideo && previousVideo !== video) {
                 previousVideo.style.opacity = '0';
                 previousVideo.style.visibility = 'hidden';
@@ -237,22 +187,18 @@ function showVideo(project) {
                 previousVideo.classList.remove('active');
                 previousVideo.style.zIndex = '1';
             }
-            
             isTransitioning = false;
             updateTextColors(project);
         });
     }
-    
     currentActiveVideo = video;
     currentMedia = projectMedia[project];
-    
     return true;
 }
 
 // Hide all media
 function hideAllMedia() {
     fullscreenBg.classList.remove('active');
-    
     if (currentActiveVideo) {
         currentActiveVideo.style.opacity = '0';
         currentActiveVideo.style.visibility = 'hidden';
@@ -261,336 +207,11 @@ function hideAllMedia() {
         currentActiveVideo.style.zIndex = '1';
         currentActiveVideo = null;
     }
-    
     document.body.classList.remove('video-dark', 'video-light');
-    
     currentMedia = null;
 }
 
-// ENHANCED Text Scramble Effect with Sequential Font Animation
-class TextScramble {
-    constructor(el) {
-        this.el = el;
-        this.chars = 'ABCDEFGHIXYZ0123456789@#$%?';
-        this.update = this.update.bind(this);
-        this.isActive = false;
-        
-        // Font array for cycling - diverse fonts for better effect
-        this.abstractFonts = [
-            'Impact, fantasy',
-            'Times New Roman, serif',
-            'Courier New, monospace',
-            'Arial Black, sans-serif',
-            'Verdana, sans-serif',
-            'Georgia, serif',
-            'Comic Sans MS, cursive',
-            'Trebuchet MS, sans-serif',
-            'Lucida Console, monospace',
-            'Tahoma, sans-serif'
-        ];
-        
-        // Store original styles
-        this.originalFont = window.getComputedStyle(el).fontFamily;
-        this.originalFontSize = window.getComputedStyle(el).fontSize;
-        this.originalFontWeight = window.getComputedStyle(el).fontWeight;
-        this.originalLineHeight = window.getComputedStyle(el).lineHeight;
-        this.originalDisplay = window.getComputedStyle(el).display;
-    }
-    
-    setText(newText, showName = false) {
-        const oldText = this.el.innerText;
-        const length = Math.max(oldText.length, newText.length, 5);
-        const promise = new Promise((resolve) => this.resolve = resolve);
-        this.queue = [];
-        this.showName = showName;
-        this.targetText = newText;
-        this.nameText = 'ABOUT';
-        this.isActive = true;
-        
-        // Create queue with sequential font timing
-        for (let i = 0; i < length; i++) {
-            const from = oldText[i] || '';
-            const to = newText[i] || '';
-            const start = Math.floor(Math.random() * 30) + i * 3; // Sequential start times
-            const end = start + Math.floor(Math.random() * 40) + 20;
-            this.queue.push({ 
-                from, 
-                to, 
-                start, 
-                end,
-                char: null,
-                currentFontIndex: 0,
-                fontChangeFrame: 0
-            });
-        }
-        
-        cancelAnimationFrame(this.frameRequest);
-        this.frame = 0;
-        this.nameShown = false;
-        this.namePauseComplete = false;
-        this.nameRevealComplete = false;
-        this.update();
-        return promise;
-    }
-    
-    update() {
-        if (!this.isActive) return;
-        
-        let complete = 0;
-        const letterSpans = [];
-        
-        // Handle the "ABOUT" reveal if showName is true
-        if (this.showName && this.frame >= 20 && !this.nameRevealComplete) {
-            const nameProgress = Math.min((this.frame - 20) / 40, 1);
-            const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
-            
-            for (let i = 0; i < this.nameText.length; i++) {
-                const span = document.createElement('span');
-                span.style.display = 'inline-block';
-                span.style.fontFamily = this.originalFont;
-                span.style.fontSize = this.originalFontSize;
-                span.style.fontWeight = this.originalFontWeight;
-                span.style.lineHeight = this.originalLineHeight;
-                
-                if (i < nameCharsToShow) {
-                    span.textContent = this.nameText[i];
-                } else {
-                    // Scrambling character with font animation
-                    span.textContent = this.randomChar();
-                    const fontIndex = Math.floor((this.frame + i * 3) / 5) % this.abstractFonts.length;
-                    span.style.fontFamily = this.abstractFonts[fontIndex];
-                }
-                
-                letterSpans.push(span);
-            }
-            
-            if (nameProgress >= 1) {
-                this.nameRevealComplete = true;
-            }
-        } else if (this.nameRevealComplete && this.frame < 120 && !this.namePauseComplete) {
-            // Hold the "ABOUT" text
-            for (let i = 0; i < this.nameText.length; i++) {
-                const span = document.createElement('span');
-                span.textContent = this.nameText[i];
-                span.style.display = 'inline-block';
-                span.style.fontFamily = this.originalFont;
-                span.style.fontSize = this.originalFontSize;
-                span.style.fontWeight = this.originalFontWeight;
-                span.style.lineHeight = this.originalLineHeight;
-                letterSpans.push(span);
-            }
-            
-            if (this.frame >= 120) {
-                this.namePauseComplete = true;
-            }
-        } else if (this.namePauseComplete || !this.showName) {
-            // Main scramble animation
-            const adjustedFrame = this.showName ? this.frame - 120 : this.frame;
-            
-            for (let i = 0, n = this.queue.length; i < n; i++) {
-                let queueItem = this.queue[i];
-                let { from, to, start, end, char } = queueItem;
-                
-                const span = document.createElement('span');
-                span.style.display = 'inline-block';
-                span.style.fontSize = this.originalFontSize;
-                span.style.fontWeight = this.originalFontWeight;
-                span.style.lineHeight = this.originalLineHeight;
-                
-                if (adjustedFrame >= end) {
-                    complete++;
-                    span.textContent = to;
-                    span.style.fontFamily = this.originalFont;
-                } else if (adjustedFrame >= start) {
-                    // Scrambling phase with sequential font cycling
-                    if (!char || Math.random() < 0.28) {
-                        char = this.randomChar();
-                        queueItem.char = char;
-                    }
-                    span.textContent = char;
-                    
-                    // Sequential font cycling - each letter cycles through fonts
-                    queueItem.fontChangeFrame++;
-                    if (queueItem.fontChangeFrame >= 4) { // Change font every 4 frames
-                        queueItem.currentFontIndex = (queueItem.currentFontIndex + 1) % this.abstractFonts.length;
-                        queueItem.fontChangeFrame = 0;
-                    }
-                    
-                    span.style.fontFamily = this.abstractFonts[queueItem.currentFontIndex];
-                } else {
-                    span.textContent = from;
-                    span.style.fontFamily = this.originalFont;
-                }
-                
-                letterSpans.push(span);
-            }
-        }
-        
-        // Update DOM with letter spans
-        this.el.innerHTML = '';
-        letterSpans.forEach(span => this.el.appendChild(span));
-        
-        if (complete === this.queue.length) {
-            this.isActive = false;
-            // Clean up - set final text
-            setTimeout(() => {
-                this.el.style.fontFamily = this.originalFont;
-                this.el.textContent = this.targetText;
-            }, 100);
-            this.resolve();
-        } else {
-            this.frameRequest = requestAnimationFrame(this.update);
-            this.frame++;
-        }
-    }
-    
-    randomChar() {
-        return this.chars[Math.floor(Math.random() * this.chars.length)];
-    }
-}
-
-// Text Parting Effect
-class TextPartingEffect {
-    constructor() {
-        this.activeElements = new Map();
-    }
-
-    init() {
-        this.wrapWordsInSpans();
-        
-        const bioTexts = document.querySelectorAll('.bio-text');
-        
-        bioTexts.forEach(element => {
-            element.addEventListener('mouseenter', (e) => this.startParting(e.target));
-            element.addEventListener('mousemove', (e) => this.updateParting(e));
-            element.addEventListener('mouseleave', (e) => this.endParting(e.target));
-        });
-    }
-
-    wrapWordsInSpans() {
-        const bioTexts = document.querySelectorAll('.bio-text p, .bio-text a');
-        
-        bioTexts.forEach(element => {
-            if (element.querySelector('.word')) return;
-            
-            const textNodes = this.getTextNodes(element);
-            
-            textNodes.forEach(node => {
-                const words = node.textContent.split(/(\s+)/);
-                const fragment = document.createDocumentFragment();
-                
-                words.forEach(word => {
-                    if (word.trim() !== '') {
-                        const span = document.createElement('span');
-                        span.className = 'word';
-                        span.textContent = word;
-                        fragment.appendChild(span);
-                    } else {
-                        fragment.appendChild(document.createTextNode(word));
-                    }
-                });
-                
-                node.parentNode.replaceChild(fragment, node);
-            });
-        }
-    }
-
-    getTextNodes(element) {
-        const textNodes = [];
-        const walker = document.createTreeWalker(
-            element,
-            NodeFilter.SHOW_TEXT,
-            null,
-            false
-        );
-        
-        let node;
-        while (node = walker.nextNode()) {
-            if (node.textContent.trim() !== '') {
-                textNodes.push(node);
-            }
-        }
-        
-        return textNodes;
-    }
-
-    startParting(element) {
-        if (!this.activeElements.has(element)) {
-            const words = element.querySelectorAll('.word');
-            const wordData = new Map();
-            
-            words.forEach(word => {
-                const rect = word.getBoundingClientRect();
-                wordData.set(word, {
-                    rect: rect,
-                    originalTransform: word.style.transform || '',
-                    isActive: true
-                });
-            });
-            
-            this.activeElements.set(element, {
-                words: wordData,
-                isActive: true
-            });
-        }
-    }
-
-    updateParting(event) {
-        const element = event.target.closest('.bio-text');
-        const data = this.activeElements.get(element);
-        
-        if (!data || !data.isActive) return;
-
-        const cursorX = event.clientX;
-        const cursorY = event.clientY;
-        
-        data.words.forEach((wordData, word) => {
-            const rect = word.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const deltaX = cursorX - centerX;
-            const deltaY = cursorY - centerY;
-            
-            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const maxInfluence = 150;
-            
-            if (distance < maxInfluence) {
-                const strength = (1 - distance / maxInfluence) * 25;
-                const angle = Math.atan2(deltaY, deltaX);
-                const pushX = -Math.cos(angle) * strength;
-                const pushY = -Math.sin(angle) * strength;
-                
-                word.style.transform = `translate(${pushX}px, ${pushY}px)`;
-                word.style.transition = 'transform 0.1s ease-out';
-            } else {
-                word.style.transform = wordData.originalTransform;
-                word.style.transition = 'transform 0.2s ease-out';
-            }
-        });
-    }
-
-    endParting(element) {
-        const data = this.activeElements.get(element);
-        
-        if (data) {
-            data.isActive = false;
-            
-            data.words.forEach((wordData, word) => {
-                word.style.transition = 'transform 0.3s ease-out';
-                word.style.transform = wordData.originalTransform;
-            });
-            
-            setTimeout(() => {
-                if (!data.isActive) {
-                    this.activeElements.delete(element);
-                }
-            }, 300);
-        }
-    }
-}
-
-// Font Flip Effect
+// Font Flip Effect (no letter scramble)
 class FontFlip {
     constructor(el) {
         this.el = el;
@@ -648,6 +269,120 @@ class FontFlip {
     }
 }
 
+// Text Parting Effect (unchanged)
+class TextPartingEffect {
+    constructor() {
+        this.activeElements = new Map();
+    }
+    init() {
+        this.wrapWordsInSpans();
+        const bioTexts = document.querySelectorAll('.bio-text');
+        bioTexts.forEach(element => {
+            element.addEventListener('mouseenter', (e) => this.startParting(e.target));
+            element.addEventListener('mousemove', (e) => this.updateParting(e));
+            element.addEventListener('mouseleave', (e) => this.endParting(e.target));
+        });
+    }
+    wrapWordsInSpans() {
+        const bioTexts = document.querySelectorAll('.bio-text p, .bio-text a');
+        bioTexts.forEach(element => {
+            if (element.querySelector('.word')) return;
+            const textNodes = this.getTextNodes(element);
+            textNodes.forEach(node => {
+                const words = node.textContent.split(/(\s+)/);
+                const fragment = document.createDocumentFragment();
+                words.forEach(word => {
+                    if (word.trim() !== '') {
+                        const span = document.createElement('span');
+                        span.className = 'word';
+                        span.textContent = word;
+                        fragment.appendChild(span);
+                    } else {
+                        fragment.appendChild(document.createTextNode(word));
+                    }
+                });
+                node.parentNode.replaceChild(fragment, node);
+            });
+        });
+    }
+    getTextNodes(element) {
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+            element,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+        );
+        let node;
+        while (node = walker.nextNode()) {
+            if (node.textContent.trim() !== '') {
+                textNodes.push(node);
+            }
+        }
+        return textNodes;
+    }
+    startParting(element) {
+        if (!this.activeElements.has(element)) {
+            const words = element.querySelectorAll('.word');
+            const wordData = new Map();
+            words.forEach(word => {
+                const rect = word.getBoundingClientRect();
+                wordData.set(word, {
+                    rect: rect,
+                    originalTransform: word.style.transform || '',
+                    isActive: true
+                });
+            });
+            this.activeElements.set(element, {
+                words: wordData,
+                isActive: true
+            });
+        }
+    }
+    updateParting(event) {
+        const element = event.target.closest('.bio-text');
+        const data = this.activeElements.get(element);
+        if (!data || !data.isActive) return;
+        const cursorX = event.clientX;
+        const cursorY = event.clientY;
+        data.words.forEach((wordData, word) => {
+            const rect = word.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const deltaX = cursorX - centerX;
+            const deltaY = cursorY - centerY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const maxInfluence = 150;
+            if (distance < maxInfluence) {
+                const strength = (1 - distance / maxInfluence) * 25;
+                const angle = Math.atan2(deltaY, deltaX);
+                const pushX = -Math.cos(angle) * strength;
+                const pushY = -Math.sin(angle) * strength;
+                word.style.transform = `translate(${pushX}px, ${pushY}px)`;
+                word.style.transition = 'transform 0.1s ease-out';
+            } else {
+                word.style.transform = wordData.originalTransform;
+                word.style.transition = 'transform 0.2s ease-out';
+            }
+        });
+    }
+    endParting(element) {
+        const data = this.activeElements.get(element);
+        if (data) {
+            data.isActive = false;
+            data.words.forEach((wordData, word) => {
+                word.style.transition = 'transform 0.3s ease-out';
+                word.style.transform = wordData.originalTransform;
+            });
+            setTimeout(() => {
+                if (!data.isActive) {
+                    this.activeElements.delete(element);
+                }
+            }, 300);
+        }
+    }
+}
+
 // Project hover handling
 function handleProjectHover(link, isEntering) {
     if (isEntering) {
@@ -655,18 +390,14 @@ function handleProjectHover(link, isEntering) {
             clearTimeout(hideMediaTimeout);
             hideMediaTimeout = null;
         }
-        
         isHoveringProject = true;
         const project = link.getAttribute('data-project');
         const projectInfo = link.getAttribute('data-info');
-        
         activeProject = project;
         projectsContainer.classList.add('hovering');
         document.body.classList.add('project-hovering');
-        
         dateText.textContent = projectInfo;
         dateText.classList.add('project-active');
-        
         const mediaInfo = projectMedia[project];
         const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
         if (url && url.includes('.mp4')) {
@@ -679,20 +410,16 @@ function handleProjectHover(link, isEntering) {
         }
     } else {
         isHoveringProject = false;
-        
         hideMediaTimeout = setTimeout(() => {
             if (!isHoveringProject) {
                 activeProject = null;
                 projectsContainer.classList.remove('hovering');
                 document.body.classList.remove('project-hovering');
-                
                 dateText.textContent = 'JUNE 2025';
                 dateText.classList.remove('project-active');
-                
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
                 });
-                
                 hideAllMedia();
             }
         }, 50);
@@ -704,20 +431,12 @@ const textParting = new TextPartingEffect();
 const aboutFlip = new FontFlip(aboutToggle);
 let isAboutOpen = false;
 
-// FIXED About toggle functionality
+// About toggle functionality (no direct style.display, just class)
 aboutToggle.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
-
-    // Fallback: force display block/none if transition doesn't work
-    if (bioContent.classList.contains('active')) {
-        bioContent.style.display = 'block';
-    } else {
-        bioContent.style.display = 'none';
-    }
-
     if (isAboutOpen) {
         aboutFlip.setText('HIDE');
         setTimeout(() => {
@@ -740,14 +459,12 @@ aboutToggle.addEventListener('mouseenter', function() {
 // Project link events
 if (!isTouchDevice) {
     projectLinks.forEach(link => {
-        link.addEventListener('mouseenter', function(e) {
+        link.addEventListener('mouseenter', function() {
             handleProjectHover(this, true);
         });
-        
-        link.addEventListener('mouseleave', function(e) {
+        link.addEventListener('mouseleave', function() {
             handleProjectHover(this, false);
         });
-        
         link.addEventListener('click', function(e) {
             e.preventDefault();
             window.location.href = this.href;
@@ -755,29 +472,22 @@ if (!isTouchDevice) {
     });
 } else {
     let lastTouchedLink = null;
-    
     projectLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            
             const project = this.getAttribute('data-project');
             const projectInfo = this.getAttribute('data-info');
-            
             if (lastTouchedLink === this) {
                 window.location.href = this.href;
                 return;
             }
-            
             projectLinks.forEach(l => l.classList.remove('touch-active'));
-            
             lastTouchedLink = this;
             this.classList.add('touch-active');
             projectsContainer.classList.add('touch-hovering');
             document.body.classList.add('project-hovering');
-            
             dateText.textContent = projectInfo;
             dateText.classList.add('project-active');
-            
             const mediaInfo = projectMedia[project];
             const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
             if (url && url.includes('.mp4')) {
@@ -790,7 +500,6 @@ if (!isTouchDevice) {
             }
         });
     });
-    
     document.addEventListener('touchstart', function(e) {
         if (!e.target.closest('.project-link')) {
             setTimeout(() => {
@@ -799,11 +508,9 @@ if (!isTouchDevice) {
                 document.body.classList.remove('project-hovering');
                 dateText.textContent = 'JUNE 2025';
                 dateText.classList.remove('project-active');
-                
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
                 });
-                
                 hideAllMedia();
                 lastTouchedLink = null;
             }, 50);
@@ -818,14 +525,12 @@ dateText.addEventListener('mouseenter', function() {
             clearTimeout(hideMediaTimeout);
             hideMediaTimeout = null;
         }
-        
         document.body.classList.add('june-hover');
         if (fullscreenBg.classList.contains('active')) {
             hideAllMedia();
         }
     }
 });
-
 dateText.addEventListener('mouseleave', function() {
     if (!dateText.classList.contains('project-active')) {
         document.body.classList.remove('june-hover');
@@ -837,14 +542,12 @@ bioLinks.forEach(link => {
     link.addEventListener('mouseenter', function() {
         const bioType = this.getAttribute('data-bio');
         const imageUrl = bioImages[bioType];
-        
         if (imageUrl) {
             bioPreviewImage.src = imageUrl;
             bioPreviewImage.alt = this.textContent;
             bioPreview.classList.add('active');
         }
     });
-    
     link.addEventListener('mouseleave', function() {
         bioPreview.classList.remove('active');
     });
@@ -852,17 +555,13 @@ bioLinks.forEach(link => {
 
 // Initialize everything on DOM load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing portfolio...');
-    
     // Make sure elements exist
     if (!aboutToggle || !bioContent) {
         console.error('Required elements not found!');
         return;
     }
-    
     // Initialize video pool
     initializeVideoPool();
-    
     // Attempt to start videos after user interaction
     document.addEventListener('mousemove', () => {
         Object.values(videoPool).forEach(video => {
@@ -874,7 +573,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { once: true });
-    
     // Periodically re-analyze brightness for playing videos
     setInterval(() => {
         if (currentActiveVideo && activeProject) {
