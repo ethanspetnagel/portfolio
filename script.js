@@ -3,7 +3,7 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: {
-            left: '38%',  // Position so "SLUG" text in video aligns with top-left
+            left: '35%',  // Position so "SLUG" text in video aligns with top-left
             top: '30%'
         }
     }, 
@@ -11,14 +11,14 @@ const projectMedia = {
         url: './church video bg.mp4',
         position: {
             left: '50%',  // Right side
-            top: '1%'
+            top: '0%'
         }
     },
     'talamel': {
         url: 'talamel.mp4',
         position: {
-            left: '1%',  // Left side
-            top: '1%'
+            left: '0%',  // Left side
+            top: '0%'
         }
     }, 
     'fox-and-lion': { 
@@ -32,22 +32,22 @@ const projectMedia = {
     'cardioscape': { 
         url: './cardio.mp4',
         position: {
-            left: '0%',  // Center-left
+            left: '3%',  // Center-left
             top: '22%'
         }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
         position: {
-            left: '65%',  // Right side
+            left: '66%',  // Right side
             top: '37%'
         }
     },
     'green-lake-law': {
         url: './greenlake.mp4',
         position: {
-            left: '1%',  // Center
-            top: '55%'
+            left: '0%',  // Center
+            top: '36%'
         }
     }, 
     'june-2025': ''

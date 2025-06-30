@@ -250,11 +250,11 @@ body.june-hover .contact-links a {
   line-height: 1;
   padding: 0;
   letter-spacing: 0.02em;
-  color: #2d2f32 !important; /* Always keep default gray color */
+  color: #2d2f32; /* Always keep default gray color */
 }
 
 .about-toggle:hover {
-  color: #ffffff;
+  color: #ffffff !important; /* White on hover */
 }
 
 /* Bio section elements maintain default colors */
