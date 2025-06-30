@@ -3,28 +3,28 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: {
-            left: '12%',  // Position so "SLUG" text in video aligns with top-left
+            left: '12%',
             top: '0%'
         }
     }, 
     'church': {
         url: './church video bg.mp4',
         position: {
-            left: '34.5%',  // Right side
+            left: '34.5%',
             top: '39%'
         }
     },
     'talamel': {
         url: './talamel1.mp4',
         position: {
-            left: '16%',  // Left side
+            left: '16%',
             top: '7%'
         }
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
         position: {
-            left: '45%',  // Center-right
+            left: '45%',
             top: '15%'
         }
     }, 
@@ -32,21 +32,21 @@ const projectMedia = {
     'cardioscape': { 
         url: './cardio.mp4',
         position: {
-            left: '5%',  // Center-left
+            left: '5%',
             top: '22%'
         }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
         position: {
-            left: '50%',  // Right side
+            left: '50%',
             top: '30.5%'
         }
     },
     'green-lake-law': {
         url: './greenlake.mp4',
         position: {
-            left: '0%',  // Center
+            left: '0%',
             top: '20%'
         }
     }, 
@@ -79,9 +79,9 @@ let activeProject = null;
 let videoPool = {};
 let currentActiveVideo = null;
 let isTransitioning = false;
-let videoBrightness = {}; // Store brightness values for each video
-let hideMediaTimeout = null; // Timeout for hiding media
-let isHoveringProject = false; // Track if hovering over any project
+let videoBrightness = {};
+let hideMediaTimeout = null;
+let isHoveringProject = false;
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -91,11 +91,9 @@ function analyzeVideoBrightness(video, project) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     
-    // Sample video at a smaller size for performance
     canvas.width = 160;
     canvas.height = 90;
     
-    // Wait for video to have enough data
     if (video.readyState >= 2) {
         try {
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -105,24 +103,21 @@ function analyzeVideoBrightness(video, project) {
             let brightness = 0;
             let pixelCount = 0;
             
-            // Sample every 10th pixel for performance
-            for (let i = 0; i < data.length; i += 40) { // 4 channels * 10 pixels
+            for (let i = 0; i < data.length; i += 40) {
                 const r = data[i];
                 const g = data[i + 1];
                 const b = data[i + 2];
-                // Calculate perceived brightness
                 const pixelBrightness = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
                 brightness += pixelBrightness;
                 pixelCount++;
             }
             
             const avgBrightness = brightness / pixelCount;
-            videoBrightness[project] = avgBrightness < 0.5; // true if dark, false if light
+            videoBrightness[project] = avgBrightness < 0.5;
             
             console.log(`${project} brightness:`, avgBrightness, 'isDark:', avgBrightness < 0.5);
         } catch (e) {
             console.log('Could not analyze video brightness:', e);
-            // Default to dark if analysis fails
             videoBrightness[project] = true;
         }
     }
@@ -130,7 +125,6 @@ function analyzeVideoBrightness(video, project) {
 
 // Initialize video pool for instant playback
 function initializeVideoPool() {
-    // Create video elements for each project
     Object.entries(projectMedia).forEach(([project, mediaInfo]) => {
         const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
         if (url && url.includes('.mp4')) {
@@ -144,32 +138,25 @@ function initializeVideoPool() {
             video.className = 'bg-video';
             video.dataset.project = project;
             
-            // Start with videos hidden
             video.style.opacity = '0';
             video.style.visibility = 'hidden';
-            video.style.zIndex = '1'; // Default z-index
+            video.style.zIndex = '1';
             
-            // Add to DOM
             fullscreenBg.appendChild(video);
             videoPool[project] = video;
             
-            // Force load
             video.load();
             
-            // Analyze brightness when video loads
             video.addEventListener('loadeddata', () => {
-                // Play and immediately pause to have frame ready
                 video.play().then(() => {
                     video.pause();
                     video.currentTime = 0;
-                    // Analyze brightness after first frame is ready
                     setTimeout(() => {
                         analyzeVideoBrightness(video, project);
                     }, 100);
                 }).catch(() => {});
             });
             
-            // Re-analyze if video seeks (in case brightness changes)
             video.addEventListener('seeked', () => {
                 analyzeVideoBrightness(video, project);
             });
@@ -179,7 +166,6 @@ function initializeVideoPool() {
 
 // Update text colors based on video brightness
 function updateTextColors(project) {
-    // Get brightness for this video (default to dark if not analyzed yet)
     const isDark = videoBrightness[project] !== undefined ? videoBrightness[project] : true;
     
     if (isDark) {
@@ -203,35 +189,28 @@ function showVideo(project) {
     
     isTransitioning = true;
     
-    // Don't hide current video yet - keep it playing until new one is ready
     const previousVideo = currentActiveVideo;
     
-    // Set z-index for layering
     if (previousVideo) {
         previousVideo.style.zIndex = '1';
     }
-    video.style.zIndex = '2'; // New video on top
+    video.style.zIndex = '2';
     
-    // Apply custom position
     video.style.left = mediaInfo.position.left;
     video.style.top = mediaInfo.position.top;
     
-    // Show new video instantly
     video.style.visibility = 'visible';
-    video.currentTime = 0; // Reset to start
+    video.currentTime = 0;
     
-    // Start playing immediately
     const playPromise = video.play();
     
     if (playPromise !== undefined) {
         playPromise.then(() => {
-            // Once playing, fade in new video
             requestAnimationFrame(() => {
                 video.style.opacity = '1';
                 video.classList.add('active');
                 fullscreenBg.classList.add('active');
                 
-                // After new video is visible, hide the previous one
                 setTimeout(() => {
                     if (previousVideo && previousVideo !== video) {
                         previousVideo.style.opacity = '0';
@@ -240,21 +219,17 @@ function showVideo(project) {
                         previousVideo.classList.remove('active');
                         previousVideo.style.zIndex = '1';
                     }
-                }, 100); // Small delay to ensure smooth transition
+                }, 100);
                 
                 isTransitioning = false;
-                
-                // Update text colors based on video brightness
                 updateTextColors(project);
             });
         }).catch(error => {
             console.log('Play failed:', error);
-            // Still show the video even if autoplay fails
             video.style.opacity = '1';
             video.classList.add('active');
             fullscreenBg.classList.add('active');
             
-            // Hide previous video
             if (previousVideo && previousVideo !== video) {
                 previousVideo.style.opacity = '0';
                 previousVideo.style.visibility = 'hidden';
@@ -264,8 +239,6 @@ function showVideo(project) {
             }
             
             isTransitioning = false;
-            
-            // Update text colors
             updateTextColors(project);
         });
     }
@@ -285,17 +258,16 @@ function hideAllMedia() {
         currentActiveVideo.style.visibility = 'hidden';
         currentActiveVideo.pause();
         currentActiveVideo.classList.remove('active');
-        currentActiveVideo.style.zIndex = '1'; // Reset z-index
+        currentActiveVideo.style.zIndex = '1';
         currentActiveVideo = null;
     }
     
-    // Remove video color classes
     document.body.classList.remove('video-dark', 'video-light');
     
     currentMedia = null;
 }
 
-// Text scramble effect - ENHANCED with font changes
+// ENHANCED Text Scramble Effect with Sequential Font Animation
 class TextScramble {
     constructor(el) {
         this.el = el;
@@ -303,23 +275,26 @@ class TextScramble {
         this.update = this.update.bind(this);
         this.isActive = false;
         
-        // Font array for cycling
+        // Font array for cycling - diverse fonts for better effect
         this.abstractFonts = [
-            '"Impact", fantasy',
-            '"Times New Roman", serif',
-            '"Courier New", monospace',
-            '"Comic Sans MS", cursive',
-            '"Papyrus", fantasy',
-            '"Old English Text MT", fantasy',
-            '"Brush Script MT", cursive',
-            '"Lucida Console", monospace',
-            '"Georgia", serif',
-            '"Trebuchet MS", sans-serif'
+            'Impact, fantasy',
+            'Times New Roman, serif',
+            'Courier New, monospace',
+            'Arial Black, sans-serif',
+            'Verdana, sans-serif',
+            'Georgia, serif',
+            'Comic Sans MS, cursive',
+            'Trebuchet MS, sans-serif',
+            'Lucida Console, monospace',
+            'Tahoma, sans-serif'
         ];
-        this.originalFont = getComputedStyle(el).fontFamily;
-        this.originalFontSize = getComputedStyle(el).fontSize;
-        this.originalFontWeight = getComputedStyle(el).fontWeight;
-        this.originalLineHeight = getComputedStyle(el).lineHeight;
+        
+        // Store original styles
+        this.originalFont = window.getComputedStyle(el).fontFamily;
+        this.originalFontSize = window.getComputedStyle(el).fontSize;
+        this.originalFontWeight = window.getComputedStyle(el).fontWeight;
+        this.originalLineHeight = window.getComputedStyle(el).lineHeight;
+        this.originalDisplay = window.getComputedStyle(el).display;
     }
     
     setText(newText, showName = false) {
@@ -332,19 +307,20 @@ class TextScramble {
         this.nameText = 'ABOUT';
         this.isActive = true;
         
-        // Enhanced: add font cycling data
+        // Create queue with sequential font timing
         for (let i = 0; i < length; i++) {
             const from = oldText[i] || '';
             const to = newText[i] || '';
-            const start = Math.floor(Math.random() * 40);
-            const end = start + Math.floor(Math.random() * 60);
+            const start = Math.floor(Math.random() * 30) + i * 3; // Sequential start times
+            const end = start + Math.floor(Math.random() * 40) + 20;
             this.queue.push({ 
                 from, 
                 to, 
                 start, 
                 end,
-                fontIndex: 0,
-                fontFrameCount: 0
+                char: null,
+                currentFontIndex: 0,
+                fontChangeFrame: 0
             });
         }
         
@@ -360,135 +336,112 @@ class TextScramble {
     update() {
         if (!this.isActive) return;
         
-        let output = '';
         let complete = 0;
-        const useSpans = true; // Always use spans for font control
         const letterSpans = [];
         
+        // Handle the "ABOUT" reveal if showName is true
         if (this.showName && this.frame >= 20 && !this.nameRevealComplete) {
             const nameProgress = Math.min((this.frame - 20) / 40, 1);
             const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
             
-            if (useSpans) {
-                for (let i = 0; i < this.nameText.length; i++) {
-                    const char = i < nameCharsToShow ? this.nameText[i] : this.randomChar();
-                    const isScrambling = i >= nameCharsToShow;
-                    
-                    const span = document.createElement('span');
-                    span.textContent = char;
-                    span.style.fontFamily = isScrambling ? this.getRandomFont() : this.originalFont;
-                    span.style.display = 'inline-block';
-                    span.style.fontSize = this.originalFontSize;
-                    span.style.fontWeight = this.originalFontWeight;
-                    span.style.lineHeight = this.originalLineHeight;
-                    span.style.verticalAlign = 'baseline';
-                    span.style.minWidth = '0.5em';
-                    letterSpans.push(span);
+            for (let i = 0; i < this.nameText.length; i++) {
+                const span = document.createElement('span');
+                span.style.display = 'inline-block';
+                span.style.fontFamily = this.originalFont;
+                span.style.fontSize = this.originalFontSize;
+                span.style.fontWeight = this.originalFontWeight;
+                span.style.lineHeight = this.originalLineHeight;
+                
+                if (i < nameCharsToShow) {
+                    span.textContent = this.nameText[i];
+                } else {
+                    // Scrambling character with font animation
+                    span.textContent = this.randomChar();
+                    const fontIndex = Math.floor((this.frame + i * 3) / 5) % this.abstractFonts.length;
+                    span.style.fontFamily = this.abstractFonts[fontIndex];
                 }
-            } else {
-                for (let i = 0; i < this.nameText.length; i++) {
-                    if (i < nameCharsToShow) {
-                        output += this.nameText[i];
-                    } else {
-                        output += this.randomChar();
-                    }
-                }
+                
+                letterSpans.push(span);
             }
             
             if (nameProgress >= 1) {
                 this.nameRevealComplete = true;
             }
         } else if (this.nameRevealComplete && this.frame < 120 && !this.namePauseComplete) {
-            if (useSpans) {
-                for (let i = 0; i < this.nameText.length; i++) {
-                    const span = document.createElement('span');
-                    span.textContent = this.nameText[i];
-                    span.style.fontFamily = this.originalFont;
-                    span.style.display = 'inline-block';
-                    span.style.fontSize = this.originalFontSize;
-                    span.style.fontWeight = this.originalFontWeight;
-                    span.style.lineHeight = this.originalLineHeight;
-                    span.style.verticalAlign = 'baseline';
-                    letterSpans.push(span);
-                }
-            } else {
-                this.el.textContent = this.nameText;
+            // Hold the "ABOUT" text
+            for (let i = 0; i < this.nameText.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = this.nameText[i];
+                span.style.display = 'inline-block';
+                span.style.fontFamily = this.originalFont;
+                span.style.fontSize = this.originalFontSize;
+                span.style.fontWeight = this.originalFontWeight;
+                span.style.lineHeight = this.originalLineHeight;
+                letterSpans.push(span);
             }
             
             if (this.frame >= 120) {
                 this.namePauseComplete = true;
             }
         } else if (this.namePauseComplete || !this.showName) {
+            // Main scramble animation
             const adjustedFrame = this.showName ? this.frame - 120 : this.frame;
             
             for (let i = 0, n = this.queue.length; i < n; i++) {
                 let queueItem = this.queue[i];
                 let { from, to, start, end, char } = queueItem;
-                let currentChar = '';
-                let currentFont = this.originalFont;
+                
+                const span = document.createElement('span');
+                span.style.display = 'inline-block';
+                span.style.fontSize = this.originalFontSize;
+                span.style.fontWeight = this.originalFontWeight;
+                span.style.lineHeight = this.originalLineHeight;
                 
                 if (adjustedFrame >= end) {
                     complete++;
-                    currentChar = to;
+                    span.textContent = to;
+                    span.style.fontFamily = this.originalFont;
                 } else if (adjustedFrame >= start) {
+                    // Scrambling phase with sequential font cycling
                     if (!char || Math.random() < 0.28) {
                         char = this.randomChar();
                         queueItem.char = char;
                     }
-                    currentChar = char;
+                    span.textContent = char;
                     
-                    // Font cycling: change font every 9 frames (0.15 seconds)
-                    queueItem.fontFrameCount++;
-                    if (queueItem.fontFrameCount >= 9) {
-                        queueItem.fontIndex = (queueItem.fontIndex + 1) % this.abstractFonts.length;
-                        queueItem.fontFrameCount = 0;
+                    // Sequential font cycling - each letter cycles through fonts
+                    queueItem.fontChangeFrame++;
+                    if (queueItem.fontChangeFrame >= 4) { // Change font every 4 frames
+                        queueItem.currentFontIndex = (queueItem.currentFontIndex + 1) % this.abstractFonts.length;
+                        queueItem.fontChangeFrame = 0;
                     }
-                    currentFont = this.abstractFonts[queueItem.fontIndex];
+                    
+                    span.style.fontFamily = this.abstractFonts[queueItem.currentFontIndex];
                 } else {
-                    currentChar = from;
+                    span.textContent = from;
+                    span.style.fontFamily = this.originalFont;
                 }
                 
-                if (useSpans) {
-                    const span = document.createElement('span');
-                    span.textContent = currentChar;
-                    span.style.fontFamily = currentFont;
-                    span.style.display = 'inline-block';
-                    span.style.fontSize = this.originalFontSize;
-                    span.style.fontWeight = this.originalFontWeight;
-                    span.style.lineHeight = this.originalLineHeight;
-                    span.style.verticalAlign = 'baseline';
-                    span.style.minWidth = '0.5em';
-                    letterSpans.push(span);
-                } else {
-                    output += currentChar;
-                }
+                letterSpans.push(span);
             }
         }
         
-        // Update DOM
-        if (useSpans && letterSpans.length > 0) {
-            this.el.innerHTML = '';
-            letterSpans.forEach(span => this.el.appendChild(span));
-        } else if (!useSpans) {
-            this.el.textContent = output;
-        }
+        // Update DOM with letter spans
+        this.el.innerHTML = '';
+        letterSpans.forEach(span => this.el.appendChild(span));
         
         if (complete === this.queue.length) {
             this.isActive = false;
-            // Reset to clean state
+            // Clean up - set final text
             setTimeout(() => {
-                this.el.textContent = this.targetText || this.el.textContent;
                 this.el.style.fontFamily = this.originalFont;
-            }, 500);
+                this.el.textContent = this.targetText;
+            }, 100);
             this.resolve();
         } else {
             this.frameRequest = requestAnimationFrame(this.update);
             this.frame++;
         }
-    }
-    
-    getRandomFont() {
-        return this.abstractFonts[Math.floor(Math.random() * this.abstractFonts.length)];
     }
     
     randomChar() {
@@ -640,7 +593,6 @@ class TextPartingEffect {
 // Project hover handling
 function handleProjectHover(link, isEntering) {
     if (isEntering) {
-        // Clear any pending hide timeout
         if (hideMediaTimeout) {
             clearTimeout(hideMediaTimeout);
             hideMediaTimeout = null;
@@ -657,13 +609,11 @@ function handleProjectHover(link, isEntering) {
         dateText.textContent = projectInfo;
         dateText.classList.add('project-active');
         
-        // Show video for this project
         const mediaInfo = projectMedia[project];
         const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
         if (url && url.includes('.mp4')) {
             showVideo(project);
         } else {
-            // Reset all videos if no video for this project
             Object.values(videoPool).forEach(v => {
                 v.style.zIndex = '1';
             });
@@ -672,9 +622,7 @@ function handleProjectHover(link, isEntering) {
     } else {
         isHoveringProject = false;
         
-        // Add a small delay before hiding to check if hovering another project
         hideMediaTimeout = setTimeout(() => {
-            // Only hide if not hovering any project
             if (!isHoveringProject) {
                 activeProject = null;
                 projectsContainer.classList.remove('hovering');
@@ -683,14 +631,13 @@ function handleProjectHover(link, isEntering) {
                 dateText.textContent = 'JUNE 2025';
                 dateText.classList.remove('project-active');
                 
-                // Reset all video z-indices before hiding
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
                 });
                 
                 hideAllMedia();
             }
-        }, 50); // 50ms delay to allow for transitions between links
+        }, 50);
     }
 }
 
@@ -699,26 +646,37 @@ const textParting = new TextPartingEffect();
 const aboutScramble = new TextScramble(aboutToggle);
 let isAboutOpen = false;
 
-// About toggle functionality - EXACTLY like your original
-aboutToggle.addEventListener('click', function() {
+// FIXED About toggle functionality
+aboutToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Toggle the bio content
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
     
+    // Update button text with animation
     if (isAboutOpen) {
         aboutScramble.setText('HIDE', true);
+        // Initialize text parting effect after content is visible
         setTimeout(() => {
             textParting.init();
-        }, 100);
+        }, 300);
     } else {
-        aboutScramble.setText('ABOUT');
+        aboutScramble.setText('ABOUT', false);
     }
+    
+    console.log('About clicked, isOpen:', isAboutOpen); // Debug log
 });
 
+// About toggle hover effect
 aboutToggle.addEventListener('mouseenter', function() {
-    if (!isAboutOpen) {
-        aboutScramble.setText('ABOUT');
-    } else {
-        aboutScramble.setText('HIDE');
+    if (!aboutScramble.isActive) { // Only animate if not already animating
+        if (!isAboutOpen) {
+            aboutScramble.setText('ABOUT');
+        } else {
+            aboutScramble.setText('HIDE');
+        }
     }
 });
 
@@ -733,7 +691,6 @@ if (!isTouchDevice) {
             handleProjectHover(this, false);
         });
         
-        // Simple navigation without transitions
         link.addEventListener('click', function(e) {
             e.preventDefault();
             window.location.href = this.href;
@@ -769,7 +726,6 @@ if (!isTouchDevice) {
             if (url && url.includes('.mp4')) {
                 showVideo(project);
             } else {
-                // Reset all videos if no video for this project
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
                 });
@@ -780,7 +736,6 @@ if (!isTouchDevice) {
     
     document.addEventListener('touchstart', function(e) {
         if (!e.target.closest('.project-link')) {
-            // Add delay for touch devices too
             setTimeout(() => {
                 projectLinks.forEach(l => l.classList.remove('touch-active'));
                 projectsContainer.classList.remove('touch-hovering');
@@ -788,7 +743,6 @@ if (!isTouchDevice) {
                 dateText.textContent = 'JUNE 2025';
                 dateText.classList.remove('project-active');
                 
-                // Reset all video z-indices
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
                 });
@@ -803,7 +757,6 @@ if (!isTouchDevice) {
 // Date text hover
 dateText.addEventListener('mouseenter', function() {
     if (!dateText.classList.contains('project-active')) {
-        // Clear any pending hide timeout
         if (hideMediaTimeout) {
             clearTimeout(hideMediaTimeout);
             hideMediaTimeout = null;
@@ -842,9 +795,15 @@ bioLinks.forEach(link => {
 
 // Initialize everything on DOM load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing video system...');
+    console.log('Initializing portfolio...');
     
-    // Initialize video pool immediately
+    // Make sure elements exist
+    if (!aboutToggle || !bioContent) {
+        console.error('Required elements not found!');
+        return;
+    }
+    
+    // Initialize video pool
     initializeVideoPool();
     
     // Attempt to start videos after user interaction
@@ -865,7 +824,7 @@ document.addEventListener('DOMContentLoaded', function() {
             analyzeVideoBrightness(currentActiveVideo, activeProject);
             updateTextColors(activeProject);
         }
-    }, 1000); // Check every second
+    }, 1000);
 });
 
 // Clean up on page unload
