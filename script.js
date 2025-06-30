@@ -15,7 +15,7 @@ const projectMedia = {
         }
     },
     'talamel': {
-        url: 'talamel.mp4',
+        url: './talamel.mp4',
         position: {
             left: '16%',  // Left side
             top: '7%'
