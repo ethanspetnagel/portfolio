@@ -347,31 +347,41 @@ class TextScramble {
         return promise;
     }
     
+    getRandomFont() {
+        return this.abstractFonts[Math.floor(Math.random() * this.abstractFonts.length)];
+    }
+    
     update() {
         let output = '';
         let complete = 0;
-        let isScrambling = false;
+        const letterSpans = [];
         
         if (this.showName && this.frame >= 20 && !this.nameRevealComplete) {
             const nameProgress = Math.min((this.frame - 20) / 40, 1);
             const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
             
             for (let i = 0; i < this.nameText.length; i++) {
-                if (i < nameCharsToShow) {
-                    output += this.nameText[i];
-                } else {
-                    output += this.randomChar();
-                    isScrambling = true;
-                }
+                const char = i < nameCharsToShow ? this.nameText[i] : this.randomChar();
+                const isScrambling = i >= nameCharsToShow;
+                
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.fontFamily = isScrambling ? this.getRandomFont() : this.originalFont;
+                span.style.transition = 'font-family 0.1s ease';
+                letterSpans.push(span);
             }
-            
-            this.el.textContent = output;
             
             if (nameProgress >= 1) {
                 this.nameRevealComplete = true;
             }
         } else if (this.nameRevealComplete && this.frame < 120 && !this.namePauseComplete) {
-            this.el.textContent = this.nameText;
+            for (let i = 0; i < this.nameText.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = this.nameText[i];
+                span.style.fontFamily = this.originalFont;
+                letterSpans.push(span);
+            }
+            
             if (this.frame >= 120) {
                 this.namePauseComplete = true;
             }
@@ -380,37 +390,41 @@ class TextScramble {
             
             for (let i = 0, n = this.queue.length; i < n; i++) {
                 let { from, to, start, end, char } = this.queue[i];
+                let currentChar = '';
+                let isCharScrambling = false;
                 
                 if (adjustedFrame >= end) {
                     complete++;
-                    output += to;
+                    currentChar = to;
                 } else if (adjustedFrame >= start) {
                     if (!char || Math.random() < 0.28) {
                         char = this.randomChar();
                         this.queue[i].char = char;
                     }
-                    output += char;
-                    isScrambling = true;
+                    currentChar = char;
+                    isCharScrambling = true;
                 } else {
-                    output += from;
+                    currentChar = from;
                 }
+                
+                const span = document.createElement('span');
+                span.textContent = currentChar;
+                span.style.fontFamily = isCharScrambling ? this.getRandomFont() : this.originalFont;
+                span.style.transition = 'font-family 0.1s ease';
+                letterSpans.push(span);
             }
-            
-            this.el.textContent = output;
         }
         
-        // Apply font changes during scrambling
-        if (isScrambling && Math.random() < 0.3) {
-            const randomFont = this.abstractFonts[Math.floor(Math.random() * this.abstractFonts.length)];
-            this.el.style.fontFamily = randomFont;
-            this.el.style.transition = 'font-family 0.1s ease';
-        } else if (!isScrambling) {
-            this.el.style.fontFamily = this.originalFont;
-            this.el.style.transition = 'font-family 0.2s ease';
-        }
+        // Clear element and add all letter spans
+        this.el.innerHTML = '';
+        letterSpans.forEach(span => this.el.appendChild(span));
         
         if (complete === this.queue.length) {
-            this.el.style.fontFamily = this.originalFont;
+            // Ensure all letters return to original font when complete
+            const finalSpans = this.el.querySelectorAll('span');
+            finalSpans.forEach(span => {
+                span.style.fontFamily = this.originalFont;
+            });
             this.resolve();
         } else {
             this.frameRequest = requestAnimationFrame(this.update);
