@@ -74,7 +74,7 @@
                     if (fontFrame < shuffledFonts.length) {
                         this._renderWord(index, fontFrame, shuffledFonts);
                         fontFrame++;
-                        this._timeout = setTimeout(animateFont, 100);
+                        this._timeout = setTimeout(animateFont, 80);
                     } else {
                         this._renderWord(index, -1, shuffledFonts);
                         this._timeout = setTimeout(() => this._animateLetter(index + 1), 1);
