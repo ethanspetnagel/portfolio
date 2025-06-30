@@ -3,15 +3,15 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: {
-            left: '35%',  // Position so "SLUG" text in video aligns with top-left
-            top: '30%'
+            left: '33%',  // Position so "SLUG" text in video aligns with top-left
+            top: '36%'
         }
     }, 
     'church': {
         url: './church video bg.mp4',
         position: {
-            left: '50%',  // Right side
-            top: '0%'
+            left: '40%',  // Right side
+            top: '33%'
         }
     },
     'talamel': {
@@ -39,15 +39,15 @@ const projectMedia = {
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
         position: {
-            left: '66%',  // Right side
-            top: '37%'
+            left: '50%',  // Right side
+            top: '33%'
         }
     },
     'green-lake-law': {
         url: './greenlake.mp4',
         position: {
             left: '0%',  // Center
-            top: '36%'
+            top: '20%'
         }
     }, 
     'june-2025': ''

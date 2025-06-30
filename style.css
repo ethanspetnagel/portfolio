@@ -361,7 +361,7 @@ body.project-hovering.video-light .bio-text a:hover {
 }
 
 .contact-links a:hover {
-  color: #ffffff !important;
+  color: #2d2f32 !important;
   text-decoration: none !important;
   transform: translateY(2px);
 }
