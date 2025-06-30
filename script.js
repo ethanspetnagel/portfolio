@@ -18,7 +18,7 @@ const projectMedia = {
         url: 'talamel.mp4',
         position: {
             left: '0%',  // Left side
-            top: '0%'
+            top: '7%'
         }
     }, 
     'fox-and-lion': { 
@@ -40,7 +40,7 @@ const projectMedia = {
         url: './lu rose gold video bg.mp4',
         position: {
             left: '50%',  // Right side
-            top: '33%'
+            top: '32%'
         }
     },
     'green-lake-law': {
