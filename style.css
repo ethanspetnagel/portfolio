@@ -94,8 +94,8 @@ body.page-navigating * {
 /* Custom positioned videos */
 .fullscreen-bg video {
   position: absolute;
-  width: 400px; /* Fixed width for all videos */
-  height: 300px; /* Fixed height for all videos */
+  width: 500px; /* Fixed width for all videos */
+  height: 400px; /* Fixed height for all videos */
   object-fit: cover;
   opacity: 0;
   /* Hardware acceleration for videos */

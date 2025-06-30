@@ -3,22 +3,22 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: {
-            left: '5%',  // Position so "SLUG" text in video aligns with top-left
-            top: '10%'
+            left: '45%',  // Position so "SLUG" text in video aligns with top-left
+            top: '30%'
         }
     }, 
     'church': {
         url: './church video bg.mp4',
         position: {
-            left: '60%',  // Right side
-            top: '20%'
+            left: '50%',  // Right side
+            top: '50%'
         }
     },
     'talamel': {
         url: 'talamel.mp4',
         position: {
-            left: '15%',  // Left side
-            top: '50%'
+            left: '1%',  // Left side
+            top: '1%'
         }
     }, 
     'fox-and-lion': { 
@@ -46,8 +46,8 @@ const projectMedia = {
     'green-lake-law': {
         url: './greenlake.mp4',
         position: {
-            left: '30%',  // Center
-            top: '25%'
+            left: '0%',  // Center
+            top: '85%'
         }
     }, 
     'june-2025': ''
