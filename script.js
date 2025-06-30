@@ -299,7 +299,7 @@ function hideAllMedia() {
 class TextScramble {
     constructor(el) {
         this.el = el;
-        this.chars = 'ABCDEFGHIXYZ0123456789@#$%?';
+        this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Only letters, no numbers
         this.update = this.update.bind(this);
         // Much more dramatic font differences
         this.abstractFonts = [
@@ -317,6 +317,8 @@ class TextScramble {
             '"Garamond", serif'
         ];
         this.originalFont = getComputedStyle(el).fontFamily;
+        this.originalFontSize = getComputedStyle(el).fontSize;
+        this.originalLineHeight = getComputedStyle(el).lineHeight;
         this.isActive = false;
         this.charWidths = [];
     }
@@ -325,7 +327,7 @@ class TextScramble {
     measureCharWidths(text) {
         const tempEl = document.createElement('span');
         tempEl.style.fontFamily = this.originalFont;
-        tempEl.style.fontSize = getComputedStyle(this.el).fontSize;
+        tempEl.style.fontSize = this.originalFontSize;
         tempEl.style.fontWeight = getComputedStyle(this.el).fontWeight;
         tempEl.style.visibility = 'hidden';
         tempEl.style.position = 'absolute';
@@ -334,7 +336,7 @@ class TextScramble {
         this.charWidths = [];
         for (let i = 0; i < text.length; i++) {
             tempEl.textContent = text[i] || 'W'; // Use 'W' as default for empty chars
-            this.charWidths[i] = tempEl.offsetWidth;
+            this.charWidths[i] = Math.max(tempEl.offsetWidth, 12); // Minimum width
         }
         
         document.body.removeChild(tempEl);
@@ -357,9 +359,18 @@ class TextScramble {
         for (let i = 0; i < length; i++) {
             const from = oldText[i] || '';
             const to = newText[i] || '';
-            const start = i * 40; // Each letter starts 40 frames after the previous
-            const end = start + 120; // Each letter scrambles for 120 frames (2+ seconds)
-            this.queue.push({ from, to, start, end });
+            const start = i * 60; // Each letter starts 60 frames (1 second) after the previous
+            const end = start + 180; // Each letter scrambles for 180 frames (3 seconds)
+            this.queue.push({ 
+                from, 
+                to, 
+                start, 
+                end, 
+                currentChar: from,
+                currentFont: this.originalFont,
+                letterChangeCounter: 0,
+                fontChangeCounter: 0
+            });
         }
         
         cancelAnimationFrame(this.frameRequest);
@@ -382,7 +393,7 @@ class TextScramble {
         const letterSpans = [];
         
         if (this.showName && this.frame >= 60 && !this.nameRevealComplete) {
-            const nameProgress = Math.min((this.frame - 60) / 200, 1); // Much slower
+            const nameProgress = Math.min((this.frame - 60) / 300, 1); // Much slower
             const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
             
             for (let i = 0; i < this.nameText.length; i++) {
@@ -395,14 +406,16 @@ class TextScramble {
                 span.style.display = 'inline-block';
                 span.style.width = (this.charWidths[i] || 12) + 'px';
                 span.style.textAlign = 'center';
-                span.style.transition = 'font-family 0.2s ease';
+                span.style.lineHeight = this.originalLineHeight;
+                span.style.verticalAlign = 'baseline';
+                span.style.fontSize = this.originalFontSize;
                 letterSpans.push(span);
             }
             
             if (nameProgress >= 1) {
                 this.nameRevealComplete = true;
             }
-        } else if (this.nameRevealComplete && this.frame < 400 && !this.namePauseComplete) {
+        } else if (this.nameRevealComplete && this.frame < 600 && !this.namePauseComplete) {
             for (let i = 0; i < this.nameText.length; i++) {
                 const span = document.createElement('span');
                 span.textContent = this.nameText[i];
@@ -410,42 +423,60 @@ class TextScramble {
                 span.style.display = 'inline-block';
                 span.style.width = (this.charWidths[i] || 12) + 'px';
                 span.style.textAlign = 'center';
+                span.style.lineHeight = this.originalLineHeight;
+                span.style.verticalAlign = 'baseline';
+                span.style.fontSize = this.originalFontSize;
                 letterSpans.push(span);
             }
             
-            if (this.frame >= 400) {
+            if (this.frame >= 600) {
                 this.namePauseComplete = true;
             }
         } else if (this.namePauseComplete || !this.showName) {
-            const adjustedFrame = this.showName ? this.frame - 400 : this.frame;
+            const adjustedFrame = this.showName ? this.frame - 600 : this.frame;
             
             for (let i = 0, n = this.queue.length; i < n; i++) {
-                let { from, to, start, end, char } = this.queue[i];
+                let queueItem = this.queue[i];
+                let { from, to, start, end } = queueItem;
                 let currentChar = '';
+                let currentFont = this.originalFont;
                 let isCharScrambling = false;
                 
                 if (adjustedFrame >= end) {
                     complete++;
                     currentChar = to;
+                    currentFont = this.originalFont;
                 } else if (adjustedFrame >= start) {
-                    // Much slower character changing - only 0.3% chance per frame
-                    if (!char || Math.random() < 0.003) {
-                        char = this.randomChar();
-                        this.queue[i].char = char;
-                    }
-                    currentChar = char;
                     isCharScrambling = true;
+                    
+                    // Font changes every 15 frames (0.25 seconds at 60fps)
+                    if (adjustedFrame - start >= queueItem.fontChangeCounter * 15) {
+                        queueItem.currentFont = this.getRandomFont();
+                        queueItem.fontChangeCounter++;
+                    }
+                    
+                    // Letter changes every 30 frames (0.5 seconds at 60fps)
+                    if (adjustedFrame - start >= queueItem.letterChangeCounter * 30) {
+                        queueItem.currentChar = this.randomChar();
+                        queueItem.letterChangeCounter++;
+                    }
+                    
+                    currentChar = queueItem.currentChar;
+                    currentFont = queueItem.currentFont;
                 } else {
                     currentChar = from;
+                    currentFont = this.originalFont;
                 }
                 
                 const span = document.createElement('span');
                 span.textContent = currentChar;
-                span.style.fontFamily = isCharScrambling ? this.getRandomFont() : this.originalFont;
+                span.style.fontFamily = currentFont;
                 span.style.display = 'inline-block';
                 span.style.width = (this.charWidths[i] || 12) + 'px';
                 span.style.textAlign = 'center';
-                span.style.transition = 'font-family 0.2s ease';
+                span.style.lineHeight = this.originalLineHeight;
+                span.style.verticalAlign = 'baseline';
+                span.style.fontSize = this.originalFontSize;
                 letterSpans.push(span);
             }
         }
@@ -688,46 +719,36 @@ const textParting = new TextPartingEffect();
 const aboutScramble = new TextScramble(aboutToggle);
 let isAboutOpen = false;
 
-// About toggle functionality - FIXED to preserve click functionality
-aboutToggle.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Stop any ongoing scrambling to prevent interference
-    aboutScramble.stop();
-    
-    // Toggle bio content
+// About toggle functionality - EXACTLY like original code
+aboutToggle.addEventListener('click', function() {
+    // 1. Simple bio content toggle (exactly like original)
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
     
-    // Set text immediately, then start scramble effect
+    // 2. Update text content
     if (isAboutOpen) {
-        aboutToggle.textContent = 'HIDE';
+        this.textContent = 'HIDE';
         setTimeout(() => {
-            aboutScramble.setText('HIDE', true);
             textParting.init();
-        }, 50);
+        }, 100);
     } else {
-        aboutToggle.textContent = 'ABOUT';
-        setTimeout(() => {
-            aboutScramble.setText('ABOUT');
-        }, 50);
+        this.textContent = 'ABOUT';
     }
+    
+    // 3. Trigger scramble effect
+    const currentText = this.textContent;
+    aboutScramble.setText(currentText);
 });
 
-// Mouse enter for scramble effect on hover
+// Hover to trigger scramble effect (separate from click)
 aboutToggle.addEventListener('mouseenter', function() {
-    // Only scramble on hover, don't change the bio content state
-    if (!isAboutOpen) {
-        aboutScramble.setText('ABOUT');
-    } else {
-        aboutScramble.setText('HIDE');
-    }
+    const currentText = this.textContent;
+    aboutScramble.setText(currentText);
 });
 
-// Mouse leave to stop scrambling
+// Don't stop on mouse leave - let it finish naturally
 aboutToggle.addEventListener('mouseleave', function() {
-    aboutScramble.stop();
+    // Let scramble finish naturally
 });
 
 // Project link events
