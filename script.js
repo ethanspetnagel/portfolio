@@ -578,14 +578,24 @@ aboutToggle.addEventListener('mouseenter', function() {
     }
 });
 
-// Toggle bio content on click
+// Toggle bio content on click (can be clicked any time, even during animation)
 aboutToggle.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
-    aboutFlip.stop();
-    aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT');
+    aboutFlip.stop(); // Stop animation if running
+
+    // Set the text to the final state WITHOUT animation
+    aboutToggle.innerHTML = '';
+    for (let i = 0; i < (isAboutOpen ? 'HIDE' : 'ABOUT').length; i++) {
+        const span = document.createElement('span');
+        span.textContent = (isAboutOpen ? 'HIDE' : 'ABOUT')[i];
+        span.style.display = 'inline-block';
+        span.style.fontFamily = aboutFlip.originalFont;
+        aboutToggle.appendChild(span);
+    }
+
     if (isAboutOpen) {
         setTimeout(() => {
             textParting.init();
