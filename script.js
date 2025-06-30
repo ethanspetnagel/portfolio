@@ -301,25 +301,43 @@ class TextScramble {
         this.el = el;
         this.chars = 'ABCDEFGHIXYZ0123456789@#$%?';
         this.update = this.update.bind(this);
-        // Add font array for variations
+        // Much more dramatic font differences
         this.abstractFonts = [
+            '"Impact", fantasy',
             '"Times New Roman", serif',
             '"Courier New", monospace',
-            '"Georgia", serif',
-            '"Lucida Console", monospace',
             '"Comic Sans MS", cursive',
-            '"Impact", fantasy',
-            '"Trebuchet MS", sans-serif',
-            '"Palatino", serif',
-            '"Garamond", serif',
-            '"Brush Script MT", cursive',
             '"Papyrus", fantasy',
             '"Old English Text MT", fantasy',
-            '"Book Antiqua", serif',
-            '"Century Gothic", sans-serif'
+            '"Brush Script MT", cursive',
+            '"Lucida Console", monospace',
+            '"Georgia", serif',
+            '"Trebuchet MS", sans-serif',
+            '"Palatino", serif',
+            '"Garamond", serif'
         ];
         this.originalFont = getComputedStyle(el).fontFamily;
-        this.isScrambling = false;
+        this.isActive = false;
+        this.charWidths = [];
+    }
+    
+    // Pre-measure character widths to prevent layout shift
+    measureCharWidths(text) {
+        const tempEl = document.createElement('span');
+        tempEl.style.fontFamily = this.originalFont;
+        tempEl.style.fontSize = getComputedStyle(this.el).fontSize;
+        tempEl.style.fontWeight = getComputedStyle(this.el).fontWeight;
+        tempEl.style.visibility = 'hidden';
+        tempEl.style.position = 'absolute';
+        document.body.appendChild(tempEl);
+        
+        this.charWidths = [];
+        for (let i = 0; i < text.length; i++) {
+            tempEl.textContent = text[i] || 'W'; // Use 'W' as default for empty chars
+            this.charWidths[i] = tempEl.offsetWidth;
+        }
+        
+        document.body.removeChild(tempEl);
     }
     
     setText(newText, showName = false) {
@@ -330,13 +348,17 @@ class TextScramble {
         this.showName = showName;
         this.targetText = newText;
         this.nameText = 'ABOUT';
-        this.isScrambling = true;
+        this.isActive = true;
         
+        // Measure character widths first
+        this.measureCharWidths(newText);
+        
+        // Sequential timing - each letter starts after the previous with slight overlap
         for (let i = 0; i < length; i++) {
             const from = oldText[i] || '';
             const to = newText[i] || '';
-            const start = Math.floor(Math.random() * 120); // Much slower start
-            const end = start + Math.floor(Math.random() * 150); // Much longer duration
+            const start = i * 40; // Each letter starts 40 frames after the previous
+            const end = start + 120; // Each letter scrambles for 120 frames (2+ seconds)
             this.queue.push({ from, to, start, end });
         }
         
@@ -354,11 +376,13 @@ class TextScramble {
     }
     
     update() {
+        if (!this.isActive) return;
+        
         let complete = 0;
         const letterSpans = [];
         
-        if (this.showName && this.frame >= 60 && !this.nameRevealComplete) { // Much slower start
-            const nameProgress = Math.min((this.frame - 60) / 120, 1); // Much slower reveal
+        if (this.showName && this.frame >= 60 && !this.nameRevealComplete) {
+            const nameProgress = Math.min((this.frame - 60) / 200, 1); // Much slower
             const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
             
             for (let i = 0; i < this.nameText.length; i++) {
@@ -368,6 +392,9 @@ class TextScramble {
                 const span = document.createElement('span');
                 span.textContent = char;
                 span.style.fontFamily = isCharScrambling ? this.getRandomFont() : this.originalFont;
+                span.style.display = 'inline-block';
+                span.style.width = (this.charWidths[i] || 12) + 'px';
+                span.style.textAlign = 'center';
                 span.style.transition = 'font-family 0.2s ease';
                 letterSpans.push(span);
             }
@@ -375,19 +402,22 @@ class TextScramble {
             if (nameProgress >= 1) {
                 this.nameRevealComplete = true;
             }
-        } else if (this.nameRevealComplete && this.frame < 300 && !this.namePauseComplete) { // Much longer pause
+        } else if (this.nameRevealComplete && this.frame < 400 && !this.namePauseComplete) {
             for (let i = 0; i < this.nameText.length; i++) {
                 const span = document.createElement('span');
                 span.textContent = this.nameText[i];
                 span.style.fontFamily = this.originalFont;
+                span.style.display = 'inline-block';
+                span.style.width = (this.charWidths[i] || 12) + 'px';
+                span.style.textAlign = 'center';
                 letterSpans.push(span);
             }
             
-            if (this.frame >= 300) { // Much longer pause duration
+            if (this.frame >= 400) {
                 this.namePauseComplete = true;
             }
         } else if (this.namePauseComplete || !this.showName) {
-            const adjustedFrame = this.showName ? this.frame - 300 : this.frame;
+            const adjustedFrame = this.showName ? this.frame - 400 : this.frame;
             
             for (let i = 0, n = this.queue.length; i < n; i++) {
                 let { from, to, start, end, char } = this.queue[i];
@@ -398,7 +428,8 @@ class TextScramble {
                     complete++;
                     currentChar = to;
                 } else if (adjustedFrame >= start) {
-                    if (!char || Math.random() < 0.05) { // Much much slower character changing
+                    // Much slower character changing - only 0.3% chance per frame
+                    if (!char || Math.random() < 0.003) {
                         char = this.randomChar();
                         this.queue[i].char = char;
                     }
@@ -410,26 +441,30 @@ class TextScramble {
                 
                 const span = document.createElement('span');
                 span.textContent = currentChar;
-                // Each scrambling character gets a new random font
                 span.style.fontFamily = isCharScrambling ? this.getRandomFont() : this.originalFont;
+                span.style.display = 'inline-block';
+                span.style.width = (this.charWidths[i] || 12) + 'px';
+                span.style.textAlign = 'center';
                 span.style.transition = 'font-family 0.2s ease';
                 letterSpans.push(span);
             }
         }
         
-        // Clear element and add all letter spans
-        this.el.innerHTML = '';
-        letterSpans.forEach(span => this.el.appendChild(span));
+        // Only update DOM if we have spans to show
+        if (letterSpans.length > 0) {
+            this.el.innerHTML = '';
+            letterSpans.forEach(span => this.el.appendChild(span));
+        }
         
         if (complete === this.queue.length) {
-            this.isScrambling = false;
-            // Ensure all letters return to original font when complete
+            this.isActive = false;
+            // Reset to clean text after completion
             setTimeout(() => {
-                if (!this.isScrambling) {
-                    this.el.innerHTML = this.el.textContent; // Reset to plain text
+                if (!this.isActive) {
+                    this.el.innerHTML = this.el.textContent;
                     this.el.style.fontFamily = this.originalFont;
                 }
-            }, 200);
+            }, 500);
             this.resolve();
         } else {
             this.frameRequest = requestAnimationFrame(this.update);
@@ -438,9 +473,10 @@ class TextScramble {
     }
     
     stop() {
-        this.isScrambling = false;
+        this.isActive = false;
         cancelAnimationFrame(this.frameRequest);
-        this.el.innerHTML = this.el.textContent; // Reset to plain text
+        // Reset to clean text
+        this.el.innerHTML = this.el.textContent;
         this.el.style.fontFamily = this.originalFont;
     }
     
