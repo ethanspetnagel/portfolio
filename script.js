@@ -346,10 +346,10 @@ class FontFlip {
         this._isAnimating = false;
     }
 
-    setText(newText) {
+    setText(newText, onFinish) {
         this.text = newText;
         this.stop();
-        this._animateLetter(0);
+        this._animateLetter(0, onFinish);
     }
 
     // Fisher-Yates shuffle
@@ -362,10 +362,11 @@ class FontFlip {
         return arr;
     }
 
-    _animateLetter(index) {
+    _animateLetter(index, onFinish) {
         if (index >= this.text.length) {
             this._renderWord(-1, -1);
             this._isAnimating = false;
+            if (typeof onFinish === 'function') onFinish();
             return;
         }
         // Shuffle font order for this letter
@@ -378,7 +379,7 @@ class FontFlip {
                 this._timeout = setTimeout(animateFont, 111);
             } else {
                 this._renderWord(index, -1, shuffledFonts);
-                this._timeout = setTimeout(() => this._animateLetter(index + 1), 5);
+                this._timeout = setTimeout(() => this._animateLetter(index + 1, onFinish), 5);
             }
         };
         this._isAnimating = true;
@@ -571,23 +572,11 @@ const textParting = new TextPartingEffect();
 const aboutFlip = new FontFlip(aboutToggle);
 let isAboutOpen = false;
 
-// Font flip on hover only (never on click)
-aboutToggle.addEventListener('mouseenter', function() {
-    if (!aboutFlip._isAnimating) {
-        aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT');
-    }
-});
+// Remove any previous click event for aboutToggle
+aboutToggle.onclick = null;
 
-// Always allow click, even during animation
-aboutToggle.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    bioContent.classList.toggle('active');
-    isAboutOpen = !isAboutOpen;
-    aboutFlip.stop(); // Stop animation if running
-
-    // Set the text to the final state WITHOUT animation
-    const label = isAboutOpen ? 'HIDE' : 'ABOUT';
+// Helper to set the button text instantly (no animation)
+function setAboutButtonText(label) {
     aboutToggle.innerHTML = '';
     for (let i = 0; i < label.length; i++) {
         const span = document.createElement('span');
@@ -596,12 +585,27 @@ aboutToggle.addEventListener('click', function(e) {
         span.style.fontFamily = aboutFlip.originalFont;
         aboutToggle.appendChild(span);
     }
+}
 
-    if (isAboutOpen) {
-        setTimeout(() => {
-            textParting.init();
-        }, 300);
-    }
+// On hover, animate, then toggle bio after animation
+aboutToggle.addEventListener('mouseenter', function() {
+    if (aboutFlip._isAnimating) return;
+    aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT', function animationDone() {
+        // Toggle bio section after animation
+        bioContent.classList.toggle('active');
+        isAboutOpen = !isAboutOpen;
+        setAboutButtonText(isAboutOpen ? 'HIDE' : 'ABOUT');
+        if (isAboutOpen) {
+            setTimeout(() => {
+                textParting.init();
+            }, 300);
+        }
+    });
+});
+
+// Optionally, reset the button text on mouseleave (not required, but keeps it tidy)
+aboutToggle.addEventListener('mouseleave', function() {
+    setAboutButtonText(isAboutOpen ? 'HIDE' : 'ABOUT');
 });
 
 // Project link events
