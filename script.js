@@ -295,13 +295,12 @@ function hideAllMedia() {
     currentMedia = null;
 }
 
-// Text scramble effect
+// Text scramble effect - SIMPLIFIED
 class TextScramble {
     constructor(el) {
         this.el = el;
-        this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Only letters, no numbers
         this.update = this.update.bind(this);
-        // Much more dramatic font differences
+        // Dramatic font differences
         this.abstractFonts = [
             '"Impact", fantasy',
             '"Times New Roman", serif',
@@ -335,168 +334,77 @@ class TextScramble {
         
         this.charWidths = [];
         for (let i = 0; i < text.length; i++) {
-            tempEl.textContent = text[i] || 'W'; // Use 'W' as default for empty chars
-            this.charWidths[i] = Math.max(tempEl.offsetWidth, 12); // Minimum width
+            tempEl.textContent = text[i] || 'W';
+            this.charWidths[i] = Math.max(tempEl.offsetWidth, 12);
         }
         
         document.body.removeChild(tempEl);
     }
     
-    setText(newText, showName = false) {
-        const oldText = this.el.innerText;
-        const length = Math.max(oldText.length, newText.length, 5);
-        const promise = new Promise((resolve) => this.resolve = resolve);
-        this.queue = [];
-        this.showName = showName;
-        this.targetText = newText;
-        this.nameText = 'ABOUT';
+    setText(text) {
+        this.targetText = text;
         this.isActive = true;
         
         // Measure character widths first
-        this.measureCharWidths(newText);
+        this.measureCharWidths(text);
         
-        // Sequential timing - each letter starts after the previous with slight overlap
-        for (let i = 0; i < length; i++) {
-            const from = oldText[i] || '';
-            const to = newText[i] || '';
-            const start = i * 60; // Each letter starts 60 frames (1 second) after the previous
-            const end = start + 180; // Each letter scrambles for 180 frames (3 seconds)
-            this.queue.push({ 
-                from, 
-                to, 
-                start, 
-                end, 
-                currentChar: from,
-                currentFont: this.originalFont,
-                letterChangeCounter: 0,
+        // Setup timing for each letter
+        this.queue = [];
+        for (let i = 0; i < text.length; i++) {
+            this.queue.push({
+                char: text[i],
+                start: i * 60, // Each letter starts 1 second after previous
+                duration: 120, // Each letter cycles fonts for 2 seconds
+                fontIndex: 0,
                 fontChangeCounter: 0
             });
         }
         
         cancelAnimationFrame(this.frameRequest);
         this.frame = 0;
-        this.nameShown = false;
-        this.namePauseComplete = false;
-        this.nameRevealComplete = false;
         this.update();
-        return promise;
-    }
-    
-    getRandomFont() {
-        return this.abstractFonts[Math.floor(Math.random() * this.abstractFonts.length)];
     }
     
     update() {
         if (!this.isActive) return;
         
-        let complete = 0;
         const letterSpans = [];
+        let allComplete = true;
         
-        if (this.showName && this.frame >= 60 && !this.nameRevealComplete) {
-            const nameProgress = Math.min((this.frame - 60) / 300, 1); // Much slower
-            const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
+        for (let i = 0; i < this.targetText.length; i++) {
+            const queueItem = this.queue[i];
+            const { char, start, duration } = queueItem;
+            const letterFrame = this.frame - start;
             
-            for (let i = 0; i < this.nameText.length; i++) {
-                const char = i < nameCharsToShow ? this.nameText[i] : this.randomChar();
-                const isCharScrambling = i >= nameCharsToShow;
-                
-                const span = document.createElement('span');
-                span.textContent = char;
-                span.style.fontFamily = isCharScrambling ? this.getRandomFont() : this.originalFont;
-                span.style.display = 'inline-block';
-                span.style.width = (this.charWidths[i] || 12) + 'px';
-                span.style.textAlign = 'center';
-                span.style.lineHeight = this.originalLineHeight;
-                span.style.verticalAlign = 'baseline';
-                span.style.fontSize = this.originalFontSize;
-                letterSpans.push(span);
-            }
+            let currentFont = this.originalFont;
             
-            if (nameProgress >= 1) {
-                this.nameRevealComplete = true;
-            }
-        } else if (this.nameRevealComplete && this.frame < 600 && !this.namePauseComplete) {
-            for (let i = 0; i < this.nameText.length; i++) {
-                const span = document.createElement('span');
-                span.textContent = this.nameText[i];
-                span.style.fontFamily = this.originalFont;
-                span.style.display = 'inline-block';
-                span.style.width = (this.charWidths[i] || 12) + 'px';
-                span.style.textAlign = 'center';
-                span.style.lineHeight = this.originalLineHeight;
-                span.style.verticalAlign = 'baseline';
-                span.style.fontSize = this.originalFontSize;
-                letterSpans.push(span);
-            }
-            
-            if (this.frame >= 600) {
-                this.namePauseComplete = true;
-            }
-        } else if (this.namePauseComplete || !this.showName) {
-            const adjustedFrame = this.showName ? this.frame - 600 : this.frame;
-            
-            for (let i = 0, n = this.queue.length; i < n; i++) {
-                let queueItem = this.queue[i];
-                let { from, to, start, end } = queueItem;
-                let currentChar = '';
-                let currentFont = this.originalFont;
-                let isCharScrambling = false;
-                
-                if (adjustedFrame >= end) {
-                    complete++;
-                    currentChar = to;
-                    currentFont = this.originalFont;
-                } else if (adjustedFrame >= start) {
-                    isCharScrambling = true;
-                    
-                    // Font changes every 15 frames (0.25 seconds at 60fps)
-                    if (adjustedFrame - start >= queueItem.fontChangeCounter * 15) {
-                        queueItem.currentFont = this.getRandomFont();
-                        queueItem.fontChangeCounter++;
-                    }
-                    
-                    // Letter changes every 30 frames (0.5 seconds at 60fps)
-                    if (adjustedFrame - start >= queueItem.letterChangeCounter * 30) {
-                        queueItem.currentChar = this.randomChar();
-                        queueItem.letterChangeCounter++;
-                    }
-                    
-                    currentChar = queueItem.currentChar;
-                    currentFont = queueItem.currentFont;
-                } else {
-                    currentChar = from;
-                    currentFont = this.originalFont;
+            if (letterFrame >= 0 && letterFrame < duration) {
+                allComplete = false;
+                // Font changes every 9 frames (0.15 seconds at 60fps)
+                if (letterFrame % 9 === 0) {
+                    queueItem.fontIndex = (queueItem.fontIndex + 1) % this.abstractFonts.length;
                 }
-                
-                const span = document.createElement('span');
-                span.textContent = currentChar;
-                span.style.fontFamily = currentFont;
-                span.style.display = 'inline-block';
-                span.style.width = (this.charWidths[i] || 12) + 'px';
-                span.style.textAlign = 'center';
-                span.style.lineHeight = this.originalLineHeight;
-                span.style.verticalAlign = 'baseline';
-                span.style.fontSize = this.originalFontSize;
-                letterSpans.push(span);
+                currentFont = this.abstractFonts[queueItem.fontIndex];
             }
+            
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.fontFamily = currentFont;
+            span.style.display = 'inline-block';
+            span.style.width = (this.charWidths[i] || 12) + 'px';
+            span.style.textAlign = 'center';
+            span.style.lineHeight = this.originalLineHeight;
+            span.style.verticalAlign = 'baseline';
+            span.style.fontSize = this.originalFontSize;
+            letterSpans.push(span);
         }
         
-        // Only update DOM if we have spans to show
-        if (letterSpans.length > 0) {
-            this.el.innerHTML = '';
-            letterSpans.forEach(span => this.el.appendChild(span));
-        }
+        // Update DOM
+        this.el.innerHTML = '';
+        letterSpans.forEach(span => this.el.appendChild(span));
         
-        if (complete === this.queue.length) {
-            this.isActive = false;
-            // Reset to clean text after completion
-            setTimeout(() => {
-                if (!this.isActive) {
-                    this.el.innerHTML = this.el.textContent;
-                    this.el.style.fontFamily = this.originalFont;
-                }
-            }, 500);
-            this.resolve();
+        if (allComplete) {
+            this.stop();
         } else {
             this.frameRequest = requestAnimationFrame(this.update);
             this.frame++;
@@ -506,13 +414,9 @@ class TextScramble {
     stop() {
         this.isActive = false;
         cancelAnimationFrame(this.frameRequest);
-        // Reset to clean text
-        this.el.innerHTML = this.el.textContent;
+        // Reset to clean text with original font
+        this.el.textContent = this.targetText;
         this.el.style.fontFamily = this.originalFont;
-    }
-    
-    randomChar() {
-        return this.chars[Math.floor(Math.random() * this.chars.length)];
     }
 }
 
@@ -719,36 +623,42 @@ const textParting = new TextPartingEffect();
 const aboutScramble = new TextScramble(aboutToggle);
 let isAboutOpen = false;
 
-// About toggle functionality - EXACTLY like original code
-aboutToggle.addEventListener('click', function() {
-    // 1. Simple bio content toggle (exactly like original)
+// About toggle functionality - COMPLETELY SEPARATE
+aboutToggle.addEventListener('click', function(e) {
+    // Immediately stop any scramble effects to prevent interference
+    aboutScramble.stop();
+    
+    // Handle bio content toggle FIRST (exactly like original)
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
     
-    // 2. Update text content
+    // Update text content
     if (isAboutOpen) {
-        this.textContent = 'HIDE';
+        aboutToggle.textContent = 'HIDE';
         setTimeout(() => {
             textParting.init();
         }, 100);
     } else {
-        this.textContent = 'ABOUT';
+        aboutToggle.textContent = 'ABOUT';
     }
     
-    // 3. Trigger scramble effect
-    const currentText = this.textContent;
-    aboutScramble.setText(currentText);
+    // Start scramble effect AFTER a delay
+    setTimeout(() => {
+        aboutScramble.setText(aboutToggle.textContent);
+    }, 100);
 });
 
-// Hover to trigger scramble effect (separate from click)
+// Hover effect - completely separate from click
 aboutToggle.addEventListener('mouseenter', function() {
-    const currentText = this.textContent;
-    aboutScramble.setText(currentText);
+    // Only do scramble on hover, don't interfere with bio content
+    if (!aboutScramble.isActive) {
+        aboutScramble.setText(this.textContent);
+    }
 });
 
-// Don't stop on mouse leave - let it finish naturally
+// Clean up on mouse leave
 aboutToggle.addEventListener('mouseleave', function() {
-    // Let scramble finish naturally
+    // Let effect finish naturally
 });
 
 // Project link events
