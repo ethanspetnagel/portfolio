@@ -630,13 +630,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
   
-    // Site title hover effect - background turns black
-    let isOverTitle = false;
-    
-    siteTitle.addEventListener('mouseenter', function () {
-        isOverTitle = true;
-        document.body.classList.add('title-hover');
-    });
   
     siteTitle.addEventListener('mouseleave', function () {
         isOverTitle = false;

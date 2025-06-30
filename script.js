@@ -1,23 +1,55 @@
-// Project media mapping - brightness will be detected automatically
+// Project media mapping with position data
 const projectMedia = {
     'slug': {
-        url: './slug.mp4'
+        url: './slug.mp4',
+        position: {
+            left: '5%',  // Position so "SLUG" text in video aligns with top-left
+            top: '10%'
+        }
     }, 
     'church': {
-        url: './church video bg.mp4'
+        url: './church video bg.mp4',
+        position: {
+            left: '60%',  // Right side
+            top: '20%'
+        }
     },
-    'talamel': 'talamel.mp4', 
+    'talamel': {
+        url: 'talamel.mp4',
+        position: {
+            left: '15%',  // Left side
+            top: '50%'
+        }
+    }, 
     'fox-and-lion': { 
-        url: './foxlionbg.mp4'
+        url: './foxlionbg.mp4',
+        position: {
+            left: '45%',  // Center-right
+            top: '15%'
+        }
     }, 
     'ecoscan': '',
     'cardioscape': { 
-        url: './cardio.mp4'
+        url: './cardio.mp4',
+        position: {
+            left: '25%',  // Center-left
+            top: '60%'
+        }
     },
     'lu-rose-gold': {
-        url: './lu rose gold video bg.mp4'
+        url: './lu rose gold video bg.mp4',
+        position: {
+            left: '55%',  // Right side
+            top: '45%'
+        }
     },
-    'green-lake-law': './greenlake.mp4', 
+    'green-lake-law': {
+        url: './greenlake.mp4',
+        position: {
+            left: '30%',  // Center
+            top: '25%'
+        }
+    }, 
     'june-2025': ''
 };
 
@@ -117,8 +149,6 @@ function initializeVideoPool() {
             video.style.visibility = 'hidden';
             video.style.zIndex = '1'; // Default z-index
             
-            // NO FILTER - removed brightness filter
-            
             // Add to DOM
             fullscreenBg.appendChild(video);
             videoPool[project] = video;
@@ -161,12 +191,15 @@ function updateTextColors(project) {
     }
 }
 
-// Show video instantly
+// Show video instantly with custom position
 function showVideo(project) {
     if (isTransitioning) return false;
     
     const video = videoPool[project];
     if (!video) return false;
+    
+    const mediaInfo = projectMedia[project];
+    if (!mediaInfo || !mediaInfo.position) return false;
     
     isTransitioning = true;
     
@@ -178,6 +211,10 @@ function showVideo(project) {
         previousVideo.style.zIndex = '1';
     }
     video.style.zIndex = '2'; // New video on top
+    
+    // Apply custom position
+    video.style.left = mediaInfo.position.left;
+    video.style.top = mediaInfo.position.top;
     
     // Show new video instantly
     video.style.visibility = 'visible';
@@ -516,8 +553,8 @@ function handleProjectHover(link, isEntering) {
         dateText.classList.add('project-active');
         
         // Show video for this project
-        const mediaUrl = projectMedia[project];
-        const url = typeof mediaUrl === 'string' ? mediaUrl : mediaUrl?.url;
+        const mediaInfo = projectMedia[project];
+        const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
         if (url && url.includes('.mp4')) {
             showVideo(project);
         } else {
@@ -622,8 +659,8 @@ if (!isTouchDevice) {
             dateText.textContent = projectInfo;
             dateText.classList.add('project-active');
             
-            const mediaUrl = projectMedia[project];
-            const url = typeof mediaUrl === 'string' ? mediaUrl : mediaUrl?.url;
+            const mediaInfo = projectMedia[project];
+            const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
             if (url && url.includes('.mp4')) {
                 showVideo(project);
             } else {
