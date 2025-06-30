@@ -295,12 +295,15 @@ function hideAllMedia() {
     currentMedia = null;
 }
 
-// Text scramble effect - SIMPLIFIED
+// Text scramble effect - ENHANCED with font changes
 class TextScramble {
     constructor(el) {
         this.el = el;
+        this.chars = 'ABCDEFGHIXYZ0123456789@#$%?';
         this.update = this.update.bind(this);
-        // Dramatic font differences
+        this.isActive = false;
+        
+        // Font array for cycling
         this.abstractFonts = [
             '"Impact", fantasy',
             '"Times New Roman", serif',
@@ -311,112 +314,185 @@ class TextScramble {
             '"Brush Script MT", cursive',
             '"Lucida Console", monospace',
             '"Georgia", serif',
-            '"Trebuchet MS", sans-serif',
-            '"Palatino", serif',
-            '"Garamond", serif'
+            '"Trebuchet MS", sans-serif'
         ];
         this.originalFont = getComputedStyle(el).fontFamily;
         this.originalFontSize = getComputedStyle(el).fontSize;
+        this.originalFontWeight = getComputedStyle(el).fontWeight;
         this.originalLineHeight = getComputedStyle(el).lineHeight;
-        this.isActive = false;
-        this.charWidths = [];
     }
     
-    // Pre-measure character widths to prevent layout shift
-    measureCharWidths(text) {
-        const tempEl = document.createElement('span');
-        tempEl.style.fontFamily = this.originalFont;
-        tempEl.style.fontSize = this.originalFontSize;
-        tempEl.style.fontWeight = getComputedStyle(this.el).fontWeight;
-        tempEl.style.visibility = 'hidden';
-        tempEl.style.position = 'absolute';
-        document.body.appendChild(tempEl);
-        
-        this.charWidths = [];
-        for (let i = 0; i < text.length; i++) {
-            tempEl.textContent = text[i] || 'W';
-            this.charWidths[i] = Math.max(tempEl.offsetWidth, 12);
-        }
-        
-        document.body.removeChild(tempEl);
-    }
-    
-    setText(text) {
-        this.targetText = text;
+    setText(newText, showName = false) {
+        const oldText = this.el.innerText;
+        const length = Math.max(oldText.length, newText.length, 5);
+        const promise = new Promise((resolve) => this.resolve = resolve);
+        this.queue = [];
+        this.showName = showName;
+        this.targetText = newText;
+        this.nameText = 'ABOUT';
         this.isActive = true;
         
-        // Measure character widths first
-        this.measureCharWidths(text);
-        
-        // Setup timing for each letter
-        this.queue = [];
-        for (let i = 0; i < text.length; i++) {
-            this.queue.push({
-                char: text[i],
-                start: i * 60, // Each letter starts 1 second after previous
-                duration: 120, // Each letter cycles fonts for 2 seconds
+        // Enhanced: add font cycling data
+        for (let i = 0; i < length; i++) {
+            const from = oldText[i] || '';
+            const to = newText[i] || '';
+            const start = Math.floor(Math.random() * 40);
+            const end = start + Math.floor(Math.random() * 60);
+            this.queue.push({ 
+                from, 
+                to, 
+                start, 
+                end,
                 fontIndex: 0,
-                fontChangeCounter: 0
+                fontFrameCount: 0
             });
         }
         
         cancelAnimationFrame(this.frameRequest);
         this.frame = 0;
+        this.nameShown = false;
+        this.namePauseComplete = false;
+        this.nameRevealComplete = false;
         this.update();
+        return promise;
     }
     
     update() {
         if (!this.isActive) return;
         
+        let output = '';
+        let complete = 0;
+        const useSpans = true; // Always use spans for font control
         const letterSpans = [];
-        let allComplete = true;
         
-        for (let i = 0; i < this.targetText.length; i++) {
-            const queueItem = this.queue[i];
-            const { char, start, duration } = queueItem;
-            const letterFrame = this.frame - start;
+        if (this.showName && this.frame >= 20 && !this.nameRevealComplete) {
+            const nameProgress = Math.min((this.frame - 20) / 40, 1);
+            const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
             
-            let currentFont = this.originalFont;
-            
-            if (letterFrame >= 0 && letterFrame < duration) {
-                allComplete = false;
-                // Font changes every 9 frames (0.15 seconds at 60fps)
-                if (letterFrame % 9 === 0) {
-                    queueItem.fontIndex = (queueItem.fontIndex + 1) % this.abstractFonts.length;
+            if (useSpans) {
+                for (let i = 0; i < this.nameText.length; i++) {
+                    const char = i < nameCharsToShow ? this.nameText[i] : this.randomChar();
+                    const isScrambling = i >= nameCharsToShow;
+                    
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    span.style.fontFamily = isScrambling ? this.getRandomFont() : this.originalFont;
+                    span.style.display = 'inline-block';
+                    span.style.fontSize = this.originalFontSize;
+                    span.style.fontWeight = this.originalFontWeight;
+                    span.style.lineHeight = this.originalLineHeight;
+                    span.style.verticalAlign = 'baseline';
+                    span.style.minWidth = '0.5em';
+                    letterSpans.push(span);
                 }
-                currentFont = this.abstractFonts[queueItem.fontIndex];
+            } else {
+                for (let i = 0; i < this.nameText.length; i++) {
+                    if (i < nameCharsToShow) {
+                        output += this.nameText[i];
+                    } else {
+                        output += this.randomChar();
+                    }
+                }
             }
             
-            const span = document.createElement('span');
-            span.textContent = char;
-            span.style.fontFamily = currentFont;
-            span.style.display = 'inline-block';
-            span.style.width = (this.charWidths[i] || 12) + 'px';
-            span.style.textAlign = 'center';
-            span.style.lineHeight = this.originalLineHeight;
-            span.style.verticalAlign = 'baseline';
-            span.style.fontSize = this.originalFontSize;
-            letterSpans.push(span);
+            if (nameProgress >= 1) {
+                this.nameRevealComplete = true;
+            }
+        } else if (this.nameRevealComplete && this.frame < 120 && !this.namePauseComplete) {
+            if (useSpans) {
+                for (let i = 0; i < this.nameText.length; i++) {
+                    const span = document.createElement('span');
+                    span.textContent = this.nameText[i];
+                    span.style.fontFamily = this.originalFont;
+                    span.style.display = 'inline-block';
+                    span.style.fontSize = this.originalFontSize;
+                    span.style.fontWeight = this.originalFontWeight;
+                    span.style.lineHeight = this.originalLineHeight;
+                    span.style.verticalAlign = 'baseline';
+                    letterSpans.push(span);
+                }
+            } else {
+                this.el.textContent = this.nameText;
+            }
+            
+            if (this.frame >= 120) {
+                this.namePauseComplete = true;
+            }
+        } else if (this.namePauseComplete || !this.showName) {
+            const adjustedFrame = this.showName ? this.frame - 120 : this.frame;
+            
+            for (let i = 0, n = this.queue.length; i < n; i++) {
+                let queueItem = this.queue[i];
+                let { from, to, start, end, char } = queueItem;
+                let currentChar = '';
+                let currentFont = this.originalFont;
+                
+                if (adjustedFrame >= end) {
+                    complete++;
+                    currentChar = to;
+                } else if (adjustedFrame >= start) {
+                    if (!char || Math.random() < 0.28) {
+                        char = this.randomChar();
+                        queueItem.char = char;
+                    }
+                    currentChar = char;
+                    
+                    // Font cycling: change font every 9 frames (0.15 seconds)
+                    queueItem.fontFrameCount++;
+                    if (queueItem.fontFrameCount >= 9) {
+                        queueItem.fontIndex = (queueItem.fontIndex + 1) % this.abstractFonts.length;
+                        queueItem.fontFrameCount = 0;
+                    }
+                    currentFont = this.abstractFonts[queueItem.fontIndex];
+                } else {
+                    currentChar = from;
+                }
+                
+                if (useSpans) {
+                    const span = document.createElement('span');
+                    span.textContent = currentChar;
+                    span.style.fontFamily = currentFont;
+                    span.style.display = 'inline-block';
+                    span.style.fontSize = this.originalFontSize;
+                    span.style.fontWeight = this.originalFontWeight;
+                    span.style.lineHeight = this.originalLineHeight;
+                    span.style.verticalAlign = 'baseline';
+                    span.style.minWidth = '0.5em';
+                    letterSpans.push(span);
+                } else {
+                    output += currentChar;
+                }
+            }
         }
         
         // Update DOM
-        this.el.innerHTML = '';
-        letterSpans.forEach(span => this.el.appendChild(span));
+        if (useSpans && letterSpans.length > 0) {
+            this.el.innerHTML = '';
+            letterSpans.forEach(span => this.el.appendChild(span));
+        } else if (!useSpans) {
+            this.el.textContent = output;
+        }
         
-        if (allComplete) {
-            this.stop();
+        if (complete === this.queue.length) {
+            this.isActive = false;
+            // Reset to clean state
+            setTimeout(() => {
+                this.el.textContent = this.targetText || this.el.textContent;
+                this.el.style.fontFamily = this.originalFont;
+            }, 500);
+            this.resolve();
         } else {
             this.frameRequest = requestAnimationFrame(this.update);
             this.frame++;
         }
     }
     
-    stop() {
-        this.isActive = false;
-        cancelAnimationFrame(this.frameRequest);
-        // Reset to clean text with original font
-        this.el.textContent = this.targetText;
-        this.el.style.fontFamily = this.originalFont;
+    getRandomFont() {
+        return this.abstractFonts[Math.floor(Math.random() * this.abstractFonts.length)];
+    }
+    
+    randomChar() {
+        return this.chars[Math.floor(Math.random() * this.chars.length)];
     }
 }
 
@@ -623,42 +699,27 @@ const textParting = new TextPartingEffect();
 const aboutScramble = new TextScramble(aboutToggle);
 let isAboutOpen = false;
 
-// About toggle functionality - COMPLETELY SEPARATE
-aboutToggle.addEventListener('click', function(e) {
-    // Immediately stop any scramble effects to prevent interference
-    aboutScramble.stop();
-    
-    // Handle bio content toggle FIRST (exactly like original)
+// About toggle functionality - EXACTLY like your original
+aboutToggle.addEventListener('click', function() {
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
     
-    // Update text content
     if (isAboutOpen) {
-        aboutToggle.textContent = 'HIDE';
+        aboutScramble.setText('HIDE', true);
         setTimeout(() => {
             textParting.init();
         }, 100);
     } else {
-        aboutToggle.textContent = 'ABOUT';
+        aboutScramble.setText('ABOUT');
     }
-    
-    // Start scramble effect AFTER a delay
-    setTimeout(() => {
-        aboutScramble.setText(aboutToggle.textContent);
-    }, 100);
 });
 
-// Hover effect - completely separate from click
 aboutToggle.addEventListener('mouseenter', function() {
-    // Only do scramble on hover, don't interfere with bio content
-    if (!aboutScramble.isActive) {
-        aboutScramble.setText(this.textContent);
+    if (!isAboutOpen) {
+        aboutScramble.setText('ABOUT');
+    } else {
+        aboutScramble.setText('HIDE');
     }
-});
-
-// Clean up on mouse leave
-aboutToggle.addEventListener('mouseleave', function() {
-    // Let effect finish naturally
 });
 
 // Project link events
