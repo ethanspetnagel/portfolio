@@ -3,7 +3,7 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: {
-            left: '11%',  // Position so "SLUG" text in video aligns with top-left
+            left: '12%',  // Position so "SLUG" text in video aligns with top-left
             top: '9%'
         }
     }, 
@@ -11,13 +11,13 @@ const projectMedia = {
         url: './church video bg.mp4',
         position: {
             left: '34%',  // Right side
-            top: '40%'
+            top: '39%'
         }
     },
     'talamel': {
         url: 'talamel.mp4',
         position: {
-            left: '0%',  // Left side
+            left: '5%',  // Left side
             top: '7%'
         }
     }, 
