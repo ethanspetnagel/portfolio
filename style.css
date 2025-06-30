@@ -49,7 +49,7 @@
 .bio-text::selection,
 .date-text::selection {
   background-color: #1d1d1c;
-  color: #2d2f32;
+  color: #ffffff;
 }
 
 body {
@@ -94,8 +94,8 @@ body.page-navigating * {
 /* Custom positioned videos */
 .fullscreen-bg video {
   position: absolute;
-  width: 500px; /* Fixed width for all videos */
-  height: 400px; /* Fixed height for all videos */
+  width: 536px; /* Fixed width for all videos */
+  height: 315px; /* Fixed height for all videos */
   object-fit: cover;
   opacity: 0;
   /* Hardware acceleration for videos */
