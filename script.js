@@ -15,7 +15,7 @@ const projectMedia = {
         }
     },
     'talamel': {
-        url: './talamel.mp4',
+        url: './talamel1.mp4',
         position: {
             left: '16%',  // Left side
             top: '7%'
@@ -57,7 +57,7 @@ const projectMedia = {
 const bioImages = {
     'church-company': '',
     'talamel-health': '',
-    'slug-soap': '',
+    'slug-soap': ' ',
     'crowe': '',
     'colorado': ''
 };
