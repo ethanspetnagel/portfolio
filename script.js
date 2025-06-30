@@ -217,42 +217,40 @@ class FontFlip {
         this.el = el;
         this.fonts = [
             'Impact, fantasy',
-            'Times New Roman, serif',
-            'Courier New, monospace',
-            'Georgia, serif'
+            'Georgia, serif',
+            'Pacifico, cursive',
+            'UnifrakturCook, cursive'
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
-        this.animating = false;
+        this._timeout = null;
     }
 
     setText(newText) {
         this.text = newText;
         this.stop();
-        this.animateLetter(0);
+        this._animateLetter(0);
     }
 
-    animateLetter(index) {
+    _animateLetter(index) {
         if (index >= this.text.length) {
-            // Animation done, set all to original font
-            this.renderWord(-1, -1);
+            this._renderWord(-1, -1);
             return;
         }
         let fontFrame = 0;
         const animateFont = () => {
             if (fontFrame < this.fonts.length) {
-                this.renderWord(index, fontFrame);
+                this._renderWord(index, fontFrame);
                 fontFrame++;
-                setTimeout(animateFont, 100); // Faster: 100ms per font
+                this._timeout = setTimeout(animateFont, 200); // 200ms per font
             } else {
-                // Move to next letter
-                this.renderWord(index, -1);
-                setTimeout(() => this.animateLetter(index + 1), 50);
+                this._renderWord(index, -1);
+                this._timeout = setTimeout(() => this._animateLetter(index + 1), 100);
             }
         };
         animateFont();
     }
 
-    renderWord(activeIndex, fontFrame) {
+    _renderWord(activeIndex, fontFrame) {
         this.el.innerHTML = '';
         for (let i = 0; i < this.text.length; i++) {
             const span = document.createElement('span');
@@ -268,7 +266,10 @@ class FontFlip {
     }
 
     stop() {
-        // No intervals to clear in this version, but method kept for API compatibility
+        if (this._timeout) {
+            clearTimeout(this._timeout);
+            this._timeout = null;
+        }
     }
 }
 
