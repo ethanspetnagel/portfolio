@@ -571,14 +571,14 @@ const textParting = new TextPartingEffect();
 const aboutFlip = new FontFlip(aboutToggle);
 let isAboutOpen = false;
 
-// Run font flip on hover only (not on click)
+// Font flip on hover only (never on click)
 aboutToggle.addEventListener('mouseenter', function() {
     if (!aboutFlip._isAnimating) {
         aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT');
     }
 });
 
-// Toggle bio content on click (can be clicked any time, even during animation)
+// Always allow click, even during animation
 aboutToggle.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -587,10 +587,11 @@ aboutToggle.addEventListener('click', function(e) {
     aboutFlip.stop(); // Stop animation if running
 
     // Set the text to the final state WITHOUT animation
+    const label = isAboutOpen ? 'HIDE' : 'ABOUT';
     aboutToggle.innerHTML = '';
-    for (let i = 0; i < (isAboutOpen ? 'HIDE' : 'ABOUT').length; i++) {
+    for (let i = 0; i < label.length; i++) {
         const span = document.createElement('span');
-        span.textContent = (isAboutOpen ? 'HIDE' : 'ABOUT')[i];
+        span.textContent = label[i];
         span.style.display = 'inline-block';
         span.style.fontFamily = aboutFlip.originalFont;
         aboutToggle.appendChild(span);
