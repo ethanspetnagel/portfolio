@@ -387,6 +387,36 @@ body.project-hovering.video-light .bio-text a:hover {
   display: block;
 }
 
+/* Intro Overlay */
+#introOverlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: #fafcfc;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+  opacity: 1;
+  pointer-events: all;
+}
+
+#introOverlay[style*="opacity: 0"] {
+  pointer-events: none;
+}
+
+#introText {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #2d2f32;
+  text-align: center;
+  line-height: 1;
+  user-select: none;
+}
+
 /* Touch device styles */
 @media (hover: none) and (pointer: coarse) {
   .project-link.touch-active {
