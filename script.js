@@ -299,7 +299,7 @@ function hideAllMedia() {
 class TextScramble {
     constructor(el) {
         this.el = el;
-        this.chars = 'ABCDEFGHIXYZ0123456789@#$%?';
+        this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // LETTERS ONLY - NO NUMBERS
         this.update = this.update.bind(this);
         this.isActive = false;
         
@@ -485,6 +485,14 @@ class TextScramble {
             this.frameRequest = requestAnimationFrame(this.update);
             this.frame++;
         }
+    }
+    
+    stop() {
+        this.isActive = false;
+        cancelAnimationFrame(this.frameRequest);
+        // Reset to clean text
+        this.el.textContent = this.el.textContent;
+        this.el.style.fontFamily = this.originalFont;
     }
     
     getRandomFont() {
@@ -699,26 +707,43 @@ const textParting = new TextPartingEffect();
 const aboutScramble = new TextScramble(aboutToggle);
 let isAboutOpen = false;
 
-// About toggle functionality - EXACTLY like your original
-aboutToggle.addEventListener('click', function() {
+// About toggle functionality - COMPLETELY ISOLATED AND SIMPLE
+aboutToggle.addEventListener('click', function(e) {
+    // FIRST: Handle bio content toggle immediately - no interference
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
     
+    console.log('About clicked, isAboutOpen:', isAboutOpen); // Debug log
+    console.log('bioContent classes:', bioContent.className); // Debug log
+    
+    // SECOND: Update text content
     if (isAboutOpen) {
-        aboutScramble.setText('HIDE', true);
+        this.textContent = 'HIDE';
         setTimeout(() => {
             textParting.init();
         }, 100);
     } else {
-        aboutScramble.setText('ABOUT');
+        this.textContent = 'ABOUT';
     }
+    
+    // THIRD: Start scramble effect after a delay to avoid conflicts
+    setTimeout(() => {
+        if (isAboutOpen) {
+            aboutScramble.setText('HIDE', true);
+        } else {
+            aboutScramble.setText('ABOUT');
+        }
+    }, 50);
 });
 
 aboutToggle.addEventListener('mouseenter', function() {
-    if (!isAboutOpen) {
-        aboutScramble.setText('ABOUT');
-    } else {
-        aboutScramble.setText('HIDE');
+    // Only do hover scramble if not currently scrambling
+    if (!aboutScramble.isActive) {
+        if (!isAboutOpen) {
+            aboutScramble.setText('ABOUT');
+        } else {
+            aboutScramble.setText('HIDE');
+        }
     }
 });
 
