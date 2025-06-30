@@ -32,7 +32,7 @@ const projectMedia = {
     'cardioscape': { 
         url: './cardio.mp4',
         position: {
-            left: '3%',  // Center-left
+            left: '5%',  // Center-left
             top: '22%'
         }
     },
