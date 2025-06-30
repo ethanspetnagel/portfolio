@@ -219,52 +219,50 @@ class FontFlip {
             'Impact, fantasy',
             'Times New Roman, serif',
             'Courier New, monospace',
-            'Arial Black, sans-serif',
-            'Verdana, sans-serif',
-            'Georgia, serif',
-            'Comic Sans MS, cursive',
-            'Trebuchet MS, sans-serif',
-            'Lucida Console, monospace',
-            'Tahoma, sans-serif'
+            'Georgia, serif'
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
-        this.originalFontSize = window.getComputedStyle(el).fontSize;
-        this.originalFontWeight = window.getComputedStyle(el).fontWeight;
-        this.originalLineHeight = window.getComputedStyle(el).lineHeight;
+        this.interval = null;
     }
 
     setText(newText) {
         this.text = newText;
-        this.frame = 0;
-        this.letterFontIndices = Array.from({length: newText.length}, () => 0);
-        this.animating = true;
+        this.stop(); // Stop any previous animation
         this.animate();
     }
 
     animate() {
-        if (!this.animating) return;
-        this.el.innerHTML = '';
-        let done = true;
-        for (let i = 0; i < this.text.length; i++) {
-            const span = document.createElement('span');
-            span.textContent = this.text[i];
-            span.style.display = 'inline-block';
-            span.style.fontSize = this.originalFontSize;
-            span.style.fontWeight = this.originalFontWeight;
-            span.style.lineHeight = this.originalLineHeight;
-            // Animate font for first 20 frames per letter, staggered
-            if (this.frame < 20 + i * 2) {
-                span.style.fontFamily = this.fonts[(this.letterFontIndices[i]) % this.fonts.length];
-                this.letterFontIndices[i]++;
-                done = false;
-            } else {
-                span.style.fontFamily = this.originalFont;
+        let frame = 0;
+        const maxFrames = this.fonts.length;
+        this.interval = setInterval(() => {
+            this.el.innerHTML = '';
+            for (let i = 0; i < this.text.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = this.text[i];
+                span.style.display = 'inline-block';
+                span.style.fontFamily = frame < maxFrames ? this.fonts[frame] : this.originalFont;
+                this.el.appendChild(span);
             }
-            this.el.appendChild(span);
-        }
-        this.frame++;
-        if (!done) {
-            requestAnimationFrame(() => this.animate());
+            frame++;
+            if (frame > maxFrames) {
+                this.stop();
+                // Set to original font at the end
+                this.el.innerHTML = '';
+                for (let i = 0; i < this.text.length; i++) {
+                    const span = document.createElement('span');
+                    span.textContent = this.text[i];
+                    span.style.display = 'inline-block';
+                    span.style.fontFamily = this.originalFont;
+                    this.el.appendChild(span);
+                }
+            }
+        }, 250);
+    }
+
+    stop() {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
         }
     }
 }
@@ -415,7 +413,7 @@ function handleProjectHover(link, isEntering) {
                 activeProject = null;
                 projectsContainer.classList.remove('hovering');
                 document.body.classList.remove('project-hovering');
-                dateText.textContent = 'JUNE 2025';
+                dateText.textContent = 'JULY 2025';
                 dateText.classList.remove('project-active');
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
@@ -435,16 +433,20 @@ let isAboutOpen = false;
 aboutToggle.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
+
+    // Animate font flip
+    aboutFlip.setText(isAboutOpen ? 'ABOUT' : 'ABOUT');
+
+    // Toggle bio content
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
-    if (isAboutOpen) {
-        aboutFlip.setText('HIDE');
-        setTimeout(() => {
-            textParting.init();
-        }, 300);
-    } else {
-        aboutFlip.setText('ABOUT');
-    }
+
+    // Troubleshooting: log state and check visibility
+    console.log('About clicked. isAboutOpen:', isAboutOpen, 'bioContent.active:', bioContent.classList.contains('active'));
+    setTimeout(() => {
+        const style = window.getComputedStyle(bioContent);
+        console.log('bioContent display:', style.display, 'opacity:', style.opacity, 'max-height:', style.maxHeight);
+    }, 300);
 });
 
 // About toggle hover effect
@@ -506,7 +508,7 @@ if (!isTouchDevice) {
                 projectLinks.forEach(l => l.classList.remove('touch-active'));
                 projectsContainer.classList.remove('touch-hovering');
                 document.body.classList.remove('project-hovering');
-                dateText.textContent = 'JUNE 2025';
+                dateText.textContent = 'JULY 2025';
                 dateText.classList.remove('project-active');
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
