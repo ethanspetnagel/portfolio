@@ -168,7 +168,7 @@ body.page-navigating * {
 
 /* Project link hover - BLACK */
 .project-link:hover {
-  color: #0f0f0f !important; /* Black on hover */
+  color: #282c33 !important; /* Black on hover */
 }
 
 /* Website Info */
@@ -196,7 +196,7 @@ body.page-navigating * {
 
 /* Date text hover - keep default color */
 .date-text:hover {
-  color: #2d2f32 !important;
+  color: #ffffff !important;
 }
 
 /* Special class for black background effect */
@@ -216,7 +216,7 @@ body.june-hover .contact-links a {
 
 /* Date text when project is active - always black */
 .date-text.project-active {
-  color: #0f0f0f !important; /* Always black */
+  color: #282c33 !important; /* Always black */
 }
 
 /* Bio Section */
@@ -254,7 +254,7 @@ body.june-hover .contact-links a {
 }
 
 .about-toggle:hover {
-  opacity: 0.8;
+  color: #ffffff;
 }
 
 /* Bio section elements maintain default colors */
