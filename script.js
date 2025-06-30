@@ -223,6 +223,7 @@ class FontFlip {
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
+        this._isAnimating = false;
     }
 
     setText(newText) {
@@ -234,6 +235,7 @@ class FontFlip {
     _animateLetter(index) {
         if (index >= this.text.length) {
             this._renderWord(-1, -1);
+            this._isAnimating = false;
             return;
         }
         let fontFrame = 0;
@@ -241,12 +243,13 @@ class FontFlip {
             if (fontFrame < this.fonts.length) {
                 this._renderWord(index, fontFrame);
                 fontFrame++;
-                this._timeout = setTimeout(animateFont, 200); // 200ms per font
+                this._timeout = setTimeout(animateFont, 150); // 150ms per font
             } else {
                 this._renderWord(index, -1);
-                this._timeout = setTimeout(() => this._animateLetter(index + 1), 100);
+                this._timeout = setTimeout(() => this._animateLetter(index + 1), 75); // 75ms between letters
             }
         };
+        this._isAnimating = true;
         animateFont();
     }
 
@@ -270,6 +273,7 @@ class FontFlip {
             clearTimeout(this._timeout);
             this._timeout = null;
         }
+        this._isAnimating = false;
     }
 }
 
@@ -435,28 +439,25 @@ const textParting = new TextPartingEffect();
 const aboutFlip = new FontFlip(aboutToggle);
 let isAboutOpen = false;
 
-// About toggle functionality (no direct style.display, just class)
+// Run font flip on hover only (not on click)
+aboutToggle.addEventListener('mouseenter', function() {
+    if (!aboutFlip._isAnimating) {
+        aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT');
+    }
+});
+
+// Toggle bio content on click
 aboutToggle.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
+    aboutFlip.stop();
+    aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT');
     if (isAboutOpen) {
-        aboutFlip.setText('HIDE');
         setTimeout(() => {
             textParting.init();
         }, 300);
-    } else {
-        aboutFlip.setText('ABOUT');
-    }
-});
-
-// About toggle hover effect
-aboutToggle.addEventListener('mouseenter', function() {
-    if (!isAboutOpen) {
-        aboutFlip.setText('ABOUT');
-    } else {
-        aboutFlip.setText('HIDE');
     }
 });
 
