@@ -319,6 +319,7 @@ class TextScramble {
             '"Century Gothic", sans-serif'
         ];
         this.originalFont = getComputedStyle(el).fontFamily;
+        this.isScrambling = false;
     }
     
     setText(newText, showName = false) {
@@ -329,12 +330,13 @@ class TextScramble {
         this.showName = showName;
         this.targetText = newText;
         this.nameText = 'ABOUT';
+        this.isScrambling = true;
         
         for (let i = 0; i < length; i++) {
             const from = oldText[i] || '';
             const to = newText[i] || '';
-            const start = Math.floor(Math.random() * 60); // Slower start
-            const end = start + Math.floor(Math.random() * 90); // Slower duration
+            const start = Math.floor(Math.random() * 120); // Much slower start
+            const end = start + Math.floor(Math.random() * 150); // Much longer duration
             this.queue.push({ from, to, start, end });
         }
         
@@ -355,25 +357,25 @@ class TextScramble {
         let complete = 0;
         const letterSpans = [];
         
-        if (this.showName && this.frame >= 30 && !this.nameRevealComplete) { // Slower start
-            const nameProgress = Math.min((this.frame - 30) / 60, 1); // Slower reveal
+        if (this.showName && this.frame >= 60 && !this.nameRevealComplete) { // Much slower start
+            const nameProgress = Math.min((this.frame - 60) / 120, 1); // Much slower reveal
             const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
             
             for (let i = 0; i < this.nameText.length; i++) {
                 const char = i < nameCharsToShow ? this.nameText[i] : this.randomChar();
-                const isScrambling = i >= nameCharsToShow;
+                const isCharScrambling = i >= nameCharsToShow;
                 
                 const span = document.createElement('span');
                 span.textContent = char;
-                span.style.fontFamily = isScrambling ? this.getRandomFont() : this.originalFont;
-                span.style.transition = 'font-family 0.15s ease';
+                span.style.fontFamily = isCharScrambling ? this.getRandomFont() : this.originalFont;
+                span.style.transition = 'font-family 0.2s ease';
                 letterSpans.push(span);
             }
             
             if (nameProgress >= 1) {
                 this.nameRevealComplete = true;
             }
-        } else if (this.nameRevealComplete && this.frame < 180 && !this.namePauseComplete) { // Slower pause
+        } else if (this.nameRevealComplete && this.frame < 300 && !this.namePauseComplete) { // Much longer pause
             for (let i = 0; i < this.nameText.length; i++) {
                 const span = document.createElement('span');
                 span.textContent = this.nameText[i];
@@ -381,11 +383,11 @@ class TextScramble {
                 letterSpans.push(span);
             }
             
-            if (this.frame >= 180) { // Slower pause duration
+            if (this.frame >= 300) { // Much longer pause duration
                 this.namePauseComplete = true;
             }
         } else if (this.namePauseComplete || !this.showName) {
-            const adjustedFrame = this.showName ? this.frame - 180 : this.frame;
+            const adjustedFrame = this.showName ? this.frame - 300 : this.frame;
             
             for (let i = 0, n = this.queue.length; i < n; i++) {
                 let { from, to, start, end, char } = this.queue[i];
@@ -396,7 +398,7 @@ class TextScramble {
                     complete++;
                     currentChar = to;
                 } else if (adjustedFrame >= start) {
-                    if (!char || Math.random() < 0.12) { // Much slower character changing
+                    if (!char || Math.random() < 0.05) { // Much much slower character changing
                         char = this.randomChar();
                         this.queue[i].char = char;
                     }
@@ -410,7 +412,7 @@ class TextScramble {
                 span.textContent = currentChar;
                 // Each scrambling character gets a new random font
                 span.style.fontFamily = isCharScrambling ? this.getRandomFont() : this.originalFont;
-                span.style.transition = 'font-family 0.15s ease';
+                span.style.transition = 'font-family 0.2s ease';
                 letterSpans.push(span);
             }
         }
@@ -420,18 +422,26 @@ class TextScramble {
         letterSpans.forEach(span => this.el.appendChild(span));
         
         if (complete === this.queue.length) {
+            this.isScrambling = false;
             // Ensure all letters return to original font when complete
             setTimeout(() => {
-                const finalSpans = this.el.querySelectorAll('span');
-                finalSpans.forEach(span => {
-                    span.style.fontFamily = this.originalFont;
-                });
-            }, 100);
+                if (!this.isScrambling) {
+                    this.el.innerHTML = this.el.textContent; // Reset to plain text
+                    this.el.style.fontFamily = this.originalFont;
+                }
+            }, 200);
             this.resolve();
         } else {
             this.frameRequest = requestAnimationFrame(this.update);
             this.frame++;
         }
+    }
+    
+    stop() {
+        this.isScrambling = false;
+        cancelAnimationFrame(this.frameRequest);
+        this.el.innerHTML = this.el.textContent; // Reset to plain text
+        this.el.style.fontFamily = this.originalFont;
     }
     
     randomChar() {
@@ -642,27 +652,46 @@ const textParting = new TextPartingEffect();
 const aboutScramble = new TextScramble(aboutToggle);
 let isAboutOpen = false;
 
-// About toggle functionality
-aboutToggle.addEventListener('click', function() {
+// About toggle functionality - FIXED to preserve click functionality
+aboutToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Stop any ongoing scrambling to prevent interference
+    aboutScramble.stop();
+    
+    // Toggle bio content
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
     
+    // Set text immediately, then start scramble effect
     if (isAboutOpen) {
-        aboutScramble.setText('HIDE', true);
+        aboutToggle.textContent = 'HIDE';
         setTimeout(() => {
+            aboutScramble.setText('HIDE', true);
             textParting.init();
-        }, 100);
+        }, 50);
     } else {
-        aboutScramble.setText('ABOUT');
+        aboutToggle.textContent = 'ABOUT';
+        setTimeout(() => {
+            aboutScramble.setText('ABOUT');
+        }, 50);
     }
 });
 
+// Mouse enter for scramble effect on hover
 aboutToggle.addEventListener('mouseenter', function() {
+    // Only scramble on hover, don't change the bio content state
     if (!isAboutOpen) {
         aboutScramble.setText('ABOUT');
     } else {
         aboutScramble.setText('HIDE');
     }
+});
+
+// Mouse leave to stop scrambling
+aboutToggle.addEventListener('mouseleave', function() {
+    aboutScramble.stop();
 });
 
 // Project link events
