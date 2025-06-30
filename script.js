@@ -391,10 +391,33 @@ class TextScramble {
     }
 }
 
-// Text Parting Effect
+// Text Parting Effect with Font Variations
 class TextPartingEffect {
     constructor() {
         this.activeElements = new Map();
+        // Array of abstract and varied fonts
+        this.abstractFonts = [
+            '"Times New Roman", serif',
+            '"Courier New", monospace',
+            '"Georgia", serif',
+            '"Lucida Console", monospace',
+            '"Comic Sans MS", cursive',
+            '"Impact", fantasy',
+            '"Trebuchet MS", sans-serif',
+            '"Palatino", serif',
+            '"Garamond", serif',
+            '"Brush Script MT", cursive',
+            '"Papyrus", fantasy',
+            '"Old English Text MT", fantasy',
+            '"Blackletter", fantasy',
+            '"Book Antiqua", serif',
+            '"Copperplate", fantasy',
+            '"Optima", sans-serif',
+            '"Didot", serif',
+            '"Futura", sans-serif',
+            '"Rockwell", serif',
+            '"Century Gothic", sans-serif'
+        ];
     }
 
     init() {
@@ -456,6 +479,10 @@ class TextPartingEffect {
         return textNodes;
     }
 
+    getRandomFont() {
+        return this.abstractFonts[Math.floor(Math.random() * this.abstractFonts.length)];
+    }
+
     startParting(element) {
         if (!this.activeElements.has(element)) {
             const words = element.querySelectorAll('.word');
@@ -466,7 +493,9 @@ class TextPartingEffect {
                 wordData.set(word, {
                     rect: rect,
                     originalTransform: word.style.transform || '',
-                    isActive: true
+                    originalFontFamily: word.style.fontFamily || getComputedStyle(word).fontFamily,
+                    isActive: true,
+                    assignedFont: null
                 });
             });
             
@@ -503,11 +532,22 @@ class TextPartingEffect {
                 const pushX = -Math.cos(angle) * strength;
                 const pushY = -Math.sin(angle) * strength;
                 
+                // Apply transform
                 word.style.transform = `translate(${pushX}px, ${pushY}px)`;
-                word.style.transition = 'transform 0.1s ease-out';
+                word.style.transition = 'transform 0.1s ease-out, font-family 0.1s ease-out';
+                
+                // Apply random font if not already assigned or change it occasionally
+                if (!wordData.assignedFont || Math.random() < 0.1) {
+                    wordData.assignedFont = this.getRandomFont();
+                }
+                word.style.fontFamily = wordData.assignedFont;
+                
             } else {
+                // Reset transform and font when outside influence
                 word.style.transform = wordData.originalTransform;
-                word.style.transition = 'transform 0.2s ease-out';
+                word.style.fontFamily = wordData.originalFontFamily;
+                word.style.transition = 'transform 0.2s ease-out, font-family 0.2s ease-out';
+                wordData.assignedFont = null;
             }
         });
     }
@@ -519,8 +559,10 @@ class TextPartingEffect {
             data.isActive = false;
             
             data.words.forEach((wordData, word) => {
-                word.style.transition = 'transform 0.3s ease-out';
+                word.style.transition = 'transform 0.3s ease-out, font-family 0.3s ease-out';
                 word.style.transform = wordData.originalTransform;
+                word.style.fontFamily = wordData.originalFontFamily;
+                wordData.assignedFont = null;
             });
             
             setTimeout(() => {
