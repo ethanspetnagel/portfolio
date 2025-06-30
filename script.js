@@ -295,13 +295,13 @@ function hideAllMedia() {
     currentMedia = null;
 }
 
-// Text scramble effect with font variations
+// Text scramble effect
 class TextScramble {
     constructor(el) {
         this.el = el;
         this.chars = 'ABCDEFGHIXYZ0123456789@#$%?';
         this.update = this.update.bind(this);
-        // Array of abstract and varied fonts for scrambling effect
+        // Add font array for variations
         this.abstractFonts = [
             '"Times New Roman", serif',
             '"Courier New", monospace',
@@ -315,20 +315,10 @@ class TextScramble {
             '"Brush Script MT", cursive',
             '"Papyrus", fantasy',
             '"Old English Text MT", fantasy',
-            '"Blackletter", fantasy',
             '"Book Antiqua", serif',
-            '"Copperplate", fantasy',
-            '"Optima", sans-serif',
-            '"Didot", serif',
-            '"Futura", sans-serif',
-            '"Rockwell", serif',
             '"Century Gothic", sans-serif'
         ];
         this.originalFont = getComputedStyle(el).fontFamily;
-    }
-    
-    getRandomFont() {
-        return this.abstractFonts[Math.floor(Math.random() * this.abstractFonts.length)];
     }
     
     setText(newText, showName = false) {
@@ -343,8 +333,8 @@ class TextScramble {
         for (let i = 0; i < length; i++) {
             const from = oldText[i] || '';
             const to = newText[i] || '';
-            const start = Math.floor(Math.random() * 60); // Slowed down from 40
-            const end = start + Math.floor(Math.random() * 100); // Slowed down from 60
+            const start = Math.floor(Math.random() * 40);
+            const end = start + Math.floor(Math.random() * 60);
             this.queue.push({ from, to, start, end });
         }
         
@@ -360,10 +350,10 @@ class TextScramble {
     update() {
         let output = '';
         let complete = 0;
-        let isScrambling = false; // Track if we're currently scrambling
+        let isScrambling = false;
         
-        if (this.showName && this.frame >= 30 && !this.nameRevealComplete) { // Slowed down from 20
-            const nameProgress = Math.min((this.frame - 30) / 60, 1); // Slowed down from 40
+        if (this.showName && this.frame >= 20 && !this.nameRevealComplete) {
+            const nameProgress = Math.min((this.frame - 20) / 40, 1);
             const nameCharsToShow = Math.floor(this.nameText.length * nameProgress);
             
             for (let i = 0; i < this.nameText.length; i++) {
@@ -380,13 +370,13 @@ class TextScramble {
             if (nameProgress >= 1) {
                 this.nameRevealComplete = true;
             }
-        } else if (this.nameRevealComplete && this.frame < 180 && !this.namePauseComplete) { // Slowed down from 120
+        } else if (this.nameRevealComplete && this.frame < 120 && !this.namePauseComplete) {
             this.el.textContent = this.nameText;
-            if (this.frame >= 180) { // Slowed down from 120
+            if (this.frame >= 120) {
                 this.namePauseComplete = true;
             }
         } else if (this.namePauseComplete || !this.showName) {
-            const adjustedFrame = this.showName ? this.frame - 180 : this.frame; // Adjusted from 120
+            const adjustedFrame = this.showName ? this.frame - 120 : this.frame;
             
             for (let i = 0, n = this.queue.length; i < n; i++) {
                 let { from, to, start, end, char } = this.queue[i];
@@ -395,7 +385,7 @@ class TextScramble {
                     complete++;
                     output += to;
                 } else if (adjustedFrame >= start) {
-                    if (!char || Math.random() < 0.15) { // Slowed down from 0.28
+                    if (!char || Math.random() < 0.28) {
                         char = this.randomChar();
                         this.queue[i].char = char;
                     }
@@ -409,21 +399,17 @@ class TextScramble {
             this.el.textContent = output;
         }
         
-        // Apply random font during scrambling, reset to original when done
-        if (isScrambling) {
-            // Change font occasionally during scrambling for more visible effect
-            if (Math.random() < 0.3) { // 30% chance each frame
-                this.el.style.fontFamily = this.getRandomFont();
-            }
-            this.el.style.transition = 'font-family 0.2s ease';
-        } else {
-            // Reset to original font when not scrambling
+        // Apply font changes during scrambling
+        if (isScrambling && Math.random() < 0.3) {
+            const randomFont = this.abstractFonts[Math.floor(Math.random() * this.abstractFonts.length)];
+            this.el.style.fontFamily = randomFont;
+            this.el.style.transition = 'font-family 0.1s ease';
+        } else if (!isScrambling) {
             this.el.style.fontFamily = this.originalFont;
-            this.el.style.transition = 'font-family 0.3s ease';
+            this.el.style.transition = 'font-family 0.2s ease';
         }
         
         if (complete === this.queue.length) {
-            // Ensure original font is restored when complete
             this.el.style.fontFamily = this.originalFont;
             this.resolve();
         } else {
@@ -434,6 +420,147 @@ class TextScramble {
     
     randomChar() {
         return this.chars[Math.floor(Math.random() * this.chars.length)];
+    }
+}
+
+// Text Parting Effect
+class TextPartingEffect {
+    constructor() {
+        this.activeElements = new Map();
+    }
+
+    init() {
+        this.wrapWordsInSpans();
+        
+        const bioTexts = document.querySelectorAll('.bio-text');
+        
+        bioTexts.forEach(element => {
+            element.addEventListener('mouseenter', (e) => this.startParting(e.target));
+            element.addEventListener('mousemove', (e) => this.updateParting(e));
+            element.addEventListener('mouseleave', (e) => this.endParting(e.target));
+        });
+    }
+
+    wrapWordsInSpans() {
+        const bioTexts = document.querySelectorAll('.bio-text p, .bio-text a');
+        
+        bioTexts.forEach(element => {
+            if (element.querySelector('.word')) return;
+            
+            const textNodes = this.getTextNodes(element);
+            
+            textNodes.forEach(node => {
+                const words = node.textContent.split(/(\s+)/);
+                const fragment = document.createDocumentFragment();
+                
+                words.forEach(word => {
+                    if (word.trim() !== '') {
+                        const span = document.createElement('span');
+                        span.className = 'word';
+                        span.textContent = word;
+                        fragment.appendChild(span);
+                    } else {
+                        fragment.appendChild(document.createTextNode(word));
+                    }
+                });
+                
+                node.parentNode.replaceChild(fragment, node);
+            });
+        });
+    }
+
+    getTextNodes(element) {
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+            element,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+        );
+        
+        let node;
+        while (node = walker.nextNode()) {
+            if (node.textContent.trim() !== '') {
+                textNodes.push(node);
+            }
+        }
+        
+        return textNodes;
+    }
+
+    startParting(element) {
+        if (!this.activeElements.has(element)) {
+            const words = element.querySelectorAll('.word');
+            const wordData = new Map();
+            
+            words.forEach(word => {
+                const rect = word.getBoundingClientRect();
+                wordData.set(word, {
+                    rect: rect,
+                    originalTransform: word.style.transform || '',
+                    isActive: true
+                });
+            });
+            
+            this.activeElements.set(element, {
+                words: wordData,
+                isActive: true
+            });
+        }
+    }
+
+    updateParting(event) {
+        const element = event.target.closest('.bio-text');
+        const data = this.activeElements.get(element);
+        
+        if (!data || !data.isActive) return;
+
+        const cursorX = event.clientX;
+        const cursorY = event.clientY;
+        
+        data.words.forEach((wordData, word) => {
+            const rect = word.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const deltaX = cursorX - centerX;
+            const deltaY = cursorY - centerY;
+            
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const maxInfluence = 150;
+            
+            if (distance < maxInfluence) {
+                const strength = (1 - distance / maxInfluence) * 25;
+                const angle = Math.atan2(deltaY, deltaX);
+                const pushX = -Math.cos(angle) * strength;
+                const pushY = -Math.sin(angle) * strength;
+                
+                word.style.transform = `translate(${pushX}px, ${pushY}px)`;
+                word.style.transition = 'transform 0.1s ease-out';
+            } else {
+                word.style.transform = wordData.originalTransform;
+                word.style.transition = 'transform 0.2s ease-out';
+            }
+        });
+    }
+
+    endParting(element) {
+        const data = this.activeElements.get(element);
+        
+        if (data) {
+            data.isActive = false;
+            
+            data.words.forEach((wordData, word) => {
+                word.style.transition = 'transform 0.3s ease-out';
+                word.style.transform = wordData.originalTransform;
+            });
+            
+            setTimeout(() => {
+                if (!data.isActive) {
+                    this.activeElements.delete(element);
+                }
+            }, 300);
+        }
     }
 }
 
@@ -495,6 +622,7 @@ function handleProjectHover(link, isEntering) {
 }
 
 // Initialize text effects
+const textParting = new TextPartingEffect();
 const aboutScramble = new TextScramble(aboutToggle);
 let isAboutOpen = false;
 
@@ -505,6 +633,9 @@ aboutToggle.addEventListener('click', function() {
     
     if (isAboutOpen) {
         aboutScramble.setText('HIDE', true);
+        setTimeout(() => {
+            textParting.init();
+        }, 100);
     } else {
         aboutScramble.setText('ABOUT');
     }
