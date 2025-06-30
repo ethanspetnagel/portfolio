@@ -4,13 +4,13 @@ const projectMedia = {
         url: './slug.mp4',
         position: {
             left: '12%',  // Position so "SLUG" text in video aligns with top-left
-            top: '9%'
+            top: '2%'
         }
     }, 
     'church': {
         url: './church video bg.mp4',
         position: {
-            left: '34%',  // Right side
+            left: '34.5%',  // Right side
             top: '39%'
         }
     },
