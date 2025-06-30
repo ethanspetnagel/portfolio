@@ -211,7 +211,7 @@ body.june-hover .bio-text,
 body.june-hover .bio-text p,
 body.june-hover .bio-text a,
 body.june-hover .contact-links a {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 /* Date text when project is active - always black */
@@ -361,7 +361,7 @@ body.project-hovering.video-light .bio-text a:hover {
 }
 
 .contact-links a:hover {
-  color: #2d2f32 !important;
+  color: #ffffff !important;
   text-decoration: none !important;
   transform: translateY(2px);
 }
