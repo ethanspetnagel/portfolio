@@ -166,9 +166,9 @@ body.page-navigating * {
   will-change: color, opacity;
 }
 
-/* Project link hover - BRIGHT HIGHLIGHTER YELLOW */
+/* Project link hover - BLACK */
 .project-link:hover {
-  color: #ffff00 !important; /* Bright highlighter yellow on hover */
+  color: #0f0f0f !important; /* Black on hover */
 }
 
 /* Website Info */
@@ -194,9 +194,9 @@ body.page-navigating * {
   letter-spacing: 0.02em;
 }
 
-/* Date text hover - white text on black background */
+/* Date text hover - keep default color */
 .date-text:hover {
-  color: #ffffff;
+  color: #2d2f32 !important;
 }
 
 /* Special class for black background effect */
@@ -205,9 +205,8 @@ body.june-hover {
   transition: background-color 0.3s ease;
 }
 
+/* Elements that turn white on June hover - excluding date text and about toggle */
 body.june-hover .project-link,
-body.june-hover .date-text,
-body.june-hover .about-toggle,
 body.june-hover .bio-text,
 body.june-hover .bio-text p,
 body.june-hover .bio-text a,
@@ -215,19 +214,9 @@ body.june-hover .contact-links a {
   color: #ffffff;
 }
 
-/* Date text when project is active - adapts to video brightness */
+/* Date text when project is active - always black */
 .date-text.project-active {
-  color: #2d2f32; /* Default color */
-}
-
-/* When video is dark - white text */
-body.project-hovering.video-dark .date-text.project-active {
-  color: #ffffff !important;
-}
-
-/* When video is light - black text */
-body.project-hovering.video-light .date-text.project-active {
-  color: #0f0f0f !important;
+  color: #0f0f0f !important; /* Always black */
 }
 
 /* Bio Section */
@@ -248,44 +237,27 @@ body.project-hovering.video-light .date-text.project-active {
   color: #2d2f32; /* Default medium gray */
 }
 
-/* About toggle */
+/* About toggle - always keep default color */
 .about-toggle {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 9px;
-  transition: color 0.3s ease, opacity 0.3s ease;
+  transition: opacity 0.3s ease;
   position: relative;
   display: inline-block;
   text-transform: uppercase;
   line-height: 1;
   padding: 0;
   letter-spacing: 0.02em;
-  color: #2d2f32; /* Default medium gray */
+  color: #2d2f32 !important; /* Always keep default gray color */
 }
 
 .about-toggle:hover {
   opacity: 0.8;
 }
 
-/* Dynamic colors based on video brightness */
-/* Dark video - white text */
-body.project-hovering.video-dark .about-toggle,
-body.project-hovering.video-dark .bio-text,
-body.project-hovering.video-dark .bio-text p,
-body.project-hovering.video-dark .bio-text a,
-body.project-hovering.video-dark .contact-links a {
-  color: #ffffff !important;
-}
-
-/* Light video - black text */
-body.project-hovering.video-light .about-toggle,
-body.project-hovering.video-light .bio-text,
-body.project-hovering.video-light .bio-text p,
-body.project-hovering.video-light .bio-text a,
-body.project-hovering.video-light .contact-links a {
-  color: #0f0f0f !important;
-}
+/* Bio section elements maintain default colors */
 
 /* Bio content */
 .bio-content {
@@ -336,7 +308,7 @@ body.project-hovering.video-light .contact-links a {
 }
 
 .bio-text a:hover {
-  color: #0008ff !important; /* Lime green on hover */
+  color: #0008ff !important; /* Blue on hover */
 }
 
 /* Maintain hover color even when video is playing */
@@ -394,15 +366,6 @@ body.project-hovering.video-light .bio-text a:hover {
   transform: translateY(2px);
 }
 
-/* Override oval colors based on video brightness */
-body.project-hovering.video-dark .contact-links a:hover::after {
-  border-color: #ffffff !important;
-}
-
-body.project-hovering.video-light .contact-links a:hover::after {
-  border-color: #0f0f0f !important;
-}
-
 /* Bio Preview */
 .bio-preview {
   position: fixed;
@@ -427,7 +390,7 @@ body.project-hovering.video-light .contact-links a:hover::after {
 /* Touch device styles */
 @media (hover: none) and (pointer: coarse) {
   .project-link.touch-active {
-    color: #ffff00; /* Bright highlighter yellow for touch active */
+    color: #0f0f0f; /* Black for touch active */
   }
 
   .projects-container.touch-hovering .project-link {
@@ -631,7 +594,7 @@ body.transitioning {
   }
 
   .bio-text a:hover {
-    color: #b3d100;
+    color: #0008ff; /* Blue on hover */
   }
 
   .contact-links {
@@ -674,10 +637,4 @@ body.transitioning {
   .contact-links a {
     color: #2d2f32;
   }
-}
-
-/* Project hovering styles */
-body.project-hovering .about-toggle,
-body.project-hovering .website-info .date-text {
-  color: #fff !important;
 }
