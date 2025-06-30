@@ -222,48 +222,53 @@ class FontFlip {
             'Georgia, serif'
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
-        this.interval = null;
+        this.animating = false;
     }
 
     setText(newText) {
         this.text = newText;
-        this.stop(); // Stop any previous animation
-        this.animate();
+        this.stop();
+        this.animateLetter(0);
     }
 
-    animate() {
-        let frame = 0;
-        const maxFrames = this.fonts.length;
-        this.interval = setInterval(() => {
-            this.el.innerHTML = '';
-            for (let i = 0; i < this.text.length; i++) {
-                const span = document.createElement('span');
-                span.textContent = this.text[i];
-                span.style.display = 'inline-block';
-                span.style.fontFamily = frame < maxFrames ? this.fonts[frame] : this.originalFont;
-                this.el.appendChild(span);
+    animateLetter(index) {
+        if (index >= this.text.length) {
+            // Animation done, set all to original font
+            this.renderWord(-1, -1);
+            return;
+        }
+        let fontFrame = 0;
+        const animateFont = () => {
+            if (fontFrame < this.fonts.length) {
+                this.renderWord(index, fontFrame);
+                fontFrame++;
+                setTimeout(animateFont, 100); // Faster: 100ms per font
+            } else {
+                // Move to next letter
+                this.renderWord(index, -1);
+                setTimeout(() => this.animateLetter(index + 1), 50);
             }
-            frame++;
-            if (frame > maxFrames) {
-                this.stop();
-                // Set to original font at the end
-                this.el.innerHTML = '';
-                for (let i = 0; i < this.text.length; i++) {
-                    const span = document.createElement('span');
-                    span.textContent = this.text[i];
-                    span.style.display = 'inline-block';
-                    span.style.fontFamily = this.originalFont;
-                    this.el.appendChild(span);
-                }
+        };
+        animateFont();
+    }
+
+    renderWord(activeIndex, fontFrame) {
+        this.el.innerHTML = '';
+        for (let i = 0; i < this.text.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = this.text[i];
+            span.style.display = 'inline-block';
+            if (i === activeIndex && fontFrame >= 0) {
+                span.style.fontFamily = this.fonts[fontFrame];
+            } else {
+                span.style.fontFamily = this.originalFont;
             }
-        }, 250);
+            this.el.appendChild(span);
+        }
     }
 
     stop() {
-        if (this.interval) {
-            clearInterval(this.interval);
-            this.interval = null;
-        }
+        // No intervals to clear in this version, but method kept for API compatibility
     }
 }
 
@@ -433,20 +438,16 @@ let isAboutOpen = false;
 aboutToggle.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
-
-    // Animate font flip
-    aboutFlip.setText(isAboutOpen ? 'ABOUT' : 'ABOUT');
-
-    // Toggle bio content
     bioContent.classList.toggle('active');
     isAboutOpen = !isAboutOpen;
-
-    // Troubleshooting: log state and check visibility
-    console.log('About clicked. isAboutOpen:', isAboutOpen, 'bioContent.active:', bioContent.classList.contains('active'));
-    setTimeout(() => {
-        const style = window.getComputedStyle(bioContent);
-        console.log('bioContent display:', style.display, 'opacity:', style.opacity, 'max-height:', style.maxHeight);
-    }, 300);
+    if (isAboutOpen) {
+        aboutFlip.setText('HIDE');
+        setTimeout(() => {
+            textParting.init();
+        }, 300);
+    } else {
+        aboutFlip.setText('ABOUT');
+    }
 });
 
 // About toggle hover effect
