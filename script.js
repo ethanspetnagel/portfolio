@@ -74,10 +74,10 @@
                     if (fontFrame < shuffledFonts.length) {
                         this._renderWord(index, fontFrame, shuffledFonts);
                         fontFrame++;
-                        this._timeout = setTimeout(animateFont, 120);
+                        this._timeout = setTimeout(animateFont, 100);
                     } else {
                         this._renderWord(index, -1, shuffledFonts);
-                        this._timeout = setTimeout(() => this._animateLetter(index + 1), 25);
+                        this._timeout = setTimeout(() => this._animateLetter(index + 1), 1);
                     }
                 };
                 animateFont();
@@ -375,10 +375,10 @@ class FontFlip {
             if (fontFrame < shuffledFonts.length) {
                 this._renderWord(index, fontFrame, shuffledFonts);
                 fontFrame++;
-                this._timeout = setTimeout(animateFont, 120);
+                this._timeout = setTimeout(animateFont, 110);
             } else {
                 this._renderWord(index, -1, shuffledFonts);
-                this._timeout = setTimeout(() => this._animateLetter(index + 1), 25);
+                this._timeout = setTimeout(() => this._animateLetter(index + 1), 5);
             }
         };
         this._isAnimating = true;
