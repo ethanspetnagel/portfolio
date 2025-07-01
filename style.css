@@ -407,6 +407,35 @@ body.project-hovering.video-light .bio-text a:hover {
   display: block;
 }
 
+/* Resume Download Button */
+.resume-download {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 15;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #2d2f32;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+  line-height: 1;
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .resume-download {
+    display: none;
+  }
+}
+
 /* Intro Overlay */
 #introOverlay {
   position: fixed;
@@ -689,3 +718,6 @@ body.transitioning {
   }
 }
 
+.bio-content {
+  overflow: visible;
+}
