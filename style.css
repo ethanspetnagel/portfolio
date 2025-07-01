@@ -427,9 +427,6 @@ body.project-hovering.video-light .bio-text a:hover {
   cursor: pointer !important;
   user-select: none !important;
   line-height: 1 !important;
-  padding: 10px !important; /* Add some padding for easier clicking */
-  background: rgba(255, 0, 0, 0.1) !important; /* Temporary red background to see it */
-  border: 2px solid red !important; /* Temporary red border */
   pointer-events: auto !important; /* Ensure it's clickable */
   display: block !important;
   visibility: visible !important;
