@@ -265,32 +265,37 @@ body.june-hover .contact-links a {
 /* Bio content */
 .bio-content {
   display: block;
-  opacity: 0;
-  transform: scale(0.96) translateY(32px);
-  pointer-events: none;
   max-height: 0;
-  background: rgba(255,255,255,0.55);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
-  transition:
-    opacity 0.44s cubic-bezier(.4,1.6,.6,1),
-    transform 0.44s cubic-bezier(.4,1.6,.6,1),
-    max-height 0.44s cubic-bezier(.4,1.6,.6,1);
-  will-change: opacity, transform, max-height;
   overflow: hidden;
-  padding: 24px 24px 16px 24px;
+  transition: max-height 0.9s cubic-bezier(.4,1.6,.6,1);
+  pointer-events: none;
 }
 
 .bio-content.active {
-  opacity: 1;
-  transform: scale(1) translateY(0);
+  max-height: 1200px; /* Large enough for your content */
   pointer-events: auto;
-  max-height: 1000px;
-  transition:
-    opacity 0.66s cubic-bezier(.4,1.6,.6,1),
-    transform 0.66s cubic-bezier(.4,1.6,.6,1),
-    max-height 0.66s cubic-bezier(.4,1.6,.6,1);
+  transition: max-height 1.2s cubic-bezier(.4,1.6,.6,1);
 }
+
+.bio-content .bio-text > * {
+  opacity: 0;
+  transform: translateY(40px) scaleY(1.12);
+  /* No transition here, animation will handle it */
+}
+
+.bio-content.active .bio-text > * {
+  animation: honeyFloatUp 1.3s cubic-bezier(.4,1.6,.6,1) forwards;
+}
+
+/* Give each line a slightly different animation-delay for a "liquid" effect */
+.bio-content.active .bio-text > *:nth-child(1) { animation-delay: 0.00s; }
+.bio-content.active .bio-text > *:nth-child(2) { animation-delay: 0.09s; }
+.bio-content.active .bio-text > *:nth-child(3) { animation-delay: 0.18s; }
+.bio-content.active .bio-text > *:nth-child(4) { animation-delay: 0.13s; }
+.bio-content.active .bio-text > *:nth-child(5) { animation-delay: 0.22s; }
+.bio-content.active .bio-text > *:nth-child(6) { animation-delay: 0.16s; }
+.bio-content.active .bio-text > *:nth-child(7) { animation-delay: 0.27s; }
+.bio-content.active .bio-text > *:nth-child(8) { animation-delay: 0.19s; }
 
 /* Bio text */
 .bio-text {
@@ -687,5 +692,29 @@ body.transitioning {
   .bio-text a,
   .contact-links a {
     color: #2d2f32;
+  }
+}
+
+/* Animation for bio content floating effect */
+@keyframes honeyFloatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scaleY(1.12);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-8px) scaleY(0.98);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(4px) scaleY(1.02);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-2px) scaleY(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
   }
 }
