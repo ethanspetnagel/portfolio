@@ -47,8 +47,7 @@
                     'Comic Sans MS, cursive',
                     'Papyrus, fantasy',                  // Ancient/mystical
             'Marker Felt, fantasy',              // Marker pen style
-            'Luminari, fantasy',                 // Decorative caps
-            'Zapfino, cursive'                   // Elegant script
+            'Luminari, fantasy'                 // Decorative c
                 ];
                 this.originalFont = window.getComputedStyle(el).fontFamily;
                 this._timeout = null;
@@ -348,8 +347,7 @@ class FontFlip {
                     'Comic Sans MS, cursive',
                     'Papyrus, fantasy',                  // Ancient/mystical
             'Marker Felt, fantasy',              // Marker pen style
-            'Luminari, fantasy',                 // Decorative caps
-            'Zapfino, cursive'        
+            'Luminari, fantasy'                // Decorative cap        
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
