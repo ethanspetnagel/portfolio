@@ -264,11 +264,32 @@ body.june-hover .contact-links a {
 
 /* Bio content */
 .bio-content {
-  display: none;
+  display: block;
+  opacity: 0;
+  transform: scale(0.96) translateY(32px);
+  pointer-events: none;
+  max-height: 0;
+  background: rgba(255,255,255,0.55);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+  transition:
+    opacity 0.44s cubic-bezier(.4,1.6,.6,1),
+    transform 0.44s cubic-bezier(.4,1.6,.6,1),
+    max-height 0.44s cubic-bezier(.4,1.6,.6,1);
+  will-change: opacity, transform, max-height;
+  overflow: hidden;
+  padding: 24px 24px 16px 24px;
 }
 
 .bio-content.active {
-  display: block;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+  max-height: 1000px;
+  transition:
+    opacity 0.66s cubic-bezier(.4,1.6,.6,1),
+    transform 0.66s cubic-bezier(.4,1.6,.6,1),
+    max-height 0.66s cubic-bezier(.4,1.6,.6,1);
 }
 
 /* Bio text */
