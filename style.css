@@ -412,26 +412,34 @@ body.project-hovering.video-light .bio-text a:hover {
 }
 
 /* Resume Download Button */
+/* Debug styles for resume button - add these temporarily */
 .resume-download {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 15;
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
-  font-weight: bold;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  color: #2d2f32;
-  cursor: pointer;
-  user-select: none;
-  transition: color 0.2s;
-  line-height: 1;
-  padding: 0;
-  background: none;
-  border: none;
-  outline: none;
-  display: inline-block;
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 9999 !important; /* Very high z-index */
+  font-size: clamp(10.8px, 2.43vw, 29.7px) !important;
+  font-weight: bold !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  color: #2d2f32 !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  line-height: 1 !important;
+  padding: 10px !important; /* Add some padding for easier clicking */
+  background: rgba(255, 0, 0, 0.1) !important; /* Temporary red background to see it */
+  border: 2px solid red !important; /* Temporary red border */
+  pointer-events: auto !important; /* Ensure it's clickable */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  transform: none !important;
+  /* Remove any animations that might interfere */
+  transition: none !important;
+  animation: none !important;
 }
 
 .resume-section {

@@ -223,6 +223,7 @@ body.title-hover .corner-logo {
   cursor: pointer;
   color: #2d2f32;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
   white-space: nowrap;
   padding: 18px 0;
   line-height: 1.08;
