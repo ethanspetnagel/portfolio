@@ -705,61 +705,6 @@ bioLinks.forEach(link => {
     });
 });
 
-// Resume FontFlip
-const resumeDownload = document.getElementById('resumeDownload');
-if (resumeDownload) {
-    const resumeFlip = new FontFlip(resumeDownload);
-
-    resumeDownload.addEventListener('mouseenter', function() {
-        alert('RESUME mouseenter triggered');
-        console.log('RESUME mouseenter triggered');
-        try {
-            if (!resumeFlip._isAnimating) {
-                alert('Starting animation');
-                resumeFlip.setText('RESUME');
-            } else {
-                alert('Animation already running');
-            }
-            setTimeout(() => {
-                alert('Triggering download');
-                const link = document.createElement('a');
-                link.href = './ethanspetnagel2025.pdf';
-                link.download = 'ethanspetnagel2025.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }, 350);
-        } catch (e) {
-            alert('Error in resume mouseenter: ' + e.message);
-            console.error(e);
-        }
-    });
-
-    resumeDownload.addEventListener('mouseleave', function() {
-        resumeFlip.stop();
-        resumeDownload.innerHTML = '';
-        for (let i = 0; i < 'RESUME'.length; i++) {
-            const span = document.createElement('span');
-            span.textContent = 'RESUME'[i];
-            span.style.display = 'inline-block';
-            span.style.fontFamily = resumeFlip.originalFont;
-            resumeDownload.appendChild(span);
-        }
-    });
-
-    // Set initial text on page load
-    resumeDownload.innerHTML = '';
-    for (let i = 0; i < 'RESUME'.length; i++) {
-        const span = document.createElement('span');
-        span.textContent = 'RESUME'[i];
-        span.style.display = 'inline-block';
-        span.style.fontFamily = resumeFlip.originalFont;
-        resumeDownload.appendChild(span);
-    }
-} else {
-    alert('resumeDownload element not found!');
-    console.error('resumeDownload element not found!');
-}
 
 // Initialize everything on DOM load
 document.addEventListener('DOMContentLoaded', function() {
@@ -788,6 +733,62 @@ document.addEventListener('DOMContentLoaded', function() {
             updateTextColors(activeProject);
         }
     }, 1000);
+
+    // Resume FontFlip
+    const resumeDownload = document.getElementById('resumeDownload');
+    if (resumeDownload) {
+        const resumeFlip = new FontFlip(resumeDownload);
+
+        resumeDownload.addEventListener('mouseenter', function() {
+            alert('RESUME mouseenter triggered');
+            console.log('RESUME mouseenter triggered');
+            try {
+                if (!resumeFlip._isAnimating) {
+                    alert('Starting animation');
+                    resumeFlip.setText('RESUME');
+                } else {
+                    alert('Animation already running');
+                }
+                setTimeout(() => {
+                    alert('Triggering download');
+                    const link = document.createElement('a');
+                    link.href = './ethanspetnagel2025.pdf';
+                    link.download = 'ethanspetnagel2025.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, 360);
+            } catch (e) {
+                alert('Error in resume mouseenter: ' + e.message);
+                console.error(e);
+            }
+        });
+
+        resumeDownload.addEventListener('mouseleave', function() {
+            resumeFlip.stop();
+            resumeDownload.innerHTML = '';
+            for (let i = 0; i < 'RESUME'.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = 'RESUME'[i];
+                span.style.display = 'inline-block';
+                span.style.fontFamily = resumeFlip.originalFont;
+                resumeDownload.appendChild(span);
+            }
+        });
+
+        // Set initial text on page load
+        resumeDownload.innerHTML = '';
+        for (let i = 0; i < 'RESUME'.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = 'RESUME'[i];
+            span.style.display = 'inline-block';
+            span.style.fontFamily = resumeFlip.originalFont;
+            resumeDownload.appendChild(span);
+        }
+    } else {
+        alert('resumeDownload element not found!');
+        console.error('resumeDownload element not found!');
+    }
 });
 
 // Clean up on page unload
