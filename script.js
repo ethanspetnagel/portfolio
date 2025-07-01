@@ -812,7 +812,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                }, 350);
+                }, 360);
             } catch (e) {
                 alert('Error in resume mouseenter: ' + e.message);
                 console.error(e);
@@ -853,9 +853,3 @@ window.addEventListener('beforeunload', function() {
     }
 });
 
-// Add resume download element
-const resumeDownloadElement = document.createElement('div');
-resumeDownloadElement.className = 'resume-download';
-resumeDownloadElement.id = 'resumeDownload';
-resumeDownloadElement.textContent = 'RESUME';
-document.body.appendChild(resumeDownloadElement);
