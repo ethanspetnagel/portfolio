@@ -705,9 +705,10 @@ bioLinks.forEach(link => {
     });
 });
 
-// Resume FontFlip - FIXED VERSION
+// Resume FontFlip - ROBUST VERSION WITH DEBUGGING
 const resumeDownload = document.getElementById('resumeDownload');
 if (resumeDownload) {
+    console.log('Resume button found successfully');
     const resumeFlip = new FontFlip(resumeDownload);
     let downloadInProgress = false;
 
@@ -721,40 +722,93 @@ if (resumeDownload) {
             span.style.fontFamily = resumeFlip.originalFont;
             resumeDownload.appendChild(span);
         }
+        console.log('Resume text set to:', text);
+    }
+
+    // Reset function to ensure clean state
+    function resetResumeButton() {
+        downloadInProgress = false;
+        resumeFlip.stop();
+        setResumeButtonText('RESUME');
+        console.log('Resume button reset');
     }
 
     // On hover, animate and download - completes regardless of mouse position
     resumeDownload.addEventListener('mouseenter', function() {
-        if (downloadInProgress || resumeFlip._isAnimating) return;
+        console.log('Resume mouseenter triggered. downloadInProgress:', downloadInProgress, 'isAnimating:', resumeFlip._isAnimating);
+        
+        if (downloadInProgress || resumeFlip._isAnimating) {
+            console.log('Download blocked - already in progress or animating');
+            return;
+        }
         
         downloadInProgress = true;
+        console.log('Starting resume animation and download');
+        
         resumeFlip.setText('DOWNLOAD', function animationDone() {
-            // Trigger download after animation completes
-            const link = document.createElement('a');
-            link.href = './ethanspetnagel2025.pdf';
-            link.download = 'ethanspetnagel2025.pdf';
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            console.log('Animation completed, triggering download');
             
-            // Reset after download
-            setTimeout(() => {
-                setResumeButtonText('RESUME');
-                downloadInProgress = false;
-            }, 500);
+            // Trigger download after animation completes
+            try {
+                const link = document.createElement('a');
+                link.href = './ethanspetnagel2025.pdf';
+                link.download = 'ethanspetnagel2025.pdf';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                console.log('Download triggered successfully');
+                
+                // Reset after download
+                setTimeout(() => {
+                    resetResumeButton();
+                }, 500);
+                
+            } catch (error) {
+                console.error('Error during download:', error);
+                resetResumeButton();
+            }
         });
     });
 
     // No interruption on mouseleave - let the process complete
     resumeDownload.addEventListener('mouseleave', function() {
+        console.log('Resume mouseleave - no action taken');
         // Do nothing - let animation and download complete
+    });
+
+    // Emergency reset on double-click (for debugging)
+    resumeDownload.addEventListener('dblclick', function() {
+        console.log('Double-click detected - force reset');
+        resetResumeButton();
     });
 
     // Set initial text on page load
     setResumeButtonText('RESUME');
+    
+    // Force reset after 5 seconds if stuck (failsafe)
+    setInterval(() => {
+        if (downloadInProgress) {
+            console.log('Checking download progress... still in progress after interval');
+            // Reset if stuck for too long
+            setTimeout(() => {
+                if (downloadInProgress) {
+                    console.log('Download seems stuck - force reset');
+                    resetResumeButton();
+                }
+            }, 10000); // Reset after 10 seconds if still stuck
+        }
+    }, 5000);
+    
 } else {
-    console.error('Resume download element not found');
+    console.error('Resume download element not found! Check your HTML.');
+    // Try to find it by class name as backup
+    const backupElement = document.querySelector('.resume-download');
+    if (backupElement) {
+        console.log('Found resume element by class name instead');
+    } else {
+        console.error('Resume element not found by ID or class');
+    }
 }
 
 // Initialize everything on DOM load
