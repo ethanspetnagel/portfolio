@@ -40,14 +40,10 @@
             constructor(el) {
                 this.el = el;
                 this.fonts = [
-                    'Impact, fantasy',
-                    'Garamond, serif',
-                    'Pacifico, cursive',
+                    'times new roman, serif',
                     'UnifrakturCook, cursive',
-                    'Comic Sans MS, cursive',
                     'Papyrus, fantasy',                  // Ancient/mystical
-            'Marker Felt, fantasy',              // Marker pen style
-            'Luminari, fantasy'                 // Decorative c
+            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
                 ];
                 this.originalFont = window.getComputedStyle(el).fontFamily;
                 this._timeout = null;
@@ -340,14 +336,10 @@ class FontFlip {
     constructor(el) {
         this.el = el;
         this.fonts = [
-            'Impact, fantasy',
-                    'Garamond, serif',
-                    'Pacifico, cursive',
+             'times new roman, serif',
                     'UnifrakturCook, cursive',
-                    'Comic Sans MS, cursive',
                     'Papyrus, fantasy',                  // Ancient/mystical
-            'Marker Felt, fantasy',              // Marker pen style
-            'Luminari, fantasy'                // Decorative cap        
+            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
