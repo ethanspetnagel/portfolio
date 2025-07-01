@@ -751,8 +751,8 @@ if (resumeDownload) {
             // Trigger download after animation completes
             try {
                 const link = document.createElement('a');
-                link.href = './ethanspetnagel2025.pdf';
-                link.download = 'ethanspetnagel2025.pdf';
+                link.href = './EthanSpetnagel2025.pdf';
+                link.download = 'EthanSpetnagel2025.pdf';
                 link.style.display = 'none';
                 document.body.appendChild(link);
                 link.click();
