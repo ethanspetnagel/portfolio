@@ -42,7 +42,7 @@
                 this.fonts = [
                     'times new roman, serif',
                     'UnifrakturCook, cursive',
-                    'Papyrus, fantasy',                  // Ancient/mystical
+                    'Impact',                  // Ancient/mystical
             'Marker Felt, fantasy'           // Marker pen style            // Decorative c
                 ];
                 this.originalFont = window.getComputedStyle(el).fontFamily;
@@ -338,7 +338,7 @@ class FontFlip {
         this.fonts = [
              'times new roman, serif',
                     'UnifrakturCook, cursive',
-                    'Papyrus, fantasy',                  // Ancient/mystical
+                    'Impact',                  // Ancient/mystical
             'Marker Felt, fantasy'           // Marker pen style            // Decorative c
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
