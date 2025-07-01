@@ -185,7 +185,7 @@ body.page-navigating * {
 .date-text {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   font-weight: bold;
-  cursor: pointer;
+  cursor: crosshair;
   transition: all 0.3s ease;
   color: #2d2f32; /* Default medium gray */
   padding: 0;
@@ -248,7 +248,7 @@ body.june-hover .resume-download {
 .about-toggle {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   font-weight: bold;
-  cursor: pointer;
+  cursor: crosshair;
   margin-bottom: 9px;
   transition: opacity 0.3s ease;
   position: relative;
@@ -302,7 +302,7 @@ body.june-hover .resume-download {
   font-weight: normal;
   line-height: 1.08;
   text-align: left;
-  cursor: default;
+  cursor: crosshair;
   margin-top: 5px;
   letter-spacing: -0.01em;
   color: #2d2f32;
@@ -360,7 +360,7 @@ body.project-hovering.video-light .bio-text a:hover {
   position: relative;
   color: #2d2f32 !important;
   padding: 8px 0;
-  cursor: pointer;
+  cursor: crosshair;;
 }
 
 /* Oval effect for contact links */
@@ -424,7 +424,7 @@ body.project-hovering.video-light .bio-text a:hover {
   text-transform: uppercase !important;
   letter-spacing: 0.02em !important;
   color: #2d2f32 !important;
-  cursor: pointer !important;
+  cursor: crosshair !important;
   user-select: none !important;
   line-height: 1 !important;
   pointer-events: auto !important; /* Ensure it's clickable */
