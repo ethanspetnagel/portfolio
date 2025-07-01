@@ -711,10 +711,18 @@ if (resumeDownload) {
     const resumeFlip = new FontFlip(resumeDownload);
 
     resumeDownload.addEventListener('mouseenter', function() {
-        if (!resumeFlip._isAnimating) {
-            resumeFlip.setText('RESUME');
-            // Trigger download after a short delay so animation is visible
+        alert('RESUME mouseenter triggered');
+        console.log('RESUME mouseenter triggered');
+        try {
+            if (!resumeFlip._isAnimating) {
+                alert('Starting animation');
+                resumeFlip.setText('RESUME');
+            } else {
+                alert('Animation already running');
+            }
+            // Always trigger download (even if animation is running)
             setTimeout(() => {
+                alert('Triggering download');
                 const link = document.createElement('a');
                 link.href = './ethanspetnagel2025.pdf';
                 link.download = 'ethanspetnagel2025.pdf';
@@ -722,6 +730,9 @@ if (resumeDownload) {
                 link.click();
                 document.body.removeChild(link);
             }, 350); // 350ms is enough for the animation to be seen
+        } catch (e) {
+            alert('Error in resume mouseenter: ' + e.message);
+            console.error(e);
         }
     });
 
