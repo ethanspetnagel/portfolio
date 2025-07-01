@@ -847,3 +847,72 @@ window.addEventListener('beforeunload', function() {
         clearTimeout(hideMediaTimeout);
     }
 });
+
+// Add this ADDITIONAL debugging code to the end of your JavaScript file
+// (This goes after your existing resume button code)
+
+// Additional debugging for resume button positioning and visibility
+document.addEventListener('DOMContentLoaded', function() {
+    // Give the page a moment to fully render
+    setTimeout(() => {
+        const resumeElement = document.getElementById('resumeDownload');
+        if (resumeElement) {
+            // Log element properties
+            const rect = resumeElement.getBoundingClientRect();
+            const styles = window.getComputedStyle(resumeElement);
+            
+            console.log('=== RESUME BUTTON DEBUG ===');
+            console.log('Element found:', resumeElement);
+            console.log('Position:', {
+                top: rect.top,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height,
+                bottom: rect.bottom,
+                right: rect.right
+            });
+            console.log('CSS Properties:', {
+                display: styles.display,
+                visibility: styles.visibility,
+                opacity: styles.opacity,
+                pointerEvents: styles.pointerEvents,
+                zIndex: styles.zIndex,
+                position: styles.position,
+                fontSize: styles.fontSize
+            });
+            
+            // Test if element is actually visible in viewport
+            const isVisible = rect.width > 0 && rect.height > 0 && 
+                             rect.top >= 0 && rect.left >= 0 && 
+                             rect.bottom <= window.innerHeight && 
+                             rect.right <= window.innerWidth;
+            console.log('Is in viewport:', isVisible);
+            console.log('Window size:', {width: window.innerWidth, height: window.innerHeight});
+            
+            // Add a test click listener to see if ANY events work
+            resumeElement.addEventListener('click', function() {
+                console.log('CLICK EVENT WORKS!');
+                alert('Click detected - so the element IS interactable');
+            });
+            
+            // Test mouseover (sometimes works when mouseenter doesn't)
+            resumeElement.addEventListener('mouseover', function() {
+                console.log('MOUSEOVER EVENT WORKS!');
+            });
+            
+            // Log any elements that might be covering it
+            const elementsAtPosition = document.elementsFromPoint(rect.right - 10, rect.bottom - 10);
+            console.log('Elements at resume position:', elementsAtPosition);
+            
+            // Test if the element is actually at the expected position
+            const testX = rect.left + rect.width / 2;
+            const testY = rect.top + rect.height / 2;
+            const elementAtCenter = document.elementFromPoint(testX, testY);
+            console.log('Element at center of resume button:', elementAtCenter);
+            console.log('Is it the resume button?', elementAtCenter === resumeElement);
+            
+        } else {
+            console.error('Resume element still not found in additional debug');
+        }
+    }, 1000); // Wait 1 second for page to fully load
+});
