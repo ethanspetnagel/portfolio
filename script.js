@@ -41,9 +41,14 @@
                 this.el = el;
                 this.fonts = [
                     'Impact, fantasy',
-                    'Georgia, serif',
+                    'Garamond, serif',
                     'Pacifico, cursive',
-                    'UnifrakturCook, cursive'
+                    'UnifrakturCook, cursive',
+                    'Comic Sans MS, cursive',
+                    'Papyrus, fantasy',                  // Ancient/mystical
+            'Marker Felt, fantasy',              // Marker pen style
+            'Luminari, fantasy',                 // Decorative caps
+            'Zapfino, cursive'                   // Elegant script
                 ];
                 this.originalFont = window.getComputedStyle(el).fontFamily;
                 this._timeout = null;
