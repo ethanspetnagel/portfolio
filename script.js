@@ -711,21 +711,19 @@ if (resumeDownload) {
     const resumeFlip = new FontFlip(resumeDownload);
 
     resumeDownload.addEventListener('mouseenter', function() {
-        // Trigger file download immediately on hover
-        const link = document.createElement('a');
-        link.href = './ethanspetnagel2025.pdf';
-        link.download = 'ethanspetnagel2025.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Then run the animation (optional, for visual effect)
         if (!resumeFlip._isAnimating) {
-            resumeFlip.setText('RESUME');
+            resumeFlip.setText('RESUME', function animationDone() {
+                // Trigger file download after animation
+                const link = document.createElement('a');
+                link.href = './ethanspetnagel2025.pdf';
+                link.download = 'ethanspetnagel2025.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
         }
     });
 
-    // Optional: Reset text on mouseleave
     resumeDownload.addEventListener('mouseleave', function() {
         resumeFlip.stop();
         resumeDownload.innerHTML = '';
