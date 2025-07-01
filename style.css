@@ -267,7 +267,7 @@ body.june-hover .contact-links a {
   display: block;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 1.2s cubic-bezier(.4,1.6,.6,1);
+  transition: max-height 2s cubic-bezier(.4,1.6,.6,1);
   pointer-events: none;
 }
 
@@ -288,7 +288,7 @@ body.june-hover .contact-links a {
 .bio-content.active .bio-text > * {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.08s;
+  transition-delay: 0.2s;
 }
 
 /* Bio text */
