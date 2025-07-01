@@ -705,60 +705,56 @@ bioLinks.forEach(link => {
     });
 });
 
-// Resume FontFlip
+// Resume FontFlip - FIXED VERSION
 const resumeDownload = document.getElementById('resumeDownload');
 if (resumeDownload) {
     const resumeFlip = new FontFlip(resumeDownload);
+    let downloadInProgress = false;
 
-    resumeDownload.addEventListener('mouseenter', function() {
-        alert('RESUME mouseenter triggered');
-        console.log('RESUME mouseenter triggered');
-        try {
-            if (!resumeFlip._isAnimating) {
-                alert('Starting animation');
-                resumeFlip.setText('RESUME');
-            } else {
-                alert('Animation already running');
-            }
-            setTimeout(() => {
-                alert('Triggering download');
-                const link = document.createElement('a');
-                link.href = './ethanspetnagel2025.pdf';
-                link.download = 'ethanspetnagel2025.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }, 350);
-        } catch (e) {
-            alert('Error in resume mouseenter: ' + e.message);
-            console.error(e);
-        }
-    });
-
-    resumeDownload.addEventListener('mouseleave', function() {
-        resumeFlip.stop();
+    // Helper to set button text without animation
+    function setResumeButtonText(text) {
         resumeDownload.innerHTML = '';
-        for (let i = 0; i < 'RESUME'.length; i++) {
+        for (let i = 0; i < text.length; i++) {
             const span = document.createElement('span');
-            span.textContent = 'RESUME'[i];
+            span.textContent = text[i];
             span.style.display = 'inline-block';
             span.style.fontFamily = resumeFlip.originalFont;
             resumeDownload.appendChild(span);
         }
+    }
+
+    // On hover, animate and download - completes regardless of mouse position
+    resumeDownload.addEventListener('mouseenter', function() {
+        if (downloadInProgress || resumeFlip._isAnimating) return;
+        
+        downloadInProgress = true;
+        resumeFlip.setText('DOWNLOAD', function animationDone() {
+            // Trigger download after animation completes
+            const link = document.createElement('a');
+            link.href = './ethanspetnagel2025.pdf';
+            link.download = 'ethanspetnagel2025.pdf';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Reset after download
+            setTimeout(() => {
+                setResumeButtonText('RESUME');
+                downloadInProgress = false;
+            }, 500);
+        });
+    });
+
+    // No interruption on mouseleave - let the process complete
+    resumeDownload.addEventListener('mouseleave', function() {
+        // Do nothing - let animation and download complete
     });
 
     // Set initial text on page load
-    resumeDownload.innerHTML = '';
-    for (let i = 0; i < 'RESUME'.length; i++) {
-        const span = document.createElement('span');
-        span.textContent = 'RESUME'[i];
-        span.style.display = 'inline-block';
-        span.style.fontFamily = resumeFlip.originalFont;
-        resumeDownload.appendChild(span);
-    }
+    setResumeButtonText('RESUME');
 } else {
-    alert('resumeDownload element not found!');
-    console.error('resumeDownload element not found!');
+    console.error('Resume download element not found');
 }
 
 // Initialize everything on DOM load
@@ -797,4 +793,3 @@ window.addEventListener('beforeunload', function() {
         clearTimeout(hideMediaTimeout);
     }
 });
-
