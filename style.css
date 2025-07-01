@@ -217,6 +217,10 @@ body.june-hover .contact-links a {
   color: #ffffff !important;
 }
 
+body.june-hover .resume-download {
+  color: #fff !important;
+}
+
 /* Date text when project is active - always black */
 .date-text.project-active {
   color: #282c33 !important; /* Always black */
@@ -428,6 +432,16 @@ body.project-hovering.video-light .bio-text a:hover {
   border: none;
   outline: none;
   display: inline-block;
+}
+
+.resume-section {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 15;
+  /* Match .bio-section's max-width if needed */
+  /* max-width: 400px; */
+  text-align: right;
 }
 
 @media (max-width: 768px) {

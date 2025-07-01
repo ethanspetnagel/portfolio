@@ -724,8 +724,8 @@ if (resumeDownload) {
         }
     });
 
-    // Optional: Reset text on mouseleave
     resumeDownload.addEventListener('mouseleave', function() {
+        resumeFlip.stop();
         resumeDownload.innerHTML = '';
         for (let i = 0; i < 'RESUME'.length; i++) {
             const span = document.createElement('span');
@@ -736,7 +736,7 @@ if (resumeDownload) {
         }
     });
 
-    // Set initial text
+    // Set initial text on page load
     resumeDownload.innerHTML = '';
     for (let i = 0; i < 'RESUME'.length; i++) {
         const span = document.createElement('span');
