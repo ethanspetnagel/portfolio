@@ -1,4 +1,9 @@
-/* Font Face Declaration */
+/* Date text when project is active - always keep project info color */
+.date-text.project-active {
+  color: #282c33 !important;
+}.date-text.project-active {
+  color: #282c33 !important;
+}/* Font Face Declaration */
 @font-face {
   font-family: 'Helvetica Neue';
   src: url('HelveticaNeue.woff') format('woff');
@@ -146,12 +151,12 @@ body.page-navigating * {
 .bio-section-center {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 5;
-  padding: 20px;
+  padding: 60px 20px;
 }
 
 .bio-text-center {
@@ -160,11 +165,11 @@ body.page-navigating * {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  line-height: 1.2;
+  line-height: 1.4;
   text-align: center;
   color: #2d2f32;
-  width: 4in;
-  max-width: 90%;
+  width: 90%;
+  max-width: 1000px;
   cursor: crosshair;
 }
 
@@ -177,7 +182,8 @@ body.page-navigating * {
   color: #2d2f32;
   text-decoration: none;
   transition: color 0.3s ease;
-  font-style: italic;
+  font-style: normal;
+  font-weight: bold;
 }
 
 .bio-text-center a:hover {
@@ -194,7 +200,7 @@ body.page-navigating * {
 /* Gap Section */
 .gap-section {
   width: 100%;
-  height: 50vh;
+  height: 25vh;
   position: relative;
 }
 
@@ -214,23 +220,28 @@ body.page-navigating * {
 .roller-container {
   position: relative;
   width: 100%;
-  height: 60%;
-  perspective: 1000px;
+  height: 300px;
+  perspective: 600px;
   transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .roller-track {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Roller Items */
 .roller-item {
   position: absolute;
-  width: 100%;
+  width: auto;
   text-align: center;
   display: block;
   color: #282c33;
@@ -239,13 +250,16 @@ body.page-navigating * {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  line-height: 0.85;
-  transition: all 0.3s ease;
+  line-height: 1;
+  transition: opacity 0.3s ease, color 0.3s ease;
   cursor: pointer;
-  transform-origin: center center -300px;
+  transform-origin: center center;
   backface-visibility: hidden;
-  opacity: 0.3;
+  opacity: 0.4;
   will-change: transform, opacity;
+  top: 50%;
+  left: 50%;
+  white-space: nowrap;
 }
 
 .roller-item.active {
@@ -610,3 +624,4 @@ body.project-hovering.video-dark .bio-text-center a:hover,
 body.project-hovering.video-light .bio-text-center a:hover {
   color: #0015ff !important;
 }
+

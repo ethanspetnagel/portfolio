@@ -188,8 +188,9 @@ let isAnimating = false;
 
 // Roller Configuration
 const ITEMS_COUNT = 7;
-const VISIBLE_ITEMS = 4;
+const VISIBLE_ITEMS = 3; // Show 3-4 items at once
 const ITEM_ANGLE = 360 / ITEMS_COUNT;
+const ROLLER_RADIUS = 100; // Smaller radius for tighter carousel
 
 // Analyze video brightness
 function analyzeVideoBrightness(video, project) {
@@ -340,32 +341,42 @@ function hideAllMedia() {
 
 // Update roller position
 function updateRoller() {
+    const totalItems = rollerItems.length;
+    const actualItemCount = totalItems / 2; // Since we have duplicates
+    
     rollerItems.forEach((item, index) => {
-        const adjustedIndex = index % ITEMS_COUNT;
-        const angle = (adjustedIndex - currentIndex) * ITEM_ANGLE + scrollProgress * ITEM_ANGLE;
-        const radian = (angle * Math.PI) / 180;
+        // Calculate angle for this item
+        const itemPosition = index % actualItemCount;
+        const angle = ((itemPosition - currentIndex) * (360 / actualItemCount) + scrollProgress * (360 / actualItemCount)) % 360;
+        const normalizedAngle = ((angle + 360) % 360);
+        const radian = (normalizedAngle * Math.PI) / 180;
         
-        const z = Math.cos(radian) * 300;
-        const y = Math.sin(radian) * 300;
+        // Calculate position using smaller radius
+        const z = Math.cos(radian) * ROLLER_RADIUS;
+        const y = Math.sin(radian) * ROLLER_RADIUS;
         
-        item.style.transform = `translateY(${y}px) translateZ(${z}px)`;
+        item.style.transform = `translate(-50%, -50%) translateY(${y}px) translateZ(${z}px)`;
         
         // Update opacity based on position
-        const normalizedAngle = ((angle % 360) + 360) % 360;
         if (normalizedAngle < 90 || normalizedAngle > 270) {
-            const opacity = Math.cos(radian) * 0.7 + 0.3;
-            item.style.opacity = Math.max(0.3, opacity);
+            const opacity = Math.cos(radian) * 0.5 + 0.5;
+            item.style.opacity = Math.max(0.4, opacity);
             item.style.pointerEvents = 'auto';
+            item.style.zIndex = Math.round(z + ROLLER_RADIUS);
         } else {
             item.style.opacity = '0';
             item.style.pointerEvents = 'none';
+            item.style.zIndex = '1';
         }
         
-        // Mark active item
+        // Mark active item (front-most)
         item.classList.remove('active');
-        if (Math.abs(angle % 360) < ITEM_ANGLE / 2 || Math.abs(angle % 360 - 360) < ITEM_ANGLE / 2) {
+        if (normalizedAngle >= 350 || normalizedAngle <= 10) {
             item.classList.add('active');
-            updateActiveProject(item);
+            // Only update for first set of items (not duplicates)
+            if (index < ITEMS_COUNT) {
+                updateActiveProject(item);
+            }
         }
     });
 }
@@ -378,12 +389,14 @@ function updateActiveProject(item) {
     if (activeProject !== project) {
         activeProject = project;
         dateText.textContent = info;
+        dateText.classList.add('project-active');
         
         // Show video for active project
         if (currentActiveVideo) {
             currentActiveVideo.style.opacity = '0';
             currentActiveVideo.style.visibility = 'hidden';
             currentActiveVideo.pause();
+            currentActiveVideo.classList.remove('active');
         }
         
         const video = videoPool[project];
@@ -395,6 +408,7 @@ function updateActiveProject(item) {
             video.currentTime = 0;
             video.play().then(() => {
                 video.style.opacity = '1';
+                video.classList.add('active');
                 fullscreenBg.classList.add('active');
                 currentActiveVideo = video;
                 
@@ -406,6 +420,7 @@ function updateActiveProject(item) {
             }).catch(() => {});
         } else {
             hideAllMedia();
+            dateText.classList.remove('project-active');
         }
     }
 }
@@ -426,16 +441,17 @@ window.addEventListener('scroll', () => {
         // Calculate scroll within roller section
         const scrollDelta = scrollTop - lastScrollTop;
         
-        // Update scroll progress
-        scrollProgress += scrollDelta * 0.002;
+        // Update scroll progress (adjusted for smoother scrolling)
+        scrollProgress += scrollDelta * 0.0005;
         
         // Handle looping
+        const actualItemCount = ITEMS_COUNT;
         if (scrollProgress >= 1) {
-            scrollProgress -= 1;
-            currentIndex = (currentIndex + 1) % ITEMS_COUNT;
+            scrollProgress = 0;
+            currentIndex = (currentIndex + 1) % actualItemCount;
         } else if (scrollProgress < 0) {
-            scrollProgress += 1;
-            currentIndex = (currentIndex - 1 + ITEMS_COUNT) % ITEMS_COUNT;
+            scrollProgress = 1;
+            currentIndex = (currentIndex - 1 + actualItemCount) % actualItemCount;
         }
         
         updateRoller();
@@ -449,7 +465,8 @@ rollerItems.forEach((item, index) => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         
-        const clickedIndex = index % ITEMS_COUNT;
+        const actualItemCount = ITEMS_COUNT;
+        const clickedIndex = index % actualItemCount;
         const activeItem = document.querySelector('.roller-item.active');
         
         if (item === activeItem) {
@@ -461,14 +478,14 @@ rollerItems.forEach((item, index) => {
                 isAnimating = true;
                 
                 // Calculate shortest rotation direction
-                let targetDiff = clickedIndex - currentIndex;
-                if (targetDiff > ITEMS_COUNT / 2) targetDiff -= ITEMS_COUNT;
-                if (targetDiff < -ITEMS_COUNT / 2) targetDiff += ITEMS_COUNT;
+                let targetDiff = clickedIndex - (currentIndex % actualItemCount);
+                if (targetDiff > actualItemCount / 2) targetDiff -= actualItemCount;
+                if (targetDiff < -actualItemCount / 2) targetDiff += actualItemCount;
                 
                 // Animate to target
                 const startProgress = scrollProgress;
-                const targetProgress = -targetDiff / ITEMS_COUNT;
-                const duration = 600;
+                const targetProgress = -targetDiff / actualItemCount;
+                const duration = 500;
                 const startTime = Date.now();
                 
                 function animate() {
@@ -477,6 +494,11 @@ rollerItems.forEach((item, index) => {
                     const eased = 0.5 - Math.cos(t * Math.PI) / 2;
                     
                     scrollProgress = startProgress + (targetProgress - startProgress) * eased;
+                    
+                    // Handle wrapping
+                    if (scrollProgress >= 1) scrollProgress -= 1;
+                    if (scrollProgress < 0) scrollProgress += 1;
+                    
                     updateRoller();
                     
                     if (t < 1) {
