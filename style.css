@@ -1,32 +1,27 @@
-/* Date text when project is active - always keep project info color */
-.date-text.project-active {
-  color: #282c33 !important;
-}.date-text.project-active {
-  color: #282c33 !important;
-}/* Font Face Declaration */
+/* Font Face Declaration for Borgia Pro */
 @font-face {
-  font-family: 'Helvetica Neue';
+  font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   src: url('HelveticaNeue.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
+ font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   src: url('HelveticaNeue.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
+   font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   src: url('HelveticaNeue.woff') format('woff');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
+   font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   src: url('HelveticaNeue.woff') format('woff');
   font-weight: bold;
   font-style: italic;
@@ -38,82 +33,54 @@
   box-sizing: border-box;
 }
 
-/* Selection Highlight Colors */
+/* Selection Highlight Colors - Modern Blue Shades */
 ::selection {
-  background-color: #262626;
-  color: #36373a;
+  background-color: #262626; /* Dark blue background */
+  color: #36373a; /* Light blue text */
 }
 
 ::-moz-selection {
-  background-color: #262626;
-  color: #36373a;
+  background-color: #262626; /* Dark blue background */
+  color: #36373a; /* Light blue text */
 }
 
-/* For specific elements */
-.roller-item::selection,
-.bio-text-center::selection,
-.contact-toggle::selection,
+/* For specific elements if needed */
+.project-link::selection,
+.bio-text::selection,
+.about-toggle::selection
 .date-text::selection {
   background-color: #1d1d1c;
   color: #ffffff;
 }
 
 body {
-  background-color: #e2e7ed; /* Updated background color */
+  background-color: #fafcfc; /* Changed to requested color */
   color: #0f0f0f;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
-  overflow-x: hidden;
-  min-height: 100vh;
 }
 
-/* Page loading state */
+/* Page loading state - prevents flash during navigation */
 body.page-navigating {
   opacity: 0 !important;
   pointer-events: none !important;
 }
 
+/* Prevent flash during navigation */
 body.page-navigating * {
   visibility: hidden !important;
 }
 
-/* Mobile Blocker */
-.mobile-blocker {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: #e2e7ed;
-  z-index: 100000;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #2d2f32;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .mobile-blocker {
-    display: flex;
-  }
-  body > *:not(.mobile-blocker) {
-    display: none !important;
-  }
-}
-
-/* Fullscreen Background Layer */
+/* Fullscreen Background Layer - Modified for custom positioning */
 .fullscreen-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 1; /* Behind main content */
   opacity: 0;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.1s ease; /* Very fast transition */
   pointer-events: none;
   /* Hardware acceleration */
   transform: translateZ(0);
@@ -147,128 +114,62 @@ body.page-navigating * {
   opacity: 1;
 }
 
-/* Bio Section - Centered */
-.bio-section-center {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  padding: 60px 20px;
-}
-
-.bio-text-center {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 1.4;
-  text-align: center;
-  color: #2d2f32;
-  width: 90%;
-  max-width: 1000px;
-  cursor: crosshair;
-}
-
-.bio-text-center p {
-  margin-bottom: 20px;
-  color: #2d2f32;
-}
-
-.bio-text-center a {
-  color: #2d2f32;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.bio-text-center a:hover {
-  color: #0008ff !important;
-}
-
-/* Word span styling for text parting effect */
-.bio-text-center .word {
-  display: inline-block;
-  transition: transform 0.1s ease-out;
-  margin-right: 0em;
-}
-
-/* Gap Section */
-.gap-section {
-  width: 100%;
-  height: 25vh;
-  position: relative;
-}
-
-/* Roller Section */
-.roller-section {
-  position: sticky;
+/* Main Content - Always visible and above videos */
+.main-content {
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  z-index: 10;
-  overflow: hidden;
+  align-items: center;
+  z-index: 10; /* Above videos */
+  opacity: 1;
+  visibility: visible;
+  padding: 20px;
 }
 
-.roller-container {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  perspective: 600px;
-  transform-style: preserve-3d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.roller-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.roller-item {
-  position: absolute;
-  width: auto;
+/* Projects Container */
+.projects-container {
   text-align: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 0.8;
+  padding-top: 10px;
+}
+
+.projects-container.hovering .project-link {
+  opacity: 0.25;
+}
+
+.projects-container.hovering .project-link:hover {
+  opacity: 1;
+}
+
+/* Project Links - Default color */
+.project-link {
   display: block;
-  color: #282c33;
+  width: fit-content;
+  margin: 0 auto;
+  color: #282c33; /* Default dark gray */
   text-decoration: none;
   font-size: clamp(32.4px, 7.29vw, 89.1px);
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  line-height: 1;
-  transition: opacity 0.3s ease, color 0.3s ease;
-  cursor: pointer;
-  transform-origin: center center;
-  backface-visibility: hidden;
-  opacity: 0.4;
-  will-change: transform, opacity;
-  top: 50%;
-  left: 50%;
-  white-space: nowrap;
+  line-height: 0.85;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  cursor: crosshair;
+  position: relative;
+  will-change: color, opacity;
 }
 
-.roller-item.active {
-  opacity: 1;
-  color: #282c33;
-}
-
-.roller-item:hover {
-  color: #282c33 !important;
+/* Project link hover - BLACK */
+.project-link:hover {
+  color: #282c33 !important; /* Black on hover */
 }
 
 /* Website Info */
@@ -278,7 +179,7 @@ body.page-navigating * {
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  z-index: 15;
+  z-index: 10;
 }
 
 .date-text {
@@ -286,7 +187,7 @@ body.page-navigating * {
   font-weight: bold;
   cursor: crosshair;
   transition: all 0.3s ease;
-  color: #2d2f32;
+  color: #2d2f32; /* Default medium gray */
   padding: 0;
   display: inline-block;
   text-transform: uppercase;
@@ -294,6 +195,7 @@ body.page-navigating * {
   letter-spacing: 0.02em;
 }
 
+/* Date text hover - keep default color */
 .date-text:hover {
   color: #ffffff !important;
 }
@@ -304,28 +206,46 @@ body.june-hover {
   transition: background-color 0.3s ease;
 }
 
-/* Elements that turn white on June hover */
-body.june-hover .roller-item,
-body.june-hover .bio-text-center,
-body.june-hover .bio-text-center p,
-body.june-hover .bio-text-center a,
-body.june-hover .contact-toggle,
-body.june-hover .contact-text,
-body.june-hover .contact-links a,
-body.june-hover .resume-download {
+/* Elements that turn white on June hover - excluding date text and about toggle */
+body.june-hover .project-link,
+body.june-hover .bio-text,
+body.june-hover .bio-text p,
+body.june-hover .bio-text a,
+body.june-hover .about-toggle,
+body.june-hover .website-info a,
+body.june-hover .contact-links a {
   color: #ffffff !important;
 }
 
-/* Contact Section (formerly Bio) */
-.contact-section {
+body.june-hover .resume-download {
+  color: #fff !important;
+}
+
+/* Date text when project is active - always black */
+.date-text.project-active {
+  color: #282c33 !important; /* Always black */
+}
+
+/* Bio Section */
+.bio-section {
   position: fixed;
   bottom: 20px;
   left: 20px;
   max-width: 400px;
-  z-index: 20;
+  z-index: 15;
 }
 
-.contact-toggle {
+/* Default text color */
+.about-toggle,
+.bio-text,
+.bio-text p,
+.bio-text a,
+.contact-links a {
+  color: #2d2f32; /* Default medium gray */
+}
+
+/* About toggle - always keep default color */
+.about-toggle {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   font-weight: bold;
   cursor: crosshair;
@@ -337,15 +257,17 @@ body.june-hover .resume-download {
   line-height: 1;
   padding: 0;
   letter-spacing: 0.02em;
-  color: #2d2f32;
+  color: #2d2f32; /* Always keep default gray color */
 }
 
-.contact-toggle:hover {
-  color: #2d2f32 !important;
+.about-toggle:hover {
+  color: #2d2f32 !important; /* White on hover */
 }
 
-/* Contact content container */
-.contact-content {
+/* Bio section elements maintain default colors */
+
+/* Bio content container */
+.bio-content {
   display: block;
   max-height: 0;
   overflow: hidden;
@@ -353,40 +275,70 @@ body.june-hover .resume-download {
   pointer-events: none;
 }
 
-.contact-content.active {
-  max-height: 400px;
+.bio-content.active {
+  max-height: 1200px; /* Large enough for your content */
   pointer-events: auto;
 }
 
-/* Contact text */
-.contact-text {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+/* Bio text children simple slide-up */
+.bio-text > * {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.7s cubic-bezier(.4,1.6,.6,1),
+    transform 0.7s cubic-bezier(.4,1.6,.6,1);
+}
+
+.bio-content.active .bio-text > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+/* Bio text */
+.bio-text {
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
   line-height: 1.08;
   text-align: left;
   cursor: crosshair;
   margin-top: 5px;
-  margin-bottom: 10px;
   letter-spacing: -0.01em;
   color: #2d2f32;
-  width: 95%;
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(.4,1.6,.6,1), transform 0.7s cubic-bezier(.4,1.6,.6,1);
+  width: 95%; /* makes it 80% of its container's width */
 }
 
-.contact-content.active .contact-text {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.2s;
-}
 
-.contact-text p {
+.bio-text p {
   margin-bottom: 10px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: normal;
   color: #2d2f32;
+}
+
+/* Word span styling for text parting effect */
+.bio-text .word {
+  display: inline-block;
+  transition: transform 0.1s ease-out;
+  margin-right: 0em;
+}
+/* Bio text links */
+.bio-text a {
+  color: #2d2f32; /* Default medium gray like other text */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.bio-text a:hover {
+  color: #0008ff !important; /* Blue on hover */
+}
+
+/* Maintain hover color even when video is playing */
+body.project-hovering.video-dark .bio-text a:hover,
+body.project-hovering.video-light .bio-text a:hover {
+  color: #0015ff !important; /* Lime green on hover */
 }
 
 /* Contact links */
@@ -397,15 +349,6 @@ body.june-hover .resume-download {
   font-size: calc(1.4rem - 7px);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   align-items: baseline;
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(.4,1.6,.6,1), transform 0.7s cubic-bezier(.4,1.6,.6,1);
-}
-
-.contact-content.active .contact-links {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.3s;
 }
 
 .contact-links a {
@@ -417,7 +360,7 @@ body.june-hover .resume-download {
   position: relative;
   color: #2d2f32 !important;
   padding: 8px 0;
-  cursor: crosshair;
+  cursor: crosshair;;
 }
 
 /* Oval effect for contact links */
@@ -468,19 +411,13 @@ body.june-hover .resume-download {
   display: block;
 }
 
-/* Resume Section */
-.resume-section {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 20;
-}
-
+/* Resume Download Button */
+/* Debug styles for resume button - add these temporarily */
 .resume-download {
   position: fixed !important;
   bottom: 20px !important;
   right: 20px !important;
-  z-index: 9999 !important;
+  z-index: 9999 !important; /* Very high z-index */
   font-size: clamp(10.8px, 2.43vw, 29.7px) !important;
   font-weight: bold !important;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
@@ -490,25 +427,39 @@ body.june-hover .resume-download {
   cursor: crosshair !important;
   user-select: none !important;
   line-height: 1 !important;
-  pointer-events: auto !important;
+  pointer-events: auto !important; /* Ensure it's clickable */
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
   width: auto !important;
   height: auto !important;
   transform: none !important;
+  /* Remove any animations that might interfere */
   transition: none !important;
   animation: none !important;
+}
+
+.resume-section {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 15;
+  /* Match .bio-section's max-width if needed */
+  /* max-width: 400px; */
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .resume-download {
+    display: none;
+  }
 }
 
 /* Intro Overlay */
 #introOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #e2e7ed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: #fafcfc;
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -534,6 +485,21 @@ body.june-hover .resume-download {
   user-select: none;
 }
 
+/* Touch device styles */
+@media (hover: none) and (pointer: coarse) {
+  .project-link.touch-active {
+    color: #0f0f0f; /* Black for touch active */
+  }
+
+  .projects-container.touch-hovering .project-link {
+    opacity: 0.25;
+  }
+
+  .projects-container.touch-hovering .project-link.touch-active {
+    opacity: 1;
+  }
+}
+
 /* Page Transition Styles */
 .page-transition-overlay {
   position: fixed;
@@ -541,7 +507,7 @@ body.june-hover .resume-download {
   left: 0;
   width: 100%;
   height: 100vh;
-  background: #e2e7ed;
+  background: #fafcfc; /* Updated to match new background */
   z-index: 20000;
   pointer-events: none;
   display: none;
@@ -610,18 +576,167 @@ body.transitioning {
   width: 100%;
 }
 
-/* Video brightness adjustments */
-body.video-dark .roller-item.active {
-  color: #ffffff !important;
+/* Media Queries - Tablet */
+@media (max-width: 768px) {
+  .project-link {
+    font-size: clamp(24.3px, 7.29vw, 64.8px);
+  }
+
+  .date-text {
+    font-size: clamp(8.1px, 2.43vw, 21.6px);
+  }
+
+  .about-toggle {
+    font-size: clamp(8.1px, 2.43vw, 21.6px);
+  }
+
+  .bio-section {
+    max-width: 300px;
+    left: 10px;
+    bottom: 10px;
+  }
+
+  .bio-preview {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .contact-links a:hover {
+    color: #2d2f32 !important;
+    text-decoration: none !important;
+  }
+  
+  /* Hide videos on tablets and below */
+  .fullscreen-bg {
+    display: none !important;
+  }
 }
 
-body.video-light .roller-item.active {
-  color: #282c33 !important;
+/* Media Queries - Mobile */
+@media (max-width: 480px) {
+  body {
+    overflow-y: auto;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    position: relative;
+    min-height: 100vh;
+    padding: 40px 20px 20px;
+    justify-content: flex-start;
+  }
+
+  .projects-container {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    line-height: 1.1;
+    padding-top: 10px;
+    padding-bottom: 0;
+  }
+
+  .project-link {
+    font-size: clamp(19.44px, 6.48vw, 36.45px);
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+
+  .website-info {
+    position: static;
+    bottom: auto;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .date-text {
+    font-size: clamp(6.48px, 2.16vw, 12.15px);
+  }
+
+  .about-toggle {
+    font-size: clamp(6.48px, 2.16vw, 12.15px);
+  }
+
+  .bio-section {
+    position: static;
+    bottom: auto;
+    left: auto;
+    max-width: 100%;
+    max-height: none;
+    margin: 0 auto;
+    padding: 0 20px 20px;
+    text-align: center;
+  }
+
+  .about-toggle {
+    padding: 5px 10px;
+    margin-bottom: 10px;
+  }
+
+  .bio-content {
+    max-height: none;
+    text-align: left;
+  }
+
+  .bio-content.active {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bio-text {
+    font-size: calc(1.3rem - 7px);
+    line-height: 1.2;
+    margin-top: 8px;
+  }
+
+  .bio-text a:hover {
+    color: #0008ff; /* Blue on hover */
+  }
+
+  .contact-links {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    font-size: calc(1.2rem - 7px);
+  }
+
+  .contact-links a {
+    font-size: calc(1.2rem - 7px);
+    display: block;
+    padding: 5px 0;
+  }
+
+  .contact-links a:hover::after {
+    width: calc(100% + 20px);
+    height: 18px;
+  }
+  
+  .contact-links a:hover {
+    transform: translateY(1px);
+  }
+
+  /* Hide bio preview on mobile */
+  .bio-preview {
+    display: none !important;
+  }
+  
+  /* Hide videos on mobile */
+  .fullscreen-bg {
+    display: none !important;
+  }
+
+  /* Ensure proper colors on mobile */
+  .about-toggle,
+  .bio-text,
+  .bio-text p,
+  .bio-text a,
+  .contact-links a {
+    color: #2d2f32;
+  }
 }
 
-/* Maintain hover color even when video is playing */
-body.project-hovering.video-dark .bio-text-center a:hover,
-body.project-hovering.video-light .bio-text-center a:hover {
-  color: #0015ff !important;
+.bio-content {
+  overflow: visible;
 }
-

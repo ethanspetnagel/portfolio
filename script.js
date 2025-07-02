@@ -1,4 +1,4 @@
-// --- INTRO OVERLAY SETUP ---
+ // --- INTRO OVERLAY SETUP ---
 (function setupIntroOverlay() {
     if (!sessionStorage.getItem('introShown')) {
         // Create overlay
@@ -9,7 +9,7 @@
         overlay.style.left = '0';
         overlay.style.width = '100vw';
         overlay.style.height = '100vh';
-        overlay.style.background = '#e2e7ed';
+        overlay.style.background = '#fafcfc';
         overlay.style.zIndex = '99999';
         overlay.style.display = 'flex';
         overlay.style.alignItems = 'center';
@@ -21,10 +21,10 @@
         const introText = document.createElement('div');
         introText.id = 'introText';
         introText.textContent = 'ETHANSPETNAGEL.ONLINE';
-        // Match Contact button font, size, color
+        // Match About button font, size, color
         introText.style.fontFamily = '"Helvetica Neue", Helvetica, Arial, sans-serif';
         introText.style.fontWeight = 'bold';
-        introText.style.fontSize = window.getComputedStyle(document.documentElement).getPropertyValue('--contact-toggle-size') || 'clamp(10.8px, 2.43vw, 29.7px)';
+        introText.style.fontSize = window.getComputedStyle(document.documentElement).getPropertyValue('--about-toggle-size') || 'clamp(10.8px, 2.43vw, 29.7px)';
         introText.style.textTransform = 'uppercase';
         introText.style.letterSpacing = '0.02em';
         introText.style.color = '#2d2f32';
@@ -35,15 +35,15 @@
 
         document.body.appendChild(overlay);
 
-        // Use the same FontFlip logic as Contact
+        // Use the same FontFlip logic as About
         class IntroFontFlip {
             constructor(el) {
                 this.el = el;
                 this.fonts = [
                     'times new roman, serif',
                     'UnifrakturCook, cursive',
-                    'Impact',
-                    'Marker Felt, fantasy'
+                    'Impact',                  // Ancient/mystical
+            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
                 ];
                 this.originalFont = window.getComputedStyle(el).fontFamily;
                 this._timeout = null;
@@ -163,15 +163,14 @@ const bioImages = {
 
 // DOM Elements
 const fullscreenBg = document.getElementById('fullscreenBg');
+const projectLinks = document.querySelectorAll('.project-link');
+const projectsContainer = document.querySelector('.projects-container');
 const dateText = document.getElementById('dateText');
-const contactToggle = document.getElementById('contactToggle');
-const contactContent = document.getElementById('contactContent');
-const bioLinks = document.querySelectorAll('.bio-text-center a[data-bio]');
+const aboutToggle = document.getElementById('aboutToggle');
+const bioContent = document.getElementById('bioContent');
+const bioLinks = document.querySelectorAll('.bio-text a[data-bio]');
 const bioPreview = document.getElementById('bioPreview');
 const bioPreviewImage = document.getElementById('bioPreviewImage');
-const rollerSection = document.getElementById('rollerSection');
-const rollerTrack = document.getElementById('rollerTrack');
-const rollerItems = document.querySelectorAll('.roller-item');
 
 // Variables
 let currentMedia = null;
@@ -182,15 +181,9 @@ let isTransitioning = false;
 let videoBrightness = {};
 let hideMediaTimeout = null;
 let isHoveringProject = false;
-let scrollProgress = 0;
-let currentIndex = 0;
-let isAnimating = false;
 
-// Roller Configuration
-const ITEMS_COUNT = 7;
-const VISIBLE_ITEMS = 3; // Show 3-4 items at once
-const ITEM_ANGLE = 360 / ITEMS_COUNT;
-const ROLLER_RADIUS = 100; // Smaller radius for tighter carousel
+// Touch device detection
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 // Analyze video brightness
 function analyzeVideoBrightness(video, project) {
@@ -320,7 +313,6 @@ function showVideo(project) {
     }
     currentActiveVideo = video;
     currentMedia = projectMedia[project];
-    document.body.classList.add('project-hovering');
     return true;
 }
 
@@ -335,197 +327,19 @@ function hideAllMedia() {
         currentActiveVideo.style.zIndex = '1';
         currentActiveVideo = null;
     }
-    document.body.classList.remove('video-dark', 'video-light', 'project-hovering');
+    document.body.classList.remove('video-dark', 'video-light');
     currentMedia = null;
 }
-
-// Update roller position
-function updateRoller() {
-    const totalItems = rollerItems.length;
-    const actualItemCount = totalItems / 2; // Since we have duplicates
-    
-    rollerItems.forEach((item, index) => {
-        // Calculate angle for this item
-        const itemPosition = index % actualItemCount;
-        const angle = ((itemPosition - currentIndex) * (360 / actualItemCount) + scrollProgress * (360 / actualItemCount)) % 360;
-        const normalizedAngle = ((angle + 360) % 360);
-        const radian = (normalizedAngle * Math.PI) / 180;
-        
-        // Calculate position using smaller radius
-        const z = Math.cos(radian) * ROLLER_RADIUS;
-        const y = Math.sin(radian) * ROLLER_RADIUS;
-        
-        item.style.transform = `translate(-50%, -50%) translateY(${y}px) translateZ(${z}px)`;
-        
-        // Update opacity based on position
-        if (normalizedAngle < 90 || normalizedAngle > 270) {
-            const opacity = Math.cos(radian) * 0.5 + 0.5;
-            item.style.opacity = Math.max(0.4, opacity);
-            item.style.pointerEvents = 'auto';
-            item.style.zIndex = Math.round(z + ROLLER_RADIUS);
-        } else {
-            item.style.opacity = '0';
-            item.style.pointerEvents = 'none';
-            item.style.zIndex = '1';
-        }
-        
-        // Mark active item (front-most)
-        item.classList.remove('active');
-        if (normalizedAngle >= 350 || normalizedAngle <= 10) {
-            item.classList.add('active');
-            // Only update for first set of items (not duplicates)
-            if (index < ITEMS_COUNT) {
-                updateActiveProject(item);
-            }
-        }
-    });
-}
-
-// Update active project
-function updateActiveProject(item) {
-    const project = item.dataset.project;
-    const info = item.dataset.info;
-    
-    if (activeProject !== project) {
-        activeProject = project;
-        dateText.textContent = info;
-        dateText.classList.add('project-active');
-        
-        // Show video for active project
-        if (currentActiveVideo) {
-            currentActiveVideo.style.opacity = '0';
-            currentActiveVideo.style.visibility = 'hidden';
-            currentActiveVideo.pause();
-            currentActiveVideo.classList.remove('active');
-        }
-        
-        const video = videoPool[project];
-        if (video) {
-            const mediaInfo = projectMedia[project];
-            video.style.left = mediaInfo.position.left;
-            video.style.top = mediaInfo.position.top;
-            video.style.visibility = 'visible';
-            video.currentTime = 0;
-            video.play().then(() => {
-                video.style.opacity = '1';
-                video.classList.add('active');
-                fullscreenBg.classList.add('active');
-                currentActiveVideo = video;
-                
-                // Update text colors
-                const isDark = videoBrightness[project];
-                document.body.classList.toggle('video-dark', isDark);
-                document.body.classList.toggle('video-light', !isDark);
-                document.body.classList.add('project-hovering');
-            }).catch(() => {});
-        } else {
-            hideAllMedia();
-            dateText.classList.remove('project-active');
-        }
-    }
-}
-
-// Handle scroll
-let lastScrollTop = 0;
-let rollerSticky = false;
-
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const rollerTop = rollerSection.offsetTop;
-    
-    if (scrollTop >= rollerTop - window.innerHeight / 2) {
-        if (!rollerSticky) {
-            rollerSticky = true;
-        }
-        
-        // Calculate scroll within roller section
-        const scrollDelta = scrollTop - lastScrollTop;
-        
-        // Update scroll progress (adjusted for smoother scrolling)
-        scrollProgress += scrollDelta * 0.0005;
-        
-        // Handle looping
-        const actualItemCount = ITEMS_COUNT;
-        if (scrollProgress >= 1) {
-            scrollProgress = 0;
-            currentIndex = (currentIndex + 1) % actualItemCount;
-        } else if (scrollProgress < 0) {
-            scrollProgress = 1;
-            currentIndex = (currentIndex - 1 + actualItemCount) % actualItemCount;
-        }
-        
-        updateRoller();
-    }
-    
-    lastScrollTop = scrollTop;
-});
-
-// Click to rotate
-rollerItems.forEach((item, index) => {
-    item.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        const actualItemCount = ITEMS_COUNT;
-        const clickedIndex = index % actualItemCount;
-        const activeItem = document.querySelector('.roller-item.active');
-        
-        if (item === activeItem) {
-            // Navigate if clicking active item
-            window.location.href = item.href;
-        } else {
-            // Rotate to clicked item
-            if (!isAnimating) {
-                isAnimating = true;
-                
-                // Calculate shortest rotation direction
-                let targetDiff = clickedIndex - (currentIndex % actualItemCount);
-                if (targetDiff > actualItemCount / 2) targetDiff -= actualItemCount;
-                if (targetDiff < -actualItemCount / 2) targetDiff += actualItemCount;
-                
-                // Animate to target
-                const startProgress = scrollProgress;
-                const targetProgress = -targetDiff / actualItemCount;
-                const duration = 500;
-                const startTime = Date.now();
-                
-                function animate() {
-                    const elapsed = Date.now() - startTime;
-                    const t = Math.min(elapsed / duration, 1);
-                    const eased = 0.5 - Math.cos(t * Math.PI) / 2;
-                    
-                    scrollProgress = startProgress + (targetProgress - startProgress) * eased;
-                    
-                    // Handle wrapping
-                    if (scrollProgress >= 1) scrollProgress -= 1;
-                    if (scrollProgress < 0) scrollProgress += 1;
-                    
-                    updateRoller();
-                    
-                    if (t < 1) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        currentIndex = clickedIndex;
-                        scrollProgress = 0;
-                        updateRoller();
-                        isAnimating = false;
-                    }
-                }
-                
-                animate();
-            }
-        }
-    });
-});
 
 // Font Flip Effect (with letter scramble)
 class FontFlip {
     constructor(el) {
         this.el = el;
         this.fonts = [
-            'times new roman, serif',
-            'UnifrakturCook, cursive',
-            'Impact',
-            'Marker Felt, fantasy'
+             'times new roman, serif',
+                    'UnifrakturCook, cursive',
+                    'Impact',                  // Ancient/mystical
+            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
@@ -596,14 +410,14 @@ class FontFlip {
     }
 }
 
-// Text Parting Effect
+// Text Parting Effect (unchanged)
 class TextPartingEffect {
     constructor() {
         this.activeElements = new Map();
     }
     init() {
         this.wrapWordsInSpans();
-        const bioTexts = document.querySelectorAll('.bio-text-center');
+        const bioTexts = document.querySelectorAll('.bio-text');
         bioTexts.forEach(element => {
             element.addEventListener('mouseenter', (e) => this.startParting(e.target));
             element.addEventListener('mousemove', (e) => this.updateParting(e));
@@ -611,7 +425,7 @@ class TextPartingEffect {
         });
     }
     wrapWordsInSpans() {
-        const bioTexts = document.querySelectorAll('.bio-text-center p, .bio-text-center a');
+        const bioTexts = document.querySelectorAll('.bio-text p, .bio-text a');
         bioTexts.forEach(element => {
             if (element.querySelector('.word')) return;
             const textNodes = this.getTextNodes(element);
@@ -667,7 +481,7 @@ class TextPartingEffect {
         }
     }
     updateParting(event) {
-        const element = event.target.closest('.bio-text-center');
+        const element = event.target.closest('.bio-text');
         const data = this.activeElements.get(element);
         if (!data || !data.isActive) return;
         const cursorX = event.clientX;
@@ -710,53 +524,169 @@ class TextPartingEffect {
     }
 }
 
+// Project hover handling
+function handleProjectHover(link, isEntering) {
+    if (isEntering) {
+        if (hideMediaTimeout) {
+            clearTimeout(hideMediaTimeout);
+            hideMediaTimeout = null;
+        }
+        isHoveringProject = true;
+        const project = link.getAttribute('data-project');
+        const projectInfo = link.getAttribute('data-info');
+        activeProject = project;
+        projectsContainer.classList.add('hovering');
+        document.body.classList.add('project-hovering');
+        dateText.textContent = projectInfo;
+        dateText.classList.add('project-active');
+        const mediaInfo = projectMedia[project];
+        const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
+        if (url && url.includes('.mp4')) {
+            showVideo(project);
+        } else {
+            Object.values(videoPool).forEach(v => {
+                v.style.zIndex = '1';
+            });
+            hideAllMedia();
+        }
+    } else {
+        isHoveringProject = false;
+        hideMediaTimeout = setTimeout(() => {
+            if (!isHoveringProject) {
+                activeProject = null;
+                projectsContainer.classList.remove('hovering');
+                document.body.classList.remove('project-hovering');
+                dateText.textContent = 'JULY 2025';
+                dateText.classList.remove('project-active');
+                Object.values(videoPool).forEach(v => {
+                    v.style.zIndex = '1';
+                });
+                hideAllMedia();
+            }
+        }, 50);
+    }
+}
+
 // Initialize text effects
 const textParting = new TextPartingEffect();
-const contactFlip = new FontFlip(contactToggle);
-let isContactOpen = false;
+const aboutFlip = new FontFlip(aboutToggle);
+let isAboutOpen = false;
+
+// Remove any previous click event for aboutToggle
+aboutToggle.onclick = null;
 
 // Helper to set the button text instantly (no animation)
-function setContactButtonText(label) {
-    contactToggle.innerHTML = '';
+function setAboutButtonText(label) {
+    aboutToggle.innerHTML = '';
     for (let i = 0; i < label.length; i++) {
         const span = document.createElement('span');
         span.textContent = label[i];
         span.style.display = 'inline-block';
-        span.style.fontFamily = contactFlip.originalFont;
-        contactToggle.appendChild(span);
+        span.style.fontFamily = aboutFlip.originalFont;
+        aboutToggle.appendChild(span);
     }
 }
 
-// On hover, animate, then toggle contact after animation
-contactToggle.addEventListener('mouseenter', function() {
-    if (contactFlip._isAnimating) return;
-    contactFlip.setText(isContactOpen ? 'HIDE' : 'CONTACT', function animationDone() {
-        // Toggle contact section after animation
-        contactContent.classList.toggle('active');
-        isContactOpen = !isContactOpen;
-        setContactButtonText(isContactOpen ? 'HIDE' : 'CONTACT');
+// On hover, animate, then toggle bio after animation
+aboutToggle.addEventListener('mouseenter', function() {
+    if (aboutFlip._isAnimating) return;
+    aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT', function animationDone() {
+        // Toggle bio section after animation
+        bioContent.classList.toggle('active');
+        isAboutOpen = !isAboutOpen;
+        setAboutButtonText(isAboutOpen ? 'HIDE' : 'ABOUT');
+        if (isAboutOpen) {
+            setTimeout(() => {
+                textParting.init();
+            }, 300);
+        }
     });
 });
 
-// Reset the button text on mouseleave
-contactToggle.addEventListener('mouseleave', function() {
-    setContactButtonText(isContactOpen ? 'HIDE' : 'CONTACT');
+// Optionally, reset the button text on mouseleave (not required, but keeps it tidy)
+aboutToggle.addEventListener('mouseleave', function() {
+    setAboutButtonText(isAboutOpen ? 'HIDE' : 'ABOUT');
 });
+
+// Project link events
+if (!isTouchDevice) {
+    projectLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            handleProjectHover(this, true);
+        });
+        link.addEventListener('mouseleave', function() {
+            handleProjectHover(this, false);
+        });
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = this.href;
+        });
+    });
+} else {
+    let lastTouchedLink = null;
+    projectLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const project = this.getAttribute('data-project');
+            const projectInfo = this.getAttribute('data-info');
+            if (lastTouchedLink === this) {
+                window.location.href = this.href;
+                return;
+            }
+            projectLinks.forEach(l => l.classList.remove('touch-active'));
+            lastTouchedLink = this;
+            this.classList.add('touch-active');
+            projectsContainer.classList.add('touch-hovering');
+            document.body.classList.add('project-hovering');
+            dateText.textContent = projectInfo;
+            dateText.classList.add('project-active');
+            const mediaInfo = projectMedia[project];
+            const url = typeof mediaInfo === 'string' ? mediaInfo : mediaInfo?.url;
+            if (url && url.includes('.mp4')) {
+                showVideo(project);
+            } else {
+                Object.values(videoPool).forEach(v => {
+                    v.style.zIndex = '1';
+                });
+                hideAllMedia();
+            }
+        });
+    });
+    document.addEventListener('touchstart', function(e) {
+        if (!e.target.closest('.project-link')) {
+            setTimeout(() => {
+                projectLinks.forEach(l => l.classList.remove('touch-active'));
+                projectsContainer.classList.remove('touch-hovering');
+                document.body.classList.remove('project-hovering');
+                dateText.textContent = 'JULY 2025';
+                dateText.classList.remove('project-active');
+                Object.values(videoPool).forEach(v => {
+                    v.style.zIndex = '1';
+                });
+                hideAllMedia();
+                lastTouchedLink = null;
+            }, 50);
+        }
+    });
+}
 
 // Date text hover
 dateText.addEventListener('mouseenter', function() {
-    if (hideMediaTimeout) {
-        clearTimeout(hideMediaTimeout);
-        hideMediaTimeout = null;
-    }
-    document.body.classList.add('june-hover');
-    if (fullscreenBg.classList.contains('active')) {
-        hideAllMedia();
+    if (!dateText.classList.contains('project-active')) {
+        if (hideMediaTimeout) {
+            clearTimeout(hideMediaTimeout);
+            hideMediaTimeout = null;
+        }
+        document.body.classList.add('june-hover');
+        if (fullscreenBg.classList.contains('active')) {
+            hideAllMedia();
+        }
     }
 });
-
 dateText.addEventListener('mouseleave', function() {
-    document.body.classList.remove('june-hover');
+    if (!dateText.classList.contains('project-active')) {
+        document.body.classList.remove('june-hover');
+    }
 });
 
 // Bio link hover
@@ -775,7 +705,7 @@ bioLinks.forEach(link => {
     });
 });
 
-// Resume FontFlip
+// Resume FontFlip - ROBUST VERSION WITH DEBUGGING
 const resumeDownload = document.getElementById('resumeDownload');
 if (resumeDownload) {
     console.log('Resume button found successfully');
@@ -884,20 +814,12 @@ if (resumeDownload) {
 // Initialize everything on DOM load
 document.addEventListener('DOMContentLoaded', function() {
     // Make sure elements exist
-    if (!contactToggle || !contactContent) {
+    if (!aboutToggle || !bioContent) {
         console.error('Required elements not found!');
         return;
     }
-    
     // Initialize video pool
     initializeVideoPool();
-    
-    // Initialize text parting effect for bio text
-    textParting.init();
-    
-    // Initialize roller
-    updateRoller();
-    
     // Attempt to start videos after user interaction
     document.addEventListener('mousemove', () => {
         Object.values(videoPool).forEach(video => {
@@ -909,7 +831,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { once: true });
-    
     // Periodically re-analyze brightness for playing videos
     setInterval(() => {
         if (currentActiveVideo && activeProject) {
@@ -917,6 +838,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateTextColors(activeProject);
         }
     }, 1000);
+
 });
 
 // Clean up on page unload
@@ -925,6 +847,9 @@ window.addEventListener('beforeunload', function() {
         clearTimeout(hideMediaTimeout);
     }
 });
+
+// Add this ADDITIONAL debugging code to the end of your JavaScript file
+// (This goes after your existing resume button code)
 
 // Additional debugging for resume button positioning and visibility
 document.addEventListener('DOMContentLoaded', function() {
