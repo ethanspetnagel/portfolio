@@ -47,21 +47,17 @@
 /* For specific elements if needed */
 .project-link::selection,
 .bio-text::selection,
-.about-toggle::selection
+.about-toggle::selection,
 .date-text::selection {
   background-color: #353c50;
   color: #d2d4db;
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #d2d4db;
+  background-color: #d2d4db; /* Changed to requested color */
   color: #353c50;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  cursor: crosshair;
-  transition: background-color 0.3s ease;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
 }
 
 /* Page loading state - prevents flash during navigation */
@@ -129,7 +125,9 @@ body.page-navigating * {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 10; /* Above videos */
+  opacity: 1;
+  visibility: visible;
   padding: 20px;
 }
 
@@ -138,6 +136,9 @@ body.page-navigating * {
   text-align: center;
   max-width: 1200px;
   width: 100%;
+  margin: 0 auto;
+  line-height: 0.8;
+  padding-top: 10px;
 }
 
 .projects-container.hovering .project-link {
@@ -148,118 +149,172 @@ body.page-navigating * {
   opacity: 1;
 }
 
-.projects-container.hovering .project-link:not(:hover) {
-  opacity: 0.25;
-}
-
-.projects-container.hovering .project-link:not(:hover) {
-  opacity: 0.25;
-}
-
 /* Project Links - Default color */
 .project-link {
   display: block;
+  width: fit-content;
+  margin: 0 auto;
+  color: #353c50; /* Default dark gray */
   text-decoration: none;
-  color: #353c50;
-  font-size: clamp(24px, 7.5vw, 110px);
+  font-size: clamp(32.4px, 7.29vw, 89.1px);
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.85;
-  transition: color 0.2s ease, opacity 0.2s;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  cursor: crosshair;
+  position: relative;
+  will-change: color, opacity;
 }
 
-/* Project link hover - Change from black to the main text color */
+/* Project link hover - BLACK */
 .project-link:hover {
-  color: #353c50 !important;
+  color: #353c50 !important; /* Black on hover */
 }
 
 /* Website Info */
 .website-info {
   position: fixed;
-  bottom: 20px; /* This might be the old rule, we will override */
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 15;
   text-align: center;
+  z-index: 10;
 }
 
-/* --- Bio Section --- */
+.date-text {
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  font-weight: bold;
+  cursor: crosshair;
+  transition: all 0.3s ease;
+  color: #353c50; /* Default medium gray */
+  padding: 0;
+  display: inline-block;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+/* Date text hover - keep default color */
+.date-text:hover {
+  color: #d2d4db !important;
+}
+
+/* Special class for black background effect */
+body.june-hover {
+  background-color: #353c50;
+  transition: background-color 0.3s ease;
+}
+
+/* Elements that turn white on June hover - excluding date text and about toggle */
+body.june-hover .project-link,
+body.june-hover .bio-text,
+body.june-hover .bio-text p,
+body.june-hover .bio-text a,
+body.june-hover .about-toggle,
+body.june-hover .website-info a,
+body.june-hover .contact-links a {
+  color: #d2d4db !important;
+}
+
+body.june-hover .resume-download {
+  color: #d2d4db !important;
+}
+
+/* Date text when project is active - always black */
+.date-text.project-active {
+  color: #282c33 !important; /* Always black */
+}
+
+/* Bio Section */
 .bio-section {
   position: fixed;
   bottom: 20px;
   left: 20px;
   max-width: 400px;
-  z-index: 20;
-  pointer-events: none;
+  z-index: 15;
 }
 
-/* Default state: bio content is hidden */
-.bio-content {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease-in-out, visibility 0.4s;
+/* Default text color */
+.about-toggle,
+.bio-text,
+.bio-text p,
+.bio-text a,
+.contact-links a {
+  color: #353c50; /* Default medium gray */
 }
 
-/* When .is-open is added, bio content becomes visible */
-.bio-section.is-open .bio-content {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-/* Default state: HIDE button is hidden */
-.hide-toggle {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: bold;
+/* About toggle - always keep default color */
+.about-toggle {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
-  color: #353c50;
+  font-weight: bold;
+  cursor: crosshair;
+  margin-bottom: 9px;
+  transition: opacity 0.3s ease;
+  position: relative;
+  display: inline-block;
   text-transform: uppercase;
+  line-height: 1;
+  padding: 0;
   letter-spacing: 0.02em;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.3s, visibility 0.3s;
+  color: #353c50; /* Always keep default gray color */
 }
 
-/* When .is-open is added, HIDE button becomes visible */
-.bio-section.is-open .hide-toggle {
-  opacity: 1;
-  visibility: visible;
+.about-toggle:hover {
+  color: #353c50 !important; /* White on hover */
+}
+
+/* Bio section elements maintain default colors */
+
+/* Bio content container */
+.bio-content {
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 2s cubic-bezier(.4,1.6,.6,1);
+  pointer-events: none;
+}
+
+.bio-content.active {
+  max-height: 1200px; /* Large enough for your content */
   pointer-events: auto;
 }
 
-/* When .is-open is added, the ABOUT button in the bottom bar is hidden */
-.bio-section.is-open ~ .bottom-bar .about-toggle {
-  visibility: hidden;
+/* Bio text children simple slide-up */
+.bio-text > * {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.7s cubic-bezier(.4,1.6,.6,1),
+    transform 0.7s cubic-bezier(.4,1.6,.6,1);
 }
 
-/* Restore July hover effect */
-body.june-hover {
-  background-color: #353c50;
-}
-
-body.june-hover .project-link,
-body.june-hover .bottom-bar > * {
-  color: #d2d4db !important;
+.bio-content.active .bio-text > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
 }
 
 /* Bio text */
 .bio-text {
-  font-size: 14px;
-  line-height: 1.4;
-  margin-bottom: 20px;
-  overflow: visible;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(1.6rem - 9px);
+  font-weight: normal;
+  line-height: 1.08;
+  text-align: left;
+  cursor: crosshair;
+  margin-top: 5px;
+  letter-spacing: -0.01em;
+  color: #353c50;
+  width: 95%; /* makes it 80% of its container's width */
 }
+
 
 .bio-text p {
-  margin-bottom: 1em;
-}
-
-.bio-text a {
+  margin-bottom: 10px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: normal;
   color: #353c50;
-  text-decoration: none;
 }
 
 /* Word span styling for text parting effect */
@@ -268,17 +323,71 @@ body.june-hover .bottom-bar > * {
   transition: transform 0.1s ease-out;
   margin-right: 0em;
 }
+/* Bio text links */
+.bio-text a {
+  color: #353c50; /* Default medium gray like other text */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.bio-text a:hover {
+  color: #0008ff !important; /* Blue on hover */
+}
+
+/* Maintain hover color even when video is playing */
+body.project-hovering.video-dark .bio-text a:hover,
+body.project-hovering.video-light .bio-text a:hover {
+  color: #0015ff !important; /* Lime green on hover */
+}
 
 /* Contact links */
 .contact-links {
-  display: flex;
-  gap: 15px;
+  margin-top: clamp(10.8px, 2.43vw, 29.7px);
+  display: inline-flex;
+  gap: 20px;
+  font-size: calc(1.4rem - 7px);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  align-items: baseline;
 }
 
 .contact-links a {
-  color: #353c50;
+  display: inline-block;
   text-decoration: none;
-  font-size: 14px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  font-style: normal;
+  font-weight: normal;
+  position: relative;
+  color: #353c50 !important;
+  padding: 8px 0;
+  cursor: crosshair;;
+}
+
+/* Oval effect for contact links */
+.contact-links a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border: 2px solid #353c50;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.contact-links a:hover::after {
+  opacity: 1;
+  width: calc(100% + 30px);
+  height: 20px;
+}
+
+.contact-links a:hover {
+  color: #353c50 !important;
+  text-decoration: none !important;
+  transform: translateY(2px);
 }
 
 /* Bio Preview */
@@ -302,68 +411,51 @@ body.june-hover .bottom-bar > * {
   display: block;
 }
 
-/* New Bottom Bar Styles */
-.bottom-bar {
+/* Resume Download Button */
+/* Debug styles for resume button - add these temporarily */
+.resume-download {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 9999 !important; /* Very high z-index */
+  font-size: clamp(10.8px, 2.43vw, 29.7px) !important;
+  font-weight: bold !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  color: #353c50 !important;
+  cursor: crosshair !important;
+  user-select: none !important;
+  line-height: 1 !important;
+  pointer-events: auto !important; /* Ensure it's clickable */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  transform: none !important;
+  /* Remove any animations that might interfere */
+  transition: none !important;
+  animation: none !important;
+}
+
+.resume-section {
   position: fixed;
-  bottom: 20px; /* Consistent distance from bottom */
-  left: 20px;
+  bottom: 20px;
   right: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center; /* Vertically aligns all items */
   z-index: 15;
-  pointer-events: none; /* Container doesn't block clicks */
+  /* Match .bio-section's max-width if needed */
+  /* max-width: 400px; */
+  text-align: right;
 }
 
-/* Ensure child elements are clickable */
-.bottom-bar > * {
-  pointer-events: auto;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: bold;
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
-  color: #353c50;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  cursor: pointer;
+@media (max-width: 768px) {
+  .resume-download {
+    display: none;
+  }
 }
 
-/* Subtitle Overlay Styles */
-#subtitleOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #fafcfc;
-  z-index: 99998; /* Below intro, above everything else */
-  display: flex;
-  align-items: center; /* Vertically center */
-  justify-content: center;
-  padding: 40px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
-}
-
-#subtitleOverlay.visible {
-  opacity: 1;
-  pointer-events: all;
-}
-
-#subtitleText {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: clamp(10.8px, 2.43vw, 29.7px); /* Match intro text size */
-  font-weight: bold; /* Match intro text weight */
-  color: #2d2f32; /* Match intro text color */
-  text-align: center;
-  line-height: 1.3; /* Adjusted for multi-line */
-  max-width: 900px; /* Increased for uppercase text */
-  text-transform: uppercase; /* Match intro text case */
-  letter-spacing: 0.02em; /* Match intro text spacing */
-  transition: opacity 0.4s ease-in-out;
-  white-space: pre-line; /* Allows \n to create line breaks */
-}
-
+/* Intro Overlay */
 #introOverlay {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
@@ -372,32 +464,25 @@ body.june-hover .bottom-bar > * {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.3s;
+  opacity: 1;
+  pointer-events: all;
+}
+
+#introOverlay[style*="opacity: 0"] {
+  pointer-events: none;
 }
 
 #introText {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
-  color: #353c50;
-  text-align: center;
-  line-height: 1.3;
-  max-width: 900px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  white-space: pre-line;
-}
-
-#introText span {
-  display: inline-block;
-  min-width: 1ch; /* Set a minimum width for each character span */
-  text-align: center; /* Center the character within its fixed-width box */
-}
-
-@media (max-width: 768px) {
-  .resume-download {
-    display: none;
-  }
+  color: #353c50;
+  text-align: center;
+  line-height: 1;
+  user-select: none;
 }
 
 /* Touch device styles */
@@ -517,7 +602,7 @@ body.transitioning {
   }
   
   .contact-links a:hover {
-    color: #2d2f32 !important;
+    color: #0008ff !important;
     text-decoration: none !important;
   }
   
@@ -650,4 +735,8 @@ body.transitioning {
   .contact-links a {
     color: #2d2f32;
   }
+}
+
+.bio-content {
+  overflow: visible;
 }
