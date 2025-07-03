@@ -135,9 +135,7 @@ function startSubtitleAnimation() {
 
     const paragraphs = [
         "Ethan Spetnagel is an interdisciplinary designer based in Queens, New York.",
-        "Ethan is the Manager of Design & Fulfillment at Church California, a skincare and grooming brand based in San Francisco. He is also a Founding UX Designer for Talamel Health Technologies, a healthcare startup revolutionizing how people find post-acute care.",
-        "In 2024, he designed and founded Slug, an artisanal soap brand where he handled everything from product development and packaging to digital branding.",
-        "He graduated from the University of Colorado with a dual major in Information Analytics and Finance."
+        "UX Designer at Talamel Health Technologies\n+\nManager of Design & Fulfillment at Church California", "Building intuitive digital products & distinctive physical brands."
     ];
 
     let paragraphIndex = 0;
