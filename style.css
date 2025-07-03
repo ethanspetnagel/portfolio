@@ -229,7 +229,7 @@ body.june-hover .resume-download {
 /* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 20px;
+  bottom: 0; /* Changed from 15px to remove space */
   left: 20px;
   max-width: 400px;
   z-index: 15;
@@ -671,7 +671,7 @@ body.transitioning {
     max-width: 100%;
     max-height: none;
     margin: 0 auto;
-    padding: 0 20px 20px;
+    padding: 0 20px 0; /* Removed bottom padding */
     text-align: center;
   }
 
