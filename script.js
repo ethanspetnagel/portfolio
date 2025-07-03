@@ -107,7 +107,6 @@ class FontFlip {
 // --- SUBTITLE ANIMATION ---
 function startSubtitleAnimation(overlay, textElement) {
     const paragraphs = [
-        "based in Queens, NY",
         "Design Manager — Church California\nUX Designer — Talamel Health",
         "Building intuitive products & distinctive brands.",
         "based in Queens, NY"
