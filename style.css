@@ -175,7 +175,7 @@ body.page-navigating * {
 /* Website Info */
 .website-info {
   position: fixed;
-  bottom: 40px;
+  bottom: 20px; /* Lowered from 40px */
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -229,7 +229,7 @@ body.june-hover .resume-download {
 /* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 0; /* Changed from 15px to remove space */
+  bottom: 20px; /* Changed from 0 to match others */
   left: 20px;
   max-width: 400px;
   z-index: 15;
@@ -309,12 +309,15 @@ body.june-hover .resume-download {
   width: 95%; /* makes it 80% of its container's width */
 }
 
-
 .bio-text p {
   margin-bottom: 10px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: normal;
   color: #353c50;
+}
+
+.bio-text p:last-of-type {
+  margin-bottom: 0;
 }
 
 /* Word span styling for text parting effect */
@@ -323,6 +326,7 @@ body.june-hover .resume-download {
   transition: transform 0.1s ease-out;
   margin-right: 0em;
 }
+
 /* Bio text links */
 .bio-text a {
   color: #353c50; /* Default medium gray like other text */
@@ -343,7 +347,7 @@ body.project-hovering.video-light .bio-text a:hover {
 
 /* Contact links */
 .contact-links {
-  margin-top: clamp(10.8px, 2.43vw, 29.7px);
+  margin-top: 15px; /* Reduced from clamp(...) */
   display: inline-flex;
   gap: 20px;
   font-size: calc(1.4rem - 7px);

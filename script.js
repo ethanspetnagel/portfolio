@@ -30,9 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 textElement.textContent = paragraphs[paragraphIndex];
                 textElement.style.color = '#353c50'; // Set subtitle color to match project links
                 
-                // Check if it's the last paragraph and set a longer delay
+                // Check if it's the first or the last paragraph for a longer delay
+                const isFirstParagraph = paragraphIndex === 0;
                 const isLastParagraph = paragraphIndex === paragraphs.length - 1;
-                const delay = isLastParagraph ? 3000 : 1800; // 3 seconds for the last line, 1.8 for others
+                const delay = (isFirstParagraph || isLastParagraph) ? 3000 : 1800;
 
                 paragraphIndex++;
                 setTimeout(showNextParagraph, delay);
