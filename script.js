@@ -327,18 +327,12 @@ class FontFlip {
             const wrapper = document.createElement('span');
             const animator = document.createElement('span');
 
-            // Style the wrapper to hold space
+            // Style the wrapper to hold space using an invisible character
             wrapper.style.display = 'inline-block';
             wrapper.style.position = 'relative';
             wrapper.style.fontFamily = this.originalFont;
             wrapper.textContent = char;
-            
-            // Hide the original letter in the wrapper when its animator is active
-            if (i === activeIndex && fontFrame >= 0) {
-                wrapper.style.visibility = 'hidden';
-            } else {
-                wrapper.style.visibility = 'visible';
-            }
+            wrapper.style.visibility = 'hidden'; // Always hide the placeholder text
 
             // Style the animator to be positioned within the wrapper
             animator.textContent = char;
@@ -349,7 +343,7 @@ class FontFlip {
             animator.style.height = '100%';
             animator.style.textAlign = 'center';
             animator.style.transformOrigin = 'center center';
-            animator.style.transition = 'transform 0.1s ease';
+            animator.style.transition = 'transform 0.1s ease, font-family 0.1s ease';
 
             if (i === activeIndex && fontFrame >= 0) {
                 // Apply scaling and font change to the animating letter
