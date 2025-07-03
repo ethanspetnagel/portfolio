@@ -449,6 +449,39 @@ body.project-hovering.video-light .bio-text a:hover {
   text-align: right;
 }
 
+/* Subtitle Overlay Styles */
+#subtitleOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fafcfc;
+  z-index: 99998; /* Below intro, above everything else */
+  display: flex;
+  align-items: flex-end; /* Align to bottom */
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#subtitleOverlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#subtitleText {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(16px, 3vw, 28px);
+  color: #2d2f32;
+  text-align: center;
+  line-height: 1.4;
+  max-width: 800px;
+  transition: opacity 0.2s ease-in-out;
+}
+
 @media (max-width: 768px) {
   .resume-download {
     display: none;

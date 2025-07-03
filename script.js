@@ -1,4 +1,4 @@
- // --- INTRO OVERLAY SETUP ---
+// --- INTRO OVERLAY SETUP ---
 (function setupIntroOverlay() {
     if (!sessionStorage.getItem('introShown')) {
         // Create overlay
@@ -43,7 +43,7 @@
                     'times new roman, serif',
                     'UnifrakturCook, cursive',
                     'Impact',                  // Ancient/mystical
-            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
+                    'Marker Felt, fantasy'           // Marker pen style            // Decorative c
                 ];
                 this.originalFont = window.getComputedStyle(el).fontFamily;
                 this._timeout = null;
@@ -107,14 +107,70 @@
         // Start animation
         const introFlip = new IntroFontFlip(introText);
         introFlip.setText('ETHANSPETNAGEL.ONLINE', () => {
+            // Instead of removing, fade out and start next animation
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.remove();
-                sessionStorage.setItem('introShown', '1');
-            }, 300);
+                startSubtitleAnimation(); // New function call
+            }, 500); // Wait for fade out
         });
+    } else {
+        // If intro was already shown, hide the subtitle overlay
+        const subtitleOverlay = document.getElementById('subtitleOverlay');
+        if (subtitleOverlay) {
+            subtitleOverlay.style.display = 'none';
+        }
     }
 })();
+
+// --- SUBTITLE ANIMATION ---
+function startSubtitleAnimation() {
+    const subtitleOverlay = document.getElementById('subtitleOverlay');
+    const subtitleTextElement = document.getElementById('subtitleText');
+
+    if (!subtitleOverlay || !subtitleTextElement) {
+        console.error('Subtitle elements not found!');
+        return;
+    }
+
+    const paragraphs = [
+        "Ethan Spetnagel is an interdisciplinary designer based in Queens, New York.",
+        "Ethan is the Manager of Design & Fulfillment at Church California, a skincare and grooming brand based in San Francisco. He is also a Founding UX Designer for Talamel Health Technologies, a healthcare startup revolutionizing how people find post-acute care.",
+        "In 2024, he designed and founded Slug, an artisanal soap brand where he handled everything from product development and packaging to digital branding.",
+        "He graduated from the University of Colorado with a dual major in Information Analytics and Finance."
+    ];
+
+    const allWords = paragraphs.join(' ').split(/\s+/);
+    let wordIndex = 0;
+
+    // Show the subtitle overlay
+    subtitleOverlay.classList.add('visible');
+
+    function showNextWord() {
+        if (wordIndex < allWords.length) {
+            subtitleTextElement.textContent += (wordIndex > 0 ? ' ' : '') + allWords[wordIndex];
+            wordIndex++;
+
+            // Adjust speed: faster for short words, slower for longer ones
+            const currentWord = allWords[wordIndex - 1];
+            const delay = currentWord.length > 5 ? 120 : 80;
+
+            setTimeout(showNextWord, delay);
+        } else {
+            // Animation finished, hide overlay and set session storage
+            setTimeout(() => {
+                subtitleOverlay.classList.remove('visible');
+                setTimeout(() => {
+                    subtitleOverlay.style.display = 'none';
+                    sessionStorage.setItem('introShown', '1');
+                }, 500); // Wait for fade out
+            }, 2000); // Wait 2 seconds after last word
+        }
+    }
+
+    // Start the animation
+    setTimeout(showNextWord, 500); // Initial delay before starting
+}
 
 // --- END INTRO OVERLAY SETUP ---
 
@@ -123,7 +179,7 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: { left: '12%', top: '0%' }
-    }, 
+    },
     'church': {
         url: './church video bg.mp4',
         position: { left: '34.5%', top: '39%' }
@@ -131,13 +187,13 @@ const projectMedia = {
     'talamel': {
         url: './talamel1.mp4',
         position: { left: '16%', top: '7%' }
-    }, 
-    'fox-and-lion': { 
+    },
+    'fox-and-lion': {
         url: './foxlionbg.mp4',
         position: { left: '45%', top: '15%' }
-    }, 
+    },
     'ecoscan': '',
-    'cardioscape': { 
+    'cardioscape': {
         url: './cardio.mp4',
         position: { left: '5%', top: '22%' }
     },
@@ -148,7 +204,7 @@ const projectMedia = {
     'green-lake-law': {
         url: './greenlake.mp4',
         position: { left: '0%', top: '20%' }
-    }, 
+    },
     'june-2025': ''
 };
 
@@ -336,9 +392,9 @@ class FontFlip {
     constructor(el) {
         this.el = el;
         this.fonts = [
-             'times new roman, serif',
-                    'UnifrakturCook, cursive',
-                    'Impact',                  // Ancient/mystical
+            'times new roman, serif',
+            'UnifrakturCook, cursive',
+            'Impact',                  // Ancient/mystical
             'Marker Felt, fantasy'           // Marker pen style            // Decorative c
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
@@ -736,18 +792,18 @@ if (resumeDownload) {
     // On hover, animate and download - completes regardless of mouse position
     resumeDownload.addEventListener('mouseenter', function() {
         console.log('Resume mouseenter triggered. downloadInProgress:', downloadInProgress, 'isAnimating:', resumeFlip._isAnimating);
-        
+
         if (downloadInProgress || resumeFlip._isAnimating) {
             console.log('Download blocked - already in progress or animating');
             return;
         }
-        
+
         downloadInProgress = true;
         console.log('Starting resume animation and download');
-        
+
         resumeFlip.setText('DOWNLOAD', function animationDone() {
             console.log('Animation completed, triggering download');
-            
+
             // Trigger download after animation completes
             try {
                 const link = document.createElement('a');
@@ -758,12 +814,12 @@ if (resumeDownload) {
                 link.click();
                 document.body.removeChild(link);
                 console.log('Download triggered successfully');
-                
+
                 // Reset after download
                 setTimeout(() => {
                     resetResumeButton();
                 }, 500);
-                
+
             } catch (error) {
                 console.error('Error during download:', error);
                 resetResumeButton();
@@ -785,7 +841,7 @@ if (resumeDownload) {
 
     // Set initial text on page load
     setResumeButtonText('RESUME');
-    
+
     // Force reset after 5 seconds if stuck (failsafe)
     setInterval(() => {
         if (downloadInProgress) {
@@ -799,7 +855,7 @@ if (resumeDownload) {
             }, 10000); // Reset after 10 seconds if still stuck
         }
     }, 5000);
-    
+
 } else {
     console.error('Resume download element not found! Check your HTML.');
     // Try to find it by class name as backup
@@ -860,7 +916,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Log element properties
             const rect = resumeElement.getBoundingClientRect();
             const styles = window.getComputedStyle(resumeElement);
-            
+
             console.log('=== RESUME BUTTON DEBUG ===');
             console.log('Element found:', resumeElement);
             console.log('Position:', {
@@ -880,37 +936,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 position: styles.position,
                 fontSize: styles.fontSize
             });
-            
+
             // Test if element is actually visible in viewport
-            const isVisible = rect.width > 0 && rect.height > 0 && 
-                             rect.top >= 0 && rect.left >= 0 && 
-                             rect.bottom <= window.innerHeight && 
-                             rect.right <= window.innerWidth;
+            const isVisible = rect.width > 0 && rect.height > 0 &&
+                rect.top >= 0 && rect.left >= 0 &&
+                rect.bottom <= window.innerHeight &&
+                rect.right <= window.innerWidth;
             console.log('Is in viewport:', isVisible);
-            console.log('Window size:', {width: window.innerWidth, height: window.innerHeight});
-            
+            console.log('Window size:', { width: window.innerWidth, height: window.innerHeight });
+
             // Add a test click listener to see if ANY events work
             resumeElement.addEventListener('click', function() {
                 console.log('CLICK EVENT WORKS!');
                 alert('Click detected - so the element IS interactable');
             });
-            
+
             // Test mouseover (sometimes works when mouseenter doesn't)
             resumeElement.addEventListener('mouseover', function() {
                 console.log('MOUSEOVER EVENT WORKS!');
             });
-            
+
             // Log any elements that might be covering it
             const elementsAtPosition = document.elementsFromPoint(rect.right - 10, rect.bottom - 10);
             console.log('Elements at resume position:', elementsAtPosition);
-            
+
             // Test if the element is actually at the expected position
             const testX = rect.left + rect.width / 2;
             const testY = rect.top + rect.height / 2;
             const elementAtCenter = document.elementFromPoint(testX, testY);
             console.log('Element at center of resume button:', elementAtCenter);
             console.log('Is it the resume button?', elementAtCenter === resumeElement);
-            
+
         } else {
             console.error('Resume element still not found in additional debug');
         }
