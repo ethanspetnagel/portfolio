@@ -52,7 +52,7 @@
 .about-toggle::selection,
 .date-text::selection {
   background-color: #daff00;
-  color: #f40f21;
+  color: #023bc9;
 }
 
 html, body {
@@ -107,6 +107,7 @@ body.page-navigating * {
   opacity: 0;
   transform: translate(-50%, -50%); /* Center the video */
   transition: opacity 0.3s ease;
+  border-radius: 5px;
 }
 
 .fullscreen-bg video.active {
@@ -465,7 +466,7 @@ body.project-hovering.video-light .bio-text a:hover {
   max-height: 80vh; /* Fit within 80% of viewport height */
   height: auto;
   width: auto;
-  border-radius: 4px;
+  border-radius: 5px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
