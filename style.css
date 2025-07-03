@@ -175,11 +175,11 @@ body.page-navigating * {
 /* Website Info */
 .website-info {
   position: fixed;
-  bottom: 40px;
+  bottom: 20px; /* This might be the old rule, we will override */
   left: 50%;
   transform: translateX(-50%);
+  z-index: 15;
   text-align: center;
-  z-index: 10;
 }
 
 .date-text {
@@ -439,15 +439,32 @@ body.project-hovering.video-light .bio-text a:hover {
   animation: none !important;
 }
 
-.resume-section {
+/* New Bottom Bar Styles */
+.bottom-bar {
   position: fixed;
-  bottom: 20px;
+  bottom: 20px; /* Consistent distance from bottom */
+  left: 20px;
   right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Vertically aligns all items */
   z-index: 15;
-  /* Match .bio-section's max-width if needed */
-  /* max-width: 400px; */
-  text-align: right;
+  pointer-events: none; /* Container doesn't block clicks */
 }
+
+/* Ensure child elements are clickable */
+.bottom-bar > * {
+  pointer-events: auto;
+}
+
+/* Remove individual positioning from child elements */
+.bottom-bar .about-toggle,
+.bottom-bar .date-text,
+.bottom-bar .resume-download {
+  position: static; /* Override any 'fixed' or 'absolute' positioning */
+  transform: none;
+}
+
 
 /* Subtitle Overlay Styles */
 #subtitleOverlay {

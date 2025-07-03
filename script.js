@@ -86,7 +86,7 @@ class FontFlip {
 
         if (introOverlay && introText) {
             const introFlip = new FontFlip(introText);
-            introFlip.setText('ETHANSPETNAGEL.ONLINE', () => {
+            introFlip.setText('ETHAN SPETNAGEL', () => {
                 // Directly start the next animation sequence in the same overlay
                 startSubtitleAnimation(introOverlay, introText);
             });
@@ -101,7 +101,7 @@ class FontFlip {
 function startSubtitleAnimation(overlay, textElement) {
     const paragraphs = [
         "Interdisciplinary Designer based in Queens, NY",
-        "UX Designer, Talamel Health\n+\nDesign Manager, Church California",
+        "UX Designer — Talamel Health\n+\nDesign Manager — Church California",
         "Building intuitive products & distinctive brands."
     ];
 
