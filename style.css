@@ -51,8 +51,8 @@
 .bio-text::selection,
 .about-toggle::selection,
 .date-text::selection {
-  background-color: #1f2022;
-  color: #e8f726;
+  background-color: #f9ff00;
+  color: #191917;
 }
 
 html, body {
