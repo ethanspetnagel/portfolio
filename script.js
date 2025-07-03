@@ -1,3 +1,83 @@
+// --- FONTFLIP CLASS DEFINITION ---
+// Make sure your FontFlip class is defined here, at the top.
+class FontFlip {
+    constructor(el) {
+        this.el = el;
+        this.fonts = [
+            'times new roman, serif',
+            'UnifrakturCook, cursive',
+            'Impact',                  // Ancient/mystical
+            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
+        ];
+        this.originalFont = window.getComputedStyle(el).fontFamily;
+        this._timeout = null;
+        this._isAnimating = false;
+    }
+
+    setText(newText, onFinish) {
+        this.text = newText;
+        this.stop();
+        this._animateLetter(0, onFinish);
+    }
+
+    // Fisher-Yates shuffle
+    _shuffle(array) {
+        let arr = array.slice();
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    _animateLetter(index, onFinish) {
+        if (index >= this.text.length) {
+            this._renderWord(-1, -1);
+            this._isAnimating = false;
+            if (typeof onFinish === 'function') onFinish();
+            return;
+        }
+        // Shuffle font order for this letter
+        const shuffledFonts = this._shuffle(this.fonts);
+        let fontFrame = 0;
+        const animateFont = () => {
+            if (fontFrame < shuffledFonts.length) {
+                this._renderWord(index, fontFrame, shuffledFonts);
+                fontFrame++;
+                this._timeout = setTimeout(animateFont, 90);
+            } else {
+                this._renderWord(index, -1, shuffledFonts);
+                this._timeout = setTimeout(() => this._animateLetter(index + 1, onFinish), 5);
+            }
+        };
+        this._isAnimating = true;
+        animateFont();
+    }
+
+    _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
+        this.el.innerHTML = '';
+        for (let i = 0; i < this.text.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = this.text[i];
+            span.style.display = 'inline-block';
+            if (i === activeIndex && fontFrame >= 0) {
+                span.style.fontFamily = fontList[fontFrame];
+            } else {
+                span.style.fontFamily = this.originalFont;
+            }
+            this.el.appendChild(span);
+        }
+    }
+
+    stop() {
+        if (this._timeout) {
+            clearTimeout(this._timeout);
+            this._timeout = null;
+        }
+        this._isAnimating = false;
+    }
+}
+
 // --- INTRO OVERLAY SETUP ---
 (function setupIntroOverlay() {
     if (!sessionStorage.getItem('introShown')) {
@@ -274,85 +354,6 @@ function hideAllMedia() {
     }
     document.body.classList.remove('video-dark', 'video-light');
     currentMedia = null;
-}
-
-// Font Flip Effect (with letter scramble)
-class FontFlip {
-    constructor(el) {
-        this.el = el;
-        this.fonts = [
-            'times new roman, serif',
-            'UnifrakturCook, cursive',
-            'Impact',                  // Ancient/mystical
-            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
-        ];
-        this.originalFont = window.getComputedStyle(el).fontFamily;
-        this._timeout = null;
-        this._isAnimating = false;
-    }
-
-    setText(newText, onFinish) {
-        this.text = newText;
-        this.stop();
-        this._animateLetter(0, onFinish);
-    }
-
-    // Fisher-Yates shuffle
-    _shuffle(array) {
-        let arr = array.slice();
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-    }
-
-    _animateLetter(index, onFinish) {
-        if (index >= this.text.length) {
-            this._renderWord(-1, -1);
-            this._isAnimating = false;
-            if (typeof onFinish === 'function') onFinish();
-            return;
-        }
-        // Shuffle font order for this letter
-        const shuffledFonts = this._shuffle(this.fonts);
-        let fontFrame = 0;
-        const animateFont = () => {
-            if (fontFrame < shuffledFonts.length) {
-                this._renderWord(index, fontFrame, shuffledFonts);
-                fontFrame++;
-                this._timeout = setTimeout(animateFont, 90);
-            } else {
-                this._renderWord(index, -1, shuffledFonts);
-                this._timeout = setTimeout(() => this._animateLetter(index + 1, onFinish), 5);
-            }
-        };
-        this._isAnimating = true;
-        animateFont();
-    }
-
-    _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
-        this.el.innerHTML = '';
-        for (let i = 0; i < this.text.length; i++) {
-            const span = document.createElement('span');
-            span.textContent = this.text[i];
-            span.style.display = 'inline-block';
-            if (i === activeIndex && fontFrame >= 0) {
-                span.style.fontFamily = fontList[fontFrame];
-            } else {
-                span.style.fontFamily = this.originalFont;
-            }
-            this.el.appendChild(span);
-        }
-    }
-
-    stop() {
-        if (this._timeout) {
-            clearTimeout(this._timeout);
-            this._timeout = null;
-        }
-        this._isAnimating = false;
-    }
 }
 
 // Text Parting Effect (unchanged)
