@@ -53,15 +53,15 @@ document.addEventListener('DOMContentLoaded', function() {
 const projectMedia = {
     'slug': {
         url: './slug.mp4',
-        position: { left: '28%', top: '12%' }
+        position: { left: '27%', top: '14%' }
     }, 
     'church': {
         url: './church video bg.mp4',
-        position: { left: '80%', top: '23%' }
+        position: { left: '77%', top: '23%' }
     },
     'talamel': {
         url: './talamel1.mp4',
-        position: { left: '22%', top: '29%' }
+        position: { left: '22%', top: '30%' }
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
@@ -70,15 +70,15 @@ const projectMedia = {
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
-        position: { left: '85%', top: '40%' }
+        position: { left: '85%', top: '44%' }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
-        position: { left: '50%', top: '48%' }
+        position: { left: '50%', top: '45%' }
     },
     'green-lake-law': {
         url: './greenlake.mp4',
-        position: { left: '85%', top: '60%' }
+        position: { left: '85%', top: '55%' }
     }, 
     'june-2025': ''
 };
