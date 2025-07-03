@@ -501,7 +501,7 @@ body.project-hovering.video-light .bio-text a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s;
+  transition: opacity 0.5s ease-in-out;
   opacity: 1;
   pointer-events: all;
 }
@@ -514,12 +514,14 @@ body.project-hovering.video-light .bio-text a:hover {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
   color: #2d2f32;
   text-align: center;
-  line-height: 1;
-  user-select: none;
+  line-height: 1.3;
+  max-width: 900px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  transition: opacity 0.4s ease-in-out;
+  white-space: pre-line; /* Allows \n to create line breaks */
 }
 
 /* Touch device styles */

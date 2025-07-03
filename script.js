@@ -1,87 +1,64 @@
 // --- INTRO OVERLAY SETUP ---
 (function setupIntroOverlay() {
     if (!sessionStorage.getItem('introShown')) {
-        // The subtitle animation is now the main intro.
-        startSubtitleAnimation();
-    } else {
-        // If intro was already shown, hide the subtitle overlay
-        const subtitleOverlay = document.getElementById('subtitleOverlay');
-        if (subtitleOverlay) {
-            subtitleOverlay.style.display = 'none';
+        const introOverlay = document.getElementById('introOverlay');
+        const introText = document.getElementById('introText');
+
+        if (introOverlay && introText) {
+            const introFlip = new FontFlip(introText);
+            introFlip.setText('ETHANSPETNAGEL.ONLINE', () => {
+                // Directly start the next animation sequence in the same overlay
+                startSubtitleAnimation(introOverlay, introText);
+            });
         }
+    } else {
+        const introOverlay = document.getElementById('introOverlay');
+        if (introOverlay) introOverlay.style.display = 'none';
     }
 })();
 
 // --- SUBTITLE ANIMATION ---
-function startSubtitleAnimation() {
-    const subtitleOverlay = document.getElementById('subtitleOverlay');
-    const subtitleTextElement = document.getElementById('subtitleText');
-
-    if (!subtitleOverlay || !subtitleTextElement) {
-        console.error('Subtitle elements not found!');
-        return;
-    }
-
-    // Revised, tighter text for the animation
+function startSubtitleAnimation(overlay, textElement) {
     const paragraphs = [
-        { animated: "Ethan Spetnagel", static: " is a designer based in Queens, New York." },
+        "Interdisciplinary Designer based in Queens, NY",
         "UX Designer, Talamel Health\n+\nDesign Manager, Church California",
         "Building intuitive products & distinctive brands."
     ];
 
     let paragraphIndex = 0;
 
-    // Show the subtitle overlay
-    subtitleOverlay.classList.add('visible');
-    subtitleTextElement.style.opacity = 0; // Start with text invisible
-
     function showNextParagraph() {
         if (paragraphIndex < paragraphs.length) {
             const currentParagraph = paragraphs[paragraphIndex];
             
             // Set text and fade in
-            subtitleTextElement.style.opacity = 1;
+            textElement.textContent = currentParagraph;
+            textElement.style.opacity = 1;
 
-            if (paragraphIndex === 0) {
-                // Handle the first line with the animation
-                const animatedSpan = document.createElement('span');
-                const staticSpan = document.createElement('span');
-                staticSpan.textContent = currentParagraph.static;
-                subtitleTextElement.innerHTML = '';
-                subtitleTextElement.appendChild(animatedSpan);
-                subtitleTextElement.appendChild(staticSpan);
-
-                const nameAnimation = new FontFlip(animatedSpan);
-                nameAnimation.setText(currentParagraph.animated);
-            } else {
-                subtitleTextElement.textContent = currentParagraph;
-            }
-
-            // Calculate how long to show the line based on its length
-            const textForTiming = typeof currentParagraph === 'string' ? currentParagraph : currentParagraph.animated + currentParagraph.static;
-            const wordCount = textForTiming.split(' ').length;
+            const wordCount = currentParagraph.split(' ').length;
             const displayDuration = Math.max(2500, wordCount * 300); 
 
             paragraphIndex++;
 
             // Set timeout to fade out the current line and show the next one
             setTimeout(() => {
-                subtitleTextElement.style.opacity = 0;
+                textElement.style.opacity = 0;
                 setTimeout(showNextParagraph, 500); // Wait for fade-out before showing next
             }, displayDuration);
 
         } else {
             // All paragraphs shown, fade out the entire overlay
-            subtitleOverlay.classList.remove('visible');
+            overlay.style.opacity = '0';
             sessionStorage.setItem('introShown', '1');
             setTimeout(() => {
-                subtitleOverlay.style.display = 'none';
-            }, 500); // Wait for fade-out transition to finish
+                overlay.style.display = 'none';
+            }, 500);
         }
     }
 
-    // Start the animation immediately
-    showNextParagraph();
+    // Fade out the old text before starting the new sequence
+    textElement.style.opacity = 0;
+    setTimeout(showNextParagraph, 500); // Wait for fade-out, then start
 }
 
 // --- END INTRO OVERLAY SETUP ---
