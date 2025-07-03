@@ -55,26 +55,39 @@ class FontFlip {
     }
 
     _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
-        this.el.innerHTML = '';
+        this.el.innerHTML = ''; // Clear previous content
         for (let i = 0; i < this.text.length; i++) {
             const char = this.text[i];
-            const span = document.createElement('span');
-            span.textContent = char;
-            
-            if (char === ' ') {
-                span.style.display = 'inline'; // Keep spaces as normal inline elements
+
+            // Create a wrapper to hold the space
+            const wrapper = document.createElement('span');
+            wrapper.style.display = 'inline-block';
+            wrapper.style.position = 'relative'; // Anchor for the inner span
+
+            // Create the inner span that will animate
+            const innerSpan = document.createElement('span');
+            innerSpan.textContent = char;
+
+            // Set a fixed width on the wrapper based on the original font
+            wrapper.style.fontFamily = this.originalFont;
+            wrapper.textContent = char;
+            const charWidth = wrapper.getBoundingClientRect().width;
+            wrapper.style.width = `${charWidth}px`;
+            wrapper.textContent = ''; // Clear the character from the wrapper
+
+            // Apply animation to the inner span
+            if (i === activeIndex && fontFrame >= 0) {
+                innerSpan.style.fontFamily = fontList[fontFrame];
             } else {
-                span.style.display = 'inline-block';
-                span.style.minWidth = '1ch';
-                span.style.textAlign = 'center';
+                innerSpan.style.fontFamily = this.originalFont;
             }
 
-            if (i === activeIndex && fontFrame >= 0) {
-                span.style.fontFamily = fontList[fontFrame];
-            } else {
-                span.style.fontFamily = this.originalFont;
+            if (char === ' ') {
+                wrapper.style.width = '0.5ch'; // Give space a consistent width
             }
-            this.el.appendChild(span);
+
+            wrapper.appendChild(innerSpan);
+            this.el.appendChild(wrapper);
         }
     }
 
@@ -403,7 +416,8 @@ class TextPartingEffect {
                 node.parentNode.replaceChild(fragment, node);
             });
         });
-    }
+    } // This closing brace was missing.
+
     getTextNodes(element) {
         const textNodes = [];
         const walker = document.createTreeWalker(
@@ -532,14 +546,16 @@ let isAboutOpen = false;
 function setAboutState(isOpen) {
     isAboutOpen = isOpen;
     bioContent.classList.toggle('active', isOpen);
-    aboutToggle.style.display = isOpen ? 'none' : 'block';
+    // Use visibility to keep the element in the layout, preventing shifts
+    aboutToggle.style.visibility = isOpen ? 'hidden' : 'visible';
     if (isOpen) {
         setTimeout(() => new TextPartingEffect().init(), 300);
     }
 }
 
-aboutToggle.addEventListener('click', () => {
-    if (aboutFlip._isAnimating) return;
+// Change from 'click' back to 'mouseenter'
+aboutToggle.addEventListener('mouseenter', () => {
+    if (aboutFlip._isAnimating || isAboutOpen) return;
     aboutFlip.setText('ABOUT', () => {
         setAboutState(true);
     });

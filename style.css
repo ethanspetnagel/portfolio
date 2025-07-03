@@ -277,6 +277,14 @@ body.june-hover .resume-download {
   overflow: hidden;
   transition: max-height 2s cubic-bezier(.4,1.6,.6,1);
   pointer-events: none;
+  /* Add these properties to prevent shifting */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns items (text, links) to the left */
+  /* --- */
+  opacity: 0;
+  visibility: hidden;
 }
 
 .bio-content.active {
