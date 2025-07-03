@@ -59,31 +59,32 @@ class FontFlip {
         for (let i = 0; i < this.text.length; i++) {
             const char = this.text[i];
 
-            // Create a wrapper to hold the space
+            // Create a wrapper to hold the space and prevent layout shifts
             const wrapper = document.createElement('span');
             wrapper.style.display = 'inline-block';
-            wrapper.style.position = 'relative'; // Anchor for the inner span
-
-            // Create the inner span that will animate
-            const innerSpan = document.createElement('span');
-            innerSpan.textContent = char;
-
-            // Set a fixed width on the wrapper based on the original font
+            wrapper.style.position = 'relative';
             wrapper.style.fontFamily = this.originalFont;
             wrapper.textContent = char;
+
+            // Set a fixed width on the wrapper based on the original font
             const charWidth = wrapper.getBoundingClientRect().width;
             wrapper.style.width = `${charWidth}px`;
             wrapper.textContent = ''; // Clear the character from the wrapper
 
-            // Apply animation to the inner span
+            // Create the inner span that will actually animate
+            const innerSpan = document.createElement('span');
+            innerSpan.textContent = char;
+            innerSpan.style.position = 'absolute';
+            innerSpan.style.left = '0';
+            innerSpan.style.top = '0';
+            innerSpan.style.width = '100%';
+            innerSpan.style.textAlign = 'center';
+
+            // Apply animation font to the inner span
             if (i === activeIndex && fontFrame >= 0) {
                 innerSpan.style.fontFamily = fontList[fontFrame];
             } else {
                 innerSpan.style.fontFamily = this.originalFont;
-            }
-
-            if (char === ' ') {
-                wrapper.style.width = '0.5ch'; // Give space a consistent width
             }
 
             wrapper.appendChild(innerSpan);
@@ -546,14 +547,16 @@ let isAboutOpen = false;
 function setAboutState(isOpen) {
     isAboutOpen = isOpen;
     bioContent.classList.toggle('active', isOpen);
-    // Use visibility to keep the element in the layout, preventing shifts
     aboutToggle.style.visibility = isOpen ? 'hidden' : 'visible';
+    hideToggle.style.visibility = isOpen ? 'visible' : 'hidden';
+    hideToggle.style.opacity = isOpen ? '1' : '0';
+
     if (isOpen) {
         setTimeout(() => new TextPartingEffect().init(), 300);
     }
 }
 
-// Change from 'click' back to 'mouseenter'
+// About button hover functionality
 aboutToggle.addEventListener('mouseenter', () => {
     if (aboutFlip._isAnimating || isAboutOpen) return;
     aboutFlip.setText('ABOUT', () => {
@@ -561,6 +564,7 @@ aboutToggle.addEventListener('mouseenter', () => {
     });
 });
 
+// Hide button click functionality
 hideToggle.addEventListener('click', () => {
     setAboutState(false);
 });

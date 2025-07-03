@@ -49,15 +49,19 @@
 .bio-text::selection,
 .about-toggle::selection
 .date-text::selection {
-  background-color: #1d1d1c;
-  color: #ffffff;
+  background-color: #353c50;
+  color: #d2d4db;
 }
 
 body {
-  background-color: #fafcfc; /* Changed to requested color */
-  color: #0f0f0f;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  position: relative;
+  background-color: #d2d4db;
+  color: #353c50;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  cursor: crosshair;
+  transition: background-color 0.3s ease;
 }
 
 /* Page loading state - prevents flash during navigation */
@@ -149,14 +153,19 @@ body.page-navigating * {
   opacity: 1;
 }
 
+.projects-container.hovering .project-link:not(:hover) {
+  color: #353c50;
+  opacity: 0.5;
+}
+
 /* Project Links - Default color */
 .project-link {
   display: block;
   width: fit-content;
   margin: 0 auto;
-  color: #282c33; /* Default dark gray */
+  color: #353c50; /* Default dark gray */
   text-decoration: none;
-  font-size: clamp(32.4px, 7.29vw, 89.1px);
+  font-size: clamp(24px, 7.5vw, 110px);
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -0.02em;
@@ -232,7 +241,8 @@ body.june-hover .resume-download {
   bottom: 20px;
   left: 20px;
   max-width: 400px;
-  z-index: 15;
+  z-index: 20;
+  pointer-events: none;
   flex-direction: column;
   justify-content: flex-end;
   padding: 20px;
@@ -285,6 +295,7 @@ body.june-hover .resume-download {
   /* --- */
   opacity: 0;
   visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s;
 }
 
 .bio-content.active {
@@ -309,15 +320,14 @@ body.june-hover .resume-download {
 
 /* Bio text */
 .bio-text {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 9px);
-  font-weight: normal;
-  line-height: 1.08;
-  text-align: left;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #353c50;
+  margin-bottom: 20px;
   cursor: crosshair;
   margin-top: 5px;
   letter-spacing: -0.01em;
-  color: #2d2f32;
   width: 95%; /* makes it 80% of its container's width */
 }
 
@@ -451,7 +461,7 @@ body.project-hovering.video-light .bio-text a:hover {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
-  color: #2d2f32;
+  color: #353c50;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   cursor: pointer;
@@ -510,7 +520,7 @@ body.project-hovering.video-light .bio-text a:hover {
 #introOverlay {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
-  background: #fafcfc;
+  background: #d2d4db;
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -528,7 +538,7 @@ body.project-hovering.video-light .bio-text a:hover {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
-  color: #2d2f32;
+  color: #353c50;
   text-align: center;
   line-height: 1.3;
   max-width: 900px;
@@ -795,17 +805,20 @@ body.transitioning {
 }
 
 .hide-toggle {
-  display: none; /* Hidden by default */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
-  color: #2d2f32;
+  color: #353c50;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   cursor: pointer;
-  margin-bottom: 10px; /* Space between HIDE and contact links */
+  pointer-events: auto;
+  visibility: hidden; /* Use visibility to prevent layout shifts */
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
 }
 
 .bio-content.active + .hide-toggle {
-  display: block; /* Show when bio is active */
+  visibility: visible;
+  opacity: 1;
 }
