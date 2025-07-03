@@ -154,8 +154,8 @@ body.page-navigating * {
 }
 
 .projects-container.hovering .project-link:not(:hover) {
-  color: #353c50;
-  opacity: 0.5;
+  color: #353c50; /* Use main text color */
+  opacity: 0.25; /* Halved opacity for a more subtle effect */
 }
 
 /* Project Links - Default color */
@@ -211,11 +211,14 @@ body.page-navigating * {
 
 /* Special class for black background effect */
 body.june-hover {
-  background-color: #000000;
-  transition: background-color 0.3s ease;
+  background-color: #353c50; /* Dark background */
+  color: #d2d4db; /* Light text */
 }
 
-/* Elements that turn white on June hover - excluding date text and about toggle */
+body.june-hover * {
+  color: #d2d4db;
+}
+
 body.june-hover .project-link,
 body.june-hover .bio-text,
 body.june-hover .bio-text p,
@@ -247,6 +250,49 @@ body.june-hover .resume-download {
   justify-content: flex-end;
   padding: 20px;
   transition: opacity 0.4s ease-in-out, visibility 0.4s;
+}
+
+/* Default state: bio content is hidden */
+.bio-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s;
+}
+
+/* When .is-open is added, bio content becomes visible */
+.bio-section.is-open .bio-content {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Default state: HIDE button is hidden */
+.hide-toggle {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  color: #353c50;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  pointer-events: none; /* Inactive by default */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* When .is-open is added, HIDE button becomes visible */
+.bio-section.is-open .hide-toggle {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* When .is-open is added, the ABOUT button in the bottom bar is hidden */
+.bio-section.is-open ~ .bottom-bar .about-toggle {
+    visibility: hidden;
 }
 
 /* Default text color */
@@ -281,23 +327,6 @@ body.june-hover .resume-download {
 /* Bio section elements maintain default colors */
 
 /* Bio content container */
-.bio-content {
-  display: block;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 2s cubic-bezier(.4,1.6,.6,1);
-  pointer-events: none;
-  /* Add these properties to prevent shifting */
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Aligns items (text, links) to the left */
-  /* --- */
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease-in-out, visibility 0.4s;
-}
-
 .bio-content.active {
   max-height: 1200px; /* Large enough for your content */
   pointer-events: auto;
@@ -365,9 +394,8 @@ body.project-hovering.video-light .bio-text a:hover {
 
 /* Contact links */
 .contact-links {
-  margin-top: clamp(10.8px, 2.43vw, 29.7px);
   display: flex;
-  gap: 20px;
+  gap: 15px;
   font-size: calc(1.4rem - 7px);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   align-items: baseline;

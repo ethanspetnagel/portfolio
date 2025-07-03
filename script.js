@@ -56,38 +56,40 @@ class FontFlip {
 
     _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
         this.el.innerHTML = ''; // Clear previous content
+
         for (let i = 0; i < this.text.length; i++) {
             const char = this.text[i];
 
-            // Create a wrapper to hold the space and prevent layout shifts
+            // 1. Create a wrapper to hold each character's space.
             const wrapper = document.createElement('span');
             wrapper.style.display = 'inline-block';
             wrapper.style.position = 'relative';
-            wrapper.style.fontFamily = this.originalFont;
-            wrapper.textContent = char;
 
-            // Set a fixed width on the wrapper based on the original font
-            const charWidth = wrapper.getBoundingClientRect().width;
-            wrapper.style.width = `${charWidth}px`;
-            wrapper.textContent = ''; // Clear the character from the wrapper
+            // 2. Create a "ghost" character to preserve the original spacing.
+            const ghost = document.createElement('span');
+            ghost.textContent = char;
+            ghost.style.fontFamily = this.originalFont;
+            ghost.style.visibility = 'hidden'; // This holds the space but is not visible.
+            wrapper.appendChild(ghost);
 
-            // Create the inner span that will actually animate
-            const innerSpan = document.createElement('span');
-            innerSpan.textContent = char;
-            innerSpan.style.position = 'absolute';
-            innerSpan.style.left = '0';
-            innerSpan.style.top = '0';
-            innerSpan.style.width = '100%';
-            innerSpan.style.textAlign = 'center';
+            // 3. Create the visible, animating character.
+            const animator = document.createElement('span');
+            animator.textContent = char;
+            animator.style.position = 'absolute';
+            animator.style.top = '0';
+            animator.style.left = '0';
+            animator.style.width = '100%';
+            animator.style.height = '100%';
+            animator.style.textAlign = 'center';
 
-            // Apply animation font to the inner span
+            // 4. Apply the changing font only to the animator span.
             if (i === activeIndex && fontFrame >= 0) {
-                innerSpan.style.fontFamily = fontList[fontFrame];
+                animator.style.fontFamily = fontList[fontFrame];
             } else {
-                innerSpan.style.fontFamily = this.originalFont;
+                animator.style.fontFamily = this.originalFont;
             }
+            wrapper.appendChild(animator);
 
-            wrapper.appendChild(innerSpan);
             this.el.appendChild(wrapper);
         }
     }
@@ -140,8 +142,8 @@ function startSubtitleAnimation(overlay, textElement) {
             textElement.style.opacity = 1;
 
             const wordCount = currentParagraph.split(' ').length;
-            // Add 1000ms to the display duration for a longer pause
-            const displayDuration = Math.max(2500, wordCount * 300) + 1000; 
+            // Remove the extra 1000ms to speed up the animation
+            const displayDuration = Math.max(2500, wordCount * 300); 
 
             paragraphIndex++;
 
@@ -222,6 +224,7 @@ const bioContent = document.getElementById('bioContent');
 const bioLinks = document.querySelectorAll('.bio-text a[data-bio]');
 const bioPreview = document.getElementById('bioPreview');
 const bioPreviewImage = document.getElementById('bioPreviewImage');
+const bioSection = document.querySelector('.bio-section');
 
 // Variables
 let currentMedia = null;
@@ -544,14 +547,14 @@ function handleProjectHover(link, isEntering) {
 const aboutFlip = new FontFlip(aboutToggle);
 let isAboutOpen = false;
 
+// Use a single function to control the "About" section's state via a CSS class
 function setAboutState(isOpen) {
     isAboutOpen = isOpen;
-    bioContent.classList.toggle('active', isOpen);
-    aboutToggle.style.visibility = isOpen ? 'hidden' : 'visible';
-    hideToggle.style.visibility = isOpen ? 'visible' : 'hidden';
-    hideToggle.style.opacity = isOpen ? '1' : '0';
-
+    if (bioSection) {
+        bioSection.classList.toggle('is-open', isOpen);
+    }
     if (isOpen) {
+        // Initialize the text parting effect only when the section becomes visible
         setTimeout(() => new TextPartingEffect().init(), 300);
     }
 }
