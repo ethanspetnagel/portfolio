@@ -1,120 +1,48 @@
+// --- INTRO ANIMATION SETUP ---
+document.addEventListener('DOMContentLoaded', function() {
+    const introOverlay = document.getElementById('introOverlay');
+    const introText = document.getElementById('introText');
 
-(function setupIntroOverlay() {
-    if (!sessionStorage.getItem('introShown')) {
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.id = 'introOverlay';
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100vw';
-        overlay.style.height = '100vh';
-        overlay.style.background = '#fafcfc';
-        overlay.style.zIndex = '99999';
-        overlay.style.display = 'flex';
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-        overlay.style.transition = 'opacity 0.3s';
-        overlay.style.opacity = '1';
-
-        // Create text element
-        const introText = document.createElement('div');
-        introText.id = 'introText';
-        introText.textContent = 'ETHANSPETNAGEL.ONLINE';
-        // Match About button font, size, color
-        introText.style.fontFamily = '"Helvetica Neue", Helvetica, Arial, sans-serif';
-        introText.style.fontWeight = 'bold';
-        introText.style.fontSize = window.getComputedStyle(document.documentElement).getPropertyValue('--about-toggle-size') || 'clamp(10.8px, 2.43vw, 29.7px)';
-        introText.style.textTransform = 'uppercase';
-        introText.style.letterSpacing = '0.02em';
-        introText.style.color = '#2d2f32';
-        introText.style.textAlign = 'center';
-        introText.style.lineHeight = '1';
-        introText.style.userSelect = 'none';
-        overlay.appendChild(introText);
-
-        document.body.appendChild(overlay);
-
-        // Use the same FontFlip logic as About
-        class IntroFontFlip {
-            constructor(el) {
-                this.el = el;
-                this.fonts = [
-                    'times new roman, serif',
-                    'UnifrakturCook, cursive',
-                    'Impact',                  // Ancient/mystical
-            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
-                ];
-                this.originalFont = window.getComputedStyle(el).fontFamily;
-                this._timeout = null;
-            }
-            setText(newText, onFinish) {
-                this.text = newText;
-                this.onFinish = onFinish;
-                this.stop();
-                this._animateLetter(0);
-            }
-            _shuffle(array) {
-                let arr = array.slice();
-                for (let i = arr.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [arr[i], arr[j]] = [arr[j], arr[i]];
-                }
-                return arr;
-            }
-            _animateLetter(index) {
-                if (index >= this.text.length) {
-                    this._renderWord(-1, -1);
-                    if (typeof this.onFinish === 'function') this.onFinish();
-                    return;
-                }
-                const shuffledFonts = this._shuffle(this.fonts);
-                let fontFrame = 0;
-                const animateFont = () => {
-                    if (fontFrame < shuffledFonts.length) {
-                        this._renderWord(index, fontFrame, shuffledFonts);
-                        fontFrame++;
-                        this._timeout = setTimeout(animateFont, 80);
-                    } else {
-                        this._renderWord(index, -1, shuffledFonts);
-                        this._timeout = setTimeout(() => this._animateLetter(index + 1), 1);
-                    }
-                };
-                animateFont();
-            }
-            _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
-                this.el.innerHTML = '';
-                for (let i = 0; i < this.text.length; i++) {
-                    const span = document.createElement('span');
-                    span.textContent = this.text[i];
-                    span.style.display = 'inline-block';
-                    if (i === activeIndex && fontFrame >= 0) {
-                        span.style.fontFamily = fontList[fontFrame];
-                    } else {
-                        span.style.fontFamily = this.originalFont;
-                    }
-                    this.el.appendChild(span);
-                }
-            }
-            stop() {
-                if (this._timeout) {
-                    clearTimeout(this._timeout);
-                    this._timeout = null;
-                }
-            }
+    if (sessionStorage.getItem('introShown')) {
+        if (introOverlay) {
+            introOverlay.style.display = 'none';
         }
+        return;
+    }
 
-        // Start animation
-        const introFlip = new IntroFontFlip(introText);
-        introFlip.setText('ETHANSPETNAGEL.ONLINE', () => {
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.remove();
-                sessionStorage.setItem('introShown', '1');
-            }, 300);
+    if (introOverlay && introText) {
+        const introFlip = new FontFlip(introText);
+        introFlip.setText('ETHAN SPETNAGEL', () => {
+            startSubtitleAnimation(introOverlay, introText);
         });
     }
-})();
+
+    function startSubtitleAnimation(overlay, textElement) {
+        const paragraphs = [
+            "Design Manager — Church California\nUX Designer — Talamel Health",
+            "based in Queens, NY",
+            "Building intuitive products & distinctive brands.",
+        ];
+        let paragraphIndex = 0;
+
+        function showNextParagraph() {
+            if (paragraphIndex < paragraphs.length) {
+                textElement.textContent = paragraphs[paragraphIndex];
+                textElement.style.color = '#2d2f32'; // Set subtitle color
+                paragraphIndex++;
+                setTimeout(showNextParagraph, 1800);
+            } else {
+                overlay.classList.add('hidden');
+                sessionStorage.setItem('introShown', '1');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 500); // Match transition duration
+            }
+        }
+        // Small delay before starting subtitles
+        setTimeout(showNextParagraph, 250);
+    }
+});
 
 // --- END INTRO OVERLAY SETUP ---
 
