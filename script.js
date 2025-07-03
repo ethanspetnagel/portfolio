@@ -1,7 +1,8 @@
 // --- FONTFLIP CLASS DEFINITION ---
 class FontFlip {
-    constructor(el) {
+    constructor(el, options = {}) { // Modified line
         this.el = el;
+        this.letterSpacing = options.letterSpacing || '-0.01em'; // Added line
         this.fonts = [
             'Times New Roman, serif',
             'UnifrakturCook, cursive',
@@ -37,7 +38,7 @@ class FontFlip {
         }
         const shuffledFonts = this._shuffle(this.fonts);
         let fontFrame = 0;
-
+  
         const animateFont = () => {
             if (fontFrame < shuffledFonts.length) {
                 this._renderWord(index, fontFrame, shuffledFonts);
@@ -69,7 +70,7 @@ class FontFlip {
             ghost.style.fontFamily = this.originalFont;
             ghost.style.visibility = 'hidden';
             // Bring letters closer together
-            ghost.style.letterSpacing = '-0.01em';
+            ghost.style.letterSpacing = this.letterSpacing; // Modified line
             wrapper.appendChild(ghost);
 
             const charWidth = ghost.getBoundingClientRect().width;
@@ -85,7 +86,7 @@ class FontFlip {
             animator.style.height = '100%';
             animator.style.textAlign = 'center';
             // Match the letter-spacing
-            animator.style.letterSpacing = '-0.01em';
+            animator.style.letterSpacing = this.letterSpacing; // Modified line
 
             if (i === activeIndex && fontFrame >= 0) {
                 animator.style.fontFamily = fontList[fontFrame];
@@ -157,30 +158,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- ABOUT/HIDE FUNCTIONALITY ---
-    const aboutFlip = new FontFlip(aboutToggle); // Initialize here
+    const aboutFlip = new FontFlip(aboutToggle);
     let isAboutOpen = false;
 
-    function setAboutState(isOpen) {
-        isAboutOpen = isOpen;
-        if (bioSection) {
-            bioSection.classList.toggle('is-open', isOpen);
-        }
+    // Helper to set the button text instantly without animation
+    function setAboutButtonText(label) {
+        aboutToggle.textContent = label;
+        // Re-initialize FontFlip with the correct original font after text change
+        aboutFlip.originalFont = window.getComputedStyle(aboutToggle).fontFamily;
     }
 
     aboutToggle.addEventListener('mouseenter', () => {
-        if (aboutFlip._isAnimating || isAboutOpen) return;
-        aboutFlip.setText('ABOUT', () => {
-            setAboutState(true);
+        if (aboutFlip._isAnimating) return;
+
+        const newText = isAboutOpen ? 'HIDE' : 'ABOUT';
+        aboutFlip.setText(newText, () => {
+            if (newText === 'ABOUT') { // We just animated 'ABOUT', so now we show the bio
+                isAboutOpen = true;
+                bioSection.classList.add('is-open');
+                setAboutButtonText('HIDE');
+            }
         });
     });
 
     hideToggle.addEventListener('click', () => {
-        setAboutState(false);
+        isAboutOpen = false;
+        bioSection.classList.remove('is-open');
+        setAboutButtonText('ABOUT');
     });
 
     // --- RESUME FUNCTIONALITY ---
-    const resumeFlip = new FontFlip(resumeDownload); // Initialize here
+    const resumeFlip = new FontFlip(resumeDownload);
     let downloadInProgress = false;
+
+    function resetResumeButton() {
+        downloadInProgress = false;
+        resumeFlip.stop();
+        resumeDownload.textContent = 'RESUME';
+        // Re-initialize FontFlip with the correct original font
+        resumeFlip.originalFont = window.getComputedStyle(resumeDownload).fontFamily;
+    }
 
     resumeDownload.addEventListener('mouseenter', function() {
         if (downloadInProgress || resumeFlip._isAnimating) return;
@@ -194,11 +211,16 @@ document.addEventListener('DOMContentLoaded', function() {
             link.click();
             document.body.removeChild(link);
 
-            setTimeout(() => {
-                downloadInProgress = false;
-                resumeFlip.setText('RESUME');
-            }, 500);
+            // Use a timeout to reset the button state after the download is initiated
+            setTimeout(resetResumeButton, 500);
         });
+    });
+
+    // Reset button text if user mouses away before animation finishes
+    resumeDownload.addEventListener('mouseleave', function() {
+        if (!downloadInProgress) {
+             resetResumeButton();
+        }
     });
 
     // --- DATE TEXT HOVER ---
