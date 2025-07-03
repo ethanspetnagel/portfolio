@@ -33,7 +33,7 @@
         introText.style.userSelect = 'none';
         overlay.appendChild(introText);
 
-        document.body.appendChild(overlay);
+        document.body.appendChild(overlay); 
 
         // Use the same FontFlip logic as About
         class IntroFontFlip {
@@ -140,36 +140,44 @@ function startSubtitleAnimation() {
         "He graduated from the University of Colorado with a dual major in Information Analytics and Finance."
     ];
 
-    const allWords = paragraphs.join(' ').split(/\s+/);
-    let wordIndex = 0;
+    let paragraphIndex = 0;
 
     // Show the subtitle overlay
     subtitleOverlay.classList.add('visible');
+    subtitleTextElement.style.opacity = 0; // Start with text invisible
 
-    function showNextWord() {
-        if (wordIndex < allWords.length) {
-            subtitleTextElement.textContent += (wordIndex > 0 ? ' ' : '') + allWords[wordIndex];
-            wordIndex++;
+    function showNextParagraph() {
+        if (paragraphIndex < paragraphs.length) {
+            const currentParagraph = paragraphs[paragraphIndex];
+            
+            // Set text and fade in
+            subtitleTextElement.textContent = currentParagraph;
+            subtitleTextElement.style.opacity = 1;
 
-            // Adjust speed: faster for short words, slower for longer ones
-            const currentWord = allWords[wordIndex - 1];
-            const delay = currentWord.length > 5 ? 120 : 80;
+            // Calculate how long to show the line based on its length
+            const wordCount = currentParagraph.split(' ').length;
+            const displayDuration = Math.max(2000, wordCount * 200); // 200ms per word, min 2s
 
-            setTimeout(showNextWord, delay);
-        } else {
-            // Animation finished, hide overlay and set session storage
+            paragraphIndex++;
+
+            // Set timeout to fade out the current line and show the next one
             setTimeout(() => {
-                subtitleOverlay.classList.remove('visible');
-                setTimeout(() => {
-                    subtitleOverlay.style.display = 'none';
-                    sessionStorage.setItem('introShown', '1');
-                }, 500); // Wait for fade out
-            }, 2000); // Wait 2 seconds after last word
+                subtitleTextElement.style.opacity = 0;
+                setTimeout(showNextParagraph, 500); // Wait for fade-out before showing next
+            }, displayDuration);
+
+        } else {
+            // All paragraphs shown, fade out the entire overlay
+            subtitleOverlay.classList.remove('visible');
+            sessionStorage.setItem('introShown', '1');
+            setTimeout(() => {
+                subtitleOverlay.style.display = 'none';
+            }, 500); // Wait for fade-out transition to finish
         }
     }
 
     // Start the animation
-    setTimeout(showNextWord, 500); // Initial delay before starting
+    setTimeout(showNextParagraph, 500); // Initial delay
 }
 
 // --- END INTRO OVERLAY SETUP ---
@@ -895,7 +903,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 1000);
 
-});
+}); 
 
 // Clean up on page unload
 window.addEventListener('beforeunload', function() {

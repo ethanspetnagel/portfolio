@@ -459,7 +459,7 @@ body.project-hovering.video-light .bio-text a:hover {
   background: #fafcfc;
   z-index: 99998; /* Below intro, above everything else */
   display: flex;
-  align-items: flex-end; /* Align to bottom */
+  align-items: center; /* Vertically center */
   justify-content: center;
   padding: 40px;
   opacity: 0;
@@ -479,7 +479,7 @@ body.project-hovering.video-light .bio-text a:hover {
   text-align: center;
   line-height: 1.4;
   max-width: 800px;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.4s ease-in-out; /* Smooth fade for text */
 }
 
 @media (max-width: 768px) {
