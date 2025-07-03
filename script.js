@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const paragraphs = [
             "Design Manager — Church California\n \nUX Designer — Talamel Health",
             "based in Queens, NY",
-            "Building intuitive digital products \n& distinctive physical brands.",
+            "Building intuitive digital products \n \n& distinctive physical brands.",
         ];
         let paragraphIndex = 0;
 
