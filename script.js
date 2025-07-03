@@ -323,15 +323,39 @@ class FontFlip {
     _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
         this.el.innerHTML = '';
         for (let i = 0; i < this.text.length; i++) {
-            const span = document.createElement('span');
-            span.textContent = this.text[i];
-            span.style.display = 'inline-block';
+            const char = this.text[i];
+            const wrapper = document.createElement('span');
+            const animator = document.createElement('span');
+
+            // Style the wrapper to hold space
+            wrapper.style.display = 'inline-block';
+            wrapper.style.position = 'relative';
+            wrapper.style.fontFamily = this.originalFont;
+            wrapper.textContent = char;
+            
+            // Style the animator to be positioned within the wrapper
+            animator.textContent = char;
+            animator.style.position = 'absolute';
+            animator.style.left = '0';
+            animator.style.top = '0';
+            animator.style.width = '100%';
+            animator.style.height = '100%';
+            animator.style.textAlign = 'center';
+            animator.style.transformOrigin = 'center center';
+            animator.style.transition = 'transform 0.1s ease';
+
             if (i === activeIndex && fontFrame >= 0) {
-                span.style.fontFamily = fontList[fontFrame];
+                // Apply scaling and font change to the animating letter
+                animator.style.fontFamily = fontList[fontFrame];
+                animator.style.transform = 'scale(2)';
             } else {
-                span.style.fontFamily = this.originalFont;
+                // Use original font and size for all other letters
+                animator.style.fontFamily = this.originalFont;
+                animator.style.transform = 'scale(1)';
             }
-            this.el.appendChild(span);
+            
+            wrapper.appendChild(animator);
+            this.el.appendChild(wrapper);
         }
     }
 
