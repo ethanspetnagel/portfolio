@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
             "Design Manager — Church California\n \nUX Designer — Talamel Health",
+            "Building intuitive digital products \n + \ndistinctive physical brands.",
             "based in Queens, NY",
-            "Building intuitive digital products \n & \ndistinctive physical brands.",
         ];
         let paragraphIndex = 0;
 
@@ -347,7 +347,7 @@ class FontFlip {
             if (i === activeIndex && fontFrame >= 0) {
                 // Apply scaling and font change to the animating letter
                 animator.style.fontFamily = fontList[fontFrame];
-                animator.style.transform = 'scale(2)';
+                animator.style.transform = 'scale(1.2)';
             } else {
                 // Use original font and size for all other letters
                 animator.style.fontFamily = this.originalFont;

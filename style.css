@@ -175,7 +175,7 @@ body.page-navigating * {
 /* Website Info */
 .website-info {
   position: fixed;
-  bottom: 20px; /* Lowered from 40px */
+  bottom: 10px; /* Reduced from 20px */
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -229,7 +229,7 @@ body.june-hover .resume-download {
 /* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 20px; /* Changed from 0 to match others */
+  bottom: 10px; /* Reduced from 20px */
   left: 20px;
   max-width: 400px;
   z-index: 15;
@@ -367,6 +367,12 @@ body.project-hovering.video-light .bio-text a:hover {
   cursor: crosshair;;
 }
 
+.contact-links a:hover {
+  color: #353c50 !important;
+  text-decoration: none !important;
+  transform: translateY(2px);
+}
+
 /* Oval effect for contact links */
 .contact-links a::after {
   content: '';
@@ -386,12 +392,6 @@ body.project-hovering.video-light .bio-text a:hover {
   opacity: 1;
   width: calc(100% + 30px);
   height: 20px;
-}
-
-.contact-links a:hover {
-  color: #353c50 !important;
-  text-decoration: none !important;
-  transform: translateY(2px);
 }
 
 /* Bio Preview */
@@ -418,8 +418,8 @@ body.project-hovering.video-light .bio-text a:hover {
 /* Resume Download Button */
 /* Debug styles for resume button - add these temporarily */
 .resume-download {
-  position: fixed !important;
-  bottom: 20px !important;
+  position: relative;
+  bottom: 10px !important;
   right: 20px !important;
   z-index: 9999 !important; /* Very high z-index */
   font-size: clamp(10.8px, 2.43vw, 29.7px) !important;
@@ -445,7 +445,7 @@ body.project-hovering.video-light .bio-text a:hover {
 
 .resume-section {
   position: fixed;
-  bottom: 20px;
+  bottom: 10px; /* Reduced from 20px */
   right: 20px;
   z-index: 15;
   /* Match .bio-section's max-width if needed */
