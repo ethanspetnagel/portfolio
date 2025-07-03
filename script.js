@@ -21,16 +21,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const paragraphs = [
             "Design Manager — Church California\n \nUX Designer — Talamel Health",
             "based in Queens, NY",
-            "Building intuitive products \n& distinctive brands.",
+            "Building intuitive digital products \n& distinctive physical brands.",
         ];
         let paragraphIndex = 0;
 
         function showNextParagraph() {
             if (paragraphIndex < paragraphs.length) {
                 textElement.textContent = paragraphs[paragraphIndex];
-                textElement.style.color = '#2d2f32'; // Set subtitle color
+                textElement.style.color = '#353c50'; // Set subtitle color to match project links
+                
+                // Check if it's the last paragraph and set a longer delay
+                const isLastParagraph = paragraphIndex === paragraphs.length - 1;
+                const delay = isLastParagraph ? 3000 : 1800; // 3 seconds for the last line, 1.8 for others
+
                 paragraphIndex++;
-                setTimeout(showNextParagraph, 1800);
+                setTimeout(showNextParagraph, delay);
             } else {
                 overlay.classList.add('hidden');
                 sessionStorage.setItem('introShown', '1');

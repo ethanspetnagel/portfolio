@@ -493,7 +493,7 @@ body.project-hovering.video-light .bio-text a:hover {
 /* Touch device styles */
 @media (hover: none) and (pointer: coarse) {
   .project-link.touch-active {
-    color: #0f0f0f; /* Black for touch active */
+    color: #353c50; /* Black for touch active */
   }
 
   .projects-container.touch-hovering .project-link {
@@ -598,7 +598,7 @@ body.transitioning {
   .bio-section {
     max-width: 300px;
     left: 10px;
-    bottom: 10px;
+    bottom: 0px;
   }
 
   .bio-preview {
