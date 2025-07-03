@@ -324,43 +324,39 @@ class FontFlip {
         this.el.innerHTML = '';
         for (let i = 0; i < this.text.length; i++) {
             const char = this.text[i];
-            const wrapper = document.createElement('span');
-            const animator = document.createElement('span');
 
-            // Style the wrapper to hold space
+            // Wrapper for spacing
+            const wrapper = document.createElement('span');
             wrapper.style.display = 'inline-block';
             wrapper.style.position = 'relative';
-            wrapper.style.fontFamily = this.originalFont;
-            wrapper.textContent = char;
-            
-            // Hide the original letter in the wrapper when its animator is active
-            if (i === activeIndex && fontFrame >= 0) {
-                wrapper.style.visibility = 'hidden';
-            } else {
-                wrapper.style.visibility = 'visible';
-            }
 
-            // Style the animator to be positioned within the wrapper
+            // Ghost span: invisible but sets correct width
+            const ghost = document.createElement('span');
+            ghost.textContent = char;
+            ghost.style.fontFamily = this.originalFont;
+            ghost.style.visibility = 'hidden';
+            ghost.style.letterSpacing = this.letterSpacing;
+            wrapper.appendChild(ghost);
+
+            const charWidth = ghost.getBoundingClientRect().width;
+            wrapper.style.width = `${charWidth}px`;
+
+            // Visible animator span
+            const animator = document.createElement('span');
             animator.textContent = char;
             animator.style.position = 'absolute';
-            animator.style.left = '0';
             animator.style.top = '0';
+            animator.style.left = '0';
             animator.style.width = '100%';
             animator.style.height = '100%';
             animator.style.textAlign = 'center';
-            animator.style.transformOrigin = 'center center';
-            animator.style.transition = 'transform 0.1s ease';
+            animator.style.letterSpacing = this.letterSpacing;
 
             if (i === activeIndex && fontFrame >= 0) {
-                // Apply scaling and font change to the animating letter
                 animator.style.fontFamily = fontList[fontFrame];
-                animator.style.transform = 'scale(1.2)';
             } else {
-                // Use original font and size for all other letters
                 animator.style.fontFamily = this.originalFont;
-                animator.style.transform = 'scale(1)';
             }
-            
             wrapper.appendChild(animator);
             this.el.appendChild(wrapper);
         }
