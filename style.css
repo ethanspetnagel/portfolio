@@ -154,8 +154,8 @@ body.page-navigating * {
 }
 
 .projects-container.hovering .project-link:not(:hover) {
-  color: #353c50; /* Use main text color */
-  opacity: 0.25; /* Halved opacity for a more subtle effect */
+  color: #353c50;
+  opacity: 0.25;
 }
 
 /* Project Links - Default color */
@@ -178,7 +178,7 @@ body.page-navigating * {
 
 /* Project link hover - Change from black to the main text color */
 .project-link:hover {
-  color: #353c50 !important; /* Use main text color on hover */
+  color: #353c50 !important;
 }
 
 /* Website Info */
@@ -193,12 +193,12 @@ body.page-navigating * {
 
 /* --- Bio Section --- */
 .bio-section {
-  position: fixed; /* This is critical to prevent layout shifts */
+  position: fixed;
   bottom: 20px;
   left: 20px;
   max-width: 400px;
   z-index: 20;
-  pointer-events: none; /* The container itself isn't clickable */
+  pointer-events: none;
 }
 
 /* Default state: bio content is hidden */
@@ -210,14 +210,14 @@ body.page-navigating * {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease-in-out, visibility 0.4s;
-  pointer-events: none; /* Not clickable when hidden */
+  pointer-events: none;
 }
 
 /* When .is-open is added, bio content becomes visible */
 .bio-section.is-open .bio-content {
   opacity: 1;
   visibility: visible;
-  pointer-events: auto; /* Clickable when visible */
+  pointer-events: auto;
 }
 
 /* Default state: HIDE button is hidden */
@@ -255,6 +255,14 @@ body.june-hover {
 
 body.june-hover * {
   color: #d2d4db;
+}
+
+/* Make these rules more specific to override other styles */
+body.june-hover .bottom-bar .date-text,
+body.june-hover .bottom-bar .about-toggle,
+body.june-hover .bottom-bar .resume-download,
+body.june-hover .project-link {
+  color: #d2d4db !important;
 }
 
 /* Bio text */
