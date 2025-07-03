@@ -8,6 +8,7 @@ class FontFlip {
             'Impact, sans-serif',
             'Marker Felt, fantasy'
         ];
+        // This now correctly captures the font after styles are applied
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
         this._isAnimating = false;
@@ -99,22 +100,27 @@ class FontFlip {
 // --- WRAP ALL CODE IN DOMCONTENTLOADED ---
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- INTRO OVERLAY SETUP ---
-    (function setupIntroOverlay() {
-        const introOverlay = document.getElementById('introOverlay');
-        const introText = document.getElementById('introText');
+    // --- DOM ELEMENT SELECTION ---
+    const introOverlay = document.getElementById('introOverlay');
+    const introText = document.getElementById('introText');
+    const dateText = document.getElementById('dateText');
+    const aboutToggle = document.getElementById('aboutToggle');
+    const hideToggle = document.getElementById('hideToggle');
+    const bioSection = document.querySelector('.bio-section');
+    const resumeDownload = document.getElementById('resumeDownload');
+    const projectsContainer = document.getElementById('projectsContainer');
 
-        if (sessionStorage.getItem('introShown')) {
-            if (introOverlay) introOverlay.style.display = 'none';
-        } else {
-            if (introOverlay && introText) {
-                const introFlip = new FontFlip(introText);
-                introFlip.setText('ETHAN SPETNAGEL', () => {
-                    startSubtitleAnimation(introOverlay, introText);
-                });
-            }
+    // --- INTRO OVERLAY SETUP ---
+    if (!sessionStorage.getItem('introShown')) {
+        if (introOverlay && introText) {
+            const introFlip = new FontFlip(introText);
+            introFlip.setText('ETHAN SPETNAGEL', () => {
+                startSubtitleAnimation(introOverlay, introText);
+            });
         }
-    })();
+    } else {
+        if (introOverlay) introOverlay.style.display = 'none';
+    }
 
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
@@ -141,16 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
         showNextParagraph();
     }
 
-    // --- DOM ELEMENT SELECTION ---
-    const dateText = document.getElementById('dateText');
-    const aboutToggle = document.getElementById('aboutToggle');
-    const hideToggle = document.getElementById('hideToggle');
-    const bioSection = document.querySelector('.bio-section');
-    const resumeDownload = document.getElementById('resumeDownload');
-    const projectsContainer = document.getElementById('projectsContainer');
-
     // --- ABOUT/HIDE FUNCTIONALITY ---
-    const aboutFlip = new FontFlip(aboutToggle);
+    const aboutFlip = new FontFlip(aboutToggle); // Initialize here
     let isAboutOpen = false;
 
     function setAboutState(isOpen) {
@@ -172,29 +170,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- RESUME FUNCTIONALITY ---
-    if (resumeDownload) {
-        const resumeFlip = new FontFlip(resumeDownload);
-        let downloadInProgress = false;
+    const resumeFlip = new FontFlip(resumeDownload); // Initialize here
+    let downloadInProgress = false;
 
-        resumeDownload.addEventListener('mouseenter', function() {
-            if (downloadInProgress || resumeFlip._isAnimating) return;
-            downloadInProgress = true;
+    resumeDownload.addEventListener('mouseenter', function() {
+        if (downloadInProgress || resumeFlip._isAnimating) return;
+        downloadInProgress = true;
 
-            resumeFlip.setText('DOWNLOAD', function onAnimationFinish() {
-                const link = document.createElement('a');
-                link.href = './EthanSpetnagel2025.pdf';
-                link.download = 'EthanSpetnagel2025.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+        resumeFlip.setText('DOWNLOAD', function onAnimationFinish() {
+            const link = document.createElement('a');
+            link.href = './EthanSpetnagel2025.pdf';
+            link.download = 'EthanSpetnagel2025.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
-                setTimeout(() => {
-                    downloadInProgress = false;
-                    resumeFlip.setText('RESUME');
-                }, 500);
-            });
+            setTimeout(() => {
+                downloadInProgress = false;
+                resumeFlip.setText('RESUME');
+            }, 500);
         });
-    }
+    });
 
     // --- DATE TEXT HOVER ---
     dateText.addEventListener('mouseenter', function() {
