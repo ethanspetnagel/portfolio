@@ -104,6 +104,7 @@ const bioContent = document.getElementById('bioContent');
 const bioLinks = document.querySelectorAll('.bio-text a[data-bio]');
 const bioPreview = document.getElementById('bioPreview');
 const bioPreviewImage = document.getElementById('bioPreviewImage');
+const bioPreviewVideo = document.getElementById('bioPreviewVideo');
 
 // Variables
 let currentMedia = null;
@@ -666,15 +667,29 @@ dateText.addEventListener('mouseleave', function() {
 bioLinks.forEach(link => {
     link.addEventListener('mouseenter', function() {
         const bioType = this.getAttribute('data-bio');
-        const imageUrl = bioImages[bioType];
-        if (imageUrl) {
-            bioPreviewImage.src = imageUrl;
-            bioPreviewImage.alt = this.textContent;
+        const mediaUrl = bioImages[bioType];
+
+        if (mediaUrl && mediaUrl.trim() !== '') {
+            // Check if the media is a video or image
+            if (mediaUrl.endsWith('.mp4')) {
+                bioPreviewImage.style.display = 'none';
+                bioPreviewVideo.style.display = 'block';
+                if (bioPreviewVideo.src !== mediaUrl) {
+                    bioPreviewVideo.src = mediaUrl;
+                }
+                bioPreviewVideo.play();
+            } else {
+                bioPreviewVideo.style.display = 'none';
+                bioPreviewImage.style.display = 'block';
+                bioPreviewImage.src = mediaUrl;
+                bioPreviewImage.alt = this.textContent;
+            }
             bioPreview.classList.add('active');
         }
     });
     link.addEventListener('mouseleave', function() {
         bioPreview.classList.remove('active');
+        bioPreviewVideo.pause();
     });
 });
 

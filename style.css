@@ -51,7 +51,7 @@
 .bio-text::selection,
 .about-toggle::selection,
 .date-text::selection {
-  background-color: #f9ff00;
+  background-color: #daff00;
   color: #191917;
 }
 
@@ -437,6 +437,36 @@ body.project-hovering.video-light .bio-text a:hover {
   display: block;
 }
 
+/* Bio Preview - Centered Overlay */
+#bioPreview {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100; /* On top of everything */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none; /* Don't block mouse */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#bioPreview.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#bioPreview img,
+#bioPreview video {
+  display: none; /* Hide both by default */
+  height: auto;
+  width: auto;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
 /* Resume Section */
 .resume-section {
   position: fixed;
@@ -495,6 +525,10 @@ body.project-hovering.video-light .bio-text a:hover {
   transition: opacity 0.5s ease-in-out;
   opacity: 1;
   pointer-events: all;
+}
+
+#introOverlay.hidden {
+  opacity: 0;
 }
 
 #introOverlay.hidden {
