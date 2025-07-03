@@ -151,18 +151,23 @@ body.page-navigating * {
   padding-top: 10px;
 }
 
+/* Remove the general emboss effect from all links on container hover */
 .projects-container.hovering .project-link {
+  color: #353c50; /* Revert to default color */
+  text-shadow: none; /* Remove text shadow by default */
+}
+
+/* Apply the emboss effect ONLY to the non-hovered links */
+.projects-container.hovering .project-link:not(:hover) {
   color: #d2d4db; /* Match background color for bevel effect */
   text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(53, 60, 80, 0.25);
   opacity: 0.85;
 }
 
+/* Ensure the hovered link is fully opaque and has the correct color */
 .projects-container.hovering .project-link:hover {
+  color: #353c50 !important;
   opacity: 1;
-}
-
-.projects-container.hovering .project-link:not(:hover) {
-  opacity: 0.2;
 }
 
 /* Project Links - Default color */
