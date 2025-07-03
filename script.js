@@ -53,32 +53,32 @@ document.addEventListener('DOMContentLoaded', function() {
 const projectMedia = {
     'slug': {
         url: './slug.mp4',
-        position: { left: '28%', top: '20%' }
+        position: { left: '28%', top: '10%' }
     }, 
     'church': {
         url: './church video bg.mp4',
-        position: { left: '54.5%', top: '30%' }
+        position: { left: '75%', top: '25%' }
     },
     'talamel': {
         url: './talamel1.mp4',
-        position: { left: '26%', top: '27%' }
+        position: { left: '23%', top: '27%' }
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
-        position: { left: '50%', top: '35%' }
+        position: { left: '50%', top: '30%' }
     }, 
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
-        position: { left: '25%', top: '52%' }
+        position: { left: '75%', top: '47%' }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
-        position: { left: '50%', top: '60.5%' }
+        position: { left: '50%', top: '55.5%' }
     },
     'green-lake-law': {
         url: './greenlake.mp4',
-        position: { left: '70%', top: '40%' }
+        position: { left: '80%', top: '70%' }
     }, 
     'june-2025': ''
 };
