@@ -461,6 +461,8 @@ body.project-hovering.video-light .bio-text a:hover {
 #bioPreview img,
 #bioPreview video {
   display: none; /* Hide both by default */
+  max-width: 80vw; /* Fit within 80% of viewport width */
+  max-height: 80vh; /* Fit within 80% of viewport height */
   height: auto;
   width: auto;
   border-radius: 4px;
