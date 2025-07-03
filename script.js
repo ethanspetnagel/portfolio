@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
-            "UX DESIGNER + GRAPHIC DESIGNER", "Design Manager — Church California\n \nUX Designer — Talamel Health",
+            "UX DESIGNER + WEB DESIGNER", "Design Manager — Church California\n \nUX Designer — Talamel Health",
             "based in Queens, NY",
         ];
         let paragraphIndex = 0;
@@ -52,24 +52,24 @@ document.addEventListener('DOMContentLoaded', function() {
 const projectMedia = {
     'slug': {
         url: './slug.mp4',
-        position: { left: '50%', top: '50%' }
+        position: { left: '0%', top: '0%' }
     }, 
     'church': {
         url: './church video bg.mp4',
-        position: { left: '50%', top: '50%' }
+        position: { left: '100%', top: '100%' }
     },
     'talamel': {
         url: './talamel1.mp4',
-        position: { left: '50%', top: '50%' }
+        position: { left: '50%', top: '0%' }
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
-        position: { left: '50%', top: '50%' }
+        position: { left: '50%', top: '100%' }
     }, 
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
-        position: { left: '50%', top: '50%' }
+        position: { left: '5%', top: '25%' }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
