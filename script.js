@@ -85,7 +85,8 @@ const projectMedia = {
 
 // Bio link images
 const bioImages = {
-    'church-company': '',
+    'me': './me.jpeg',
+    'church-company': 'church video bg.mp4',
     'talamel-health': '',
     'slug-soap': ' ',
     'crowe': '',
