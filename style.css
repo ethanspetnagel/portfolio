@@ -411,34 +411,6 @@ body.project-hovering.video-light .bio-text a:hover {
   display: block;
 }
 
-/* Resume Download Button */
-/* Debug styles for resume button - add these temporarily */
-.resume-download {
-  position: fixed !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  z-index: 9999 !important; /* Very high z-index */
-  font-size: clamp(10.8px, 2.43vw, 29.7px) !important;
-  font-weight: bold !important;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.02em !important;
-  color: #2d2f32 !important;
-  cursor: crosshair !important;
-  user-select: none !important;
-  line-height: 1 !important;
-  pointer-events: auto !important; /* Ensure it's clickable */
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  width: auto !important;
-  height: auto !important;
-  transform: none !important;
-  /* Remove any animations that might interfere */
-  transition: none !important;
-  animation: none !important;
-}
-
 /* New Bottom Bar Styles */
 .bottom-bar {
   position: fixed;

@@ -108,7 +108,7 @@ class FontFlip {
 function startSubtitleAnimation(overlay, textElement) {
     const paragraphs = [
         "based in Queens, NY",
-        "UX Designer — Talamel Health\n\nDesign Manager — Church California",
+        "Design Manager — Church California\nUX Designer — Talamel Health",
         "Building intuitive products & distinctive brands.",
         "based in Queens, NY"
     ];
