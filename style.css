@@ -162,8 +162,6 @@ body.page-navigating * {
 
 .projects-container.hovering .project-link:not(:hover) {
   opacity: 0.2;
-  -webkit-text-stroke: 3px #353c50; /* Add text stroke for outline effect */
-  -webkit-text-fill-color: transparent; /* Make the inside of the letter transparent */
 }
 
 /* Project Links - Default color */
