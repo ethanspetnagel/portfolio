@@ -65,6 +65,11 @@ class FontFlip {
             wrapper.style.display = 'inline-block';
             wrapper.style.position = 'relative';
 
+            // Set a fixed width on the wrapper, with a slight reduction to tighten spacing
+            const charWidth = wrapper.getBoundingClientRect().width;
+            wrapper.style.width = `${charWidth * 0.99}px`;
+            wrapper.textContent = ''; // Clear the character from the wrapper
+
             // 2. Create a "ghost" character to preserve the original spacing.
             const ghost = document.createElement('span');
             ghost.textContent = char;
@@ -137,24 +142,20 @@ function startSubtitleAnimation(overlay, textElement) {
         if (paragraphIndex < paragraphs.length) {
             const currentParagraph = paragraphs[paragraphIndex];
             
-            // Set text and fade in
+            // Set text instantly without fade
             textElement.textContent = currentParagraph;
-            textElement.style.opacity = 1;
 
-            const wordCount = currentParagraph.split(' ').length;
-            // Remove the extra 1000ms to speed up the animation
-            const displayDuration = Math.max(2500, wordCount * 300); 
+            // Shorten the display duration
+            const displayDuration = 2000; 
 
             paragraphIndex++;
 
-            // Set timeout to fade out the current line and show the next one
-            setTimeout(() => {
-                textElement.style.opacity = 0;
-                setTimeout(showNextParagraph, 500); // Wait for fade-out before showing next
-            }, displayDuration);
+            // Set timeout to show the next one
+            setTimeout(showNextParagraph, displayDuration);
 
         } else {
             // All paragraphs shown, fade out the entire overlay
+            overlay.style.transition = 'opacity 0.5s ease-in-out';
             overlay.style.opacity = '0';
             sessionStorage.setItem('introShown', '1');
             setTimeout(() => {
@@ -163,9 +164,8 @@ function startSubtitleAnimation(overlay, textElement) {
         }
     }
 
-    // Fade out the old text before starting the new sequence
-    textElement.style.opacity = 0;
-    setTimeout(showNextParagraph, 500); // Wait for fade-out, then start
+    // Start the animation immediately
+    showNextParagraph();
 }
 
 // --- END INTRO OVERLAY SETUP ---

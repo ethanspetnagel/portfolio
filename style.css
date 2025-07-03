@@ -176,9 +176,9 @@ body.page-navigating * {
   will-change: color, opacity;
 }
 
-/* Project link hover - BLACK */
+/* Project link hover - Change from black to the main text color */
 .project-link:hover {
-  color: #282c33 !important; /* Black on hover */
+  color: #353c50 !important; /* Use main text color on hover */
 }
 
 /* Website Info */
@@ -191,83 +191,18 @@ body.page-navigating * {
   text-align: center;
 }
 
-.date-text {
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
-  font-weight: bold;
-  cursor: crosshair;
-  transition: all 0.3s ease;
-  color: #2d2f32; /* Default medium gray */
-  padding: 0;
-  display: inline-block;
-  text-transform: uppercase;
-  line-height: 1;
-  letter-spacing: 0.02em;
-}
-
-/* Date text hover - keep default color */
-.date-text:hover {
-  color: #ffffff !important;
-}
-
-/* Special class for black background effect */
-body.june-hover {
-  background-color: #353c50; /* Dark background */
-  color: #d2d4db; /* Light text */
-}
-
-body.june-hover * {
-  color: #d2d4db;
-}
-
-body.june-hover .project-link,
-body.june-hover .bio-text,
-body.june-hover .bio-text p,
-body.june-hover .bio-text a,
-body.june-hover .about-toggle,
-body.june-hover .website-info a,
-body.june-hover .contact-links a {
-  color: #ffffff !important;
-}
-
-body.june-hover .resume-download {
-  color: #fff !important;
-}
-
-/* Date text when project is active - always black */
-.date-text.project-active {
-  color: #282c33 !important; /* Always black */
-}
-
-/* Bio Section */
-.bio-section {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  max-width: 400px;
-  z-index: 20;
-  pointer-events: none;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  transition: opacity 0.4s ease-in-out, visibility 0.4s;
-}
-
-/* Default state: bio content is hidden */
-.bio-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease-in-out, visibility 0.4s;
-}
-
 /* When .is-open is added, bio content becomes visible */
 .bio-section.is-open .bio-content {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+
+/* When .is-open is added, the slide-up animation triggers */
+.bio-section.is-open .bio-text > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
 }
 
 /* Default state: HIDE button is hidden */
@@ -279,74 +214,26 @@ body.june-hover .resume-download {
   text-transform: uppercase;
   letter-spacing: 0.02em;
   cursor: pointer;
-  pointer-events: none; /* Inactive by default */
+  pointer-events: auto;
+  visibility: hidden; /* Use visibility to prevent layout shifts */
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, visibility 0.3s;
 }
 
 /* When .is-open is added, HIDE button becomes visible */
 .bio-section.is-open .hide-toggle {
   opacity: 1;
   pointer-events: auto;
+  visibility: visible;
 }
 
 /* When .is-open is added, the ABOUT button in the bottom bar is hidden */
 .bio-section.is-open ~ .bottom-bar .about-toggle {
-    visibility: hidden;
-}
-
-/* Default text color */
-.about-toggle,
-.bio-text,
-.bio-text p,
-.bio-text a,
-.contact-links a {
-  color: #2d2f32; /* Default medium gray */
-}
-
-/* About toggle - always keep default color */
-.about-toggle {
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
-  font-weight: bold;
-  cursor: crosshair;
-  margin-bottom: 9px;
-  transition: opacity 0.3s ease;
-  position: relative;
-  display: inline-block;
-  text-transform: uppercase;
-  line-height: 1;
-  padding: 0;
-  letter-spacing: 0.02em;
-  color: #2d2f32; /* Always keep default gray color */
-}
-
-.about-toggle:hover {
-  color: #2d2f32 !important; /* White on hover */
-}
-
-/* Bio section elements maintain default colors */
-
-/* Bio content container */
-.bio-content.active {
-  max-height: 1200px; /* Large enough for your content */
-  pointer-events: auto;
-}
-
-/* Bio text children simple slide-up */
-.bio-text > * {
+  visibility: hidden;
   opacity: 0;
-  transform: translateY(32px);
-  transition:
-    opacity 0.7s cubic-bezier(.4,1.6,.6,1),
-    transform 0.7s cubic-bezier(.4,1.6,.6,1);
 }
 
-.bio-content.active .bio-text > * {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.2s;
-}
-
+/* REMOVE this conflicting rule */
 /* Bio text */
 .bio-text {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -359,7 +246,6 @@ body.june-hover .resume-download {
   letter-spacing: -0.01em;
   width: 95%; /* makes it 80% of its container's width */
 }
-
 
 .bio-text p {
   margin-bottom: 10px;
@@ -394,8 +280,9 @@ body.project-hovering.video-light .bio-text a:hover {
 
 /* Contact links */
 .contact-links {
+  margin-top: clamp(10.8px, 2.43vw, 29.7px);
   display: flex;
-  gap: 15px;
+  gap: 20px;
   font-size: calc(1.4rem - 7px);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   align-items: baseline;
@@ -830,23 +717,4 @@ body.transitioning {
 
 .bio-content {
   overflow: visible;
-}
-
-.hide-toggle {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: bold;
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
-  color: #353c50;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  pointer-events: auto;
-  visibility: hidden; /* Use visibility to prevent layout shifts */
-  opacity: 0;
-  transition: opacity 0.3s, visibility 0.3s;
-}
-
-.bio-content.active + .hide-toggle {
-  visibility: visible;
-  opacity: 1;
 }
