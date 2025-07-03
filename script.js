@@ -488,6 +488,47 @@ class TextPartingEffect {
     }
 }
 
+// Initialize text effects
+const textParting = new TextPartingEffect();
+textParting.init();
+
+// --- ABOUT/HIDE BUTTON HOVER LOGIC ---
+const aboutFlip = new FontFlip(aboutToggle);
+let isAboutOpen = false;
+
+// Helper to set button text without animation
+function setAboutButtonText(label) {
+    aboutToggle.innerHTML = '';
+    for (let i = 0; i < label.length; i++) {
+        const span = document.createElement('span');
+        span.textContent = label[i];
+        span.style.display = 'inline-block';
+        span.style.fontFamily = aboutFlip.originalFont;
+        aboutToggle.appendChild(span);
+    }
+}
+
+// On hover, animate and show the bio
+bioSection.addEventListener('mouseenter', () => {
+    if (!isAboutOpen && !aboutFlip._isAnimating) {
+        aboutFlip.setText('HIDE', () => {
+            isAboutOpen = true;
+            bioContent.classList.add('active');
+            setAboutButtonText('HIDE'); // Ensure text is correct after animation
+        });
+    }
+});
+
+// On mouse leave, hide the bio and revert text
+bioSection.addEventListener('mouseleave', () => {
+    if (isAboutOpen) {
+        isAboutOpen = false;
+        bioContent.classList.remove('active');
+        // Instantly revert text without animation
+        setAboutButtonText('ABOUT');
+    }
+});
+
 // Project hover handling
 function handleProjectHover(link, isEntering) {
     if (isEntering) {
@@ -530,57 +571,6 @@ function handleProjectHover(link, isEntering) {
         }, 50);
     }
 }
-
-// Initialize text effects
-const textParting = new TextPartingEffect();
-textParting.init(); // Initialize the effect once on page load
-
-// --- ABOUT SECTION HOVER LOGIC ---
-if (bioSection && bioContent) {
-    bioSection.addEventListener('mouseenter', () => {
-        bioContent.classList.add('active');
-    });
-
-    bioSection.addEventListener('mouseleave', () => {
-        bioContent.classList.remove('active');
-    });
-}
-
-// Remove any previous click event for aboutToggle
-aboutToggle.onclick = null;
-
-// Helper to set the button text instantly (no animation)
-function setAboutButtonText(label) {
-    aboutToggle.innerHTML = '';
-    for (let i = 0; i < label.length; i++) {
-        const span = document.createElement('span');
-        span.textContent = label[i];
-        span.style.display = 'inline-block';
-        span.style.fontFamily = aboutFlip.originalFont;
-        aboutToggle.appendChild(span);
-    }
-}
-
-// On hover, animate, then toggle bio after animation
-aboutToggle.addEventListener('mouseenter', function() {
-    if (aboutFlip._isAnimating) return;
-    aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT', function animationDone() {
-        // Toggle bio section after animation
-        bioContent.classList.toggle('active');
-        isAboutOpen = !isAboutOpen;
-        setAboutButtonText(isAboutOpen ? 'HIDE' : 'ABOUT');
-        if (isAboutOpen) {
-            setTimeout(() => {
-                textParting.init();
-            }, 300);
-        }
-    });
-});
-
-// Optionally, reset the button text on mouseleave (not required, but keeps it tidy)
-aboutToggle.addEventListener('mouseleave', function() {
-    setAboutButtonText(isAboutOpen ? 'HIDE' : 'ABOUT');
-});
 
 // Project link events
 if (!isTouchDevice) {
