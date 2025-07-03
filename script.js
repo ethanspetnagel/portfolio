@@ -202,12 +202,15 @@ function showVideo(project) {
     if (!video) return false;
     const mediaInfo = projectMedia[project];
     if (!mediaInfo || !mediaInfo.position) return false;
+
+    // This transform is now handled by the .bg-video class in CSS
+    video.style.left = mediaInfo.position.left;
+    video.style.top = mediaInfo.position.top;
+
     isTransitioning = true;
     const previousVideo = currentActiveVideo;
     if (previousVideo) previousVideo.style.zIndex = '1';
     video.style.zIndex = '2';
-    video.style.left = mediaInfo.position.left;
-    video.style.top = mediaInfo.position.top;
     video.style.visibility = 'visible';
     video.currentTime = 0;
     const playPromise = video.play();
