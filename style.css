@@ -152,6 +152,10 @@ body.page-navigating * {
   opacity: 0.25;
 }
 
+.projects-container.hovering .project-link:not(:hover) {
+  opacity: 0.25;
+}
+
 /* Project Links - Default color */
 .project-link {
   display: block;
@@ -162,7 +166,7 @@ body.page-navigating * {
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.85;
-  transition: color 0.2s ease, opacity 0.2s ease;
+  transition: color 0.2s ease, opacity 0.2s;
 }
 
 /* Project link hover - Change from black to the main text color */
@@ -246,6 +250,7 @@ body.june-hover .bottom-bar > * {
   font-size: 14px;
   line-height: 1.4;
   margin-bottom: 20px;
+  overflow: visible;
 }
 
 .bio-text p {
@@ -645,8 +650,4 @@ body.transitioning {
   .contact-links a {
     color: #2d2f32;
   }
-}
-
-.bio-content {
-  overflow: visible;
 }

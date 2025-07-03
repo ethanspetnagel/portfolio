@@ -8,7 +8,6 @@ class FontFlip {
             'Impact, sans-serif',
             'Marker Felt, fantasy'
         ];
-        // This now correctly captures the font after styles are applied
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
         this._isAnimating = false;
@@ -16,7 +15,7 @@ class FontFlip {
 
     setText(newText, onFinish) {
         this.text = newText;
-        this.stop();
+        this.stop(); 
         this._animateLetter(0, onFinish);
     }
 
@@ -38,6 +37,7 @@ class FontFlip {
         }
         const shuffledFonts = this._shuffle(this.fonts);
         let fontFrame = 0;
+
         const animateFont = () => {
             if (fontFrame < shuffledFonts.length) {
                 this._renderWord(index, fontFrame, shuffledFonts);
@@ -48,6 +48,7 @@ class FontFlip {
                 this._timeout = setTimeout(() => this._animateLetter(index + 1, onFinish), 5);
             }
         };
+
         this._isAnimating = true;
         animateFont();
     }
@@ -56,19 +57,25 @@ class FontFlip {
         this.el.innerHTML = '';
         for (let i = 0; i < this.text.length; i++) {
             const char = this.text[i];
+
+            // Wrapper for spacing
             const wrapper = document.createElement('span');
             wrapper.style.display = 'inline-block';
             wrapper.style.position = 'relative';
 
+            // Ghost span: invisible but sets correct width
             const ghost = document.createElement('span');
             ghost.textContent = char;
             ghost.style.fontFamily = this.originalFont;
             ghost.style.visibility = 'hidden';
+            // Bring letters closer together
+            ghost.style.letterSpacing = '-0.01em';
             wrapper.appendChild(ghost);
 
             const charWidth = ghost.getBoundingClientRect().width;
             wrapper.style.width = `${charWidth}px`;
 
+            // Visible animator span
             const animator = document.createElement('span');
             animator.textContent = char;
             animator.style.position = 'absolute';
@@ -77,6 +84,8 @@ class FontFlip {
             animator.style.width = '100%';
             animator.style.height = '100%';
             animator.style.textAlign = 'center';
+            // Match the letter-spacing
+            animator.style.letterSpacing = '-0.01em';
 
             if (i === activeIndex && fontFrame >= 0) {
                 animator.style.fontFamily = fontList[fontFrame];
