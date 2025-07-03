@@ -52,7 +52,7 @@
 .about-toggle::selection,
 .date-text::selection {
   background-color: #daff00;
-  color: #191917;
+  color: #f40f21;
 }
 
 html, body {
