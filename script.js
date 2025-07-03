@@ -24,7 +24,7 @@ function startSubtitleAnimation() {
 
     // Revised, tighter text for the animation
     const paragraphs = [
-        { animated: "Ethan Spetnagel", static: " is a designer in Queens, New York." },
+        { animated: "Ethan Spetnagel", static: " is a designer based in Queens, New York." },
         "UX Designer, Talamel Health\n+\nDesign Manager, Church California",
         "Building intuitive products & distinctive brands."
     ];
