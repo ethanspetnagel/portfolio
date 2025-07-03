@@ -29,10 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 textElement.textContent = paragraphs[paragraphIndex];
                 textElement.style.color = '#353c50'; // Set subtitle color to match project links
                 
-                // Check for specific paragraphs to apply a longer delay
-                const isFirstParagraph = paragraphIndex === 0;
-                const isSecondParagraph = paragraphIndex === 1; // "Building..." line
-                const delay = (isFirstParagraph || isSecondParagraph) ? 3000 : 1800;
+                const delay = 1500; // Set a consistent 1.5-second delay for all paragraphs
 
                 paragraphIndex++;
                 setTimeout(showNextParagraph, delay);

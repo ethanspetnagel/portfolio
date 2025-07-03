@@ -95,18 +95,11 @@ body.page-navigating * {
 /* Custom positioned videos */
 .fullscreen-bg video {
   position: absolute;
-  width: 536px; /* Fixed width for all videos */
-  height: 315px; /* Fixed height for all videos */
+  width: 804px; /* 1.5x original size */
+  height: 473px; /* 1.5x original size */
   object-fit: cover;
   opacity: 0;
-  /* Hardware acceleration for videos */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  /* Prevent flickering */
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
+  transform: translate(-50%, -50%); /* Center the video */
   transition: opacity 0.3s ease;
 }
 
