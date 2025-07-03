@@ -86,11 +86,11 @@ const projectMedia = {
 // Bio link images
 const bioImages = {
     'me': './me.jpeg',
-    'church-company': 'church video bg.mp4',
-    'talamel-health': '',
-    'slug-soap': ' ',
-    'crowe': '',
-    'colorado': ''
+    'church-company': './church/brand 1.mp4',
+    'talamel-health': './talamel1.mp4',
+    'slug-soap': './slug.mp4',
+    'crowe': './bird.jpg',
+    'colorado': './colorado.gif'
 };
 
 // DOM Elements
