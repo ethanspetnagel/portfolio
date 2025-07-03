@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
             "Design Manager — Church California\n \nUX Designer — Talamel Health",
-            "Building intuitive digital products \n + \ndistinctive physical brands.",
+            "Building intuitive digital products \n & \ndistinctive physical brands.",
             "based in Queens, NY",
         ];
         let paragraphIndex = 0;
@@ -30,10 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 textElement.textContent = paragraphs[paragraphIndex];
                 textElement.style.color = '#353c50'; // Set subtitle color to match project links
                 
-                // Check if it's the first or the last paragraph for a longer delay
+                // Check for specific paragraphs to apply a longer delay
                 const isFirstParagraph = paragraphIndex === 0;
-                const isLastParagraph = paragraphIndex === paragraphs.length - 1;
-                const delay = (isFirstParagraph || isLastParagraph) ? 3000 : 1800;
+                const isSecondParagraph = paragraphIndex === 1; // "Building..." line
+                const delay = (isFirstParagraph || isSecondParagraph) ? 3000 : 1800;
 
                 paragraphIndex++;
                 setTimeout(showNextParagraph, delay);
@@ -333,6 +333,13 @@ class FontFlip {
             wrapper.style.fontFamily = this.originalFont;
             wrapper.textContent = char;
             
+            // Hide the original letter in the wrapper when its animator is active
+            if (i === activeIndex && fontFrame >= 0) {
+                wrapper.style.visibility = 'hidden';
+            } else {
+                wrapper.style.visibility = 'visible';
+            }
+
             // Style the animator to be positioned within the wrapper
             animator.textContent = char;
             animator.style.position = 'absolute';

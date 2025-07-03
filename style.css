@@ -149,6 +149,12 @@ body.page-navigating * {
   opacity: 1;
 }
 
+.projects-container.hovering .project-link:not(:hover) {
+  opacity: 0.2;
+  -webkit-text-stroke: 1px #353c50; /* Add text stroke for outline effect */
+  -webkit-text-fill-color: transparent; /* Make the inside of the letter transparent */
+}
+
 /* Project Links - Default color */
 .project-link {
   display: block;
@@ -175,7 +181,7 @@ body.page-navigating * {
 /* Website Info */
 .website-info {
   position: fixed;
-  bottom: 10px; /* Reduced from 20px */
+  bottom: 20px; /* Aligned with other bottom elements */
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -229,7 +235,7 @@ body.june-hover .resume-download {
 /* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 10px; /* Reduced from 20px */
+  bottom: 20px; /* Aligned with other bottom elements */
   left: 20px;
   max-width: 400px;
   z-index: 15;
@@ -445,7 +451,7 @@ body.project-hovering.video-light .bio-text a:hover {
 
 .resume-section {
   position: fixed;
-  bottom: 10px; /* Reduced from 20px */
+  bottom: 20px; /* Aligned with other bottom elements */
   right: 20px;
   z-index: 15;
   /* Match .bio-section's max-width if needed */
