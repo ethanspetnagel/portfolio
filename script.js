@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const hideToggle = document.getElementById('hideToggle');
     const bioSection = document.querySelector('.bio-section');
     const resumeDownload = document.getElementById('resumeDownload');
+    const projectsContainer = document.getElementById('projectsContainer');
 
     // --- ABOUT/HIDE FUNCTIONALITY ---
     const aboutFlip = new FontFlip(aboutToggle);
@@ -156,9 +157,6 @@ document.addEventListener('DOMContentLoaded', function() {
         isAboutOpen = isOpen;
         if (bioSection) {
             bioSection.classList.toggle('is-open', isOpen);
-        }
-        if (isOpen) {
-            setTimeout(() => new TextPartingEffect().init(), 300);
         }
     }
 
@@ -200,20 +198,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- DATE TEXT HOVER ---
     dateText.addEventListener('mouseenter', function() {
-        if (!dateText.classList.contains('project-active')) {
-            document.body.classList.add('june-hover');
-        }
+        document.body.classList.add('june-hover');
     });
     dateText.addEventListener('mouseleave', function() {
-        if (!dateText.classList.contains('project-active')) {
-            document.body.classList.remove('june-hover');
-        }
+        document.body.classList.remove('june-hover');
     });
 
-    // --- OTHER INITIALIZATIONS ---
-    // (Your project hover, video, and other functions would go here)
-    // For brevity, I am omitting the large blocks of code that were already working.
-    // Make sure the rest of your script (TextPartingEffect, video handling, etc.)
-    // is placed inside this DOMContentLoaded wrapper.
-
-}); // --- END OF DOMCONTENTLOADED WRAPPER ---
+    // --- PROJECT LINK HOVER ---
+    projectsContainer.addEventListener('mouseover', (event) => {
+        if (event.target.classList.contains('project-link')) {
+            projectsContainer.classList.add('hovering');
+        }
+    });
+    projectsContainer.addEventListener('mouseout', () => {
+        projectsContainer.classList.remove('hovering');
+    });
+});

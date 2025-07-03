@@ -129,9 +129,7 @@ body.page-navigating * {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 10; /* Above videos */
-  opacity: 1;
-  visibility: visible;
+  z-index: 10;
   padding: 20px;
 }
 
@@ -140,9 +138,6 @@ body.page-navigating * {
   text-align: center;
   max-width: 1200px;
   width: 100%;
-  margin: 0 auto;
-  line-height: 0.8;
-  padding-top: 10px;
 }
 
 .projects-container.hovering .project-link {
@@ -154,26 +149,20 @@ body.page-navigating * {
 }
 
 .projects-container.hovering .project-link:not(:hover) {
-  color: #353c50;
   opacity: 0.25;
 }
 
 /* Project Links - Default color */
 .project-link {
   display: block;
-  width: fit-content;
-  margin: 0 auto;
-  color: #353c50; /* Default dark gray */
   text-decoration: none;
+  color: #353c50;
   font-size: clamp(24px, 7.5vw, 110px);
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.85;
   transition: color 0.2s ease, opacity 0.2s ease;
-  cursor: crosshair;
-  position: relative;
-  will-change: color, opacity;
 }
 
 /* Project link hover - Change from black to the main text color */
@@ -203,14 +192,9 @@ body.page-navigating * {
 
 /* Default state: bio content is hidden */
 .bio-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.4s ease-in-out, visibility 0.4s;
-  pointer-events: none;
 }
 
 /* When .is-open is added, bio content becomes visible */
@@ -250,39 +234,27 @@ body.page-navigating * {
 /* Restore July hover effect */
 body.june-hover {
   background-color: #353c50;
-  color: #d2d4db;
 }
 
-body.june-hover * {
-  color: #d2d4db;
-}
-
-/* Make these rules more specific to override other styles */
-body.june-hover .bottom-bar .date-text,
-body.june-hover .bottom-bar .about-toggle,
-body.june-hover .bottom-bar .resume-download,
-body.june-hover .project-link {
+body.june-hover .project-link,
+body.june-hover .bottom-bar > * {
   color: #d2d4db !important;
 }
 
 /* Bio text */
 .bio-text {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.4;
-  color: #353c50;
   margin-bottom: 20px;
-  cursor: crosshair;
-  margin-top: 5px;
-  letter-spacing: -0.01em;
-  width: 95%; /* makes it 80% of its container's width */
 }
 
 .bio-text p {
-  margin-bottom: 10px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: normal;
-  color: #2d2f32;
+  margin-bottom: 1em;
+}
+
+.bio-text a {
+  color: #353c50;
+  text-decoration: none;
 }
 
 /* Word span styling for text parting effect */
@@ -291,71 +263,17 @@ body.june-hover .project-link {
   transition: transform 0.1s ease-out;
   margin-right: 0em;
 }
-/* Bio text links */
-.bio-text a {
-  color: #2d2f32; /* Default medium gray like other text */
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-}
-
-.bio-text a:hover {
-  color: #0008ff !important; /* Blue on hover */
-}
-
-/* Maintain hover color even when video is playing */
-body.project-hovering.video-dark .bio-text a:hover,
-body.project-hovering.video-light .bio-text a:hover {
-  color: #0015ff !important; /* Lime green on hover */
-}
 
 /* Contact links */
 .contact-links {
-  margin-top: clamp(10.8px, 2.43vw, 29.7px);
   display: flex;
-  gap: 20px;
-  font-size: calc(1.4rem - 7px);
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  align-items: baseline;
+  gap: 15px;
 }
 
 .contact-links a {
-  display: inline-block;
+  color: #353c50;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  font-style: normal;
-  font-weight: normal;
-  position: relative;
-  color: #2d2f32 !important;
-  padding: 8px 0;
-  cursor: crosshair;;
-}
-
-/* Oval effect for contact links */
-.contact-links a::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 0;
-  height: 0;
-  border: 2px solid #2d2f32;
-  border-radius: 50%;
-  opacity: 0;
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.contact-links a:hover::after {
-  opacity: 1;
-  width: calc(100% + 30px);
-  height: 20px;
-}
-
-.contact-links a:hover {
-  color: #2d2f32 !important;
-  text-decoration: none !important;
-  transform: translateY(2px);
+  font-size: 14px;
 }
 
 /* Bio Preview */
@@ -395,15 +313,6 @@ body.project-hovering.video-light .bio-text a:hover {
 /* Ensure child elements are clickable */
 .bottom-bar > * {
   pointer-events: auto;
-}
-
-/* Remove individual positioning from child elements */
-.bottom-bar .about-toggle,
-.bottom-bar .date-text,
-.bottom-bar .resume-download {
-  position: static; /* Override any 'fixed' or 'absolute' positioning */
-  transform: none;
-  /* Restore original formatting */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
@@ -450,19 +359,6 @@ body.project-hovering.video-light .bio-text a:hover {
   white-space: pre-line; /* Allows \n to create line breaks */
 }
 
-#introText span {
-  display: inline-block;
-  min-width: 1ch; /* Set a minimum width for each character span */
-  text-align: center; /* Center the character within its fixed-width box */
-}
-
-@media (max-width: 768px) {
-  .resume-download {
-    display: none;
-  }
-}
-
-/* Intro Overlay */
 #introOverlay {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
@@ -472,12 +368,6 @@ body.project-hovering.video-light .bio-text a:hover {
   align-items: center;
   justify-content: center;
   transition: opacity 0.5s ease-in-out;
-  opacity: 1;
-  pointer-events: all;
-}
-
-#introOverlay[style*="opacity: 0"] {
-  pointer-events: none;
 }
 
 #introText {
@@ -490,8 +380,19 @@ body.project-hovering.video-light .bio-text a:hover {
   max-width: 900px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  transition: opacity 0.4s ease-in-out;
-  white-space: pre-line; /* Allows \n to create line breaks */
+  white-space: pre-line;
+}
+
+#introText span {
+  display: inline-block;
+  min-width: 1ch; /* Set a minimum width for each character span */
+  text-align: center; /* Center the character within its fixed-width box */
+}
+
+@media (max-width: 768px) {
+  .resume-download {
+    display: none;
+  }
 }
 
 /* Touch device styles */
