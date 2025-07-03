@@ -61,7 +61,7 @@ const projectMedia = {
     },
     'talamel': {
         url: './talamel1.mp4',
-        position: { left: '23%', top: '31%' }
+        position: { left: '22%', top: '31%' }
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
@@ -70,7 +70,7 @@ const projectMedia = {
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
-        position: { left: '85%', top: '45%' }
+        position: { left: '84.5%', top: '45.5%' }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
@@ -78,7 +78,7 @@ const projectMedia = {
     },
     'green-lake-law': {
         url: './greenlake.mp4',
-        position: { left: '85%', top: '54%' }
+        position: { left: '85%', top: '53.5%' }
     }, 
     'june-2025': ''
 };
