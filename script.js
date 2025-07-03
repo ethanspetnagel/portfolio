@@ -57,15 +57,22 @@ class FontFlip {
     _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
         this.el.innerHTML = '';
         for (let i = 0; i < this.text.length; i++) {
-            const span = document.createElement('span');
-            span.textContent = this.text[i];
-            span.style.display = 'inline-block';
-            if (i === activeIndex && fontFrame >= 0) {
-                span.style.fontFamily = fontList[fontFrame];
+            const char = this.text[i];
+            if (char === ' ') {
+                // If the character is a space, append it as a simple text node
+                this.el.appendChild(document.createTextNode(' '));
             } else {
-                span.style.fontFamily = this.originalFont;
+                // Otherwise, create the animated span
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.display = 'inline-block';
+                if (i === activeIndex && fontFrame >= 0) {
+                    span.style.fontFamily = fontList[fontFrame];
+                } else {
+                    span.style.fontFamily = this.originalFont;
+                }
+                this.el.appendChild(span);
             }
-            this.el.appendChild(span);
         }
     }
 
@@ -101,7 +108,7 @@ class FontFlip {
 function startSubtitleAnimation(overlay, textElement) {
     const paragraphs = [
         "Interdisciplinary Designer based in Queens, NY",
-        "UX Designer — Talamel Health\n+\nDesign Manager — Church California",
+        "UX Designer — Talamel Health\nAND\nDesign Manager — Church California",
         "Building intuitive products & distinctive brands."
     ];
 
@@ -116,7 +123,8 @@ function startSubtitleAnimation(overlay, textElement) {
             textElement.style.opacity = 1;
 
             const wordCount = currentParagraph.split(' ').length;
-            const displayDuration = Math.max(2500, wordCount * 300); 
+            // Add 1000ms to the display duration for a longer pause
+            const displayDuration = Math.max(2500, wordCount * 300) + 1000; 
 
             paragraphIndex++;
 
