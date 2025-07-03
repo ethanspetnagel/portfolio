@@ -181,11 +181,12 @@ body.page-navigating * {
 /* Website Info */
 .website-info {
   position: fixed;
-  bottom: 20px; /* Aligned with other bottom elements */
+  bottom: 5px; /* Set to 5px */
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   z-index: 10;
+  line-height: 1; /* Ensure consistent line height */
 }
 
 .date-text {
@@ -235,7 +236,7 @@ body.june-hover .resume-download {
 /* Bio Section */
 .bio-section {
   position: fixed;
-  bottom: 20px; /* Aligned with other bottom elements */
+  bottom: 5px; /* Set to 5px */
   left: 20px;
   max-width: 400px;
   z-index: 15;
@@ -255,7 +256,7 @@ body.june-hover .resume-download {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   font-weight: bold;
   cursor: crosshair;
-  margin-bottom: 9px;
+  margin-bottom: 0; /* Removed margin */
   transition: opacity 0.3s ease;
   position: relative;
   display: inline-block;
@@ -424,9 +425,10 @@ body.project-hovering.video-light .bio-text a:hover {
 /* Resume Section */
 .resume-section {
   position: fixed;
-  bottom: 20px; /* Aligned with other bottom elements */
+  bottom: 5px; /* Set to 5px */
   right: 20px;
   z-index: 15;
+  line-height: 1; /* Ensure consistent line height */
 }
 
 /* Resume Download Button */
