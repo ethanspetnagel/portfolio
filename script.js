@@ -58,21 +58,23 @@ class FontFlip {
         this.el.innerHTML = '';
         for (let i = 0; i < this.text.length; i++) {
             const char = this.text[i];
+            const span = document.createElement('span');
+            span.textContent = char;
+            
             if (char === ' ') {
-                // If the character is a space, append it as a simple text node
-                this.el.appendChild(document.createTextNode(' '));
+                span.style.display = 'inline'; // Keep spaces as normal inline elements
             } else {
-                // Otherwise, create the animated span
-                const span = document.createElement('span');
-                span.textContent = char;
                 span.style.display = 'inline-block';
-                if (i === activeIndex && fontFrame >= 0) {
-                    span.style.fontFamily = fontList[fontFrame];
-                } else {
-                    span.style.fontFamily = this.originalFont;
-                }
-                this.el.appendChild(span);
+                span.style.minWidth = '1ch';
+                span.style.textAlign = 'center';
             }
+
+            if (i === activeIndex && fontFrame >= 0) {
+                span.style.fontFamily = fontList[fontFrame];
+            } else {
+                span.style.fontFamily = this.originalFont;
+            }
+            this.el.appendChild(span);
         }
     }
 
@@ -107,9 +109,8 @@ class FontFlip {
 // --- SUBTITLE ANIMATION ---
 function startSubtitleAnimation(overlay, textElement) {
     const paragraphs = [
-        "Design Manager — Church California\nUX Designer — Talamel Health",
-        "Building intuitive products & distinctive brands.",
-        "based in Queens, NY"
+        "Design Manager at Church California\n+\nUX Designer at Talamel Health",
+        "based in Queens, NY", "Building intuitive products & distinctive brands."
     ];
 
     let paragraphIndex = 0;
@@ -200,6 +201,7 @@ const projectLinks = document.querySelectorAll('.project-link');
 const projectsContainer = document.querySelector('.projects-container');
 const dateText = document.getElementById('dateText');
 const aboutToggle = document.getElementById('aboutToggle');
+const hideToggle = document.getElementById('hideToggle');
 const bioContent = document.getElementById('bioContent');
 const bioLinks = document.querySelectorAll('.bio-text a[data-bio]');
 const bioPreview = document.getElementById('bioPreview');
@@ -522,44 +524,27 @@ function handleProjectHover(link, isEntering) {
 }
 
 // Initialize text effects
-const textParting = new TextPartingEffect();
 const aboutFlip = new FontFlip(aboutToggle);
 let isAboutOpen = false;
 
-// Remove any previous click event for aboutToggle
-aboutToggle.onclick = null;
-
-// Helper to set the button text instantly (no animation)
-function setAboutButtonText(label) {
-    aboutToggle.innerHTML = '';
-    for (let i = 0; i < label.length; i++) {
-        const span = document.createElement('span');
-        span.textContent = label[i];
-        span.style.display = 'inline-block';
-        span.style.fontFamily = aboutFlip.originalFont;
-        aboutToggle.appendChild(span);
+function setAboutState(isOpen) {
+    isAboutOpen = isOpen;
+    bioContent.classList.toggle('active', isOpen);
+    aboutToggle.style.display = isOpen ? 'none' : 'block';
+    if (isOpen) {
+        setTimeout(() => new TextPartingEffect().init(), 300);
     }
 }
 
-// On hover, animate, then toggle bio after animation
-aboutToggle.addEventListener('mouseenter', function() {
+aboutToggle.addEventListener('click', () => {
     if (aboutFlip._isAnimating) return;
-    aboutFlip.setText(isAboutOpen ? 'HIDE' : 'ABOUT', function animationDone() {
-        // Toggle bio section after animation
-        bioContent.classList.toggle('active');
-        isAboutOpen = !isAboutOpen;
-        setAboutButtonText(isAboutOpen ? 'HIDE' : 'ABOUT');
-        if (isAboutOpen) {
-            setTimeout(() => {
-                textParting.init();
-            }, 300);
-        }
+    aboutFlip.setText('ABOUT', () => {
+        setAboutState(true);
     });
 });
 
-// Optionally, reset the button text on mouseleave (not required, but keeps it tidy)
-aboutToggle.addEventListener('mouseleave', function() {
-    setAboutButtonText(isAboutOpen ? 'HIDE' : 'ABOUT');
+hideToggle.addEventListener('click', () => {
+    setAboutState(false);
 });
 
 // Project link events

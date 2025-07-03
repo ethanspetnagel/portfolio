@@ -233,6 +233,10 @@ body.june-hover .resume-download {
   left: 20px;
   max-width: 400px;
   z-index: 15;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s;
 }
 
 /* Default text color */
@@ -344,7 +348,7 @@ body.project-hovering.video-light .bio-text a:hover {
 /* Contact links */
 .contact-links {
   margin-top: clamp(10.8px, 2.43vw, 29.7px);
-  display: inline-flex;
+  display: flex;
   gap: 20px;
   font-size: calc(1.4rem - 7px);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
@@ -435,8 +439,15 @@ body.project-hovering.video-light .bio-text a:hover {
 .bottom-bar .resume-download {
   position: static; /* Override any 'fixed' or 'absolute' positioning */
   transform: none;
+  /* Restore original formatting */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  color: #2d2f32;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
 }
-
 
 /* Subtitle Overlay Styles */
 #subtitleOverlay {
@@ -473,6 +484,12 @@ body.project-hovering.video-light .bio-text a:hover {
   letter-spacing: 0.02em; /* Match intro text spacing */
   transition: opacity 0.4s ease-in-out;
   white-space: pre-line; /* Allows \n to create line breaks */
+}
+
+#introText span {
+  display: inline-block;
+  min-width: 1ch; /* Set a minimum width for each character span */
+  text-align: center; /* Center the character within its fixed-width box */
 }
 
 @media (max-width: 768px) {
@@ -767,4 +784,20 @@ body.transitioning {
 
 .bio-content {
   overflow: visible;
+}
+
+.hide-toggle {
+  display: none; /* Hidden by default */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  color: #2d2f32;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  margin-bottom: 10px; /* Space between HIDE and contact links */
+}
+
+.bio-content.active + .hide-toggle {
+  display: block; /* Show when bio is active */
 }
