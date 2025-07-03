@@ -169,7 +169,7 @@ body.page-navigating * {
 
 /* Project link hover - BLACK */
 .project-link:hover {
-  color: #353c50 !important; /* Black on hover */
+  color: #353c50 !important; 
 }
 
 /* Website Info */
@@ -223,7 +223,7 @@ body.june-hover .resume-download {
 
 /* Date text when project is active - always black */
 .date-text.project-active {
-  color: #282c33 !important; /* Always black */
+  color: #353c50 !important; /* Always black */
 }
 
 /* Bio Section */
