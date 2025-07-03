@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
-            "Design Manager — Church California\nUX Designer — Talamel Health",
+            "Design Manager — Church California\n \nUX Designer — Talamel Health",
             "based in Queens, NY",
-            "Building intuitive products & distinctive brands.",
+            "Building intuitive products \n& distinctive brands.",
         ];
         let paragraphIndex = 0;
 
