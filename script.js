@@ -99,6 +99,7 @@ const projectLinks = document.querySelectorAll('.project-link');
 const projectsContainer = document.querySelector('.projects-container');
 const dateText = document.getElementById('dateText');
 const aboutToggle = document.getElementById('aboutToggle');
+const bioSection = document.querySelector('.bio-section'); // Get the container
 const bioContent = document.getElementById('bioContent');
 const bioLinks = document.querySelectorAll('.bio-text a[data-bio]');
 const bioPreview = document.getElementById('bioPreview');
@@ -531,8 +532,18 @@ function handleProjectHover(link, isEntering) {
 
 // Initialize text effects
 const textParting = new TextPartingEffect();
-const aboutFlip = new FontFlip(aboutToggle);
-let isAboutOpen = false;
+textParting.init(); // Initialize the effect once on page load
+
+// --- ABOUT SECTION HOVER LOGIC ---
+if (bioSection && bioContent) {
+    bioSection.addEventListener('mouseenter', () => {
+        bioContent.classList.add('active');
+    });
+
+    bioSection.addEventListener('mouseleave', () => {
+        bioContent.classList.remove('active');
+    });
+}
 
 // Remove any previous click event for aboutToggle
 aboutToggle.onclick = null;
