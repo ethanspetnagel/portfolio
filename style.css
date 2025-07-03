@@ -38,7 +38,7 @@
 /* Selection Highlight Colors - Modern Blue Shades */
 ::selection {
   background-color: #262626; /* Dark blue background */
-  color: #36373a; /* Light blue text */
+  color: #1f2021; /* Light blue text */
 }
 
 ::-moz-selection {
@@ -51,8 +51,8 @@
 .bio-text::selection,
 .about-toggle::selection,
 .date-text::selection {
-  background-color: #353c50;
-  color: #d2d4db;
+  background-color: #1f2022;
+  color: #404148;
 }
 
 html, body {
@@ -358,13 +358,13 @@ body.june-hover .resume-download {
 }
 
 .bio-text a:hover {
-  color: #0008ff !important; /* Blue on hover */
+  color: #e4f921 !important; /* Blue on hover */
 }
 
 /* Maintain hover color even when video is playing */
 body.project-hovering.video-dark .bio-text a:hover,
 body.project-hovering.video-light .bio-text a:hover {
-  color: #0015ff !important; /* Lime green on hover */
+  color: #e4f921 !important; /* Lime green on hover */
 }
 
 /* Contact links */
