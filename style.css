@@ -474,12 +474,15 @@ body.project-hovering.video-light .bio-text a:hover {
 
 #subtitleText {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: clamp(16px, 3vw, 28px);
-  color: #2d2f32;
+  font-size: clamp(10.8px, 2.43vw, 29.7px); /* Match intro text size */
+  font-weight: bold; /* Match intro text weight */
+  color: #2d2f32; /* Match intro text color */
   text-align: center;
-  line-height: 1.4;
-  max-width: 800px;
-  transition: opacity 0.4s ease-in-out; /* Smooth fade for text */
+  line-height: 1.2; /* Adjusted for readability */
+  max-width: 900px; /* Increased for uppercase text */
+  text-transform: uppercase; /* Match intro text case */
+  letter-spacing: 0.02em; /* Match intro text spacing */
+  transition: opacity 0.4s ease-in-out;
 }
 
 @media (max-width: 768px) {

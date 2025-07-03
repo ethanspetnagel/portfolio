@@ -107,12 +107,12 @@
         // Start animation
         const introFlip = new IntroFontFlip(introText);
         introFlip.setText('ETHANSPETNAGEL.ONLINE', () => {
-            // Instead of removing, fade out and start next animation
+            // Immediately start the next animation while this one fades out
+            startSubtitleAnimation(); 
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.remove();
-                startSubtitleAnimation(); // New function call
-            }, 500); // Wait for fade out
+            }, 300); // Wait for fade out transition to finish before removing
         });
     } else {
         // If intro was already shown, hide the subtitle overlay
@@ -176,8 +176,8 @@ function startSubtitleAnimation() {
         }
     }
 
-    // Start the animation
-    setTimeout(showNextParagraph, 500); // Initial delay
+    // Start the animation immediately
+    showNextParagraph();
 }
 
 // --- END INTRO OVERLAY SETUP ---
