@@ -496,8 +496,9 @@ textParting.init();
 const aboutFlip = new FontFlip(aboutToggle);
 let isAboutOpen = false;
 
-// Helper to set button text without animation
+// Helper to set button text without animation and update animator's state
 function setAboutButtonText(label) {
+    aboutFlip.text = label; // Keep the animator's internal text in sync
     aboutToggle.innerHTML = '';
     for (let i = 0; i < label.length; i++) {
         const span = document.createElement('span');
@@ -508,25 +509,30 @@ function setAboutButtonText(label) {
     }
 }
 
-// On hover, animate and show the bio
+// Set initial text
+setAboutButtonText('ABOUT');
+
+// On hover, animate "ABOUT" then show the bio
 bioSection.addEventListener('mouseenter', () => {
-    if (!isAboutOpen && !aboutFlip._isAnimating) {
-        aboutFlip.setText('HIDE', () => {
-            isAboutOpen = true;
-            bioContent.classList.add('active');
-            setAboutButtonText('HIDE'); // Ensure text is correct after animation
-        });
-    }
+    if (isAboutOpen || aboutFlip._isAnimating) return;
+
+    aboutFlip.setText('ABOUT', () => {
+        bioContent.classList.add('active');
+        setAboutButtonText('HIDE');
+        isAboutOpen = true;
+    });
 });
 
-// On mouse leave, hide the bio and revert text
+// On mouse leave, hide the bio then animate "HIDE"
 bioSection.addEventListener('mouseleave', () => {
-    if (isAboutOpen) {
-        isAboutOpen = false;
-        bioContent.classList.remove('active');
-        // Instantly revert text without animation
+    if (!isAboutOpen || aboutFlip._isAnimating) return;
+
+    bioContent.classList.remove('active');
+    isAboutOpen = false;
+
+    aboutFlip.setText('HIDE', () => {
         setAboutButtonText('ABOUT');
-    }
+    });
 });
 
 // Project hover handling
