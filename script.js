@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const projectMedia = {
     'slug': {
         url: './slug.mp4',
-        position: { left: '27%', top: '14%' }
+        position: { left: '27%', top: '15%' }
     }, 
     'church': {
         url: './church video bg.mp4',
@@ -61,7 +61,7 @@ const projectMedia = {
     },
     'talamel': {
         url: './talamel1.mp4',
-        position: { left: '22%', top: '30%' }
+        position: { left: '23%', top: '31%' }
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
@@ -70,7 +70,7 @@ const projectMedia = {
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
-        position: { left: '85%', top: '44%' }
+        position: { left: '85%', top: '45%' }
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
@@ -78,7 +78,7 @@ const projectMedia = {
     },
     'green-lake-law': {
         url: './greenlake.mp4',
-        position: { left: '85%', top: '55%' }
+        position: { left: '85%', top: '54%' }
     }, 
     'june-2025': ''
 };
