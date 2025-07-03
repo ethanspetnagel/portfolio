@@ -1,119 +1,8 @@
 // --- INTRO OVERLAY SETUP ---
 (function setupIntroOverlay() {
     if (!sessionStorage.getItem('introShown')) {
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.id = 'introOverlay';
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100vw';
-        overlay.style.height = '100vh';
-        overlay.style.background = '#fafcfc';
-        overlay.style.zIndex = '99999';
-        overlay.style.display = 'flex';
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-        overlay.style.transition = 'opacity 0.3s';
-        overlay.style.opacity = '1';
-
-        // Create text element
-        const introText = document.createElement('div');
-        introText.id = 'introText';
-        introText.textContent = 'ETHANSPETNAGEL.ONLINE';
-        // Match About button font, size, color
-        introText.style.fontFamily = '"Helvetica Neue", Helvetica, Arial, sans-serif';
-        introText.style.fontWeight = 'bold';
-        introText.style.fontSize = window.getComputedStyle(document.documentElement).getPropertyValue('--about-toggle-size') || 'clamp(10.8px, 2.43vw, 29.7px)';
-        introText.style.textTransform = 'uppercase';
-        introText.style.letterSpacing = '0.02em';
-        introText.style.color = '#2d2f32';
-        introText.style.textAlign = 'center';
-        introText.style.lineHeight = '1';
-        introText.style.userSelect = 'none';
-        overlay.appendChild(introText);
-
-        document.body.appendChild(overlay); 
-
-        // Use the same FontFlip logic as About
-        class IntroFontFlip {
-            constructor(el) {
-                this.el = el;
-                this.fonts = [
-                    'times new roman, serif',
-                    'UnifrakturCook, cursive',
-                    'Impact',                  // Ancient/mystical
-                    'Marker Felt, fantasy'           // Marker pen style            // Decorative c
-                ];
-                this.originalFont = window.getComputedStyle(el).fontFamily;
-                this._timeout = null;
-            }
-            setText(newText, onFinish) {
-                this.text = newText;
-                this.onFinish = onFinish;
-                this.stop();
-                this._animateLetter(0);
-            }
-            _shuffle(array) {
-                let arr = array.slice();
-                for (let i = arr.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [arr[i], arr[j]] = [arr[j], arr[i]];
-                }
-                return arr;
-            }
-            _animateLetter(index) {
-                if (index >= this.text.length) {
-                    this._renderWord(-1, -1);
-                    if (typeof this.onFinish === 'function') this.onFinish();
-                    return;
-                }
-                const shuffledFonts = this._shuffle(this.fonts);
-                let fontFrame = 0;
-                const animateFont = () => {
-                    if (fontFrame < shuffledFonts.length) {
-                        this._renderWord(index, fontFrame, shuffledFonts);
-                        fontFrame++;
-                        this._timeout = setTimeout(animateFont, 80);
-                    } else {
-                        this._renderWord(index, -1, shuffledFonts);
-                        this._timeout = setTimeout(() => this._animateLetter(index + 1), 1);
-                    }
-                };
-                animateFont();
-            }
-            _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
-                this.el.innerHTML = '';
-                for (let i = 0; i < this.text.length; i++) {
-                    const span = document.createElement('span');
-                    span.textContent = this.text[i];
-                    span.style.display = 'inline-block';
-                    if (i === activeIndex && fontFrame >= 0) {
-                        span.style.fontFamily = fontList[fontFrame];
-                    } else {
-                        span.style.fontFamily = this.originalFont;
-                    }
-                    this.el.appendChild(span);
-                }
-            }
-            stop() {
-                if (this._timeout) {
-                    clearTimeout(this._timeout);
-                    this._timeout = null;
-                }
-            }
-        }
-
-        // Start animation
-        const introFlip = new IntroFontFlip(introText);
-        introFlip.setText('ETHANSPETNAGEL.ONLINE', () => {
-            // Immediately start the next animation while this one fades out
-            startSubtitleAnimation(); 
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.remove();
-            }, 300); // Wait for fade out transition to finish before removing
-        });
+        // The subtitle animation is now the main intro.
+        startSubtitleAnimation();
     } else {
         // If intro was already shown, hide the subtitle overlay
         const subtitleOverlay = document.getElementById('subtitleOverlay');
@@ -133,9 +22,11 @@ function startSubtitleAnimation() {
         return;
     }
 
+    // Revised, tighter text for the animation
     const paragraphs = [
-        "Ethan Spetnagel is an interdisciplinary designer based in Queens, New York.",
-        "UX Designer at Talamel Health Technologies\n+\nManager of Design & Fulfillment at Church California", "Building intuitive digital products & distinctive physical brands."
+        { animated: "Ethan Spetnagel", static: " is a designer in Queens, New York." },
+        "UX Designer, Talamel Health\n+\nDesign Manager, Church California",
+        "Building intuitive products & distinctive brands."
     ];
 
     let paragraphIndex = 0;
@@ -149,12 +40,27 @@ function startSubtitleAnimation() {
             const currentParagraph = paragraphs[paragraphIndex];
             
             // Set text and fade in
-            subtitleTextElement.textContent = currentParagraph;
             subtitleTextElement.style.opacity = 1;
 
+            if (paragraphIndex === 0) {
+                // Handle the first line with the animation
+                const animatedSpan = document.createElement('span');
+                const staticSpan = document.createElement('span');
+                staticSpan.textContent = currentParagraph.static;
+                subtitleTextElement.innerHTML = '';
+                subtitleTextElement.appendChild(animatedSpan);
+                subtitleTextElement.appendChild(staticSpan);
+
+                const nameAnimation = new FontFlip(animatedSpan);
+                nameAnimation.setText(currentParagraph.animated);
+            } else {
+                subtitleTextElement.textContent = currentParagraph;
+            }
+
             // Calculate how long to show the line based on its length
-            const wordCount = currentParagraph.split(' ').length;
-            const displayDuration = Math.max(2000, wordCount * 200); // 200ms per word, min 2s
+            const textForTiming = typeof currentParagraph === 'string' ? currentParagraph : currentParagraph.animated + currentParagraph.static;
+            const wordCount = textForTiming.split(' ').length;
+            const displayDuration = Math.max(2500, wordCount * 300); 
 
             paragraphIndex++;
 
