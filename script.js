@@ -30,10 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 textElement.style.color = '#353c50'; // Set subtitle color to match project links
                 
                 // Set custom delay: 2s for the second subtitle, 1.7s for others
-                const delay = (paragraphIndex === 1) ? 2000 : 1700;
+                const delay = (paragraphIndex === 1) ? 3000 : 1700;
 
                 paragraphIndex++;
-                setTimeout(showNextParagraph, delay);
+                setTimeout(showNextParagraph, delay); 
             } else {
                 overlay.classList.add('hidden');
                 sessionStorage.setItem('introShown', '1');
