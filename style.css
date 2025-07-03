@@ -181,7 +181,7 @@ body.page-navigating * {
 /* Website Info */
 .website-info {
   position: fixed;
-  bottom: 5px; /* Set to 5px */
+  bottom: 10px; /* Set to 10px to move it up */
   left: 50%;
   transform: translateX(-50%);
   text-align: center;

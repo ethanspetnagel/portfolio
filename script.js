@@ -336,6 +336,7 @@ class FontFlip {
 
             // Style the animator to be positioned within the wrapper
             animator.textContent = char;
+            animator.style.visibility = 'visible'; // Ensure the animator is always visible
             animator.style.position = 'absolute';
             animator.style.left = '0';
             animator.style.top = '0';
