@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 textElement.textContent = paragraphs[paragraphIndex];
                 textElement.style.color = '#353c50'; // Set subtitle color to match project links
                 
-                const delay = 1500; // Set a consistent 1.5-second delay for all paragraphs
+                // Set custom delay: 2s for the second subtitle, 1.7s for others
+                const delay = (paragraphIndex === 1) ? 2000 : 1700;
 
                 paragraphIndex++;
                 setTimeout(showNextParagraph, delay);
@@ -269,10 +270,11 @@ class FontFlip {
     constructor(el) {
         this.el = el;
         this.fonts = [
-             'times new roman, serif',
-                    'UnifrakturCook, cursive',
-                    'Impact',                  // Ancient/mystical
-            'Marker Felt, fantasy'           // Marker pen style            // Decorative c
+            'EB Garamond', // Use the loaded web font
+            'UnifrakturCook, cursive',
+            'Impact',
+            'Marker Felt, fantasy',
+            'Carlito', // Use the loaded Calibri alternative
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
@@ -840,7 +842,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 fontSize: styles.fontSize
             });
             
-            // Test if element is actually visible in viewport
+            // Test if element is actually visible in viewport 
             const isVisible = rect.width > 0 && rect.height > 0 && 
                              rect.top >= 0 && rect.left >= 0 && 
                              rect.bottom <= window.innerHeight && 

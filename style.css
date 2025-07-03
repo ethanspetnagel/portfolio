@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Carlito&family=EB+Garamond&display=swap');
+
 /* Font Face Declaration for Borgia Pro */
 @font-face {
   font-family: 'helvetica Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -51,6 +53,10 @@
 .date-text::selection {
   background-color: #353c50;
   color: #d2d4db;
+}
+
+html, body {
+  margin: 0;
 }
 
 body {
