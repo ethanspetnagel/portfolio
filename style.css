@@ -191,18 +191,33 @@ body.page-navigating * {
   text-align: center;
 }
 
+/* --- Bio Section --- */
+.bio-section {
+  position: fixed; /* This is critical to prevent layout shifts */
+  bottom: 20px;
+  left: 20px;
+  max-width: 400px;
+  z-index: 20;
+  pointer-events: none; /* The container itself isn't clickable */
+}
+
+/* Default state: bio content is hidden */
+.bio-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s;
+  pointer-events: none; /* Not clickable when hidden */
+}
+
 /* When .is-open is added, bio content becomes visible */
 .bio-section.is-open .bio-content {
   opacity: 1;
   visibility: visible;
-  pointer-events: auto;
-}
-
-/* When .is-open is added, the slide-up animation triggers */
-.bio-section.is-open .bio-text > * {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.2s;
+  pointer-events: auto; /* Clickable when visible */
 }
 
 /* Default state: HIDE button is hidden */
@@ -214,26 +229,34 @@ body.page-navigating * {
   text-transform: uppercase;
   letter-spacing: 0.02em;
   cursor: pointer;
-  pointer-events: auto;
-  visibility: hidden; /* Use visibility to prevent layout shifts */
   opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
   transition: opacity 0.3s, visibility 0.3s;
 }
 
 /* When .is-open is added, HIDE button becomes visible */
 .bio-section.is-open .hide-toggle {
   opacity: 1;
-  pointer-events: auto;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* When .is-open is added, the ABOUT button in the bottom bar is hidden */
 .bio-section.is-open ~ .bottom-bar .about-toggle {
   visibility: hidden;
-  opacity: 0;
 }
 
-/* REMOVE this conflicting rule */
+/* Restore July hover effect */
+body.june-hover {
+  background-color: #353c50;
+  color: #d2d4db;
+}
+
+body.june-hover * {
+  color: #d2d4db;
+}
+
 /* Bio text */
 .bio-text {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

@@ -65,19 +65,19 @@ class FontFlip {
             wrapper.style.display = 'inline-block';
             wrapper.style.position = 'relative';
 
-            // Set a fixed width on the wrapper, with a slight reduction to tighten spacing
-            const charWidth = wrapper.getBoundingClientRect().width;
-            wrapper.style.width = `${charWidth * 0.99}px`;
-            wrapper.textContent = ''; // Clear the character from the wrapper
-
-            // 2. Create a "ghost" character to preserve the original spacing.
+            // 2. Create a "ghost" character to measure and preserve the original spacing.
             const ghost = document.createElement('span');
             ghost.textContent = char;
             ghost.style.fontFamily = this.originalFont;
             ghost.style.visibility = 'hidden'; // This holds the space but is not visible.
             wrapper.appendChild(ghost);
 
-            // 3. Create the visible, animating character.
+            // 3. Set the wrapper's width based on the ghost's rendered size.
+            // This is the key fix for the spacing issue.
+            const charWidth = ghost.getBoundingClientRect().width;
+            wrapper.style.width = `${charWidth}px`;
+
+            // 4. Create the visible, animating character.
             const animator = document.createElement('span');
             animator.textContent = char;
             animator.style.position = 'absolute';
@@ -87,7 +87,7 @@ class FontFlip {
             animator.style.height = '100%';
             animator.style.textAlign = 'center';
 
-            // 4. Apply the changing font only to the animator span.
+            // 5. Apply the changing font only to the animator span.
             if (i === activeIndex && fontFrame >= 0) {
                 animator.style.fontFamily = fontList[fontFrame];
             } else {
@@ -669,110 +669,32 @@ bioLinks.forEach(link => {
     });
 });
 
-// Resume FontFlip - ROBUST VERSION WITH DEBUGGING
+// Resume FontFlip - Simplified and reliable
 const resumeDownload = document.getElementById('resumeDownload');
 if (resumeDownload) {
-    console.log('Resume button found successfully');
     const resumeFlip = new FontFlip(resumeDownload);
     let downloadInProgress = false;
 
-    // Helper to set button text without animation
-    function setResumeButtonText(text) {
-        resumeDownload.innerHTML = '';
-        for (let i = 0; i < text.length; i++) {
-            const span = document.createElement('span');
-            span.textContent = text[i];
-            span.style.display = 'inline-block';
-            span.style.fontFamily = resumeFlip.originalFont;
-            resumeDownload.appendChild(span);
-        }
-        console.log('Resume text set to:', text);
-    }
-
-    // Reset function to ensure clean state
-    function resetResumeButton() {
-        downloadInProgress = false;
-        resumeFlip.stop();
-        setResumeButtonText('RESUME');
-        console.log('Resume button reset');
-    }
-
-    // On hover, animate and download - completes regardless of mouse position
     resumeDownload.addEventListener('mouseenter', function() {
-        console.log('Resume mouseenter triggered. downloadInProgress:', downloadInProgress, 'isAnimating:', resumeFlip._isAnimating);
-
-        if (downloadInProgress || resumeFlip._isAnimating) {
-            console.log('Download blocked - already in progress or animating');
-            return;
-        }
-
+        if (downloadInProgress || resumeFlip._isAnimating) return;
         downloadInProgress = true;
-        console.log('Starting resume animation and download');
 
-        resumeFlip.setText('DOWNLOAD', function animationDone() {
-            console.log('Animation completed, triggering download');
+        resumeFlip.setText('DOWNLOAD', function onAnimationFinish() {
+            // Trigger download
+            const link = document.createElement('a');
+            link.href = './EthanSpetnagel2025.pdf';
+            link.download = 'EthanSpetnagel2025.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
-            // Trigger download after animation completes
-            try {
-                const link = document.createElement('a');
-                link.href = './EthanSpetnagel2025.pdf';
-                link.download = 'EthanSpetnagel2025.pdf';
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                console.log('Download triggered successfully');
-
-                // Reset after download
-                setTimeout(() => {
-                    resetResumeButton();
-                }, 500);
-
-            } catch (error) {
-                console.error('Error during download:', error);
-                resetResumeButton();
-            }
+            // Reset button after a short delay
+            setTimeout(() => {
+                downloadInProgress = false;
+                resumeFlip.setText('RESUME');
+            }, 500);
         });
     });
-
-    // No interruption on mouseleave - let the process complete
-    resumeDownload.addEventListener('mouseleave', function() {
-        console.log('Resume mouseleave - no action taken');
-        // Do nothing - let animation and download complete
-    });
-
-    // Emergency reset on double-click (for debugging)
-    resumeDownload.addEventListener('dblclick', function() {
-        console.log('Double-click detected - force reset');
-        resetResumeButton();
-    });
-
-    // Set initial text on page load
-    setResumeButtonText('RESUME');
-
-    // Force reset after 5 seconds if stuck (failsafe)
-    setInterval(() => {
-        if (downloadInProgress) {
-            console.log('Checking download progress... still in progress after interval');
-            // Reset if stuck for too long
-            setTimeout(() => {
-                if (downloadInProgress) {
-                    console.log('Download seems stuck - force reset');
-                    resetResumeButton();
-                }
-            }, 10000); // Reset after 10 seconds if still stuck
-        }
-    }, 5000);
-
-} else {
-    console.error('Resume download element not found! Check your HTML.');
-    // Try to find it by class name as backup
-    const backupElement = document.querySelector('.resume-download');
-    if (backupElement) {
-        console.log('Found resume element by class name instead');
-    } else {
-        console.error('Resume element not found by ID or class');
-    }
 }
 
 // Initialize everything on DOM load
