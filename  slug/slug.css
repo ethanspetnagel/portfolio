@@ -83,7 +83,6 @@ body.title-hover .corner-logo {
 .projects-button {
   position: fixed;
   bottom: 5px;
-  align-items: left;
   left: 0px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
@@ -92,7 +91,6 @@ body.title-hover .corner-logo {
   text-decoration: none;
   color: #353c50;
   background: none;
-  cursor: w-resize
   border: none;
   cursor: crosshair;
   z-index: 1000;
@@ -185,9 +183,8 @@ body.title-hover .corner-logo {
 .top-navigation {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: flex-start; /* Aligns items to the left */
   gap: 10px;
-  margin-right: 10px;
   margin-bottom: 0px;
   width: 100%;
 }
@@ -198,16 +195,10 @@ body.title-hover .corner-logo {
   font-size: clamp(32.4px, 7.29vw, 89.1px);
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  cursor: w-resize;
+  cursor: crosshair;
   line-height: 1.08;
   margin: 0;
   white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.site-title a {
-  color: inherit;
-  text-decoration: none;
 }
 
 /* UPDATED NEURAL TABS */
@@ -342,7 +333,7 @@ body.title-hover .corner-logo {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 15px 20px 40px 20px;
+  padding: 15px 20px 40px 0; /* Reduced left padding to 0 */
   background-color: #d2d4db;
   scrollbar-width: none;
   display: flex;
@@ -633,11 +624,11 @@ ul.interactive-text li {
 @media (max-width: 1100px) {
   .essay-sidebar {
     min-width: 280px;
-    width: 33vw; /* Reduced from 38vw */
+    width: 35vw; /* Adjusted for better responsiveness */
     max-width: 420px;
   }
   .star-scroll-indicator {
-    left: calc(33vw - 25px); /* Adjusted to match */
+    left: calc(35vw - 25px); /* Adjusted to match */
   }
   .top-navigation {
     gap: 20px;
