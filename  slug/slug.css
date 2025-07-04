@@ -181,16 +181,17 @@ body.title-hover .corner-logo {
 /* Navigation with reduced gap */
 .top-navigation {
   display: flex;
-  align-items: baseline;
-  gap: 40px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
   margin-bottom: 8px;
   width: 100%;
 }
 
 .site-title {
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: bold;
-  font-size: calc(1.6rem - 7px);
+  font-weight: 900;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
   letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: pointer;
@@ -215,7 +216,7 @@ body.title-hover .corner-logo {
   font-weight: normal;
   letter-spacing: -0.01em;
   white-space: nowrap;
-  padding: 8px 0;
+  padding: 0;
 }
 
 .essay-tab {
@@ -278,7 +279,7 @@ body.title-hover .corner-logo {
 .essay-content {
   padding-right: 20px;
   max-width: 100%;
-  margin-top: -29px;
+  margin-top: 0;
   position: relative;
 }
 
@@ -364,7 +365,7 @@ body.title-hover .corner-logo {
   right: 15px;
   top: 15px;
   font-size: 33.6px;
-  color: #ffffff;
+  color: #353c50;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
