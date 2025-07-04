@@ -83,6 +83,7 @@ body.title-hover .corner-logo {
 .projects-button {
   position: fixed;
   bottom: 5px;
+  align-items: left;
   left: 0px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
@@ -91,7 +92,7 @@ body.title-hover .corner-logo {
   text-decoration: none;
   color: #353c50;
   background: none;
-  cursor: w-resize;
+  cursor: w-resize
   border: none;
   cursor: crosshair;
   z-index: 1000;
@@ -184,8 +185,9 @@ body.title-hover .corner-logo {
 .top-navigation {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   gap: 10px;
+  margin-right: 10px;
   margin-bottom: 0px;
   width: 100%;
 }
