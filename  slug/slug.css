@@ -195,7 +195,7 @@ body.title-hover .corner-logo {
   font-size: clamp(32.4px, 7.29vw, 89.1px);
   letter-spacing: -0.01em;
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: w-resize;
   line-height: 1.08;
   margin: 0;
   white-space: nowrap;
