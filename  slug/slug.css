@@ -92,7 +92,7 @@ body.title-hover .corner-logo {
   color: #353c50;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: crosshair;
   z-index: 1000;
   letter-spacing: 0.0em;
   transition: opacity 0.3s ease;
@@ -153,6 +153,7 @@ body.title-hover .corner-logo {
   scrollbar-width: none;
   background: #d2d4db;
   position: relative;
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
 }
 
 .essay-sidebar::-webkit-scrollbar {
@@ -220,7 +221,7 @@ body.title-hover .corner-logo {
 }
 
 .essay-tab {
-  cursor: pointer;
+  cursor: crosshair;
   color: #353c50;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   
@@ -300,7 +301,7 @@ body.title-hover .corner-logo {
   margin-bottom: 20px;
   color: #353c50;
   letter-spacing: -0.01em;
-  cursor: default;
+  cursor: crosshair;
 }
 
 .interactive-text .word {
@@ -333,7 +334,7 @@ body.title-hover .corner-logo {
 
 /* Right gallery column */
 .project-gallery {
-  width: calc(100vw - 36vw);
+  flex-grow: 1; /* Allow gallery to fill remaining space */
   min-width: 0;
   height: 100vh;
   overflow-y: scroll;
@@ -542,7 +543,7 @@ body.title-hover .corner-logo {
 .info-toggle {
   align-self: flex-start;
   margin-top: 8px;
-  cursor: pointer;
+  cursor: crosshair;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
