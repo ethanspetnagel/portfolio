@@ -166,7 +166,7 @@ body.title-hover .corner-logo {
   left: calc(36vw - 25px);
   top: 15px;
   font-size: 33.6px;
-  color: hsl(0, 0%, 95%);
+  color: #353c50;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
@@ -317,7 +317,6 @@ body.title-hover .corner-logo {
 
 .interactive-text:last-child {
   margin-bottom: 0;
-}
 
 /* Links in text */
 .interactive-text a {
