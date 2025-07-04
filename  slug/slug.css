@@ -91,6 +91,7 @@ body.title-hover .corner-logo {
   text-decoration: none;
   color: #353c50;
   background: none;
+  cursor: w-resize;
   border: none;
   cursor: crosshair;
   z-index: 1000;
@@ -516,7 +517,7 @@ body.title-hover .corner-logo {
   background: #d2d4db;
   box-shadow: none;
   border-radius: 0;
-  cursor: pointer;
+  cursor: crosshair;
   object-fit: contain;
 }
 
