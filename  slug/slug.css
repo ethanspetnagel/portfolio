@@ -191,7 +191,7 @@ body.title-hover .corner-logo {
 .site-title {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  font-size: clamp(32.4px, 7.29vw, 89.1px);
   letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: pointer;
