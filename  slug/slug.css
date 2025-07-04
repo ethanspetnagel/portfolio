@@ -143,9 +143,7 @@ body.title-hover .corner-logo {
 
 /* Left sidebar */
 .essay-sidebar {
-  width: 36vw;
-  min-width: 320px;
-  max-width: 580px;
+  width: auto; /* Let the content determine the width */
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -629,15 +627,16 @@ ul.interactive-text li {
 /* Responsive styles */
 @media (max-width: 1100px) {
   .essay-sidebar {
-    min-width: 280px;
-    width: 38vw;
-    max-width: 420px;
+    min-width: 0; /* Remove min-width */
+    width: auto; /* Let content determine width */
+    max-width: none; /* Remove max-width */
   }
   .star-scroll-indicator {
-    left: calc(38vw - 25px);
+    left: 15px; /* Adjust star position for smaller screens */
   }
   .project-gallery {
-    width: calc(100vw - 38vw);
+    width: auto; /* Let gallery fill remaining space */
+    flex-grow: 1;
   }
   .top-navigation {
     gap: 30px;
