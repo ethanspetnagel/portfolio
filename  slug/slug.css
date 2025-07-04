@@ -364,7 +364,7 @@ body.title-hover .corner-logo {
   right: 15px;
   top: 15px;
   font-size: 33.6px;
-  color: #d4d4d4;
+  color: #ffffff;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
