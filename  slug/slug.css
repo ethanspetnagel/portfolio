@@ -367,7 +367,7 @@ body.title-hover .project-gallery {
   right: 15px;
   top: 15px;
   font-size: 33.6px;
-  color: #34312e;
+  color: #daff00;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
