@@ -19,9 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
-            "<div style='margin-bottom: 1em; line-height: 1;'><div>Design Manager</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px);'>Church California</div></div><div style='line-height: 1;'><div>UX Designer</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px);'>Talamel Health</div></div>",
-            "UX DESIGNER + WEB DESIGNER",
-            "Building intuitive digital products & distinctive physical brands.",
+"UX DESIGNER + WEB DESIGNER",
+            "web<div style='margin-bottom: 1em; line-height: 1;'><div>Design Manager</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px);'>Church California</div></div><div style='line-height: 1;'><div>UX Designer</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px);'>Talamel Health</div></div>",
             "based in Queens, NY"
         ];
         let paragraphIndex = 0;
