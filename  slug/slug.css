@@ -302,7 +302,7 @@ body.title-hover .project-gallery {
 
 /* Essay content */
 .essay-content {
-  padding-right: 20px;
+  padding-right: 25px;
   max-width: 100%;
   margin-top: -29px;
   position: relative;
@@ -363,10 +363,8 @@ body.title-hover .project-gallery {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 0px 0px 0px 0px; /* Reduced left padding from 60px */
+  padding: 0px 0px 0px 10px; /* Reduced left padding from 60px */
   background-color: #d9d9d9;
-  scrollbar-width: thin;
-  scrollbar-color: #d92020 #d9d9d9;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -511,7 +509,7 @@ body.title-hover .project-gallery {
   /* Large sizes */
   --size-l: 60vw;        /* Large */
   --size-xl: 78vw;
-  --size-xxl: 98vw;       /* Extra large */
+  --size-xxl: 88vw;       /* Extra large */
   --size-full: 100vw;    /* Full width */
 }
 
