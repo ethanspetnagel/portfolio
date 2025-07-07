@@ -196,7 +196,7 @@ body.title-hover .project-gallery {
   font-size: 33.6px;
   color: #d92020;
   opacity: 1;
-  transition: opacity 0.3s ease, top 0.2s linear;
+  transition: top 0.2s linear;
   pointer-events: none;
   z-index: 100;
 }
@@ -398,7 +398,7 @@ body.title-hover .project-gallery {
   font-size: 33.6px;
   color: #d92020;
   opacity: 1;
-  transition: opacity 0.3s ease, top 0.2s linear;
+  transition: top 0.2s linear;
   pointer-events: none;
   z-index: 100;
 }
