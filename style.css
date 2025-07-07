@@ -382,13 +382,13 @@ body.june-hover .resume-download {
 }
 
 .bio-text a:hover {
-  color: #ff50de !important; /* Blue on hover */
+  color: #d92020 !important; /* Blue on hover */
 }
 
 /* Maintain hover color even when video is playing */
 body.project-hovering.video-dark .bio-text a:hover,
 body.project-hovering.video-light .bio-text a:hover {
-  color: #ff50de !important; /* Lime green on hover */
+  color: #d92020 !important; /* Lime green on hover */
 }
 
 /* Contact links */
