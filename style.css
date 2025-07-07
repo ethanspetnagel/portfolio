@@ -38,12 +38,12 @@
 /* Selection Highlight Colors - Modern Blue Shades */
 ::selection {
   background-color: none; /* Dark blue background */
-  color: #ff50de; /* Light blue text */
+  color: #ffffff; /* Light blue text */
 }
 
 ::-moz-selection {
   background-color: none; /* Dark blue background */
-  color: #ff50de; /* Light blue text */
+  color: #ffffff; /* Light blue text */
 }
 
 /* For specific elements if needed */
@@ -52,7 +52,7 @@
 .about-toggle::selection,
 .date-text::selection {
   background-color: none;
-  color: #ff50de;
+  color: #ffffff;
 }
 
 html, body {
@@ -471,8 +471,8 @@ body.project-hovering.video-light .bio-text a:hover {
   max-height: 80vh; /* Fit within 80% of viewport height */
   height: auto;
   width: auto;
-  border-radius: px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 0; /* Corrected from 'px' */
+  box-shadow: none; /* Removed drop shadow */
 }
 
 /* Resume Section */
