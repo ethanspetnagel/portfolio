@@ -349,7 +349,7 @@ body.title-hover .project-gallery {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 20px 0px 0px 0px; /* Reduced left padding from 60px */
+  padding: 0px 0px 0px 0px; /* Reduced left padding from 60px */
   background-color: #d9d9d9;
   display: flex;
   flex-direction: column;
@@ -488,7 +488,7 @@ body.title-hover .project-gallery {
 
 /* Apply sizes using data attributes */
 [data-size="xxs"] .slideshow-zone {
-  width: var(--size-xxs);
+  width: var(--size-xs);
   max-width: calc(var(--size-xxs) * 2.2);
 }
 [data-size="xs"] .slideshow-zone {
@@ -553,9 +553,7 @@ body.title-hover .project-gallery {
 /* Images and videos inherit parent size */
 .slide {
   display: none;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
+  width: auto;
 }
 
 .slide.current {
@@ -566,7 +564,8 @@ body.title-hover .project-gallery {
 .slide video {
   display: block;
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
   margin-bottom: 0;
   margin-left: 0;
   background: #d9d9d9;
@@ -574,9 +573,6 @@ body.title-hover .project-gallery {
   border-radius: 0;
   cursor: pointer;
   object-fit: contain;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 /* Caption styling */
@@ -585,7 +581,7 @@ body.title-hover .project-gallery {
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-endt;
+  align-items: flex-start;
   margin-top: 14px;
   padding: 0;
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -600,7 +596,7 @@ body.title-hover .project-gallery {
 
 /* Info toggle */
 .info-toggle {
-  align-self: flex-end;
+  align-self: flex-start;
   margin-top: 8px;
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -628,7 +624,7 @@ body.title-hover .project-gallery {
 
 /* Info panel */
 .info-panel {
-  align-self: flex-end;
+  align-self: flex-start;
   width: 100%;
   max-width: 100%;
   margin-top: 8px;
