@@ -175,7 +175,7 @@ body.page-navigating * {
 
 /* Project link hover - Blue color */
 .project-link:hover {
-  color: #4da62f !important;
+  color: #FFFFFF !important;
   opacity: 1;
   text-shadow: none;
 }
