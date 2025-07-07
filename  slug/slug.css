@@ -233,6 +233,10 @@ body.title-hover .project-gallery {
   text-decoration: none;
 }
 
+.site-title a[href*="slug.html"] {
+  color: #d92020;
+}
+
 /* UPDATED NEURAL TABS */
 .nav-tabs {
   display: flex;
