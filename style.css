@@ -496,7 +496,7 @@ body.project-hovering.video-light .bio-text a:hover {
 /* Resume Section */
 .resume-section {
   position: fixed;
-  bottom: 5px; /* Set to 5px */
+  bottom: 20px; /* Align with .website-info */
   right: 20px;
   z-index: 15;
   line-height: 1; /* Ensure consistent line height */
