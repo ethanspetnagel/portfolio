@@ -194,7 +194,7 @@ body.title-hover .project-gallery {
   left: calc(36vw - 25px);
   top: 15px;
   font-size: 33.6px;
-  color: #ff50de;
+  color: #d92020;
   opacity: 1;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
@@ -355,7 +355,7 @@ body.title-hover .project-gallery {
 }
 
 .interactive-text a:hover {
-  color: #7ab9e0;
+  color: #d92020;
 }
 
 /* Right gallery column */
@@ -392,7 +392,7 @@ body.title-hover .project-gallery {
   right: 15px;
   top: 15px;
   font-size: 33.6px;
-  color: #ff50de;
+  color: #d92020;
   opacity: 1;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
@@ -401,7 +401,7 @@ body.title-hover .project-gallery {
 
 .project-gallery:hover ~ .star-scroll-indicator-gallery,
 .project-gallery.scrolling ~ .star-scroll-indicator-gallery {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 /* Project sets and blocks */
@@ -589,7 +589,7 @@ body.title-hover .project-gallery {
 }
 
 .info-toggle.active {
-  color: #ff50de;
+  color: #d92020;
   opacity: 1;
 }
 
