@@ -195,6 +195,15 @@ body.page-navigating * {
   text-shadow: none;
 }
 
+/* Make date text, about, and resume buttons solid on project link hover */
+body.project-links-hover .date-text,
+body.project-links-hover .about-toggle,
+body.project-links-hover .resume-download {
+  color: #34312e !important;
+  opacity: 1;
+  text-shadow: none;
+}
+
 /* Website Info */
 .website-info {
   position: fixed;

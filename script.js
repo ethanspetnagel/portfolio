@@ -49,6 +49,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // --- END INTRO OVERLAY SETUP ---
 
+// --- PROJECT LINK HOVER EFFECT ---
+document.addEventListener('DOMContentLoaded', function() {
+    const projectsContainer = document.querySelector('.projects-container');
+    if (projectsContainer) {
+        projectsContainer.addEventListener('mouseenter', () => {
+            document.body.classList.add('project-links-hover');
+        });
+        projectsContainer.addEventListener('mouseleave', () => {
+            document.body.classList.remove('project-links-hover');
+        });
+    }
+});
+
 // Project media mapping with position data
 const projectMedia = {
     'slug': {
