@@ -169,7 +169,7 @@ body.title-hover .project-gallery {
   left: calc(36vw - 25px);
   top: 15px;
   font-size: 33.6px;
-  color: #daff00;
+  color: #ff50de;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
@@ -367,7 +367,7 @@ body.title-hover .project-gallery {
   right: 15px;
   top: 15px;
   font-size: 33.6px;
-  color: #daff00;
+  color: #ff50de;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
