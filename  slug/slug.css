@@ -151,7 +151,7 @@ body.title-hover .project-gallery {
   mix-blend-mode: difference;
   color: #ffffff !important;
   z-index: 999;
-  display: none;
+  display: none !important;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
   letter-spacing: 0.0em;
