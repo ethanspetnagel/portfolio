@@ -136,12 +136,109 @@ class SmoothScroll {
     }
 }
 
+// --- FONT FLIP CLASS ---
+class FontFlip {
+    constructor(el) {
+        this.el = el;
+        this.fonts = [
+            'EB Garamond, serif',
+            'UnifrakturCook, cursive',
+            'Impact, sans-serif',
+            'Courier New, monospace',
+        ];
+        this.originalFont = window.getComputedStyle(el).fontFamily;
+        this._timeout = null;
+        this._isAnimating = false;
+    }
+
+    setText(newText, onFinish) {
+        this.text = newText;
+        this.stop();
+        this._animateLetter(0, onFinish);
+    }
+
+    _shuffle(array) {
+        let arr = array.slice();
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    _animateLetter(index, onFinish) {
+        if (index >= this.text.length) {
+            this._renderWord(-1, -1);
+            this._isAnimating = false;
+            if (typeof onFinish === 'function') onFinish();
+            return;
+        }
+        const shuffledFonts = this._shuffle(this.fonts);
+        let fontFrame = 0;
+        const animateFont = () => {
+            if (fontFrame < shuffledFonts.length) {
+                this._renderWord(index, fontFrame, shuffledFonts);
+                fontFrame++;
+                this._timeout = setTimeout(animateFont, 90);
+            } else {
+                this._renderWord(index, -1, shuffledFonts);
+                this._timeout = setTimeout(() => this._animateLetter(index + 1, onFinish), 5);
+            }
+        };
+        this._isAnimating = true;
+        animateFont();
+    }
+
+    _renderWord(activeIndex, fontFrame, fontList = this.fonts) {
+        this.el.innerHTML = '';
+        for (let i = 0; i < this.text.length; i++) {
+            const char = this.text[i];
+            const wrapper = document.createElement('span');
+            const animator = document.createElement('span');
+            wrapper.style.display = 'inline-block';
+            wrapper.style.position = 'relative';
+            wrapper.style.fontFamily = this.originalFont;
+            wrapper.textContent = char;
+            wrapper.style.visibility = 'hidden';
+            animator.textContent = char;
+            animator.style.visibility = 'visible';
+            animator.style.position = 'absolute';
+            animator.style.left = '0';
+            animator.style.top = '0';
+            animator.style.width = '100%';
+            animator.style.height = '100%';
+            animator.style.textAlign = 'center';
+            animator.style.transformOrigin = 'center center';
+            animator.style.transition = 'transform 0.1s ease, font-family 0.1s ease';
+            if (i === activeIndex && fontFrame >= 0) {
+                animator.style.fontFamily = fontList[fontFrame];
+                animator.style.transform = 'scale(1.2)';
+            } else {
+                animator.style.fontFamily = this.originalFont;
+                animator.style.transform = 'scale(1)';
+            }
+            wrapper.appendChild(animator);
+            this.el.appendChild(wrapper);
+        }
+    }
+
+    stop() {
+        if (this._timeout) {
+            clearTimeout(this._timeout);
+            this._timeout = null;
+        }
+        this._isAnimating = false;
+    }
+}
+
 // Main initialization
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM ELEMENT SELECTORS ---
     const cursorLabel = document.getElementById('cursorLabel');
     const homeLink = document.getElementById('home-link');
     const churchLink = document.getElementById('church-link');
+    const homeLabel = document.getElementById('home-label');
+    const churchLabel = document.getElementById('church-label');
     const tabs = document.querySelectorAll('.essay-tab');
     const essays = document.querySelectorAll('.essay-text');
     const projects = document.querySelectorAll('.project-set');
@@ -175,6 +272,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupArrowHover(homeLink, 'HOME');
     setupArrowHover(churchLink, 'CHURCH');
+
+    // --- NAVIGATION ARROW ANIMATION ---
+    if (homeLink && homeLabel) {
+        const homeFlip = new FontFlip(homeLabel);
+        homeLink.addEventListener('mouseenter', () => {
+            homeFlip.setText('HOME');
+        });
+        homeLink.addEventListener('mouseleave', () => {
+            homeFlip.stop();
+            homeLabel.textContent = '';
+        });
+    }
+
+    if (churchLink && churchLabel) {
+        const churchFlip = new FontFlip(churchLabel);
+        churchLink.addEventListener('mouseenter', () => {
+            churchFlip.setText('CHURCH');
+        });
+        churchLink.addEventListener('mouseleave', () => {
+            churchFlip.stop();
+            churchLabel.textContent = '';
+        });
+    }
 
     // --- TAB SWITCHING LOGIC ---
     tabs.forEach(tab => {

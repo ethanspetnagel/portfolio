@@ -100,17 +100,21 @@ body.title-hover .project-gallery {
   z-index: 1000;
   width: 35px; /* Adjust size as needed */
   height: auto;
-  transition: opacity 0.3s ease;
-}
-
-.nav-arrow:hover {
-  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
 }
 
 .nav-arrow img {
   width: 100%;
   height: auto;
   display: block;
+  transition: opacity 0.3s ease;
+}
+
+.nav-arrow:hover img {
+  opacity: 1;
 }
 
 .left-arrow {
@@ -119,6 +123,22 @@ body.title-hover .project-gallery {
 
 .right-arrow {
   right: 15px;
+  flex-direction: row-reverse;
+}
+
+.arrow-label {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  text-transform: uppercase;
+  color: #34312e;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-arrow:hover .arrow-label {
+  opacity: 1;
 }
 
 /* Cursor label */
@@ -175,7 +195,7 @@ body.title-hover .project-gallery {
   top: 15px;
   font-size: 33.6px;
   color: #ff50de;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
   z-index: 100;
@@ -373,7 +393,7 @@ body.title-hover .project-gallery {
   top: 15px;
   font-size: 33.6px;
   color: #ff50de;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
   z-index: 100;
