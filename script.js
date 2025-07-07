@@ -11,10 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (introOverlay && introText) {
-        // Make sure the overlay is visible at the start
-        introOverlay.style.display = 'flex';
-        introOverlay.classList.remove('hidden');
-
         const introFlip = new FontFlip(introText);
         introFlip.setText('ETHAN SPETNAGEL', () => {
             startSubtitleAnimation(introOverlay, introText);
@@ -34,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Use innerHTML to render the styled text
                 textElement.innerHTML = paragraphs[paragraphIndex];
                 textElement.style.color = '#d92020'; // Set subtitle color to match project links
+                textElement.style.textShadow = 'none'; // Remove embossing for subtitles
                 
                 // Set custom delay: 3s for the second subtitle, 1.7s for others
                 const delay = (paragraphIndex === 1) ? 3000 : 1700;
