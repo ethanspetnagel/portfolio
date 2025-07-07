@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function showNextParagraph() {
             if (paragraphIndex < paragraphs.length) {
                 textElement.textContent = paragraphs[paragraphIndex];
-                textElement.style.color = '#ffffff'; // Set subtitle color to match project links
+                textElement.style.color = '#ec6632'; // Set subtitle color to match project links
                 
                 // Set custom delay: 2s for the second subtitle, 1.7s for others
                 const delay = (paragraphIndex === 1) ? 2600 : 1700;
