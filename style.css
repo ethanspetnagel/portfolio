@@ -211,7 +211,7 @@ body.page-navigating * {
   letter-spacing: 0.02em;
   /* Default Embossed Style */
   text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
-  opacity: 0.5;
+  opacity: 0.5; /* Opacity is now controlled directly on the text */
   transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
 }
 
@@ -286,8 +286,9 @@ body.june-hover .resume-download {
   transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
 }
 
-.about-toggle:hover {
-  color: #34312e !important; /* White on hover */
+.about-toggle:hover,
+.about-toggle.active {
+  color: #34312e !important;
   opacity: 1;
   text-shadow: none;
 }
@@ -364,13 +365,13 @@ body.june-hover .resume-download {
 }
 
 .bio-text a:hover {
-  color: #e4f921 !important; /* Blue on hover */
+  color: #ff50de !important; /* Blue on hover */
 }
 
 /* Maintain hover color even when video is playing */
 body.project-hovering.video-dark .bio-text a:hover,
 body.project-hovering.video-light .bio-text a:hover {
-  color: #e4f921 !important; /* Lime green on hover */
+  color: #ff50de !important; /* Lime green on hover */
 }
 
 /* Contact links */

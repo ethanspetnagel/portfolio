@@ -520,6 +520,9 @@ if (aboutToggle && bioContent) {
 
         const isActive = bioContent.classList.contains('active');
 
+        // Toggle the active class on the button for styling
+        aboutToggle.classList.toggle('active');
+
         if (isActive) {
             // If it's open, hide the content and animate the button to "ABOUT"
             bioContent.classList.remove('active');
