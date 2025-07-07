@@ -273,11 +273,10 @@ class FontFlip {
     constructor(el) {
         this.el = el;
         this.fonts = [
-            'EB Garamond', // Use the loaded web font
+            'EB Garamond, serif', // Use the loaded web font
             'UnifrakturCook, cursive',
-            'Impact',
-            'Marker Felt, fantasy',
-            'Carlito', // Use the loaded Calibri alternative
+            'courier, monospace',
+            'fantasy',
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
@@ -691,11 +690,13 @@ bioLinks.forEach(link => {
     });
 });
 
-// Resume FontFlip - ROBUST VERSION
+// Resume FontFlip - Hover-to-Download Version
 const resumeDownload = document.getElementById('resumeDownload');
 if (resumeDownload) {
     const resumeFlip = new FontFlip(resumeDownload);
+    let isHoveringResume = false;
     let isDownloading = false;
+    let downloadTimeout = null;
 
     // Helper to set button text without animation
     function setResumeButtonText(text) {
@@ -712,32 +713,57 @@ if (resumeDownload) {
     // Set initial text
     setResumeButtonText('RESUME');
 
-    resumeDownload.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default link action
+    resumeDownload.addEventListener('mouseenter', function() {
+        if (isDownloading || resumeFlip._isAnimating) return;
 
-        if (isDownloading || resumeFlip._isAnimating) {
-            return; // Don't do anything if already processing
-        }
+        isHoveringResume = true;
 
-        isDownloading = true;
-
-        // Animate the text to "DOWNLOAD"
         resumeFlip.setText('DOWNLOAD', function onAnimationComplete() {
-            // Create a temporary link to trigger the download
-            const link = document.createElement('a');
-            link.href = './EthanSpetnagel2025.pdf';
-            link.download = 'EthanSpetnagel2025.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // If the user is still hovering after the animation, start the download timer.
+            if (isHoveringResume) {
+                downloadTimeout = setTimeout(() => {
+                    if (isHoveringResume && !isDownloading) {
+                        isDownloading = true;
 
-            // Reset the button back to "RESUME" after a short delay
-            setTimeout(() => {
-                setResumeButtonText('RESUME');
-                isDownloading = false;
-            }, 1000);
+                        // Create a temporary link to trigger the download
+                        const link = document.createElement('a');
+                        link.href = './EthanSpetnagel2025.pdf';
+                        link.download = 'EthanSpetnagel2025.pdf';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
+                        // Reset after a delay
+                        setTimeout(() => {
+                            isDownloading = false;
+                            // If the user is no longer hovering, reset the text
+                            if (!isHoveringResume) {
+                                setResumeButtonText('RESUME');
+                            }
+                        }, 1000);
+                    }
+                }, 500); // 0.5-second delay before download starts
+            }
         });
     });
+
+    resumeDownload.addEventListener('mouseleave', function() {
+        isHoveringResume = false;
+
+        // Clear the download timer if the user mouses out
+        if (downloadTimeout) {
+            clearTimeout(downloadTimeout);
+            downloadTimeout = null;
+        }
+
+        // If not in the middle of downloading or animating, reset the text
+        if (!isDownloading && !resumeFlip._isAnimating) {
+             resumeFlip.setText('RESUME', () => {
+                setResumeButtonText('RESUME');
+             });
+        }
+    });
+
 } else {
     console.error('Resume download element not found!');
 }
