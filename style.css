@@ -60,7 +60,7 @@ html, body {
 }
 
 body {
-  background-color: #f9f9f9; /* Changed to requested color */
+  background-color: #ffffff; /* Changed to requested color */
   color: #64d643;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
@@ -160,7 +160,7 @@ body.page-navigating * {
 
 /* Apply the emboss effect ONLY to the non-hovered links */
 .projects-container.hovering .project-link:not(:hover) {
-  color: #f9f9f9; /* Match background color for bevel effect */
+  color: #ffffff; /* Match background color for bevel effect */
   text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(100, 214, 67, 0.25);
   opacity: 0.5;
 }
@@ -220,7 +220,7 @@ body.page-navigating * {
 
 /* Date text hover - keep default color */
 .date-text:hover {
-  color: #f9f9f9 !important;
+  color: #ffffff !important;
 }
 
 /* Special class for black background effect */
@@ -237,11 +237,11 @@ body.june-hover .bio-text a,
 body.june-hover .about-toggle,
 body.june-hover .website-info a,
 body.june-hover .contact-links a {
-  color: #f9f9f9 !important;
+  color: #ffffff !important;
 }
 
 body.june-hover .resume-download {
-  color: #f9f9f9 !important;
+  color: #ffffff !important;
 }
 
 /* Date text when project is active - always black */
@@ -520,7 +520,7 @@ body.project-hovering.video-light .bio-text a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #f9f9f9;
+  background: #ffffff;
   z-index: 99999;
   display: flex;
   align-items: center;
