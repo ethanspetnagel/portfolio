@@ -12,14 +12,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (introOverlay && introText) {
         const introFlip = new FontFlip(introText);
-        introFlip.setText('ETHAN SPETNAGEL', () => {
+        introFlip.setText('ETHANSPETNAGEL.ONLINE', () => {
             startSubtitleAnimation(introOverlay, introText);
         });
     }
 
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
-"WEB DESIGNER",
+"Ethan Spetnagel",
             "<div style='margin-bottom: 1em; line-height: 1;'><div>Design Manager</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px);'>Church California</div></div><div style='line-height: 1;'><div>UX Designer</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px);'>Talamel Health</div></div>",
             "based in Queens, NY"
         ];

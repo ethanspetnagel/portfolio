@@ -166,14 +166,20 @@ body.title-hover .project-gallery {
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 0 0px 40px 15px; /* Reduced right padding from 40px */
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: #d92020 #d9d9d9;
   background: #d9d9d9;
   position: relative;
 }
 
 .essay-sidebar::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
+  width: 8px;
+  background: #d9d9d9;
+}
+
+.essay-sidebar::-webkit-scrollbar-thumb {
+  background-color: #d92020;
+  border-radius: 4px;
 }
 
 /* Star scrollbar indicator */
@@ -359,19 +365,21 @@ body.title-hover .project-gallery {
   overflow-x: hidden;
   padding: 15px 20px 20px 30px; /* Reduced left padding from 60px */
   background-color: #d9d9d9;
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: #d92020 #d9d9d9;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
 .project-gallery::-webkit-scrollbar {
-  width: 20px;
-  background: transparent;
+  width: 8px;
+  background: #d9d9d9;
 }
 
 .project-gallery::-webkit-scrollbar-thumb {
-  background: transparent;
+  background-color: #d92020;
+  border-radius: 4px;
 }
 
 .project-gallery::-webkit-scrollbar-track {
@@ -557,13 +565,12 @@ body.title-hover .project-gallery {
 }
 
 [data-size="xxl"] .slideshow-zone {
-  width: var(--size-xl);
+  width: var(--size-xxl);
   max-width: calc(var(--size-xxl) * 2.2);
 }
 
 [data-size="full"] .slideshow-zone {
   width: var(--size-full);
-  max-width: 100%;
 }
 
 /* Custom sizes for specific items (if needed) */
