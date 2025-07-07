@@ -180,9 +180,11 @@ body.page-navigating * {
   text-shadow: none;
 }
 
-/* Make date text opaque when hovering over any project link */
+/* Make date text red and opaque when hovering over any project link */
 .projects-container:hover ~ .website-info .date-text {
   opacity: 1;
+  color: #d92020 !important;
+  text-shadow: none;
 }
 
 /* Website Info */
