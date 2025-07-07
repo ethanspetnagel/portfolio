@@ -528,10 +528,10 @@ body.project-hovering.video-light .bio-text a:hover {
 #introText {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  font-size: clamp(20px, 5vw, 60px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: #ffffff;
+  color: #ec6632;
   text-align: center;
   line-height: 1;
   user-select: none;
