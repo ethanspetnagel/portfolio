@@ -537,7 +537,7 @@ body.project-hovering.video-light .bio-text a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #34312e;
+  background: #d9d9d9;
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -562,7 +562,8 @@ body.project-hovering.video-light .bio-text a:hover {
   font-size: clamp(20px, 5vw, 60px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: #d92020;
+  color: #d9d9d9;
+  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
   text-align: center;
   line-height: 1;
   user-select: none;
