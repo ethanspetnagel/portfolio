@@ -754,23 +754,23 @@ if (resumeDownload) {
     setResumeButtonText('RESUME');
 
     resumeDownload.addEventListener('mouseenter', function() {
-        // If a download is already in progress or animating, do nothing.
-        if (isDownloading || resumeFlip._isAnimating) {
+        // If a download is already in progress, do nothing.
+        if (isDownloading) {
             return;
         }
 
         isDownloading = true;
 
-        // Animate the text to "DOWNLOAD"
-        resumeFlip.setText('DOWNLOAD', function onAnimationComplete() {
-            // Create a temporary link to trigger the download
-            const link = document.createElement('a');
-            link.href = './EthanSpetnagel2025.pdf';
-            link.download = 'EthanSpetnagel2025.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        // Create a temporary link to trigger the download immediately
+        const link = document.createElement('a');
+        link.href = './EthanSpetnagel2025.pdf';
+        link.download = 'EthanSpetnagel2025.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
+        // Animate the text to "DOWNLOAD" and then back to "RESUME"
+        resumeFlip.setText('DOWNLOAD', function onAnimationComplete() {
             // Reset the button back to "RESUME" after a short delay
             setTimeout(() => {
                 resumeFlip.setText('RESUME', () => {
