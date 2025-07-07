@@ -111,6 +111,7 @@ body.title-hover .project-gallery {
   height: auto;
   display: block;
   transition: opacity 0.3s ease;
+  filter: invert(19%) sepia(83%) saturate(4033%) hue-rotate(346deg) brightness(89%) contrast(94%); /* Changes color to #d92020 */
 }
 
 .nav-arrow:hover img {
@@ -685,26 +686,6 @@ ul.interactive-text li {
     bottom: 20px;
     left: 10px;
     font-size: clamp(10.8px, 2.43vw, 29.7px);
-  }
-  .floating-logo {
-    width: 80px;
-    height: 24px;
-    bottom: 2px;
-    right: 2px;
-  }
-  .page {
-    flex-direction: column;
-    overflow: visible;
-    position: static;
-    height: auto;
-  }
-  .essay-sidebar,
-  .project-gallery {
-    width: 100vw;
-    height: 50vh;
-    min-width: 0;
-    padding: 20px;
-    border-right: none;
   }
   .essay-sidebar {
     border-bottom: 1px solid #34312e;
