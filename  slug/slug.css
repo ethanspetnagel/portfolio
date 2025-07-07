@@ -354,8 +354,13 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   position: relative;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
 }
 
+.project-gallery::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari and Opera */
+}
 
 /* Project sets and blocks */
 .project-set {
