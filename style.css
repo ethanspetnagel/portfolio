@@ -151,46 +151,33 @@ body.page-navigating * {
   padding-top: 10px;
 }
 
-/* Remove the general emboss effect from all links on container hover */
-.projects-container.hovering .project-link {
-  color: #34312e; /* Revert to default color */
-  text-shadow: none; /* Remove text shadow by default */
-}
-
-/* Apply the emboss effect ONLY to the non-hovered links */
-.projects-container.hovering .project-link:not(:hover) {
-  color: #d9d9d9; /* Match background color for bevel effect */
-  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
-  opacity: 0.5;
-}
-
-/* Ensure the hovered link is fully opaque and has the correct color */
-.projects-container.hovering .project-link:hover {
-  color: #34312e !important;
-  opacity: 1;
-}
-
-/* Project Links - Default color */
+/* Project Links - Default embossed state */
 .project-link {
   display: block;
   width: fit-content;
   margin: 0 auto;
-  color: #34312e; /* Default dark gray */
   text-decoration: none;
   font-size: clamp(32.4px, 7.29vw, 89.1px);
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 0.85;
-  transition: color 0.2s ease, opacity 0.2s ease;
   cursor: crosshair;
   position: relative;
-  will-change: color, opacity;
+  will-change: color, opacity, text-shadow;
+  
+  /* Default Embossed Style */
+  color: #d9d9d9;
+  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
+  opacity: 0.5;
+  transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
 }
 
-/* Project link hover - BLACK */
+/* Project link hover - Blue color */
 .project-link:hover {
-  color: #34312e !important; 
+  color: #396ed8 !important;
+  opacity: 1;
+  text-shadow: none;
 }
 
 /* Website Info */
@@ -519,7 +506,7 @@ body.project-hovering.video-light .bio-text a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #346bf4;
+  background: #396ed8;
   z-index: 99999;
   display: flex;
   align-items: center;
