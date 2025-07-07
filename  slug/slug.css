@@ -93,27 +93,32 @@ body.title-hover .project-gallery {
   background-color: #000000;
 }
 
-/* Projects/Home button */
-.projects-button {
+/* Corner Navigation Arrows */
+.nav-arrow {
   position: fixed;
   bottom: 15px;
-  left: 15px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: 900;
-  font-size: clamp(10.8px, 2.43vw, 29.7px);
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #34312e;
-  background: none;
-  border: none;
-  cursor: pointer;
   z-index: 1000;
-  letter-spacing: 0.0em;
+  width: 35px; /* Adjust size as needed */
+  height: auto;
   transition: opacity 0.3s ease;
 }
 
-.projects-button:hover {
+.nav-arrow:hover {
   opacity: 0.6;
+}
+
+.nav-arrow img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.left-arrow {
+  left: 15px;
+}
+
+.right-arrow {
+  right: 15px;
 }
 
 /* Cursor label */

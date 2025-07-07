@@ -45,12 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Small delay before starting subtitles
         setTimeout(showNextParagraph, 250);
     }
-});
 
-// --- END INTRO OVERLAY SETUP ---
-
-// --- PROJECT LINK HOVER EFFECT ---
-document.addEventListener('DOMContentLoaded', function() {
+    // --- PROJECT HOVER CLASS ---
     const projectsContainer = document.querySelector('.projects-container');
     if (projectsContainer) {
         projectsContainer.addEventListener('mouseenter', () => {
@@ -59,6 +55,36 @@ document.addEventListener('DOMContentLoaded', function() {
         projectsContainer.addEventListener('mouseleave', () => {
             document.body.classList.remove('project-links-hover');
         });
+    }
+
+    // --- MAIN INITIALIZATION ---
+    if (!aboutToggle || !bioContent) {
+        console.error('Required elements not found!');
+        return;
+    }
+    initializeVideoPool();
+    document.addEventListener('mousemove', () => {
+        Object.values(videoPool).forEach(video => {
+            if (video.paused) {
+                video.play().then(() => {
+                    video.pause();
+                    video.currentTime = 0;
+                }).catch(() => {});
+            }
+        });
+    }, { once: true });
+    setInterval(() => {
+        if (currentActiveVideo && activeProject) {
+            analyzeVideoBrightness(currentActiveVideo, activeProject);
+            updateTextColors(activeProject);
+        }
+    }, 1000);
+});
+
+// Clean up on page unload
+window.addEventListener('beforeunload', function() {
+    if (hideMediaTimeout) {
+        clearTimeout(hideMediaTimeout);
     }
 });
 
@@ -758,40 +784,3 @@ if (resumeDownload) {
 } else {
     console.error('Resume download element not found!');
 }
-
-// Initialize everything on DOM load
-document.addEventListener('DOMContentLoaded', function() {
-    // Make sure elements exist
-    if (!aboutToggle || !bioContent) {
-        console.error('Required elements not found!');
-        return;
-    }
-    // Initialize video pool
-    initializeVideoPool();
-    // Attempt to start videos after user interaction
-    document.addEventListener('mousemove', () => {
-        Object.values(videoPool).forEach(video => {
-            if (video.paused) {
-                video.play().then(() => {
-                    video.pause();
-                    video.currentTime = 0;
-                }).catch(() => {});
-            }
-        });
-    }, { once: true });
-    // Periodically re-analyze brightness for playing videos
-    setInterval(() => {
-        if (currentActiveVideo && activeProject) {
-            analyzeVideoBrightness(currentActiveVideo, activeProject);
-            updateTextColors(activeProject);
-        }
-    }, 1000);
-
-});
-
-// Clean up on page unload
-window.addEventListener('beforeunload', function() {
-    if (hideMediaTimeout) {
-        clearTimeout(hideMediaTimeout);
-    }
-});
