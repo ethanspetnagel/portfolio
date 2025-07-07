@@ -14,12 +14,12 @@
 /* Selection color */
 ::selection {
   background-color: #daff00; 
-  color: #023bc9; 
+  color: #ff50de; 
 }
 
 ::-moz-selection {
   background-color: #daff00;
-  color: #023bc9;
+  color: #ff50de;
 }
 
 body {
@@ -169,7 +169,7 @@ body.title-hover .project-gallery {
   left: calc(36vw - 25px);
   top: 15px;
   font-size: 33.6px;
-  color: #d92020;
+  color: #daff00;
   opacity: 0;
   transition: opacity 0.3s ease, top 0.2s linear;
   pointer-events: none;
@@ -558,13 +558,13 @@ body.title-hover .project-gallery {
 }
 
 .info-toggle:hover {
-  color: #d92020;
+  color: #daff00;
   text-shadow: 0 0 6px rgba(122, 185, 224, 0.3);
   opacity: 1;
 }
 
 .info-toggle.active {
-  color: #d92020;
+  color: #ff50de;
   opacity: 1;
 }
 
