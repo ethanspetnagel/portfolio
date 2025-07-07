@@ -275,7 +275,8 @@ class FontFlip {
         this.fonts = [
             'EB Garamond, serif', // Use the loaded web font
             'UnifrakturCook, cursive',
-            'fantasy',
+            'Impact, sans-serif',
+            'Courier New, monospace',
         ];
         this.originalFont = window.getComputedStyle(el).fontFamily;
         this._timeout = null;
