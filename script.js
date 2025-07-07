@@ -691,12 +691,11 @@ bioLinks.forEach(link => {
     });
 });
 
-// Resume FontFlip - ROBUST VERSION WITH DEBUGGING
+// Resume FontFlip - ROBUST VERSION
 const resumeDownload = document.getElementById('resumeDownload');
 if (resumeDownload) {
-    console.log('Resume button found successfully');
     const resumeFlip = new FontFlip(resumeDownload);
-    let downloadInProgress = false;
+    let isDownloading = false;
 
     // Helper to set button text without animation
     function setResumeButtonText(text) {
@@ -708,93 +707,39 @@ if (resumeDownload) {
             span.style.fontFamily = resumeFlip.originalFont;
             resumeDownload.appendChild(span);
         }
-        console.log('Resume text set to:', text);
     }
 
-    // Reset function to ensure clean state
-    function resetResumeButton() {
-        downloadInProgress = false;
-        resumeFlip.stop();
-        setResumeButtonText('RESUME');
-        console.log('Resume button reset');
-    }
+    // Set initial text
+    setResumeButtonText('RESUME');
 
-    // On hover, animate and download - completes regardless of mouse position
-    resumeDownload.addEventListener('mouseenter', function() {
-        console.log('Resume mouseenter triggered. downloadInProgress:', downloadInProgress, 'isAnimating:', resumeFlip._isAnimating);
-        
-        if (downloadInProgress || resumeFlip._isAnimating) {
-            console.log('Download blocked - already in progress or animating');
-            return;
+    resumeDownload.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default link action
+
+        if (isDownloading || resumeFlip._isAnimating) {
+            return; // Don't do anything if already processing
         }
-        
-        downloadInProgress = true;
-        console.log('Starting resume animation and download');
-        
-        resumeFlip.setText('DOWNLOAD', function animationDone() {
-            console.log('Animation completed, triggering download');
-            
-            // Trigger download after animation completes
-            try {
-                const link = document.createElement('a');
-                link.href = './EthanSpetnagel2025.pdf';
-                link.download = 'EthanSpetnagel2025.pdf';
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                console.log('Download triggered successfully');
-                
-                // Reset after download
-                setTimeout(() => {
-                    resetResumeButton();
-                }, 500);
-                
-            } catch (error) {
-                console.error('Error during download:', error);
-                resetResumeButton();
-            }
+
+        isDownloading = true;
+
+        // Animate the text to "DOWNLOAD"
+        resumeFlip.setText('DOWNLOAD', function onAnimationComplete() {
+            // Create a temporary link to trigger the download
+            const link = document.createElement('a');
+            link.href = './EthanSpetnagel2025.pdf';
+            link.download = 'EthanSpetnagel2025.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Reset the button back to "RESUME" after a short delay
+            setTimeout(() => {
+                setResumeButtonText('RESUME');
+                isDownloading = false;
+            }, 1000);
         });
     });
-
-    // No interruption on mouseleave - let the process complete
-    resumeDownload.addEventListener('mouseleave', function() {
-        console.log('Resume mouseleave - no action taken');
-        // Do nothing - let animation and download complete
-    });
-
-    // Emergency reset on double-click (for debugging)
-    resumeDownload.addEventListener('dblclick', function() {
-        console.log('Double-click detected - force reset');
-        resetResumeButton();
-    });
-
-    // Set initial text on page load
-    setResumeButtonText('RESUME');
-    
-    // Force reset after 5 seconds if stuck (failsafe)
-    setInterval(() => {
-        if (downloadInProgress) {
-            console.log('Checking download progress... still in progress after interval');
-            // Reset if stuck for too long
-            setTimeout(() => {
-                if (downloadInProgress) {
-                    console.log('Download seems stuck - force reset');
-                    resetResumeButton();
-                }
-            }, 10000); // Reset after 10 seconds if still stuck
-        }
-    }, 5000);
-    
 } else {
-    console.error('Resume download element not found! Check your HTML.');
-    // Try to find it by class name as backup
-    const backupElement = document.querySelector('.resume-download');
-    if (backupElement) {
-        console.log('Found resume element by class name instead');
-    } else {
-        console.error('Resume element not found by ID or class');
-    }
+    console.error('Resume download element not found!');
 }
 
 // Initialize everything on DOM load
@@ -832,73 +777,4 @@ window.addEventListener('beforeunload', function() {
     if (hideMediaTimeout) {
         clearTimeout(hideMediaTimeout);
     }
-});
-
-// Add this ADDITIONAL debugging code to the end of your JavaScript file
-// (This goes after your existing resume button code)
-
-// Additional debugging for resume button positioning and visibility
-document.addEventListener('DOMContentLoaded', function() {
-    // Give the page a moment to fully render
-    setTimeout(() => {
-        const resumeElement = document.getElementById('resumeDownload');
-        if (resumeElement) {
-            // Log element properties
-            const rect = resumeElement.getBoundingClientRect();
-            const styles = window.getComputedStyle(resumeElement);
-            
-            console.log('=== RESUME BUTTON DEBUG ===');
-            console.log('Element found:', resumeElement);
-            console.log('Position:', {
-                top: rect.top,
-                left: rect.left,
-                width: rect.width,
-                height: rect.height,
-                bottom: rect.bottom,
-                right: rect.right
-            });
-            console.log('CSS Properties:', {
-                display: styles.display,
-                visibility: styles.visibility,
-                opacity: styles.opacity,
-                pointerEvents: styles.pointerEvents,
-                zIndex: styles.zIndex,
-                position: styles.position,
-                fontSize: styles.fontSize
-            });
-            
-            // Test if element is actually visible in viewport 
-            const isVisible = rect.width > 0 && rect.height > 0 && 
-                             rect.top >= 0 && rect.left >= 0 && 
-                             rect.bottom <= window.innerHeight && 
-                             rect.right <= window.innerWidth;
-            console.log('Is in viewport:', isVisible);
-            console.log('Window size:', {width: window.innerWidth, height: window.innerHeight});
-            
-            // Add a test click listener to see if ANY events work
-            resumeElement.addEventListener('click', function() {
-                console.log('CLICK EVENT WORKS!');
-                alert('Click detected - so the element IS interactable');
-            });
-            
-            // Test mouseover (sometimes works when mouseenter doesn't)
-            resumeElement.addEventListener('mouseover', function() {
-                console.log('MOUSEOVER EVENT WORKS!');
-            });
-            
-            // Log any elements that might be covering it
-            const elementsAtPosition = document.elementsFromPoint(rect.right - 10, rect.bottom - 10);
-            console.log('Elements at resume position:', elementsAtPosition);
-            
-            // Test if the element is actually at the expected position
-            const testX = rect.left + rect.width / 2;
-            const testY = rect.top + rect.height / 2;
-            const elementAtCenter = document.elementFromPoint(testX, testY);
-            console.log('Element at center of resume button:', elementAtCenter);
-            console.log('Is it the resume button?', elementAtCenter === resumeElement);
-            
-        } else {
-            console.error('Resume element still not found in additional debug');
-        }
-    }, 1000); // Wait 1 second for page to fully load
 });
