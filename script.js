@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (introOverlay && introText) {
+        // Make sure the overlay is visible at the start
+        introOverlay.style.display = 'flex';
+        introOverlay.classList.remove('hidden');
+
         const introFlip = new FontFlip(introText);
         introFlip.setText('ETHAN SPETNAGEL', () => {
             startSubtitleAnimation(introOverlay, introText);
