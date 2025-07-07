@@ -238,7 +238,7 @@ body.june-hover .resume-download {
 
 /* Date text when project is active - always black */
 .date-text.project-active {
-  color: #ffffff !important; /* Always black */
+  color: #d92020 !important; /* Always black */
 }
 
 /* Bio Section */
@@ -538,7 +538,7 @@ body.project-hovering.video-light .bio-text a:hover {
   font-size: clamp(20px, 5vw, 60px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: #e81717;
+  color: #34312e;
   text-align: center;
   line-height: 1;
   user-select: none;
