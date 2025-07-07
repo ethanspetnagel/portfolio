@@ -165,7 +165,7 @@ body.title-hover .project-gallery {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 0 0px 40px 10px; /* Reduced right padding from 40px */
+  padding: 0 0px 40px 15px; /* Reduced right padding from 40px */
   scrollbar-width: thin;
   scrollbar-color: #d92020 #d9d9d9;
   background: #d9d9d9;
@@ -363,7 +363,7 @@ body.title-hover .project-gallery {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 15px 0px 0px 30px; /* Reduced left padding from 60px */
+  padding: 15px 0px 0px 0px; /* Reduced left padding from 60px */
   background-color: #d9d9d9;
   scrollbar-width: thin;
   scrollbar-color: #d92020 #d9d9d9;
