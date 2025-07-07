@@ -132,7 +132,7 @@ body.title-hover .project-gallery {
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   text-transform: uppercase;
-  color: #34312e;
+  color: #d92020;
   opacity: 0;
   transition: opacity 0.3s ease;
   white-space: nowrap;
@@ -149,14 +149,14 @@ body.title-hover .project-gallery {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
-  mix-blend-mode: difference;
-  color: #ffffff !important;
+  color: #d92020 !important;
   z-index: 999;
-  display: none !important;
+  display: none;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
   letter-spacing: 0.0em;
   text-shadow: none !important;
+  mix-blend-mode: normal;
 }
 
 /* Main page layout */
@@ -444,6 +444,7 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  cursor: pointer;
 }
 
 /* Slideshow Controls */

@@ -316,54 +316,91 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- SLIDESHOW NAVIGATION ---
+    // --- SLIDESHOW NAVIGATION (like church.js) ---
     document.querySelectorAll('.slideshow-zone').forEach(zone => {
         const slides = zone.querySelectorAll('.slide');
-        if (slides.length <= 1) return;
+        if (slides.length === 0) return;
 
         let currentIndex = 0;
 
-        // Create controls
-        const controls = document.createElement('div');
-        controls.className = 'slideshow-controls';
-        const prevButton = document.createElement('div');
-        prevButton.className = 'prev-button';
-        const nextButton = document.createElement('div');
-        nextButton.className = 'next-button';
-        
-        controls.appendChild(prevButton);
-        controls.appendChild(nextButton);
-        zone.appendChild(controls);
-
-        const updateSlides = () => {
-            slides.forEach((slide, index) => {
-                slide.classList.toggle('current', index === currentIndex);
+        const showSlide = (index) => {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('current', i === index);
+                const video = slide.querySelector('video');
+                if (video && i !== index) {
+                    video.pause();
+                }
             });
+            const currentVideo = slides[index].querySelector('video');
+            if (currentVideo) {
+                currentVideo.play().catch(() => {});
+            }
         };
 
-        nextButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentIndex = (currentIndex + 1) % slides.length;
-            updateSlides();
-        });
-
-        prevButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-            updateSlides();
-        });
-
-        // Handle video play/pause
         zone.addEventListener('click', (e) => {
-            const video = slides[currentIndex].querySelector('video');
-            if (video) {
-                if (video.paused) {
-                    video.play();
+            if (e.target.classList.contains('info-toggle')) return;
+            e.stopPropagation();
+
+            const mediaRect = zone.querySelector('.slide.current')?.getBoundingClientRect();
+            if (!mediaRect) return;
+
+            const midpoint = mediaRect.left + (mediaRect.width / 2);
+            const currentVideo = slides[currentIndex].querySelector('video');
+
+            if (slides.length > 1) {
+                if (e.clientX > midpoint) {
+                    currentIndex = (currentIndex + 1) % slides.length;
                 } else {
-                    video.pause();
+                    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                }
+                showSlide(currentIndex);
+            } else if (currentVideo) {
+                if (currentVideo.paused) {
+                    currentVideo.play();
+                } else {
+                    currentVideo.pause();
                 }
             }
         });
+
+        zone.addEventListener('mousemove', (e) => {
+            const mediaRect = zone.querySelector('.slide.current')?.getBoundingClientRect();
+            if (!mediaRect || !cursorLabel) return;
+
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            if (mouseX >= mediaRect.left && mouseX <= mediaRect.right && mouseY >= mediaRect.top && mouseY <= mediaRect.bottom) {
+                const midpoint = mediaRect.left + (mediaRect.width / 2);
+                const currentVideo = slides[currentIndex].querySelector('video');
+                let label = '';
+
+                if (slides.length > 1) {
+                    label = mouseX > midpoint ? 'NEXT' : 'BACK';
+                } else if (currentVideo) {
+                    label = currentVideo.paused ? 'PLAY' : 'PAUSE';
+                }
+
+                if (label) {
+                    cursorLabel.textContent = label;
+                    cursorLabel.style.display = 'block';
+                    cursorLabel.style.left = `${e.clientX}px`;
+                    cursorLabel.style.top = `${e.clientY}px`;
+                } else {
+                    cursorLabel.style.display = 'none';
+                }
+            } else {
+                cursorLabel.style.display = 'none';
+            }
+        });
+
+        zone.addEventListener('mouseleave', () => {
+            if (cursorLabel) {
+                cursorLabel.style.display = 'none';
+            }
+        });
+
+        showSlide(0); // Initialize first slide
     });
 
     // --- INFO TOGGLE FOR PROJECT DETAILS ---
