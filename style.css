@@ -183,7 +183,7 @@ body.page-navigating * {
 /* Make date text red and opaque when hovering over any project link */
 .projects-container:hover ~ .website-info .date-text {
   opacity: 1;
-  color: #4da62f !important;
+  color: #7ab9e0 !important;
   text-shadow: none;
 }
 
@@ -216,14 +216,14 @@ body.page-navigating * {
 
 /* Date text hover - keep default color */
 .date-text:hover {
-  color: #4da62f !important;
+  color: #7ab9e0 !important;
   opacity: 1;
   text-shadow: none;
 }
 
 /* Special class for black background effect */
 body.june-hover {
-  background-color: #4da62f;
+  background-color: #7ab9e0;
   transition: background-color 0.3s ease;
 }
 
@@ -244,7 +244,7 @@ body.june-hover .resume-download {
 
 /* Date text when project is active - always black */
 .date-text.project-active {
-  color: #4da62f !important; /* Always black */
+  color: #7ab9e0 !important; /* Always black */
 }
 
 /* Bio Section */
