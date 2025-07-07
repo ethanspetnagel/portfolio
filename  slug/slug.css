@@ -481,7 +481,7 @@ body.title-hover .project-gallery {
   
   /* Large sizes */
   --size-l: 60vw;        /* Large */
-  --size-xl: 78vw;
+  --size-xl: 68vw;
   --size-xxl: 88vw;       /* Extra large */
   --size-full: 100vw;    /* Full width */
 }
