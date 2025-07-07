@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setupArrowHover(homeLink, 'HOME');
-    setupArrowHover(churchLink, 'NEXT PROJECT');
+    setupArrowHover(churchLink, 'NEXT');
 
     // --- NAVIGATION ARROW ANIMATION ---
     if (homeLink && homeLabel) {

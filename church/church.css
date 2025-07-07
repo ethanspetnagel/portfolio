@@ -13,13 +13,13 @@
 
 /* Selection color */
 ::selection {
-  background-color: #daff00; 
-  color: #023bc9; 
+  background-color: none;
+  color: #ffffff;
 }
 
 ::-moz-selection {
-  background-color: #daff00;
-  color: #023bc9;
+  background-color: none;
+  color: #ffffff;
 }
 
 body {
@@ -123,13 +123,13 @@ body.title-hover .project-gallery {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
   font-size: clamp(10.8px, 2.43vw, 29.7px);
-  mix-blend-mode: difference;
-  color: #ffffff !important;
+  color: #d92020 !important;
+  mix-blend-mode: normal;
   z-index: 999;
   display: none;
   transform: translate(-50%, -150%);
   text-transform: uppercase;
-  letter-spacing: 0.0em;
+  letter-spacing: 0;
   text-shadow: none !important;
 }
 
@@ -156,11 +156,17 @@ body.title-hover .project-gallery {
   scrollbar-width: none;
   background: #d9d9d9;
   position: relative;
+  scrollbar-color: #d92020 #d9d9d9;
 }
 
 .essay-sidebar::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
+  width: 3px;
+  background: #d9d9d9;
+}
+
+.essay-sidebar::-webkit-scrollbar-thumb {
+  background-color: #d92020;
+  border-radius: 4px;
 }
 
 /* Star scrollbar indicator */
@@ -206,6 +212,10 @@ body.title-hover .project-gallery {
 .site-title a {
   color: inherit;
   text-decoration: none;
+}
+
+.site-title a[href*="church.html"] {
+  color: #d92020;
 }
 
 /* UPDATED NEURAL TABS */
@@ -349,16 +359,7 @@ body.title-hover .project-gallery {
 }
 
 .project-gallery::-webkit-scrollbar {
-  width: 20px;
-  background: transparent;
-}
-
-.project-gallery::-webkit-scrollbar-thumb {
-  background: transparent;
-}
-
-.project-gallery::-webkit-scrollbar-track {
-  background: transparent;
+  display: none;
 }
 
 /* Gallery star scrollbar */
@@ -414,6 +415,52 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  cursor: pointer;
+}
+
+.slideshow-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 10;
+}
+
+.prev-button,
+.next-button {
+  width: 50%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+}
+
+.prev-button::after,
+.next-button::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #d92020;
+}
+
+.prev-button::after {
+  content: '<';
+  left: 15px;
+}
+
+.next-button::after {
+  content: '>';
+  right: 15px;
+}
+
+.slideshow-zone:hover .prev-button::after,
+.slideshow-zone:hover .next-button::after {
+  opacity: 1;
 }
 
 /* ============================================
@@ -426,22 +473,28 @@ body.title-hover .project-gallery {
 
 /* SIZE PRESETS - Edit these values to change image/video sizes */
 :root {
-  /* Small sizes */
-  --size-xs: 19.25vw;    /* Extra small */
-  --size-s: 27vw;        /* Small */
+  /* Extra small sizes */
+  --size-xxs: 10.25vw;    /* Extra extra small */
+  --size-xs: 19.25vw;     /* Extra small */
+  --size-s: 27vw;         /* Small */
   
   /* Medium sizes */
-  --size-m: 35.75vw;     /* Medium */
-  --size-default: 43vw;  /* Default/Standard */
+  --size-m: 35.75vw;      /* Medium */
+  --size-default: 43vw;   /* Default/Standard */
   
   /* Large sizes */
-  --size-l: 60vw;        /* Large */
-  --size-xl: 78vw;       /* Extra large */
-  --size-xl: 98vw;       /* Extra large */
-  --size-full: 100vw;    /* Full width */
+  --size-l: 60vw;         /* Large */
+  --size-xl: 78vw;        /* Extra large */
+  --size-xxl: 88vw;       /* Extra extra large */
+  --size-full: 100vw;     /* Full width */
 }
 
 /* Apply sizes using data attributes */
+[data-size="xxs"] .slideshow-zone {
+  width: var(--size-xxs);
+  max-width: calc(var(--size-xxs) * 2.2);
+}
+
 [data-size="xs"] .slideshow-zone {
   width: var(--size-xs);
   max-width: calc(var(--size-xs) * 2.2);
@@ -472,8 +525,9 @@ body.title-hover .project-gallery {
   width: var(--size-xl);
   max-width: calc(var(--size-xl) * 2.2);
 }
-[data-size="xl"] .slideshow-zone {
-  width: var(--size-xl);
+
+[data-size="xxl"] .slideshow-zone {
+  width: var(--size-xxl);
   max-width: calc(var(--size-xxl) * 2.2);
 }
 
@@ -563,13 +617,13 @@ body.title-hover .project-gallery {
 }
 
 .info-toggle:hover {
-  color: #34312e;
+  color: #daff00;
   text-shadow: 0 0 6px rgba(122, 185, 224, 0.3);
   opacity: 1;
 }
 
 .info-toggle.active {
-  color: #34312e;
+  color: #d92020;
   opacity: 1;
 }
 
@@ -630,6 +684,40 @@ ul.interactive-text {
 
 ul.interactive-text li {
   margin-bottom: 5px;
+}
+
+/* Corner Navigation Arrows */
+.nav-arrow {
+  position: fixed;
+  bottom: 15px;
+  z-index: 1000;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.nav-arrow img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.3s ease;
+  filter: invert(19%) sepia(83%) saturate(4033%) hue-rotate(346deg)
+          brightness(89%) contrast(94%); /* #d92020 */
+}
+
+.nav-arrow:hover img {
+  opacity: 1;
+}
+
+.left-arrow {
+  left: 15px;
+}
+
+.right-arrow {
+  right: 15px;
+  flex-direction: row-reverse;
 }
 
 /* Responsive styles */
