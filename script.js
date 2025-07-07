@@ -19,17 +19,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
-            "UX DESIGNER + WEB DESIGNER", "Design Manager \n — Church California\n \nUX Designer \n— Talamel Health",
+            "UX DESIGNER + WEB DESIGNER",
+            "Design Manager<br><span style='font-size: 0.5em; line-height: 1;'>Church California</span><br><br>UX Designer<br><span style='font-size: 0.5em; line-height: 1;'>Talamel Health</span>",
             "based in Queens, NY",
         ];
         let paragraphIndex = 0;
 
         function showNextParagraph() {
             if (paragraphIndex < paragraphs.length) {
-                textElement.textContent = paragraphs[paragraphIndex];
+                // Use innerHTML to render the styled text
+                textElement.innerHTML = paragraphs[paragraphIndex];
                 textElement.style.color = '#d92020'; // Set subtitle color to match project links
                 
-                // Set custom delay: 2s for the second subtitle, 1.7s for others
+                // Set custom delay: 3s for the second subtitle, 1.7s for others
                 const delay = (paragraphIndex === 1) ? 3000 : 1700;
 
                 paragraphIndex++;
