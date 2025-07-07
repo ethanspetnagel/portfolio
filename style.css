@@ -38,12 +38,12 @@
 /* Selection Highlight Colors - Modern Blue Shades */
 ::selection {
   background-color: #daff00; /* Dark blue background */
-  color: hsl(300, 100%, 76%); /* Light blue text */
+  color: #ffb6ec; /* Light blue text */
 }
 
 ::-moz-selection {
   background-color: #daff00; /* Dark blue background */
-  color: #ff1818; /* Light blue text */
+  color: #ffb6ec; /* Light blue text */
 }
 
 /* For specific elements if needed */
@@ -60,8 +60,8 @@ html, body {
 }
 
 body {
-  background-color: #eeeeee; /* Changed to requested color */
-  color: #222324;
+  background-color: #d2d4db; /* Changed to requested color */
+  color: #353c50;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
 }
@@ -107,6 +107,7 @@ body.page-navigating * {
   opacity: 0;
   transform: translate(-50%, -50%); /* Center the video */
   transition: opacity 0.3s ease;
+  border-radius: 5px;
 }
 
 .fullscreen-bg video.active {
@@ -159,9 +160,9 @@ body.page-navigating * {
 
 /* Apply the emboss effect ONLY to the non-hovered links */
 .projects-container.hovering .project-link:not(:hover) {
-  color: #eeeeee; /* Match background color for bevel effect */
+  color: #d2d4db; /* Match background color for bevel effect */
   text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(53, 60, 80, 0.25);
-  opacity: 0.4;
+  opacity: 0.5;
 }
 
 /* Ensure the hovered link is fully opaque and has the correct color */
@@ -465,6 +466,7 @@ body.project-hovering.video-light .bio-text a:hover {
   max-height: 80vh; /* Fit within 80% of viewport height */
   height: auto;
   width: auto;
+  border-radius: 5px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -540,7 +542,7 @@ body.project-hovering.video-light .bio-text a:hover {
 #introText {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
-  font-size: clamp(21.6px, 4.86vw, 59.4px);
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: #353c50;
