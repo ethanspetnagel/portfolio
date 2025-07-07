@@ -253,6 +253,7 @@ body.june-hover .resume-download {
   bottom: 5px; /* Set to 5px */
   left: 20px;
   max-width: 400px;
+  line-height: 1.2;
   z-index: 15;
 }
 
