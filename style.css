@@ -183,7 +183,7 @@ body.page-navigating * {
 /* Make date text red and opaque when hovering over any project link */
 .projects-container:hover ~ .website-info .date-text {
   opacity: 1;
-  color: #7ab9e0 !important;
+  color: #d92020 !important;
   text-shadow: none;
 }
 
@@ -216,14 +216,14 @@ body.page-navigating * {
 
 /* Date text hover - keep default color */
 .date-text:hover {
-  color: #7ab9e0 !important;
+  color: #d92020 !important;
   opacity: 1;
   text-shadow: none;
 }
 
 /* Special class for black background effect */
 body.june-hover {
-  background-color: #7ab9e0;
+  background-color: #d92020;
   transition: background-color 0.3s ease;
 }
 
@@ -244,7 +244,7 @@ body.june-hover .resume-download {
 
 /* Date text when project is active - always black */
 .date-text.project-active {
-  color: #7ab9e0 !important; /* Always black */
+  color: #d92020 !important; /* Always black */
 }
 
 /* Bio Section */
@@ -396,7 +396,7 @@ body.project-hovering.video-light .bio-text a:hover {
 }
 
 .contact-links a:hover {
-  color: #34312e !important;
+  color: #d92020 !important;
   text-decoration: none !important;
   transform: translateY(2px);
 }
@@ -669,7 +669,7 @@ body.transitioning {
   }
   
   .contact-links a:hover {
-    color: #7ab9e0  !important;
+    color: #d92020  !important;
     text-decoration: none !important;
   }
   
