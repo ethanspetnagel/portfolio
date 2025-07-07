@@ -515,11 +515,16 @@ body.title-hover .project-gallery {
   
   /* Large sizes */
   --size-l: 60vw;        /* Large */
-  --size-xl: 78vw;       /* Extra large */
+  --size-xl: 78vw;
+  --size-xxl: 88vw;       /* Extra large */
   --size-full: 100vw;    /* Full width */
 }
 
 /* Apply sizes using data attributes */
+[data-size="xxs"] .slideshow-zone {
+  width: var(--size-xs);
+  max-width: calc(var(--size-xs) * 2.2);
+}
 [data-size="xs"] .slideshow-zone {
   width: var(--size-xs);
   max-width: calc(var(--size-xs) * 2.2);
@@ -547,6 +552,11 @@ body.title-hover .project-gallery {
 }
 
 [data-size="xl"] .slideshow-zone {
+  width: var(--size-xl);
+  max-width: calc(var(--size-xl) * 2.2);
+}
+
+[data-size="xxl"] .slideshow-zone {
   width: var(--size-xl);
   max-width: calc(var(--size-xl) * 2.2);
 }
