@@ -693,13 +693,11 @@ bioLinks.forEach(link => {
     });
 });
 
-// Resume FontFlip - Hover-to-Download Version
+// Resume FontFlip - Simplified Hover-to-Download Version
 const resumeDownload = document.getElementById('resumeDownload');
 if (resumeDownload) {
     const resumeFlip = new FontFlip(resumeDownload);
-    let isHoveringResume = false;
     let isDownloading = false;
-    let downloadTimeout = null;
 
     // Helper to set button text without animation
     function setResumeButtonText(text) {
@@ -717,54 +715,31 @@ if (resumeDownload) {
     setResumeButtonText('RESUME');
 
     resumeDownload.addEventListener('mouseenter', function() {
-        if (isDownloading || resumeFlip._isAnimating) return;
+        // If a download is already in progress or animating, do nothing.
+        if (isDownloading || resumeFlip._isAnimating) {
+            return;
+        }
 
-        isHoveringResume = true;
+        isDownloading = true;
 
+        // Animate the text to "DOWNLOAD"
         resumeFlip.setText('DOWNLOAD', function onAnimationComplete() {
-            // If the user is still hovering after the animation, start the download timer.
-            if (isHoveringResume) {
-                downloadTimeout = setTimeout(() => {
-                    if (isHoveringResume && !isDownloading) {
-                        isDownloading = true;
+            // Create a temporary link to trigger the download
+            const link = document.createElement('a');
+            link.href = './EthanSpetnagel2025.pdf';
+            link.download = 'EthanSpetnagel2025.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
-                        // Create a temporary link to trigger the download
-                        const link = document.createElement('a');
-                        link.href = './EthanSpetnagel2025.pdf';
-                        link.download = 'EthanSpetnagel2025.pdf';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        // Reset after a delay
-                        setTimeout(() => {
-                            isDownloading = false;
-                            // If the user is no longer hovering, reset the text
-                            if (!isHoveringResume) {
-                                setResumeButtonText('RESUME');
-                            }
-                        }, 1000);
-                    }
-                }, 500); // 0.5-second delay before download starts
-            }
+            // Reset the button back to "RESUME" after a short delay
+            setTimeout(() => {
+                resumeFlip.setText('RESUME', () => {
+                    setResumeButtonText('RESUME');
+                    isDownloading = false; // Allow another download
+                });
+            }, 1500); // Wait 1.5 seconds before resetting
         });
-    });
-
-    resumeDownload.addEventListener('mouseleave', function() {
-        isHoveringResume = false;
-
-        // Clear the download timer if the user mouses out
-        if (downloadTimeout) {
-            clearTimeout(downloadTimeout);
-            downloadTimeout = null;
-        }
-
-        // If not in the middle of downloading or animating, reset the text
-        if (!isDownloading && !resumeFlip._isAnimating) {
-             resumeFlip.setText('RESUME', () => {
-                setResumeButtonText('RESUME');
-             });
-        }
     });
 
 } else {

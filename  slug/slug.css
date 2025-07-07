@@ -13,13 +13,13 @@
 
 /* Selection color */
 ::selection {
-  background-color: #daff00; 
-  color: #ff50de; 
+  background-color:none; 
+  color: #ffffff; 
 }
 
 ::-moz-selection {
-  background-color: #daff00;
-  color: #ff50de;
+  background-color: none;
+  color: #ffffff;
 }
 
 body {
