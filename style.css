@@ -37,12 +37,12 @@
 
 /* Selection Highlight Colors - Modern Blue Shades */
 ::selection {
-  background-color: #d9d9d9; /* Dark blue background */
+  background-color: none; /* Dark blue background */
   color: #ff50de; /* Light blue text */
 }
 
 ::-moz-selection {
-  background-color: #d9d9d9; /* Dark blue background */
+  background-color: none; /* Dark blue background */
   color: #ff50de; /* Light blue text */
 }
 
@@ -51,7 +51,7 @@
 .bio-text::selection,
 .about-toggle::selection,
 .date-text::selection {
-  background-color: #d9d9d9;
+  background-color: none;
   color: #ff50de;
 }
 
