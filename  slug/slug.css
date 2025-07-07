@@ -814,44 +814,6 @@ ul.interactive-text li {
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
   }
-  .floating-logo {
-    width: 60px;
-    height: 18px;
-    right: 45px;
-  }
+  
 }
 
-/* Page transition state */
-body.from-transition .page > * {
-  animation: none;
-}
-#products-reel-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* Place it behind other content */
-}
-
-#products-reel-container .slideshow-zone,
-#products-reel-container .slide,
-#products-reel-container video {
-  width: 100%;
-  height: 100%;
-}
-
-#products-reel-container video {
-  object-fit: cover; /* Ensures the video covers the area */
-}
-
-#products-reel-container .caption,
-#products-reel-container .info-toggle,
-#products-reel-container .info-panel {
-  display: none; /* Hide captions for the background video */
-}
-
-.project-gallery::-webkit-scrollbar {
-  width: 20px;
-  background: transparent;
-}

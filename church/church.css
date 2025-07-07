@@ -437,6 +437,7 @@ body.title-hover .project-gallery {
   /* Large sizes */
   --size-l: 60vw;        /* Large */
   --size-xl: 78vw;       /* Extra large */
+  --size-xl: 98vw;       /* Extra large */
   --size-full: 100vw;    /* Full width */
 }
 
@@ -470,6 +471,10 @@ body.title-hover .project-gallery {
 [data-size="xl"] .slideshow-zone {
   width: var(--size-xl);
   max-width: calc(var(--size-xl) * 2.2);
+}
+[data-size="xl"] .slideshow-zone {
+  width: var(--size-xl);
+  max-width: calc(var(--size-xxl) * 2.2);
 }
 
 [data-size="full"] .slideshow-zone {
