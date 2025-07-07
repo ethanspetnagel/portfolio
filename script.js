@@ -492,48 +492,50 @@ class TextPartingEffect {
 const textParting = new TextPartingEffect();
 textParting.init();
 
-// --- ABOUT/HIDE BUTTON HOVER LOGIC ---
-const aboutFlip = new FontFlip(aboutToggle);
-let isAboutOpen = false;
+// --- ABOUT/HIDE BUTTON CLICK LOGIC ---
+if (aboutToggle && bioContent) {
+    const aboutFlip = new FontFlip(aboutToggle);
 
-// Helper to set button text without animation and update animator's state
-function setAboutButtonText(label) {
-    aboutFlip.text = label; // Keep the animator's internal text in sync
-    aboutToggle.innerHTML = '';
-    for (let i = 0; i < label.length; i++) {
-        const span = document.createElement('span');
-        span.textContent = label[i];
-        span.style.display = 'inline-block';
-        span.style.fontFamily = aboutFlip.originalFont;
-        aboutToggle.appendChild(span);
+    // Helper to set button text without animation
+    function setAboutButtonText(label) {
+        aboutToggle.innerHTML = ''; // Clear existing content
+        for (let i = 0; i < label.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = label[i];
+            span.style.display = 'inline-block';
+            span.style.fontFamily = aboutFlip.originalFont;
+            aboutToggle.appendChild(span);
+        }
     }
+
+    // Set the initial state of the button
+    setAboutButtonText('ABOUT');
+
+    aboutToggle.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent default link behavior
+
+        // Don't do anything if an animation is already running
+        if (aboutFlip._isAnimating) {
+            return;
+        }
+
+        const isActive = bioContent.classList.contains('active');
+
+        if (isActive) {
+            // If it's open, hide the content and animate the button to "ABOUT"
+            bioContent.classList.remove('active');
+            aboutFlip.setText('HIDE', () => {
+                setAboutButtonText('ABOUT');
+            });
+        } else {
+            // If it's closed, show the content and animate the button to "HIDE"
+            bioContent.classList.add('active');
+            aboutFlip.setText('ABOUT', () => {
+                setAboutButtonText('HIDE');
+            });
+        }
+    });
 }
-
-// Set initial text
-setAboutButtonText('ABOUT');
-
-// On hover, animate "ABOUT" then show the bio
-bioSection.addEventListener('mouseenter', () => {
-    if (isAboutOpen || aboutFlip._isAnimating) return;
-
-    aboutFlip.setText('ABOUT', () => {
-        bioContent.classList.add('active');
-        setAboutButtonText('HIDE');
-        isAboutOpen = true;
-    });
-});
-
-// On mouse leave, hide the bio then animate "HIDE"
-bioSection.addEventListener('mouseleave', () => {
-    if (!isAboutOpen || aboutFlip._isAnimating) return;
-
-    bioContent.classList.remove('active');
-    isAboutOpen = false;
-
-    aboutFlip.setText('HIDE', () => {
-        setAboutButtonText('ABOUT');
-    });
-});
 
 // Project hover handling
 function handleProjectHover(link, isEntering) {
