@@ -505,6 +505,7 @@ body.title-hover .project-gallery {
 /* SIZE PRESETS - Edit these values to change image/video sizes */
 :root {
   /* Small sizes */
+  --size-xxs: 10.25vw;   
   --size-xs: 19.25vw;    /* Extra small */
   --size-s: 27vw;        /* Small */
   
