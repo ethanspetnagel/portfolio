@@ -558,13 +558,13 @@ body.title-hover .project-gallery {
 }
 
 .info-toggle:hover {
-  color: #34312e;
+  color: #d92020;
   text-shadow: 0 0 6px rgba(122, 185, 224, 0.3);
   opacity: 1;
 }
 
 .info-toggle.active {
-  color: #34312e;
+  color: #d92020;
   opacity: 1;
 }
 
