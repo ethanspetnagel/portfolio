@@ -87,9 +87,16 @@
       </div>
     </aside>
     <!-- RIGHT IMAGE COLUMN -->
-    <main class="project-gallery">
+    <!-- Set your global size here: xxs, xs, s, m, default, l, xl, xxl, full -->
+    <main class="project-gallery" data-size="default">
+      
       <!-- ABOUT section images -->
-      <section class="project-set active" data-index="0" aria-label="About Projects">
+      <!-- Or override this section to medium: data-size="m" -->
+      <section 
+        class="project-set active" 
+        data-index="0" 
+        data-size="m" 
+        aria-label="About Projects">
         <div class="project-block slideshow-zone">
           <div class="slide current">
             <img src="product1.png" alt="Products on table">
@@ -217,7 +224,11 @@
       </section>
       
       <!-- WORK section (formerly VIDEO) -->
-      <section class="project-set" data-index="1" aria-label="Work Projects">
+      <section 
+        class="project-set" 
+        data-index="1" 
+        data-size="l" 
+        aria-label="Work Projects">
         <!-- Skincare Campaign -->
         <div class="project-block slideshow-zone skincare-campaign">
           <div class="slide current">
@@ -446,7 +457,11 @@
       </section>
       
       <!-- OTHER section -->
-      <section class="project-set" data-index="2" aria-label="Other Projects">
+      <section 
+        class="project-set" 
+        data-index="2" 
+        data-size="l" 
+        aria-label="Other Projects">
         <div class="project-block slideshow-zone">
           <div class="slide current">
             <div style="width: 700px; height: 500px; background: #ffcc00; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #0f0f0f;">Web Placeholder 1</div>
