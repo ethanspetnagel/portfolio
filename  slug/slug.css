@@ -14,7 +14,7 @@
 /* Selection color */
 ::selection {
   background-color: #daff00; /* Dark blue background */
-  color: #023bc9; /* Light blue text */
+  color: #ff1818; /* Light blue text */
 }
 
 ::-moz-selection {
@@ -240,7 +240,7 @@ body.title-hover .corner-logo {
   opacity: 1;
   width: calc(100% + 40px);
   height: 24px;
-  border-color: #353c50;
+  border-color: #33302d;
 }
 
 .essay-tab:hover {
@@ -254,7 +254,7 @@ body.title-hover .corner-logo {
 /* Remove any conflicting styles */
 .essay-tab:hover {
   text-shadow: none !important;
-  color: #4da62f !important;
+  color: #33302d !important;
 }
 
 /* Essay content */
@@ -538,13 +538,13 @@ body.title-hover .corner-logo {
 }
 
 .info-toggle:hover {
-  color: #353c50;
+  color: #33302d;
   text-shadow: 0 0 6px rgba(179, 209, 0, 0.3);
   opacity: 1;
 }
 
 .info-toggle.active {
-  color: #353c50;
+  color: #33302d;
   opacity: 1;
 }
 
@@ -560,7 +560,7 @@ body.title-hover .corner-logo {
   text-transform: none;
   letter-spacing: -0.01em;
   line-height: 1.08;
-  color: #353c50;
+  color: #33302d;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
@@ -697,7 +697,7 @@ ul.interactive-text li {
   .essay-tab,
   .essay-tab.active,
   .essay-tab:hover {
-    color: #353c50 !important;
+    color: #33302d !important;
   }
 }
 
