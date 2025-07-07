@@ -204,7 +204,7 @@ body.title-hover .corner-logo {
 /* UPDATED NEURAL TABS */
 .nav-tabs {
   display: flex;
-  gap: 40px;
+  gap: 50px;
   position: relative;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
@@ -212,9 +212,9 @@ body.title-hover .corner-logo {
   letter-spacing: -0.01em;
   white-space: nowrap;
   padding: 0;
-  margin-left: 5px; /* This will scoot the tabs over */
+  margin-left: 10px; /* This will scoot the tabs over */
 }
-
+ 
 .essay-tab {
   cursor: crosshair;
   color: #353c50;
@@ -632,7 +632,7 @@ ul.interactive-text li {
     left: calc(35vw - 25px); /* Adjusted to match */
   }
   .top-navigation {
-    gap: 20px;
+    gap: 0px;
   }
 }
 
@@ -666,11 +666,11 @@ ul.interactive-text li {
   }
   .top-navigation {
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
     align-items: flex-start;
   }
   .nav-tabs {
-    gap: 20px;
+    gap: 25px;
     margin-bottom: 10px;
     padding: 15px 0;
   }
@@ -679,7 +679,7 @@ ul.interactive-text li {
   }
   .essay-nav {
     font-size: calc(1.3rem - 7px);
-    gap: 20px;
+    gap: 25px;
   }
   .interactive-text {
     font-size: calc(1.3rem - 7px);
