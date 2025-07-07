@@ -175,7 +175,7 @@ body.page-navigating * {
 
 /* Project link hover - Blue color */
 .project-link:hover {
-  color: #FFFFFF !important;
+  color: #396ed8 !important;
   opacity: 1;
   text-shadow: none;
 }
@@ -196,17 +196,23 @@ body.page-navigating * {
   font-weight: bold;
   cursor: crosshair;
   transition: all 0.3s ease;
-  color: #34312e; /* Default medium gray */
+  color: #d9d9d9; /* Default medium gray */
   padding: 0;
   display: inline-block;
   text-transform: uppercase;
   line-height: 1;
   letter-spacing: 0.02em;
+  /* Default Embossed Style */
+  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
+  opacity: 0.5;
+  transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
 }
 
 /* Date text hover - keep default color */
 .date-text:hover {
-  color: #d9d9d9 !important;
+  color: #34312e !important;
+  opacity: 1;
+  text-shadow: none;
 }
 
 /* Special class for black background effect */
@@ -266,11 +272,17 @@ body.june-hover .resume-download {
   line-height: 1;
   padding: 0;
   letter-spacing: 0.02em;
-  color: #d92020; /* Always keep default gray color */
+  /* Default Embossed Style */
+  color: #d9d9d9;
+  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
+  opacity: 0.5;
+  transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
 }
 
 .about-toggle:hover {
   color: #34312e !important; /* White on hover */
+  opacity: 1;
+  text-shadow: none;
 }
 
 /* Bio section elements maintain default colors */
@@ -466,31 +478,26 @@ body.project-hovering.video-light .bio-text a:hover {
 }
 
 /* Resume Download Button */
-/* Debug styles for resume button - add these temporarily */
 .resume-download {
-  position: relative;
-  bottom: 10px !important;
-  right: 20px !important;
-  z-index: 9999 !important; /* Very high z-index */
-  font-size: clamp(10.8px, 2.43vw, 29.7px) !important;
-  font-weight: bold !important;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.02em !important;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: crosshair;
+  user-select: none;
+  line-height: 1;
+  /* Default Embossed Style */
+  color: #d9d9d9;
+  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
+  opacity: 0.5;
+  transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
+}
+
+.resume-download:hover {
   color: #34312e !important;
-  cursor: crosshair !important;
-  user-select: none !important;
-  line-height: 1 !important;
-  pointer-events: auto !important; /* Ensure it's clickable */
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  width: auto !important;
-  height: auto !important;
-  transform: none !important;
-  /* Remove any animations that might interfere */
-  transition: none !important;
-  animation: none !important;
+  opacity: 1;
+  text-shadow: none;
 }
 
 @media (max-width: 768px) {
