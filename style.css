@@ -38,12 +38,12 @@
 /* Selection Highlight Colors - Modern Blue Shades */
 ::selection {
   background-color: #daff00; /* Dark blue background */
-  color: #ffb6ec; /* Light blue text */
+  color: #023bc9; /* Light blue text */
 }
 
 ::-moz-selection {
   background-color: #daff00; /* Dark blue background */
-  color: #ffb6ec; /* Light blue text */
+  color: #023bc9; /* Light blue text */
 }
 
 /* For specific elements if needed */
@@ -60,8 +60,8 @@ html, body {
 }
 
 body {
-  background-color: #d2d4db; /* Changed to requested color */
-  color: #353c50;
+  background-color: #fff3fc; /* Changed to requested color */
+  color: #35232f;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
 }
@@ -154,20 +154,20 @@ body.page-navigating * {
 
 /* Remove the general emboss effect from all links on container hover */
 .projects-container.hovering .project-link {
-  color: #353c50; /* Revert to default color */
+  color: #35232f; /* Revert to default color */
   text-shadow: none; /* Remove text shadow by default */
 }
 
 /* Apply the emboss effect ONLY to the non-hovered links */
 .projects-container.hovering .project-link:not(:hover) {
-  color: #d2d4db; /* Match background color for bevel effect */
-  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(53, 60, 80, 0.25);
+  color: #fff3fc; /* Match background color for bevel effect */
+  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(53, 35, 47, 0.25);
   opacity: 0.5;
 }
 
 /* Ensure the hovered link is fully opaque and has the correct color */
 .projects-container.hovering .project-link:hover {
-  color: #353c50 !important;
+  color: #35232f !important;
   opacity: 1;
 }
 
@@ -176,7 +176,7 @@ body.page-navigating * {
   display: block;
   width: fit-content;
   margin: 0 auto;
-  color: #353c50; /* Default dark gray */
+  color: #35232f; /* Default dark gray */
   text-decoration: none;
   font-size: clamp(32.4px, 7.29vw, 89.1px);
   font-weight: bold;
@@ -191,7 +191,7 @@ body.page-navigating * {
 
 /* Project link hover - BLACK */
 .project-link:hover {
-  color: #353c50 !important; 
+  color: #35232f !important; 
 }
 
 /* Website Info */
@@ -210,7 +210,7 @@ body.page-navigating * {
   font-weight: bold;
   cursor: crosshair;
   transition: all 0.3s ease;
-  color: #353c50; /* Default medium gray */
+  color: #35232f; /* Default medium gray */
   padding: 0;
   display: inline-block;
   text-transform: uppercase;
@@ -220,12 +220,12 @@ body.page-navigating * {
 
 /* Date text hover - keep default color */
 .date-text:hover {
-  color: #d2d4db !important;
+  color: #fff3fc !important;
 }
 
 /* Special class for black background effect */
 body.june-hover {
-  background-color: #353c50;
+  background-color: #35232f;
   transition: background-color 0.3s ease;
 }
 
@@ -237,16 +237,16 @@ body.june-hover .bio-text a,
 body.june-hover .about-toggle,
 body.june-hover .website-info a,
 body.june-hover .contact-links a {
-  color: #d2d4db !important;
+  color: #fff3fc !important;
 }
 
 body.june-hover .resume-download {
-  color: #d2d4db !important;
+  color: #fff3fc !important;
 }
 
 /* Date text when project is active - always black */
 .date-text.project-active {
-  color: #353c50 !important; /* Always black */
+  color: #35232f !important; /* Always black */
 }
 
 /* Bio Section */
@@ -264,7 +264,7 @@ body.june-hover .resume-download {
 .bio-text p,
 .bio-text a,
 .contact-links a {
-  color: #353c50; /* Default medium gray */
+  color: #35232f; /* Default medium gray */
 }
 
 /* About toggle - always keep default color */
@@ -280,11 +280,11 @@ body.june-hover .resume-download {
   line-height: 1;
   padding: 0;
   letter-spacing: 0.02em;
-  color: #353c50; /* Always keep default gray color */
+  color: #35232f; /* Always keep default gray color */
 }
 
 .about-toggle:hover {
-  color: #353c50 !important; /* White on hover */
+  color: #35232f !important; /* White on hover */
 }
 
 /* Bio section elements maintain default colors */
@@ -328,7 +328,7 @@ body.june-hover .resume-download {
   cursor: crosshair;
   margin-top: 5px;
   letter-spacing: -0.01em;
-  color: #353c50;
+  color: #35232f;
   width: 95%; /* makes it 80% of its container's width */
 }
 
@@ -336,7 +336,7 @@ body.june-hover .resume-download {
   margin-bottom: 10px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: normal;
-  color: #353c50;
+  color: #35232f;
 }
 
 .bio-text p:last-of-type {
@@ -352,7 +352,7 @@ body.june-hover .resume-download {
 
 /* Bio text links */
 .bio-text a {
-  color: #353c50; /* Default medium gray like other text */
+  color: #35232f; /* Default medium gray like other text */
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Helvetica Neue", Arial, sans-serif;
@@ -385,13 +385,13 @@ body.project-hovering.video-light .bio-text a:hover {
   font-style: normal;
   font-weight: normal;
   position: relative;
-  color: #353c50 !important;
+  color: #35232f !important;
   padding: 8px 0;
   cursor: crosshair;;
 }
 
 .contact-links a:hover {
-  color: #353c50 !important;
+  color: #35232f !important;
   text-decoration: none !important;
   transform: translateY(2px);
 }
@@ -405,7 +405,7 @@ body.project-hovering.video-light .bio-text a:hover {
   transform: translate(-50%, -50%);
   width: 0;
   height: 0;
-  border: 2px solid #353c50;
+  border: 2px solid #35232f;
   border-radius: 50%;
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -491,7 +491,7 @@ body.project-hovering.video-light .bio-text a:hover {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   text-transform: uppercase !important;
   letter-spacing: 0.02em !important;
-  color: #353c50 !important;
+  color: #35232f !important;
   cursor: crosshair !important;
   user-select: none !important;
   line-height: 1 !important;
@@ -520,7 +520,7 @@ body.project-hovering.video-light .bio-text a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #d2d4db;
+  background: #fff3fc;
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -545,7 +545,7 @@ body.project-hovering.video-light .bio-text a:hover {
   font-size: clamp(10.8px, 2.43vw, 29.7px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: #353c50;
+  color: #35232f;
   text-align: center;
   line-height: 1;
   user-select: none;
@@ -555,7 +555,7 @@ body.project-hovering.video-light .bio-text a:hover {
 /* Touch device styles */
 @media (hover: none) and (pointer: coarse) {
   .project-link.touch-active {
-    color: #353c50; /* Black for touch active */
+    color: #35232f; /* Black for touch active */
   }
 
   .projects-container.touch-hovering .project-link {

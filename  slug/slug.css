@@ -184,7 +184,7 @@ body.title-hover .corner-logo {
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Aligns items to the left */
-  gap: 10px;
+  gap: 0px;
   margin-bottom: 0px;
   width: 100%;
 }
@@ -212,6 +212,7 @@ body.title-hover .corner-logo {
   letter-spacing: -0.01em;
   white-space: nowrap;
   padding: 0;
+  margin-left: 5px; /* This will scoot the tabs over */
 }
 
 .essay-tab {
