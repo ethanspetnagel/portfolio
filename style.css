@@ -187,6 +187,14 @@ body.page-navigating * {
   text-shadow: none;
 }
 
+/* Make About and Resume buttons solid on project link hover */
+.projects-container:hover ~ .bio-section .about-toggle,
+.projects-container:hover ~ .resume-section .resume-download {
+  color: #34312e !important;
+  opacity: 1;
+  text-shadow: none;
+}
+
 /* Website Info */
 .website-info {
   position: fixed;
