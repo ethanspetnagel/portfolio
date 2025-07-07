@@ -316,6 +316,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- SLIDESHOW NAVIGATION ---
+    document.querySelectorAll('.slideshow-zone').forEach(zone => {
+        const slides = zone.querySelectorAll('.slide');
+        if (slides.length <= 1) return;
+
+        let currentIndex = 0;
+
+        // Create controls
+        const controls = document.createElement('div');
+        controls.className = 'slideshow-controls';
+        const prevButton = document.createElement('div');
+        prevButton.className = 'prev-button';
+        const nextButton = document.createElement('div');
+        nextButton.className = 'next-button';
+        
+        controls.appendChild(prevButton);
+        controls.appendChild(nextButton);
+        zone.appendChild(controls);
+
+        const updateSlides = () => {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('current', index === currentIndex);
+            });
+        };
+
+        nextButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlides();
+        });
+
+        prevButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateSlides();
+        });
+
+        // Handle video play/pause
+        zone.addEventListener('click', (e) => {
+            const video = slides[currentIndex].querySelector('video');
+            if (video) {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            }
+        });
+    });
+
     // --- INFO TOGGLE FOR PROJECT DETAILS ---
     document.querySelectorAll('.info-toggle').forEach(toggle => {
         toggle.addEventListener('click', (e) => {

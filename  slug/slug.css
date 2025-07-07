@@ -446,6 +446,66 @@ body.title-hover .project-gallery {
   align-items: flex-start;
 }
 
+/* Slideshow Controls */
+.slideshow-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 10;
+}
+
+.prev-button,
+.next-button {
+  width: 50%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+}
+
+.prev-button:hover,
+.next-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.prev-button::after,
+.next-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: invert(19%) sepia(83%) saturate(4033%) hue-rotate(346deg) brightness(89%) contrast(94%); /* Red color */
+}
+
+.prev-button::after {
+  content: '<';
+  left: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #d92020;
+}
+
+.next-button::after {
+  content: '>';
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #d92020;
+}
+
+.slideshow-zone:hover .prev-button::after,
+.slideshow-zone:hover .next-button::after {
+  opacity: 1;
+}
+
 /* ============================================
    EASY SIZE CONTROL SYSTEM
    ============================================
