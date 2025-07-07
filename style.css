@@ -175,7 +175,7 @@ body.page-navigating * {
 
 /* Project link hover - Blue color */
 .project-link:hover {
-  color: #396ed8 !important;
+  color: #34312e !important;
   opacity: 1;
   text-shadow: none;
 }
@@ -210,7 +210,7 @@ body.page-navigating * {
 
 /* Date text hover - keep default color */
 .date-text:hover {
-  color: #34312e !important;
+  color: #d92020 !important;
   opacity: 1;
   text-shadow: none;
 }
