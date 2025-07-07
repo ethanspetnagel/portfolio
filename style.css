@@ -211,7 +211,7 @@ body.page-navigating * {
 
 /* Special class for black background effect */
 body.june-hover {
-  background-color: #34312e;
+  background-color: #d92020;
   transition: background-color 0.3s ease;
 }
 
@@ -232,7 +232,7 @@ body.june-hover .resume-download {
 
 /* Date text when project is active - always black */
 .date-text.project-active {
-  color: #34312e !important; /* Always black */
+  color: #ffffff !important; /* Always black */
 }
 
 /* Bio Section */
@@ -266,7 +266,7 @@ body.june-hover .resume-download {
   line-height: 1;
   padding: 0;
   letter-spacing: 0.02em;
-  color: #34312e; /* Always keep default gray color */
+  color: #d92020; /* Always keep default gray color */
 }
 
 .about-toggle:hover {
