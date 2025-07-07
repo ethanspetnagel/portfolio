@@ -166,7 +166,6 @@ body.title-hover .project-gallery {
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 0 0px 40px 15px; /* Reduced right padding from 40px */
-  scrollbar-width: thin;
   scrollbar-color: #d92020 #d9d9d9;
   background: #d9d9d9;
   position: relative;
@@ -180,19 +179,6 @@ body.title-hover .project-gallery {
 .essay-sidebar::-webkit-scrollbar-thumb {
   background-color: #d92020;
   border-radius: 4px;
-}
-
-/* Star scrollbar indicator */
-.star-scroll-indicator {
-  position: fixed;
-  left: calc(36vw - 25px);
-  top: 15px;
-  font-size: 33.6px;
-  color: #d92020;
-  opacity: 1;
-  transition: top 0.2s linear;
-  pointer-events: none;
-  z-index: 100;
 }
 
 .essay-sidebar:hover ~ .star-scroll-indicator,
@@ -363,31 +349,13 @@ body.title-hover .project-gallery {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 0px 0px 0px 10px; /* Reduced left padding from 60px */
+  padding: 0px 0px 0px 0px; /* Reduced left padding from 60px */
   background-color: #d9d9d9;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.project-gallery::-webkit-scrollbar {
-  width: 3px;
-  background: #d9d9d9;
-}
-
-.project-gallery::-webkit-scrollbar-thumb {
-  background-color: #d92020;
-  border-radius: 4px;
-}
-
-.project-gallery::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.project-gallery:hover ~ .star-scroll-indicator-gallery,
-.project-gallery.scrolling ~ .star-scroll-indicator-gallery {
-  opacity: 1;
-}
 
 /* Project sets and blocks */
 .project-set {
@@ -715,9 +683,7 @@ ul.interactive-text li {
     width: 38vw;
     max-width: 420px;
   }
-  .star-scroll-indicator {
-    left: calc(38vw - 25px);
-  }
+
   .project-gallery {
     width: calc(100vw - 38vw);
   }
@@ -740,10 +706,6 @@ ul.interactive-text li {
   }
   .essay-sidebar {
     border-bottom: 1px solid #34312e;
-  }
-  .star-scroll-indicator,
-  .star-scroll-indicator-gallery {
-    display: none;
   }
   .top-navigation {
     flex-direction: column;
