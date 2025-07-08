@@ -95,32 +95,39 @@ window.addEventListener('beforeunload', function() {
 const projectMedia = {
     'slug': {
         url: './slug.mp4',
-        position: { left: '27%', top: '15%' }
+        position: { left: '27%', top: '15%' },
+        size: 'm' // Example size
     }, 
     'church': {
         url: './church video bg.mp4',
-        position: { left: '77%', top: '23%' }
+        position: { left: '77%', top: '23%' },
+        size: 'l' // Example size
     },
     'talamel': {
         url: './talamel1.mp4',
-        position: { left: '22%', top: '31%' }
+        position: { left: '22%', top: '31%' },
+        size: 'm' // Example size
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
-        position: { left: '50%', top: '30%' }
+        position: { left: '50%', top: '30%' },
+        size: 'xl' // Example size
     }, 
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
-        position: { left: '84.5%', top: '45.5%' }
+        position: { left: '84.5%', top: '45.5%' },
+        size: 's' // Example size
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
-        position: { left: '50%', top: '45%' }
+        position: { left: '50%', top: '45%' },
+        size: 'l' // Example size
     },
     'green-lake-law': {
         url: './greenlake.mp4',
-        position: { left: '85%', top: '53.5%' }
+        position: { left: '85%', top: '53.5%' },
+        size: 's' // Example size
     }, 
     'june-2025': ''
 };
@@ -245,6 +252,13 @@ function showVideo(project) {
     if (!video) return false;
     const mediaInfo = projectMedia[project];
     if (!mediaInfo || !mediaInfo.position) return false;
+
+    // Reset any existing size classes
+    video.className = 'bg-video'; 
+    // Add size class if it exists
+    if (mediaInfo.size) {
+        video.classList.add(`size-${mediaInfo.size}`);
+    }
 
     // Use the position data from the projectMedia object
     video.style.left = mediaInfo.position.left;

@@ -113,15 +113,34 @@ body.page-navigating * {
   opacity: 1;
 }
 
+/* Custom positioned videos - Sizing and Aspect Ratio */
 .bg-video {
   position: absolute;
+  transform: translate(-50%, -50%); /* Center the video on its position coordinates */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  object-fit: contain; /* Ensures the video maintains its aspect ratio */
+  max-width: 90vw; /* Prevents videos from being too wide */
+  max-height: 90vh; /* Prevents videos from being too tall */
+  width: auto; /* Default width */
+  height: auto; /* Default height */
   opacity: 0;
-  transition: opacity 0.4s ease;
-  max-width: 80vw; /* Prevent videos from being too wide on large screens */
-  max-height: 80vh; /* Prevent videos from being too tall on large screens */
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%); /* Position from center */
+}
+
+/* Size presets for videos */
+.bg-video.size-s {
+  width: 25vw;
+}
+
+.bg-video.size-m {
+  width: 35vw; /* This is the new medium size */
+}
+
+.bg-video.size-l {
+  width: 45vw;
+}
+
+.bg-video.size-xl {
+  width: 55vw;
 }
 
 /* Main Content - Always visible and above videos */
