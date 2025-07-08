@@ -316,7 +316,7 @@ body.title-hover .project-gallery {
 
 /* Interactive text for word-level parting effect */
 .interactive-text {
-  font-family: "Borgia Pro", serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   line-height: 1.4;
   margin-bottom: 20px;
@@ -599,7 +599,7 @@ body.title-hover .project-gallery {
   align-items: flex-start;
   margin-top: 14px;
   padding: 0;
-  font-family: "Borgia Pro", serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
   text-transform: uppercase;
@@ -643,7 +643,7 @@ body.title-hover .project-gallery {
   width: 100%;
   max-width: 100%;
   margin-top: 8px;
-  font-family: "Borgia Pro", serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
   font-weight: normal;
   text-transform: none;
