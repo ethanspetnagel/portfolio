@@ -197,16 +197,6 @@ body.page-navigating * {
   text-shadow: none;
 }
 
-/* When hovering the container, dim all project links */
-.projects-container:hover .project-link {
-  opacity: 0.25;
-}
-
-/* Then, restore full opacity for the specific link being hovered */
-.projects-container .project-link:hover {
-  opacity: 1;
-}
-
 /* Make date text red and opaque when hovering over any project link */
 .projects-container:hover ~ .website-info .date-text {
   opacity: 1;
