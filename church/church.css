@@ -518,8 +518,8 @@ body.title-hover .project-gallery {
   max-width: calc(var(--size-m) * 2.2);
 }
 
-[data-size="default"] .slideshow-zone,
-.project-block .slideshow-zone {  /* Default if no size specified */
+/* Default if no size specified */
+[data-size="default"] .slideshow-zone {
   width: var(--size-default);
   max-width: calc(var(--size-default) * 2.2);
 }
