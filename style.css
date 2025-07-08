@@ -186,7 +186,7 @@ body.page-navigating * {
   /* Default Embossed Style */
   color: #d9d9d9;
   text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
-  opacity: 0.3;
+  opacity: 0.9;
   transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
 }
 
@@ -195,6 +195,16 @@ body.page-navigating * {
   color: #d92020!important;
   opacity: 1;
   text-shadow: none;
+}
+
+/* When hovering the container, dim all project links */
+.projects-container:hover .project-link {
+  opacity: 0.25;
+}
+
+/* Then, restore full opacity for the specific link being hovered */
+.projects-container .project-link:hover {
+  opacity: 1;
 }
 
 /* Make date text red and opaque when hovering over any project link */
