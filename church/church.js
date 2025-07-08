@@ -233,6 +233,159 @@ class FontFlip {
     }
 }
 
+// Text Parting Sea Effect Class - Word Level
+class TextPartingEffect {
+    constructor() {
+        this.activeElements = new Map();
+        this.rafId = null;
+    }
+  
+    init() {
+        // First, wrap all words in spans
+        this.wrapWordsInSpans();
+        
+        const interactiveTexts = document.querySelectorAll('.interactive-text');
+        
+        interactiveTexts.forEach(element => {
+            element.addEventListener('mouseenter', (e) => this.startParting(e.target));
+            element.addEventListener('mousemove', (e) => this.updateParting(e));
+            element.addEventListener('mouseleave', (e) => this.endParting(e.target));
+        });
+    }
+  
+    wrapWordsInSpans() {
+        const interactiveTexts = document.querySelectorAll('.interactive-text');
+        
+        interactiveTexts.forEach(element => {
+            // Skip if already processed
+            if (element.querySelector('.word')) return;
+            
+            const textNodes = this.getTextNodes(element);
+            
+            textNodes.forEach(node => {
+                const words = node.textContent.split(/(\s+)/);
+                const fragment = document.createDocumentFragment();
+                
+                words.forEach(word => {
+                    if (word.trim() !== '') {
+                        const span = document.createElement('span');
+                        span.className = 'word';
+                        span.textContent = word;
+                        fragment.appendChild(span);
+                    } else {
+                        // Preserve whitespace
+                        fragment.appendChild(document.createTextNode(word));
+                    }
+                });
+                
+                node.parentNode.replaceChild(fragment, node);
+            });
+        });
+    }
+  
+    getTextNodes(element) {
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+            element,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+        );
+        
+        let node;
+        while (node = walker.nextNode()) {
+            if (node.textContent.trim() !== '') {
+                textNodes.push(node);
+            }
+        }
+        
+        return textNodes;
+    }
+  
+    startParting(element) {
+        if (!this.activeElements.has(element)) {
+            const words = element.querySelectorAll('.word');
+            const wordData = new Map();
+            
+            words.forEach(word => {
+                const rect = word.getBoundingClientRect();
+                wordData.set(word, {
+                    rect: rect,
+                    originalTransform: word.style.transform || '',
+                    isActive: true
+                });
+            });
+            
+            this.activeElements.set(element, {
+                words: wordData,
+                isActive: true
+            });
+        }
+    }
+  
+    updateParting(event) {
+        const element = event.target.closest('.interactive-text');
+        const data = this.activeElements.get(element);
+        
+        if (!data || !data.isActive) return;
+  
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        
+        data.words.forEach((wordData, word) => {
+            const rect = word.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const deltaX = mouseX - centerX;
+            const deltaY = mouseY - centerY;
+            
+            // Calculate distance from word center
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const maxInfluence = 150; // Influence radius in pixels
+            
+            if (distance < maxInfluence) {
+                // Calculate parting effect strength (stronger when mouse is closer)
+                const strength = (1 - distance / maxInfluence) * 25; // Max 25px displacement
+                
+                // Calculate direction to push word away from cursor
+                const angle = Math.atan2(deltaY, deltaX);
+                const pushX = -Math.cos(angle) * strength;
+                const pushY = -Math.sin(angle) * strength;
+                
+                // Apply transform
+                word.style.transform = `translate(${pushX}px, ${pushY}px)`;
+                word.style.transition = 'transform 0.1s ease-out';
+            } else {
+                // Return to original position if outside influence radius
+                word.style.transform = wordData.originalTransform;
+                word.style.transition = 'transform 0.2s ease-out';
+            }
+        });
+    }
+  
+    endParting(element) {
+        const data = this.activeElements.get(element);
+        
+        if (data) {
+            data.isActive = false;
+            
+            // Return all words to original positions
+            data.words.forEach((wordData, word) => {
+                word.style.transition = 'transform 0.3s ease-out';
+                word.style.transform = wordData.originalTransform;
+            });
+            
+            // Clean up after animation
+            setTimeout(() => {
+                if (!data.isActive) {
+                    this.activeElements.delete(element);
+                }
+            }, 300);
+        }
+    }
+}
+
 // Main initialization
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM ELEMENT SELECTORS ---
@@ -246,6 +399,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const projects = document.querySelectorAll('.project-set');
     const essaySidebar = document.querySelector('.essay-sidebar');
     const projectGallery = document.querySelector('.project-gallery');
+
+    // Initialize text parting effect
+    const textParting = new TextPartingEffect();
+    textParting.init();
 
     // --- NAVIGATION ARROW HOVER LABELS ---
     function setupArrowHover(arrowElement, labelText) {
@@ -315,6 +472,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Reset scroll positions
             if (essaySidebar) essaySidebar.scrollTop = 0;
             if (projectGallery) projectGallery.scrollTop = 0;
+
+            // Reinitialize text parting effect for new content
+            setTimeout(() => {
+                textParting.init();
+            }, 100);
         });
     });
 
