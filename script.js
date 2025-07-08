@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (introOverlay && introText) {
         const introFlip = new FontFlip(introText);
-        introFlip.setText('ETHANSPETNAGEL.ONLINE', () => {
+        introFlip.setText('loading...', () => {
             startSubtitleAnimation(introOverlay, introText);
         });
     }
