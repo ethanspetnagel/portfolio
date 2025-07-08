@@ -485,7 +485,7 @@ body.title-hover .project-gallery {
   /* Small sizes */
   --size-xxs: 10.25vw;   
   --size-xs: 19.25vw;    /* Extra small */
-  --size-s: 27vw;        /* Small */
+  --size-s: 20vw;        /* Small */
   
   /* Medium sizes */
   --size-m: 35.75vw;     /* Medium */
