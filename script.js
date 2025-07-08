@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     initializeVideoPool();
+    preloadPages(); // Preload linked pages
     document.addEventListener('mousemove', () => {
         Object.values(videoPool).forEach(video => {
             if (video.paused) {
@@ -195,6 +196,18 @@ function analyzeVideoBrightness(video, project) {
             videoBrightness[project] = true;
         }
     }
+}
+
+// Preload linked HTML pages to cache them
+function preloadPages() {
+    const links = document.querySelectorAll('.project-link');
+    links.forEach(link => {
+        const url = link.href;
+        if (url) {
+            // Fetching the page will cause the browser to cache it
+            fetch(url).catch(err => console.error(`Failed to preload page: ${url}`, err));
+        }
+    });
 }
 
 // Initialize video pool for instant playback
