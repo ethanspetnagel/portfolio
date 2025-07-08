@@ -694,12 +694,7 @@ ul.interactive-text li {
   .top-navigation {
     gap: 30px;
   }
-  .floating-logo {
-    width: 200px;
-    height: 77px;
-    right: 45px;
-    bottom: 60px;
-  }
+ 
 }
 
 @media (max-width: 768px) {
