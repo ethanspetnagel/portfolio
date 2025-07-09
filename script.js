@@ -97,7 +97,7 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: { left: '27%', top: '15%' },
-        size: 'm' // Example size
+        size: 'l' // Example size
     }, 
     'church': {
         url: './church video bg.mp4',
@@ -107,18 +107,18 @@ const projectMedia = {
     'talamel': {
         url: './talamel1.mp4',
         position: { left: '22%', top: '31%' },
-        size: 'm' // Example size
+        size: 'l' // Example size
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
         position: { left: '50%', top: '30%' },
-        size: 'xl' // Example size
+        size: 'l' // Example size
     }, 
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
         position: { left: '84.5%', top: '45.5%' },
-        size: 's' // Example size
+        size: 'l' // Example size
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
@@ -126,9 +126,9 @@ const projectMedia = {
         size: 'l' // Example size
     },
     'green-lake-law': {
-        url: './greenlake.mp4',
+        url: './bag.png',
         position: { left: '85%', top: '53.5%' },
-        size: 's' // Example size
+        size: 'l' // Example size
     }, 
     'june-2025': ''
 };
