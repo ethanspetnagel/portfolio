@@ -595,7 +595,7 @@ body.title-hover .project-gallery {
 /* Images and videos inherit parent size */
 .slide {
   display: none;
-  width: auto;
+  width: auto; /* Reverted to auto for default behavior */
 }
 
 .slide.current {
@@ -619,6 +619,7 @@ body.title-hover .project-gallery {
 
 /* New rule for fixed aspect ratio slideshows */
 .project-block.fixed-aspect-ratio .slide {
+  width: 100%; /* Apply full width only to slides in this block */
   aspect-ratio: 1 / 1; /* Force the slide container to be a perfect square */
   overflow: hidden;    /* Hide any part of the image that overflows the square */
 }
