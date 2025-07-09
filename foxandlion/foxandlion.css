@@ -177,9 +177,9 @@ body.title-hover .project-gallery {
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 0 0px 40px 15px; /* Reduced right padding from 40px */
-  scrollbar-color: #d92020 #d9d9d9;
   background: #d9d9d9;
   position: relative;
+  border-right: 2px solid #34312e;
 }
 
 .essay-sidebar::-webkit-scrollbar {
