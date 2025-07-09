@@ -404,6 +404,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const textParting = new TextPartingEffect();
     textParting.init();
 
+    // --- INITIALIZE SMOOTH SCROLL ---
+    if (essaySidebar) {
+        new SmoothScroll(essaySidebar, {
+            resistance: 0.8,
+            damping: 0.08
+        });
+    }
+
+    if (projectGallery) {
+        new SmoothScroll(projectGallery, {
+            resistance: 0.8,
+            damping: 0.08
+        });
+    }
+
     // --- NAVIGATION ARROW HOVER LABELS ---
     function setupArrowHover(arrowElement, labelText) {
         if (!arrowElement) return;
@@ -594,21 +609,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-    // --- INITIALIZE SMOOTH SCROLL ---
-    if (essaySidebar) {
-        new SmoothScroll(essaySidebar, {
-            resistance: 0.8,
-            damping: 0.08
-        });
-    }
-
-    if (projectGallery) {
-        new SmoothScroll(projectGallery, {
-            resistance: 0.8,
-            damping: 0.08
-        });
-    }
 
     // --- INITIALIZE FIRST TAB ---
     const firstTab = document.querySelector('.essay-tab');
