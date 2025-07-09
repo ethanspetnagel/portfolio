@@ -97,33 +97,33 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: { left: '27%', top: '15%' },
-        size: 'l' // Example size
+        size: 'm' // Example size
     }, 
     'church': {
         url: './church video bg.mp4',
         position: { left: '77%', top: '23%' },
-        size: 'l' // Example size
+        size: 'm' // Example size
     },
     'talamel': {
         url: './talamel1.mp4',
         position: { left: '22%', top: '31%' },
-        size: 'l' // Example size
+        size: 'm' // Example size
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
         position: { left: '50%', top: '30%' },
-        size: 'l' // Example size
+        size: 'xl' // Example size
     }, 
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
         position: { left: '84.5%', top: '45.5%' },
-        size: 'l' // Example size
+        size: 'm' // Example size
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
         position: { left: '50%', top: '45%' },
-        size: 'l' // Example size
+        size: 'm' // Example size
     },
     'green-lake-law': {
         url: './bag.png',
