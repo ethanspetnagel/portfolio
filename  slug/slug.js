@@ -523,6 +523,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     currentVideo.pause();
                 }
+                // Manually trigger a mousemove event to update the cursor label
+                zone.dispatchEvent(new MouseEvent('mousemove', {
+                    bubbles: true,
+                    cancelable: true,
+                    clientX: e.clientX,
+                    clientY: e.clientY
+                }));
             }
         });
 

@@ -600,7 +600,7 @@ body.title-hover .project-gallery {
 
 .slide img,
 .slide video {
-  display: block;
+  display: block; /* Ensures consistent block-level behavior */
   width: 100%;
   max-width: 100%;
   height: auto;
