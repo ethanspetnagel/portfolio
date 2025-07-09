@@ -298,7 +298,7 @@ body.title-hover .project-gallery {
 .essay-content {
   padding-right: 25px;
   max-width: 100%;
-  padding-top: 20px; /* Add space so content starts below the sticky header */
+  padding-top: 10px; /* Add space so content starts below the sticky header */
   position: relative;
 }
 
