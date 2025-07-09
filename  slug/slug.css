@@ -435,7 +435,7 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   align-items: flex-end; /* Align children (caption, toggle) to the right */
-  flex-grow: 1; /* Allow the zone to grow and fill the project block */
+  /* flex-grow: 1; */ /* REMOVED: This was causing the spacing and video issues. */
 }
 
 /* Slideshow Controls */
