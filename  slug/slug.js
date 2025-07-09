@@ -1,4 +1,4 @@
-// Slug JS - Updated with Text Parting Effect
+// Slug JS - Updated with Text Parting Effect and Fixed Play/Pause
 
 class TextScramble {
     constructor(el) {
@@ -479,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- SLIDESHOW NAVIGATION (like church.js) ---
+    // --- SLIDESHOW NAVIGATION WITH FIXED PLAY/PAUSE ---
     document.querySelectorAll('.slideshow-zone').forEach(zone => {
         const slides = zone.querySelectorAll('.slide');
         if (slides.length === 0) return;
@@ -511,6 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentVideo = slides[currentIndex].querySelector('video');
 
             if (slides.length > 1) {
+                // Multiple slides - navigate
                 if (e.clientX > midpoint) {
                     currentIndex = (currentIndex + 1) % slides.length;
                 } else {
@@ -518,12 +519,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 showSlide(currentIndex);
             } else if (currentVideo) {
+                // Single video - play/pause
                 if (currentVideo.paused) {
-                    currentVideo.play();
+                    currentVideo.play().catch(() => {
+                        console.log('Play failed');
+                    });
                 } else {
                     currentVideo.pause();
                 }
-                // REMOVED: The manual mousemove event dispatch was causing issues.
             }
         });
 
@@ -632,37 +635,4 @@ document.addEventListener('DOMContentLoaded', () => {
             textScramble.setText('HOME');
         });
     }
-
-    // --- VIDEO PLACEHOLDER FOR SLIDESHOW ---
-    document.querySelectorAll('.slideshow-zone').forEach(zone => {
-        const firstSlide = zone.querySelector('.slide');
-        if (!firstSlide) return;
-
-        const video = document.createElement('video');
-        video.src = firstSlide.dataset.video;
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
-        video.className = 'video-placeholder';
-
-        // Cover the entire slide area
-        const { width, height } = firstSlide.getBoundingClientRect();
-        video.style.width = `${width}px`;
-        video.style.height = `${height}px`;
-
-        firstSlide.appendChild(video);
-
-        // Play the video if the slide is active
-        if (firstSlide.classList.contains('current')) {
-            video.play().catch(() => {});
-        }
-
-        // Pause video when slide changes
-        zone.addEventListener('click', () => {
-            const currentVideo = zone.querySelector('.slide.current video');
-            if (currentVideo) {
-                currentVideo.pause();
-            }
-        });
-    });
 });

@@ -128,7 +128,25 @@ body.title-hover .project-gallery {
   flex-direction: row-reverse;
 }
 
+/* Projects button */
+.projects-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: bold;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  color: #d92020;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
 
+.projects-button:hover {
+  color: #34312e;
+}
 
 /* Cursor label */
 .cursor-label {
@@ -597,14 +615,15 @@ body.title-hover .project-gallery {
   display: block;
 }
 
+/* FIX 1: Ensure video elements don't have default margins/padding */
 .slide img,
 .slide video {
   display: block; /* Ensures consistent block-level behavior */
   width: 100%;
   max-width: 100%;
   height: auto;
-  margin-bottom: 0;
-  margin-left: 0;
+  margin: 0; /* Remove all margins */
+  padding: 0; /* Remove all padding */
   background: #d9d9d9;
   box-shadow: none;
   border-radius: 0;
@@ -837,4 +856,3 @@ ul.interactive-text li {
   }
   
 }
-
