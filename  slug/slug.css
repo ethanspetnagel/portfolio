@@ -594,7 +594,7 @@ body.title-hover .project-gallery {
 
 /* Offset/margin control */
 [data-offset="small"] .slideshow-zone {
-  margin-left: 1vw;
+  margin-left: 1.5vw;
 }
 
 [data-offset="medium"] .slideshow-zone {
