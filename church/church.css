@@ -212,6 +212,7 @@ body.title-hover .project-gallery {
   padding-left: 15px; /* Add padding back to align with the content */
   padding-bottom: 8px;
   padding-top: 8px;
+  border-bottom: 2px solid #34312e;
 }
 
 .site-title {
