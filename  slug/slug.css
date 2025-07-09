@@ -430,13 +430,12 @@ body.title-hover .project-gallery {
 
 /* Slideshow */
 .slideshow-zone {
-  width: 100%;
-  max-width: none;
   position: relative;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  cursor: pointer;
+  align-items: flex-end; /* Align children (caption, toggle) to the right */
+  flex-grow: 1; /* Allow the zone to grow and fill the project block */
 }
 
 /* Slideshow Controls */
@@ -593,6 +592,7 @@ body.title-hover .project-gallery {
 .slide {
   display: none;
   width: auto; /* Reverted to auto for default behavior */
+  flex-grow: 1; /* Allow the slide to take up available space */
 }
 
 .slide.current {
