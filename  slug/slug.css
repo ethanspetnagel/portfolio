@@ -32,6 +32,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   transition: background-color 0.3s ease, color 0.3s ease;
+  border: 2px solid #34312e;
 }
 
 /* Page loading state */
@@ -169,6 +170,12 @@ body.title-hover .project-gallery {
   background: #d9d9d9;
   position: relative;
   border-right: 2px solid #34312e; /* Vertical separator line */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.essay-sidebar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari and Opera */
 }
 
 .essay-sidebar:hover ~ .star-scroll-indicator,
@@ -288,7 +295,7 @@ body.title-hover .project-gallery {
 .essay-content {
   padding-right: 25px;
   max-width: 100%;
-  padding-top: 10px; /* Add space so content starts below the sticky header */
+  padding-top: 5px; /* Add space so content starts below the sticky header */
   position: relative;
 }
 
