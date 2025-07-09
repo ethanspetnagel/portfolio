@@ -406,7 +406,7 @@ body.title-hover .project-gallery {
   display: none;
   width: 100%;
   flex-direction: column;
-  gap: 90px 0;
+  /* gap: 90px 0; */ /* REMOVED: Use margin on child for stability */
   align-items: flex-start;
 }
 
@@ -420,7 +420,7 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 0;
+  margin-bottom: 90px; /* ADDED: Creates consistent space between blocks */
   background: none;
   border: none;
   box-shadow: none;
@@ -592,7 +592,6 @@ body.title-hover .project-gallery {
 .slide {
   display: none;
   width: auto; /* Reverted to auto for default behavior */
-  flex-grow: 1; /* Allow the slide to take up available space */
 }
 
 .slide.current {
