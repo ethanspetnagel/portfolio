@@ -594,15 +594,15 @@ body.title-hover .project-gallery {
 
 /* Offset/margin control */
 [data-offset="small"] .slideshow-zone {
-  margin-left: 2vw;
+  margin-left: 1vw;
 }
 
 [data-offset="medium"] .slideshow-zone {
-  margin-left: 6vw;
+  margin-left: 4vw;
 }
 
 [data-offset="large"] .slideshow-zone {
-  margin-left: 8vw;
+  margin-left: 6vw;
 }
 
 /* Images and videos inherit parent size */
