@@ -188,14 +188,18 @@ body.title-hover .project-gallery {
 
 /* Navigation with reduced gap */
 .top-navigation {
+  position: sticky; /* Makes the header stick to the top */
+  top: 0; /* Sticks it to the very top of the scrolling container */
+  z-index: 10; /* Ensures it stays above the scrolling text */
+  background-color: #d9d9d9; /* Hides the text scrolling underneath */
   display: flex;
   align-items: baseline;
   gap: 40px;
-  margin-bottom: 8px;
   width: calc(100% + 15px); /* Extend width to cover the padding */
   margin-left: -15px; /* Pull the element to the left edge */
   padding-left: 15px; /* Add padding back to align the content */
   border-bottom: 2px solid #34312e; /* Horizontal separator line */
+  padding-top: 15px; /* Add some space at the top */
   padding-bottom: 15px; /* Adjust space between tabs and the line */
 }
 
@@ -294,7 +298,7 @@ body.title-hover .project-gallery {
 .essay-content {
   padding-right: 25px;
   max-width: 100%;
-  margin-top: -29px;
+  padding-top: 20px; /* Add space so content starts below the sticky header */
   position: relative;
 }
 
