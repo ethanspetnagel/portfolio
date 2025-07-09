@@ -193,6 +193,8 @@ body.title-hover .project-gallery {
   gap: 40px;
   margin-bottom: 8px;
   width: 100%;
+  border-bottom: 2px solid #34312e; /* Horizontal separator line */
+  padding-bottom: 15px; /* Adjust space between tabs and the line */
 }
 
 .site-title {
