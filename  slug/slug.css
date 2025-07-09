@@ -155,9 +155,7 @@ body.title-hover .project-gallery {
   position: fixed;
   top: 0;
   left: 0;
-  overflow: hidden;
-  border: 2px solid #34312e; /* Added border here */
-  box-sizing: border-box; /* Include border in the element's total size */
+  overflow: hidden; 
 }
 
 /* Left sidebar */
