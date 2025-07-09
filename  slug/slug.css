@@ -617,6 +617,12 @@ body.title-hover .project-gallery {
   object-fit: contain;
 }
 
+/* New rule for fixed aspect ratio slideshows */
+.project-block.fixed-aspect-ratio .slide img {
+  height: 80vh; /* Set a fixed height */
+  object-fit: cover; /* Crop image to fill the container */
+}
+
 /* Caption styling */
 .caption {
   width: 100%;
