@@ -32,7 +32,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: relative;
   transition: background-color 0.3s ease, color 0.3s ease;
-  border: 2px solid #34312e;
+  /* border has been moved to .page */
 }
 
 /* Page loading state */
@@ -156,6 +156,7 @@ body.title-hover .project-gallery {
   top: 0;
   left: 0;
   overflow: hidden;
+  border: 2px solid #34312e; /* Added */
 }
 
 /* Left sidebar */
@@ -634,7 +635,7 @@ body.title-hover .project-gallery {
   display: flex;
   flex-direction: column;
   align-items: flex-end; /* Changed from flex-start */
-  margin-top: 14px;
+  margin-top: 14px; /* This space is for when a caption exists */
   padding: 0;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
@@ -650,7 +651,7 @@ body.title-hover .project-gallery {
 /* Info toggle */
 .info-toggle {
   align-self: flex-end; /* Changed from flex-start */
-  margin-top: 8px;
+  margin-top: 8px; /* This space is for when a caption exists */
   cursor: pointer;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: calc(1.6rem - 9px);
@@ -662,6 +663,15 @@ body.title-hover .project-gallery {
   width: auto;
   opacity: 0.7;
   color: #34312e;
+}
+
+/* If there's no caption, the toggle should have a larger top margin to compensate */
+.caption + .info-toggle {
+  margin-top: 8px; /* Keep smaller margin when it follows a caption */
+}
+
+.slideshow-zone > .info-toggle:first-of-type {
+    margin-top: 14px; /* Add space when it's the first element after the slides */
 }
 
 .info-toggle:hover {
