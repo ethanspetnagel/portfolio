@@ -434,8 +434,7 @@ body.title-hover .project-gallery {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Align children (caption, toggle) to the right */
-  /* flex-grow: 1; */ /* REMOVED: This was causing the spacing and video issues. */
+  align-items: flex-start; /* CHANGED: Match church.css for stable alignment */
 }
 
 /* Slideshow Controls */
