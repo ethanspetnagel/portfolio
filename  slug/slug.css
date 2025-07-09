@@ -178,7 +178,7 @@ body.title-hover .project-gallery {
 
 .essay-sidebar::-webkit-scrollbar-thumb {
   background-color: #d92020;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .essay-sidebar:hover ~ .star-scroll-indicator,

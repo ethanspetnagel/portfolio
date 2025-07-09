@@ -573,10 +573,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const panel = toggle.nextElementSibling;
             const isActive = toggle.classList.contains('active');
 
-            // Close all other panels
+            // Close all other panels and reset their toggles to '+'
             document.querySelectorAll('.info-toggle.active').forEach(t => {
                 if (t !== toggle) {
                     t.classList.remove('active');
+                    t.textContent = '+'; // Reset to plus
                     const otherPanel = t.nextElementSibling;
                     if (otherPanel) {
                         otherPanel.classList.remove('active');
@@ -585,33 +586,82 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Toggle the current panel
+            // Toggle the current panel and its symbol
             toggle.classList.toggle('active');
             if (panel) {
                 panel.classList.toggle('active');
                 panel.style.maxHeight = isActive ? '0' : panel.scrollHeight + 'px';
+                toggle.textContent = isActive ? '+' : '−'; // Plus or minus symbol
             }
         });
     });
 
-    // --- INITIALIZE SMOOTH SCROLL ---
-    if (essaySidebar) {
-        new SmoothScroll(essaySidebar, {
-            resistance: 0.8,
-            damping: 0.08
+    // --- CURSOR FOLLOWING EFFECT ---
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursor-follower');
+
+    if (cursor && follower) {
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            cursor.style.transform = `translate(${x}px, ${y}px)`;
+            follower.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+            follower.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            follower.style.opacity = '0';
         });
     }
 
-    if (projectGallery) {
-        new SmoothScroll(projectGallery, {
-            resistance: 0.8,
-            damping: 0.08
+    // --- HOME CHURCH LINK REVEAL ANIMATION ---
+    const homeChurchLink = document.querySelector('.home-church-link');
+    if (homeChurchLink) {
+        const textScramble = new TextScramble(homeChurchLink.querySelector('span'));
+        homeChurchLink.addEventListener('mouseenter', () => {
+            textScramble.setText('CHURCH');
+        });
+        homeChurchLink.addEventListener('mouseleave', () => {
+            textScramble.setText('HOME');
         });
     }
 
-    // --- INITIALIZE FIRST TAB ---
-    const firstTab = document.querySelector('.essay-tab');
-    if (firstTab) {
-        firstTab.click();
-    }
+    // --- VIDEO PLACEHOLDER FOR SLIDESHOW ---
+    document.querySelectorAll('.slideshow-zone').forEach(zone => {
+        const firstSlide = zone.querySelector('.slide');
+        if (!firstSlide) return;
+
+        const video = document.createElement('video');
+        video.src = firstSlide.dataset.video;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.className = 'video-placeholder';
+
+        // Cover the entire slide area
+        const { width, height } = firstSlide.getBoundingClientRect();
+        video.style.width = `${width}px`;
+        video.style.height = `${height}px`;
+
+        firstSlide.appendChild(video);
+
+        // Play the video if the slide is active
+        if (firstSlide.classList.contains('current')) {
+            video.play().catch(() => {});
+        }
+
+        // Pause video when slide changes
+        zone.addEventListener('click', () => {
+            const currentVideo = zone.querySelector('.slide.current video');
+            if (currentVideo) {
+                currentVideo.pause();
+            }
+        });
+    });
 });
