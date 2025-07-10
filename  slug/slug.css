@@ -455,6 +455,22 @@ body.title-hover .project-gallery {
   align-items: flex-start; /* CHANGED: Match church.css for stable alignment */
 }
 
+/* FIX 1: Ensure video elements don't have default margins/padding */
+.slide img,
+.slide video {
+  display: block; /* Ensures consistent block-level behavior */
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  background-color: #f0f0f0; /* Placeholder color */
+}
+
+.flashing-warning .slide video {
+  border: 2px solid #2677ed;
+  box-sizing: border-box;
+}
+
 /* Slideshow Controls */
 .slideshow-controls {
   position: absolute;
@@ -622,13 +638,13 @@ body.title-hover .project-gallery {
   width: 100%;
   max-width: 100%;
   height: auto;
-  margin: 0; /* Remove all margins */
-  padding: 0; /* Remove all padding */
-  background: #d9d9d9;
-  box-shadow: none;
-  border-radius: 0;
-  cursor: pointer;
-  object-fit: contain;
+  object-fit: cover;
+  background-color: #f0f0f0; /* Placeholder color */
+}
+
+.flashing-warning .slide video {
+  border: 2px solid #2677ed;
+  box-sizing: border-box;
 }
 
 /* New rule for fixed aspect ratio slideshows */
