@@ -466,6 +466,12 @@ body.title-hover .project-gallery {
   background-color: #f0f0f0; /* Placeholder color */
 }
 
+/* Force images in the fixed-aspect-ratio block to fill the container */
+.fixed-aspect-ratio .slide img {
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the area, cropping if needed */
+}
+
 .flashing-warning .slide video {
   border: 2px solid #d92020;
   box-sizing: border-box;
