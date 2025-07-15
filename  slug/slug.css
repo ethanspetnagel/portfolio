@@ -196,20 +196,7 @@ body.title-hover .project-gallery {
   display: none; /* For Chrome, Safari and Opera */
 }
 
-/* New header container to hold arrow and title */
-.essay-sidebar::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 36vw; /* Match sidebar width */
-  min-width: 320px;
-  max-width: 580px;
-  height: 55px; /* Height of the header area */
-  background-color: #d9d9d9;
-  z-index: 999;
-  border-bottom: 2px solid #34312e;
-}
+/* REMOVED: The ::before pseudo-element was causing the "crack" and top line. */
 
 .essay-sidebar:hover ~ .star-scroll-indicator,
 .essay-sidebar.scrolling ~ .star-scroll-indicator {
@@ -229,14 +216,18 @@ body.title-hover .project-gallery {
   margin-left: -15px; /* Pull the element to the left edge */
   padding-left: 15px; /* Add padding back to align the content */
   border-bottom: 2px solid #34312e; /* Horizontal separator line */
-  padding-top: 0px; /* Add some space at the top */
+  padding-top: 60px; /* ADDED: Creates space for the arrow and title */
   padding-bottom: 0px; /* Adjust space between tabs and the line */
 }
 
 .site-title {
+  position: fixed;
+  top: 18px; /* Adjusted for vertical alignment with arrow */
+  left: 65px;
+  z-index: 1001; /* Above the header background */
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
-  font-size: calc(1.6rem - 7px);
+  font-size: 1.5rem; /* Increased font size */
   letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: pointer;
@@ -328,7 +319,7 @@ body.title-hover .project-gallery {
 .essay-content {
   padding-right: 25px;
   max-width: 100%;
-  padding-top: 5px; /* Add space so content starts below the sticky header */
+  /* padding-top: 5px; */ /* REMOVED: Space is now handled by the sticky header */
   position: relative;
 }
 
