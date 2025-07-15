@@ -187,7 +187,7 @@ body.title-hover .project-gallery {
   padding: 60px 0px 40px 15px; /* Added 60px top padding */
   background: #d9d9d9;
   position: relative;
-  border-right: 1px solid #34312e; /* Vertical separator line */
+  border-right: 2px solid #34312e; /* Vertical separator line */
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none;  /* For Internet Explorer and Edge */
 }
@@ -208,7 +208,7 @@ body.title-hover .project-gallery {
   height: 55px; /* Height of the header area */
   background-color: #d9d9d9;
   z-index: 999;
-  border-bottom: 1px solid #34312e;
+  border-bottom: 2px solid #34312e;
 }
 
 .essay-sidebar:hover ~ .star-scroll-indicator,
