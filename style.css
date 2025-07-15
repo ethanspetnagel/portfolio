@@ -184,7 +184,7 @@ body.page-navigating * {
   will-change: color, opacity, text-shadow;
   
   /* Default Embossed Style */
-  color: #d9d9d9;
+  color: #EAEAEA;
   text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
   opacity: 0.9;
   transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
@@ -215,7 +215,7 @@ body.page-navigating * {
 /* Make date text, about, and resume buttons solid on project link hover */
 body.project-links-hover .date-text,
 body.project-links-hover .about-toggle,
-body.project-links-hover .resume-download {
+body.project_links-hover .resume-download {
   color: #34312e !important;
   opacity: 1;
   text-shadow: none;
