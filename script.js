@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const paragraphs = [
 "Web designer + UX designer",
             "<div style='margin-bottom: 1em; line-height: 1;'><div>Design Manager</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px); color: #34312e;'>Church California</div></div><div style='line-height: 1;'><div>UX Designer</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px); color: #34312e;'>Talamel Health</div></div>",
-            "based in Queens, NY"
+            
         ];
         let paragraphIndex = 0;
 
