@@ -42,6 +42,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 sessionStorage.setItem('introShown', '1');
                 setTimeout(() => {
                     overlay.style.display = 'none';
+                    // New animation sequence starts here
+                    const profileImage = document.querySelector('.profile-image');
+                    if (profileImage) {
+                        profileImage.style.opacity = '1';
+                    }
+
+                    setTimeout(() => {
+                        const mainTitle = document.querySelector('.main-title');
+                        const aboutText = document.querySelector('.about-text');
+                        const contactLinks = document.querySelector('.first-contact');
+                        if (mainTitle && aboutText && contactLinks) {
+                            mainTitle.style.transform = 'translateY(0)';
+                            aboutText.style.transform = 'translateY(0)';
+                            contactLinks.style.transform = 'translateY(0)';
+                        }
+                    }, 300); // Delay for profile image animation
                 }, 500); // Match transition duration
             }
         }
@@ -50,10 +66,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- SMOOTH SCROLL FOR DOWN ARROW ---
-    function scrollToOldContent() {
-        window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: 'smooth'
+    const downArrow = document.querySelector('.down-arrow');
+    if (downArrow) {
+        downArrow.addEventListener('click', () => {
+            const oldContentSection = document.getElementById('old-content');
+            if (oldContentSection) {
+                oldContentSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     }
 
@@ -521,7 +542,7 @@ class TextPartingEffect {
         }
     }
     updateParting(event) {
-        const element = event.target.closest('.bio-text');
+        const element = event.target.closest('.bio-text, .about-text');
         const data = this.activeElements.get(element);
         if (!data || !data.isActive) return;
         const cursorX = event.clientX;
