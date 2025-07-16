@@ -443,6 +443,7 @@ body.profile-hover .first-section .contact-links a:hover {
     text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.8), 1px 1px 3px rgba(52, 49, 46, 0.3);
     opacity: 0.9;
     transition: color 0.2s ease, opacity 0.2s ease, text-shadow 0.2s ease;
+    font-family: 'Franklin Gothic ATF Heavy', Arial, sans-serif !important;
 }
 
 /* Project link hover */
