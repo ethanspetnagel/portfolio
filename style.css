@@ -147,17 +147,19 @@ body.page-navigating * {
 }
 
 .profile-image {
-    position: relative; /* Change from absolute */
+    position: relative;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-    height: 150px; /* Increased size */
-    width: 150px; /* Increased size */
+    max-width: 150px;      /* or your preferred max width */
+    width: 100%;
+    height: auto;
+    aspect-ratio: unset;   /* Let the image keep its natural aspect */
     border-radius: 0px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    margin-bottom: 40px; /* Add space below image */
-    order: 2; /* Set correct order */
+    margin-bottom: 40px;
+    order: 2;
     cursor: crosshair;
 }
 
@@ -243,7 +245,7 @@ body.page-navigating * {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     line-height: 1.3;
-    margin-bottom: 40px; /* Add space */
+    margin-bottom: 0px; /* Add space */
     order: 3; /* Set correct order */
 }
 

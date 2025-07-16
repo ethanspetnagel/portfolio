@@ -77,6 +77,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // --- JULY 2025 TEXT HOVER EFFECT ---
+    const dateText = document.querySelector('.date-text');
+    if (dateText) {
+        dateText.addEventListener('mouseenter', () => {
+            document.body.classList.add('profile-hover');
+        });
+        dateText.addEventListener('mouseleave', () => {
+            document.body.classList.remove('profile-hover');
+        });
+    }
+
     // --- SMOOTH SCROLL FOR DOWN ARROW ---
     const downArrow = document.querySelector('.down-arrow');
     if (downArrow) {
