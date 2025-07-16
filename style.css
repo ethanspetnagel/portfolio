@@ -233,7 +233,7 @@ body.page-navigating * {
     line-height: normal;
     left: 869.5px;
     font-style: normal;
-    color: #000000;
+    color: #34312e;
     font-size: 18px;
     text-align: center;
     top: 708.5px;
@@ -441,8 +441,12 @@ body.june-hover .bio-text p,
 body.june-hover .bio-text a,
 body.june-hover .about-toggle,
 body.june-hover .website-info a,
-body.june-hover .contact-links a {
+body.june-hover .contact-links a,
+body.june-hover .main-title p,
+body.june-hover .about-text p,
+body.june-hover .top-contacts a {
     color: #d9d9d9 !important;
+    text-shadow: none;
 }
 
 body.june-hover .resume-download {
@@ -625,6 +629,28 @@ body.project-hovering.video-light .bio-text a:hover {
     opacity: 1;
     width: calc(100% + 30px);
     height: 20px;
+}
+
+/* Styling for top contact links */
+.top-contacts {
+    justify-content: center;
+    gap: 25px;
+}
+
+.top-contacts a {
+    color: #000000 !important;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0;
+}
+
+.top-contacts a:hover {
+    color: #d92020 !important;
+    transform: none;
+}
+
+.top-contacts a::after {
+    display: none;
 }
 
 /* Bio Preview */
