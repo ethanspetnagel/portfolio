@@ -501,7 +501,8 @@ class TextPartingEffect {
     }
     init() {
         this.wrapWordsInSpans();
-        const bioTexts = document.querySelectorAll('.bio-text, .about-text');
+        // Attach listeners to <p> inside .bio-text and .about-text
+        const bioTexts = document.querySelectorAll('.bio-text p, .about-text p');
         bioTexts.forEach(element => {
             element.addEventListener('mouseenter', (e) => this.startParting(e.target));
             element.addEventListener('mousemove', (e) => this.updateParting(e));
@@ -861,5 +862,5 @@ if (resumeDownload) {
                 });
             }, 1500); // Wait 1.5 seconds
         });
-    });
+}   });
 }
