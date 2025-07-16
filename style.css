@@ -243,6 +243,29 @@ body.page-navigating * {
     font-weight: bold;
 }
 
+.first-section .contact-links {
+    position: absolute;
+    left: 50%;
+    top: 820px; /* Positioned below about-text */
+    transform: translateX(-50%);
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+}
+
+.first-section .contact-links a {
+    color: #34312e;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.first-section .contact-links a:hover {
+    color: #d92020;
+}
+
 /* Second Section - Old Portfolio Content */
 .second-section {
     background-color: #d9d9d9;
