@@ -281,6 +281,29 @@ body.page-navigating * {
     color: #d92020;
 }
 
+/* --- Profile Image Hover Effect --- */
+body.profile-hover .first-section,
+body.profile-hover .second-section {
+    background-color: #d92020;
+    transition: background-color 0.3s ease;
+}
+
+body.profile-hover .main-title p,
+body.profile-hover .about-text p,
+body.profile-hover .first-section .contact-links a {
+    color: #d9d9d9;
+    transition: color 0.3s ease;
+}
+
+body.profile-hover .arrow-image {
+    background-color: #d9d9d9;
+    transition: background-color 0.3s ease;
+}
+
+body.profile-hover .first-section .contact-links a:hover {
+    color: #34312e; /* Revert to dark on hover for contrast */
+}
+
 /* Second Section - Old Portfolio Content */
 .second-section {
     background-color: #d9d9d9;

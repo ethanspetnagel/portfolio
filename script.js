@@ -65,6 +65,17 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(showNextParagraph, 250);
     }
 
+    // --- PROFILE IMAGE HOVER EFFECT ---
+    const profileImage = document.querySelector('.profile-image');
+    if (profileImage) {
+        profileImage.addEventListener('mouseenter', () => {
+            document.body.classList.add('profile-hover');
+        });
+        profileImage.addEventListener('mouseleave', () => {
+            document.body.classList.remove('profile-hover');
+        });
+    }
+
     // --- SMOOTH SCROLL FOR DOWN ARROW ---
     const downArrow = document.querySelector('.down-arrow');
     if (downArrow) {
