@@ -1150,7 +1150,7 @@ body.transitioning {
     align-items: center;
     justify-content: flex-end; /* Push content to the bottom */
     min-height: 100vh;
-    padding-bottom: 8vh; /* Add some space from the very bottom */
+    padding-bottom: 10vh; /* Add some space from the very bottom */
 }
 
 .main-title {
