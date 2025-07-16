@@ -1148,3 +1148,57 @@ body.transitioning {
         top: auto;
     }
 }
+
+.section-container.first-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+}
+
+.main-title {
+    margin-bottom: 32px; /* Even space below title */
+    margin-top: 0;
+    text-align: center;
+    opacity: 1;
+}
+
+.profile-image {
+    margin-bottom: 32px; /* Same as .main-title for symmetry */
+    margin-top: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 1;
+}
+
+.about-text {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+.about-text p {
+    margin: 0 0 18px 0; /* Consistent vertical spacing */
+    line-height: 1.4;
+}
+
+.about-text p:last-of-type {
+    margin-bottom: 0;
+}
+
+.about-text .contact-links {
+    margin-top: 24px; /* Space above contact links */
+    justify-content: center;
+    gap: 25px;
+    opacity: 1;
+    position: static;
+}
+
+.about-text .contact-links a {
+    font-size: 16px;
+}
