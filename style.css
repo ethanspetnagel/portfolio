@@ -180,8 +180,8 @@ body.page-navigating * {
 .down-arrow {
     position: absolute;
     display: flex;
-    height: 156px; /* Doubled size */
-    width: 138px;  /* Doubled size */
+    height: 78px; /* Half size */
+    width: 69px;  /* Half size */
     align-items: center;
     justify-content: center;
     left: 1638px;
@@ -192,7 +192,7 @@ body.page-navigating * {
 }
 
 .down-arrow:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
 .arrow-rotated {
@@ -205,13 +205,17 @@ body.page-navigating * {
 }
 
 .arrow-image {
-    background-image: url('arrow-right.png');
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
     height: 100%;
     width: 100%;
-    background-color: transparent; /* Remove background color */
+    background-color: #d92020;
+    -webkit-mask-image: url('arrow-right.png');
+    mask-image: url('arrow-right.png');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
 }
 
 .arrow-image::after {
