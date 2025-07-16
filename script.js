@@ -20,8 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
-"Web designer + UX designer",
-            "<div style='margin-bottom: 1em; line-height: 1;'><div>Design Manager</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px); color: #34312e;'>Church California</div></div><div style='line-height: 1;'><div>UX Designer</div><div style='font-size: clamp(10.8px, 2.43vw, 29.7px); color: #34312e;'>Talamel Health</div></div>",
+"Web designer + UX designer"
             
         ];
         let paragraphIndex = 0;
@@ -52,10 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- SMOOTH SCROLL FOR DOWN ARROW ---
     function scrollToOldContent() {
-        const oldContent = document.getElementById('old-content');
-        if (oldContent) {
-            oldContent.scrollIntoView({ behavior: 'smooth' });
-        }
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
     }
 
     // --- PROJECT HOVER CLASS ---
@@ -458,7 +457,7 @@ class TextPartingEffect {
     }
     init() {
         this.wrapWordsInSpans();
-        const bioTexts = document.querySelectorAll('.bio-text');
+        const bioTexts = document.querySelectorAll('.bio-text, .about-text');
         bioTexts.forEach(element => {
             element.addEventListener('mouseenter', (e) => this.startParting(e.target));
             element.addEventListener('mousemove', (e) => this.updateParting(e));
@@ -466,7 +465,7 @@ class TextPartingEffect {
         });
     }
     wrapWordsInSpans() {
-        const bioTexts = document.querySelectorAll('.bio-text p, .bio-text a');
+        const bioTexts = document.querySelectorAll('.bio-text p, .bio-text a, .about-text p');
         bioTexts.forEach(element => {
             if (element.querySelector('.word')) return;
             const textNodes = this.getTextNodes(element);

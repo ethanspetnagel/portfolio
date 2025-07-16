@@ -56,6 +56,7 @@
     color: #ffffff;
 }
 
+
 html, body {
     margin: 0;
 }
@@ -108,7 +109,7 @@ body.page-navigating * {
     font-size: clamp(20px, 5vw, 60px);
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    color: #d9d9d9;
+    color: #dedede;
     text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.7), 1px 1px 3px rgba(52, 49, 46, 0.25);
     text-align: center;
     line-height: 1;
@@ -125,7 +126,7 @@ body.page-navigating * {
 
 /* First Section - New Portfolio Content */
 .first-section {
-    background-color: #ffffff;
+    background-color: #d9d9d9;
     overflow: hidden;
 }
 
@@ -186,13 +187,13 @@ body.page-navigating * {
     justify-content: center;
     left: 1638px;
     top: 959px;
-    cursor: pointer;
+    cursor: crosshair;
     transition: transform 0.3s ease;
     z-index: 10;
 }
 
 .down-arrow:hover {
-    transform: scale(1.2);
+    transform: scale(1.05);
 }
 
 .arrow-rotated {
@@ -260,7 +261,7 @@ body.page-navigating * {
 .first-section .contact-links a {
     color: #34312e;
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 18px;
     text-decoration: none;
     transition: color 0.3s ease;
