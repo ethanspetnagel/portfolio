@@ -149,12 +149,10 @@ body.page-navigating * {
 .profile-image {
     position: relative;
     background-position: center;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
-    max-width: 150px;      /* or your preferred max width */
-    width: 100%;
-    height: auto;
-    aspect-ratio: unset;   /* Let the image keep its natural aspect */
+    width: 120px;         /* Set fixed width */
+    height: 168px;        /* Set fixed height for portrait tile */
     border-radius: 0px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
