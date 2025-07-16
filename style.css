@@ -29,6 +29,13 @@
     font-style: italic;
 }
 
+@font-face {
+    font-family: 'Franklin Gothic URW Book';
+    src: url('fonts/FranklinGothicURW-Book.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -1225,4 +1232,10 @@ body.transitioning {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+}
+
+#introText,
+.main-title,
+.main-title p {
+    font-family: 'Franklin Gothic URW Book', Arial, sans-serif !important;
 }
