@@ -251,7 +251,7 @@ body.page-navigating * {
 .first-section .contact-links {
     position: absolute;
     left: 50%;
-    top: 820px; /* Positioned below about-text */
+    top: 800px; /* Positioned below about-text */
     transform: translateX(-50%);
     display: flex;
     gap: 25px;
@@ -262,7 +262,7 @@ body.page-navigating * {
     color: #34312e;
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 12px;
     text-decoration: none;
     transition: color 0.3s ease;
 }
