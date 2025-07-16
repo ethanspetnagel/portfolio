@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (introOverlay && introText) {
         const introFlip = new FontFlip(introText);
         introFlip.setText('ETHAN SPETNAGEL', () => {
-            startSubtitleAnimation(introOverlay, introText);
+            // After main text animation, start subtitles
+            setTimeout(() => startSubtitleAnimation(introOverlay, introText), 500);
         });
     }
 
@@ -47,6 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         // Small delay before starting subtitles
         setTimeout(showNextParagraph, 250);
+    }
+
+    // --- SMOOTH SCROLL FOR DOWN ARROW ---
+    function scrollToOldContent() {
+        const oldContent = document.getElementById('old-content');
+        if (oldContent) {
+            oldContent.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
     // --- PROJECT HOVER CLASS ---
