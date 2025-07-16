@@ -50,6 +50,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Franklin Gothic URW Medium';
+    src: url('fonts/FranklinGothic_URW_Medium.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -287,7 +294,7 @@ body.page-navigating * {
 
 .first-section .contact-links a {
     color: #34312e;
-    font-family: 'Franklin Gothic URW Book', Arial, sans-serif;
+    font-family: 'Franklin Gothic URW Medium', Arial, sans-serif;
     font-weight: normal;
     font-size: 16px;
     text-decoration: none;
@@ -629,7 +636,7 @@ body.june-hover .resume-download {
 
 .bio-text p {
     margin-bottom: 10px;
-    font-family: "Franklin Gothic URW Book", Arial, sans-serif;
+    font-family: "Franklin Gothic URW Medium", Arial, sans-serif;
     font-weight: normal;
     color: #34312e;
 }
@@ -650,7 +657,7 @@ body.june-hover .resume-download {
     color: #34312e;
     text-decoration: none;
     transition: all 0.3s ease;
-    font-family: "Franklin Gothic URW Book", Arial, sans-serif;
+    font-family: "Franklin Gothic URW Medium", Arial, sans-serif;
 }
 
 .bio-text a:hover {
@@ -669,7 +676,7 @@ body.project-hovering.video-light .bio-text a:hover {
     display: inline-flex;
     gap: 20px;
     font-size: calc(1.4rem - 7px);
-    font-family: "Franklin Gothic URW Book", Helvetica, Arial, sans-serif !important;
+    font-family: "Franklin Gothic URW Medium", Helvetica, Arial, sans-serif !important;
     align-items: baseline;
 }
 
@@ -1257,5 +1264,5 @@ body.transitioning {
 
 .about-text,
 .about-text p {
-    font-family: 'Franklin Gothic URW Book', Arial, sans-serif;
+    font-family: 'Franklin Gothic URW Medium', Arial, sans-serif;
 }
