@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (aboutText) aboutText.style.opacity = '1';
                         if (contactLinks) contactLinks.style.opacity = '1';
                         if (downArrow) downArrow.style.opacity = '1';
-                    }, 300); // Delay for profile image animation
+                    }, 700); // Delay for profile image animation
                 }, 500); // Match transition duration
             }
         }
