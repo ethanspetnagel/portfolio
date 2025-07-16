@@ -51,12 +51,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(() => {
                         const mainTitle = document.querySelector('.main-title');
                         const aboutText = document.querySelector('.about-text');
-                        const contactLinks = document.querySelector('.first-contact');
-                        if (mainTitle && aboutText && contactLinks) {
-                            mainTitle.style.transform = 'translateY(0)';
-                            aboutText.style.transform = 'translateY(0)';
-                            contactLinks.style.transform = 'translateY(0)';
-                        }
+                        const contactLinks = document.querySelector('.first-section .contact-links');
+                        const downArrow = document.querySelector('.down-arrow');
+
+                        if (mainTitle) mainTitle.style.opacity = '1';
+                        if (aboutText) aboutText.style.opacity = '1';
+                        if (contactLinks) contactLinks.style.opacity = '1';
+                        if (downArrow) downArrow.style.opacity = '1';
                     }, 300); // Delay for profile image animation
                 }, 500); // Match transition duration
             }
