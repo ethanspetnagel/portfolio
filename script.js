@@ -2,10 +2,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     const introOverlay = document.getElementById('introOverlay');
     const introText = document.getElementById('introText');
+    const firstSection = document.querySelector('.first-section');
+    const secondSection = document.querySelector('.second-section');
 
     if (sessionStorage.getItem('introShown')) {
         if (introOverlay) {
+            introOverlay.classList.add('hidden');
             introOverlay.style.display = 'none';
+        }
+        if (firstSection) {
+            firstSection.style.display = 'none';
+        }
+        if (secondSection) {
+            secondSection.style.display = 'block';
         }
         return;
     }
