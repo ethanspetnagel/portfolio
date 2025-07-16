@@ -156,7 +156,7 @@ body.page-navigating * {
     border-radius: 0px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     order: 2;
     cursor: crosshair;
 }
@@ -238,7 +238,7 @@ body.page-navigating * {
     color: #34312e;
     font-size: 18px;
     width: 100%;
-    max-width: 445px; /* Set max-width */
+    max-width: 450px; /* Set max-width */
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     line-height: 1.3;
@@ -910,7 +910,7 @@ body.transitioning {
         left: auto;
         top: auto;
         width: 100%;
-        max-width: 445px;
+        max-width: 450px;
     }
 }
 
@@ -1148,9 +1148,9 @@ body.transitioning {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end; /* Push content to the bottom */
     min-height: 100vh;
-    padding: 0;
+    padding-bottom: 8vh; /* Add some space from the very bottom */
 }
 
 .main-title {
@@ -1164,7 +1164,7 @@ body.transitioning {
 }
 
 .profile-image {
-    margin-bottom: 24px;
+    margin-bottom: 38px;
     margin-top: 0;
     display: block;
     margin-left: auto;
@@ -1183,7 +1183,7 @@ body.transitioning {
     margin: 0;
     padding: 0;
     text-align: center;
-    max-width: 600px;
+    max-width: 450px;
     width: 100%;
 }
 
@@ -1221,7 +1221,7 @@ body.transitioning {
 
 .main-title,
 .about-text {
-    max-width: 445px;
+    max-width: 450px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
