@@ -180,12 +180,12 @@ body.page-navigating * {
 .down-arrow {
     position: absolute;
     display: flex;
-    height: 78px;
+    height: 156px; /* Doubled size */
+    width: 138px;  /* Doubled size */
     align-items: center;
     justify-content: center;
     left: 1638px;
     top: 959px;
-    width: 69px;
     cursor: pointer;
     transition: transform 0.3s ease;
     z-index: 10;
@@ -196,30 +196,26 @@ body.page-navigating * {
 }
 
 .arrow-rotated {
-    flex: none;
+    width: 100%;
+    height: 100%;
     transform: rotate(90deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .arrow-image {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==');
+    background-image: url('arrow-right.png');
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-    height: 69px;
-    width: 78px;
-    background-color: #666;
-    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: transparent; /* Remove background color */
 }
 
 .arrow-image::after {
-    content: '→';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
+    content: ''; /* Remove the text arrow */
 }
 
 .about-text {
@@ -387,8 +383,8 @@ body.page-navigating * {
 }
 
 /* Make date text, about, and resume buttons solid on project link hover */
-body.project-links-hover .date-text,
-body.project-links-hover .about-toggle,
+body.project_links-hover .date-text,
+body.project_links-hover .about-toggle,
 body.project_links-hover .resume-download {
     color: #34312e !important;
     opacity: 1;
