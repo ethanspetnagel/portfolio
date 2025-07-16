@@ -30,6 +30,13 @@
 }
 
 @font-face {
+    font-family: 'Franklin Gothic ATF Heavy';
+    src: url('fonts/Franklin_Gothic_ATF_Hvy.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Franklin Gothic URW Book';
     src: url('fonts/FranklinGothicURW-Book.otf') format('opentype');
     font-weight: normal;
@@ -1237,5 +1244,11 @@ body.transitioning {
 #introText,
 .main-title,
 .main-title p {
-    font-family: 'Franklin Gothic URW Book', Arial, sans-serif !important;
+    font-family: 'Franklin Gothic ATF Heavy', Arial, sans-serif !important;
+    font-weight: bold;
+}
+
+.about-text,
+.about-text p {
+    font-family: 'Franklin Gothic URW Book', Arial, sans-serif;
 }
