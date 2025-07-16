@@ -1159,19 +1159,17 @@ body.transitioning {
 }
 
 .main-title {
-    margin-bottom: 32px; /* Even space below title */
+    margin-bottom: 24px;
     margin-top: 0;
     text-align: center;
-    opacity: 1;
 }
 
 .profile-image {
-    margin-bottom: 32px; /* Same as .main-title for symmetry */
+    margin-bottom: 24px;
     margin-top: 0;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    opacity: 1;
 }
 
 .about-text {
@@ -1183,8 +1181,9 @@ body.transitioning {
 }
 
 .about-text p {
-    margin: 0 0 18px 0; /* Consistent vertical spacing */
+    margin: 0 0 24px 0;
     line-height: 1.4;
+    font-weight: bold;
 }
 
 .about-text p:last-of-type {
@@ -1192,13 +1191,9 @@ body.transitioning {
 }
 
 .about-text .contact-links {
-    margin-top: 24px; /* Space above contact links */
+    margin-top: 16px;
     justify-content: center;
     gap: 25px;
     opacity: 1;
     position: static;
-}
-
-.about-text .contact-links a {
-    font-size: 16px;
 }
