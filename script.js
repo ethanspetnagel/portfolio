@@ -1,5 +1,8 @@
 // --- INTRO ANIMATION SETUP ---
 document.addEventListener('DOMContentLoaded', function() {
+    // Always initialize video pool
+    initializeVideoPool();
+
     const introOverlay = document.getElementById('introOverlay');
     const introText = document.getElementById('introText');
     const firstSection = document.querySelector('.first-section');
