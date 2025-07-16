@@ -299,6 +299,11 @@ body.profile-hover .arrow-image {
     transition: background-color 0.3s ease;
 }
 
+body.profile-hover .first-section .contact-links a {
+    color: #fff !important;
+    transition: color 0.3s ease;
+}
+
 body.profile-hover .first-section .contact-links a:hover {
     color: #34312e; /* Revert to dark on hover for contrast */
 }
