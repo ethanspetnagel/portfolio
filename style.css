@@ -239,7 +239,7 @@ body.page-navigating * {
     color: #34312e;
     font-size: 18px;
     width: 100%;
-    max-width: 571px; /* Set max-width */
+    max-width: 500px; /* Set max-width */
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     line-height: 1.3;
