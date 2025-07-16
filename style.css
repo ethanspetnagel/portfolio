@@ -249,7 +249,6 @@ body.page-navigating * {
 .about-text p {
     display: block;
     margin-bottom: 0;
-    font-weight: bold;
 }
 
 .first-section .contact-links {
@@ -1164,7 +1163,7 @@ body.transitioning {
 }
 
 .profile-image {
-    margin-bottom: 24px;
+    margin-bottom: 0px;
     margin-top: 0;
     display: block;
     margin-left: auto;
