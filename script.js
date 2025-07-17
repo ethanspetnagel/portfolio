@@ -884,11 +884,9 @@ const secondSection = document.querySelector('.second-section');
 
 function updateUpArrowVisibility() {
     if (!upArrow || !secondSection) return;
-    // Show arrow after half of second section is scrolled past
     const rect = secondSection.getBoundingClientRect();
-    const halfSection = secondSection.offsetHeight / 2;
-    // When the top of second section is above -half its height, user is halfway down
-    if (rect.top < -halfSection) {
+    // Show arrow if any part of second section is in the viewport
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
         upArrow.style.opacity = '1';
         upArrow.style.pointerEvents = 'auto';
     } else {

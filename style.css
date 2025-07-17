@@ -1296,16 +1296,16 @@ body.june-hover .date-text {
 }
 
 .up-arrow {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
     position: absolute;
     top: 32px;
     left: 32px;
     height: 40px;
     width: 35px;
     cursor: crosshair;
-    z-index: 1000; /* Make sure it's above other elements */
-    opacity: 1; /* Force visible for testing */
-    pointer-events: auto; /* Allow clicking */
-    transition: opacity 0.3s ease;
+    z-index: 1000;
     background: none;
 }
 
