@@ -884,10 +884,11 @@ const secondSection = document.querySelector('.second-section');
 
 function updateUpArrowVisibility() {
     if (!upArrow || !secondSection) return;
-    // Check if user is near the bottom of the second section
+    // Show arrow after half of second section is scrolled past
     const rect = secondSection.getBoundingClientRect();
-    const threshold = 100; // px from bottom
-    if (rect.top < -threshold) {
+    const halfSection = secondSection.offsetHeight / 2;
+    // When the top of second section is above -half its height, user is halfway down
+    if (rect.top < -halfSection) {
         upArrow.style.opacity = '1';
         upArrow.style.pointerEvents = 'auto';
     } else {
@@ -904,7 +905,9 @@ if (upArrow) {
     upArrow.addEventListener('click', () => {
         const firstSection = document.querySelector('.first-section');
         if (firstSection) {
-            firstSection.scrollIntoView({
+            // Use scrollTo for reliability
+            window.scrollTo({
+                top: firstSection.offsetTop,
                 behavior: 'smooth'
             });
         }
