@@ -812,7 +812,7 @@ body.project-hovering.video-light .bio-text a:hover {
 .resume-download {
     font-size: clamp(10.8px, 2.43vw, 29.7px);
     font-weight: bold;
-    font-family: "Franklin Gothic URW Medium", Helvetica, Arial, sans-serif;
+    font-family: "Franklin Gothic URW Book", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.02em;
     cursor: crosshair;
