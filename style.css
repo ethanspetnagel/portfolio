@@ -655,7 +655,6 @@ body.june-hover .resume-download {
 .bio-text .word {
     display: inline-block;
     transition: transform 0.1s ease-out;
-    margin-right: 0em;
 }
 
 /* Bio text links */
@@ -1271,4 +1270,9 @@ body.transitioning {
 .about-text,
 .about-text p {
     font-family: 'Franklin Gothic ATF Book', Arial, sans-serif;
+}
+
+body.june-hover .date-text {
+    color: #d9d9d9 !important;
+    text-shadow: none !important;
 }
