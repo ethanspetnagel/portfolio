@@ -175,6 +175,7 @@ body.page-navigating * {
 
 .profile-image {
     position: relative;
+    background-image: url('photo.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -186,6 +187,11 @@ body.page-navigating * {
     margin-bottom: 50px;
     order: 2;
     cursor: crosshair;
+}
+
+.profile-image:hover {
+    background-image: url('pink.png');
+    transition: none;
 }
 
 .main-title {
