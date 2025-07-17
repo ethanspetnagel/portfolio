@@ -670,6 +670,23 @@ body.june-hover .resume-download {
     color: #d92020 !important;
 }
 
+/* Fix about-text and bio-text links */
+.about-text a,
+.bio-text a {
+    color: #34312e !important;
+    text-decoration: none !important;
+    font-style: normal !important; /* Remove italics unless you want them */
+    transition: color 0.3s ease;
+    font-family: 'Franklin Gothic ATF Book', Arial, sans-serif !important;
+}
+
+.about-text a:hover,
+.bio-text a:hover {
+    color: #d92020 !important;
+    text-decoration: none !important;
+    font-style: normal !important;
+}
+
 /* Maintain hover color even when video is playing */
 body.project-hovering.video-dark .bio-text a:hover,
 body.project-hovering.video-light .bio-text a:hover {
