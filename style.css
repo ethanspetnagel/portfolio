@@ -294,7 +294,7 @@ body.page-navigating * {
 
 .first-section .contact-links a {
     color: #34312e;
-    font-family: 'Franklin Gothic URW Medium', Arial, sans-serif;
+    font-family: 'Franklin Gothic ATF Book', Arial, sans-serif;
     font-weight: normal;
     font-size: 16px;
     text-decoration: none;
@@ -676,7 +676,7 @@ body.project-hovering.video-light .bio-text a:hover {
     display: inline-flex;
     gap: 20px;
     font-size: calc(1.4rem - 7px);
-    font-family: "Franklin Gothic URW Medium", Helvetica, Arial, sans-serif !important;
+    font-family: "Franklin Gothic ATF Book", Helvetica, Arial, sans-serif !important;
     align-items: baseline;
 }
 
