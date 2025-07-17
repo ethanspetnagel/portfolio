@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- SMOOTH SCROLL FOR DOWN ARROW ---
     const downArrow = document.querySelector('.down-arrow');
+    const firstSection = document.querySelector('.first-section');
     if (downArrow) {
         downArrow.addEventListener('click', () => {
             const oldContentSection = document.getElementById('old-content');
@@ -903,21 +904,62 @@ function hideUpArrow() {
     upArrow.style.pointerEvents = 'none';
 }
 
-function handleScroll() {
-    hideUpArrow();
-    if (upArrowTimeout) clearTimeout(upArrowTimeout);
-    upArrowTimeout = setTimeout(showUpArrowIfOnSecondSection, 200); // Show after scroll stops
-}
-
-window.addEventListener('scroll', handleScroll);
-window.addEventListener('resize', showUpArrowIfOnSecondSection);
-document.addEventListener('DOMContentLoaded', showUpArrowIfOnSecondSection);
-
 if (upArrow) {
     upArrow.addEventListener('click', () => {
         const firstSection = document.querySelector('.first-section');
         if (firstSection) {
-            // Use scrollTo for reliability
+            window.scrollTo({
+                top: firstSection.offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    });
+}
+
+// Scroll down arrow logic
+const downArrow = document.querySelector('.down-arrow');
+function showDownArrowIfOnFirstSection() {
+    if (!downArrow || !firstSection) return;
+    const rect = firstSection.getBoundingClientRect();
+    // Show arrow if first section is in viewport
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+        downArrow.style.opacity = '1';
+        downArrow.style.pointerEvents = 'auto';
+    } else {
+        downArrow.style.opacity = '0';
+        downArrow.style.pointerEvents = 'none';
+    }
+}
+
+function hideDownArrow() {
+    if (!downArrow) return;
+    downArrow.style.opacity = '0';
+    downArrow.style.pointerEvents = 'none';
+}
+
+function handleScroll() {
+    hideUpArrow();
+    hideDownArrow();
+    if (upArrowTimeout) clearTimeout(upArrowTimeout);
+    upArrowTimeout = setTimeout(() => {
+        showUpArrowIfOnSecondSection();
+        showDownArrowIfOnFirstSection();
+    }, 200); // Show after scroll stops
+}
+
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('resize', () => {
+    showUpArrowIfOnSecondSection();
+    showDownArrowIfOnFirstSection();
+});
+document.addEventListener('DOMContentLoaded', () => {
+    showUpArrowIfOnSecondSection();
+    showDownArrowIfOnFirstSection();
+});
+
+if (upArrow) {
+    upArrow.addEventListener('click', () => {
+        if (firstSection) {
             window.scrollTo({
                 top: firstSection.offsetTop,
                 behavior: 'smooth'
