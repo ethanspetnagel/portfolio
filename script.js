@@ -515,7 +515,7 @@ class TextPartingEffect {
     }
     init() {
         this.wrapWordsInSpans();
-        const bioTexts = document.querySelectorAll('.bio-text, .about-text');
+        const bioTexts = document.querySelectorAll('.about-text');
         bioTexts.forEach(element => {
             element.addEventListener('mouseenter', (e) => this.startParting(e.target));
             element.addEventListener('mousemove', (e) => this.updateParting(e));
@@ -523,7 +523,7 @@ class TextPartingEffect {
         });
     }
     wrapWordsInSpans() {
-        const bioTexts = document.querySelectorAll('.bio-text p, .bio-text a, .about-text p');
+        const bioTexts = document.querySelectorAll('.about-text a, .about-text p');
         bioTexts.forEach(element => {
             if (element.querySelector('.word')) return;
             const textNodes = this.getTextNodes(element);
@@ -579,7 +579,7 @@ class TextPartingEffect {
         }
     }
     updateParting(event) {
-        const element = event.target.closest('.bio-text, .about-text');
+        const element = event.target.closest('.about-text');
         const data = this.activeElements.get(element);
         if (!data || !data.isActive) return;
         const cursorX = event.clientX;
@@ -643,7 +643,7 @@ if (aboutToggle && bioContent) {
     }
 
     // Set the initial state of the button
-    setAboutButtonText('ABOUT');
+    setAboutButtonText('ARTWORK');
 
     aboutToggle.addEventListener('click', (event) => {
         event.preventDefault(); // Prevent default link behavior
@@ -662,12 +662,12 @@ if (aboutToggle && bioContent) {
             // If it's open, hide the content and animate the button to "ABOUT"
             bioContent.classList.remove('active');
             aboutFlip.setText('HIDE', () => {
-                setAboutButtonText('ABOUT');
+                setAboutButtonText('ARTWORK');
             });
         } else {
             // If it's closed, show the content and animate the button to "HIDE"
             bioContent.classList.add('active');
-            aboutFlip.setText('ABOUT', () => {
+            aboutFlip.setText('ARTWORK', () => {
                 setAboutButtonText('HIDE');
             });
         }
