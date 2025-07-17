@@ -882,10 +882,12 @@ if (resumeDownload) {
 const upArrow = document.querySelector('.up-arrow');
 const secondSection = document.querySelector('.second-section');
 
-function updateUpArrowVisibility() {
+let upArrowTimeout = null;
+
+function showUpArrowIfOnSecondSection() {
     if (!upArrow || !secondSection) return;
     const rect = secondSection.getBoundingClientRect();
-    // Show arrow if any part of second section is in the viewport
+    // Only show if second section is in viewport
     if (rect.top < window.innerHeight && rect.bottom > 0) {
         upArrow.style.opacity = '1';
         upArrow.style.pointerEvents = 'auto';
@@ -895,9 +897,21 @@ function updateUpArrowVisibility() {
     }
 }
 
-window.addEventListener('scroll', updateUpArrowVisibility);
-window.addEventListener('resize', updateUpArrowVisibility);
-document.addEventListener('DOMContentLoaded', updateUpArrowVisibility);
+function hideUpArrow() {
+    if (!upArrow) return;
+    upArrow.style.opacity = '0';
+    upArrow.style.pointerEvents = 'none';
+}
+
+function handleScroll() {
+    hideUpArrow();
+    if (upArrowTimeout) clearTimeout(upArrowTimeout);
+    upArrowTimeout = setTimeout(showUpArrowIfOnSecondSection, 200); // Show after scroll stops
+}
+
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('resize', showUpArrowIfOnSecondSection);
+document.addEventListener('DOMContentLoaded', showUpArrowIfOnSecondSection);
 
 if (upArrow) {
     upArrow.addEventListener('click', () => {
