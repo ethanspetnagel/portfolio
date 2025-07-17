@@ -1303,8 +1303,9 @@ body.june-hover .date-text {
     width: 35px;
     cursor: crosshair;
     z-index: 10;
-    opacity: 1;
-    transition: transform 0.3s ease, opacity 0.5s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 .up-arrow:hover {
@@ -1314,7 +1315,7 @@ body.june-hover .date-text {
 .arrow-rotated-up {
     width: 100%;
     height: 100%;
-    transform: rotate(-90deg); /* Flip arrow to point up */
+    transform: rotate(-90deg); /* Arrow points up */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1335,7 +1336,7 @@ body.june-hover .date-text {
     transition: background-color 0.3s ease;
 }
 
-/* Make up arrow white on hover elements */
+/* Make up arrow white on hover states */
 body.profile-hover .up-arrow .arrow-image,
 body.june-hover .up-arrow .arrow-image,
 body.project_hovering .up-arrow .arrow-image {

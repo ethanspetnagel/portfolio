@@ -880,6 +880,26 @@ if (resumeDownload) {
 
 // Scroll to top arrow
 const upArrow = document.querySelector('.up-arrow');
+const secondSection = document.querySelector('.second-section');
+
+function updateUpArrowVisibility() {
+    if (!upArrow || !secondSection) return;
+    // Check if user is near the bottom of the second section
+    const rect = secondSection.getBoundingClientRect();
+    const threshold = 100; // px from bottom
+    if (rect.top < -threshold) {
+        upArrow.style.opacity = '1';
+        upArrow.style.pointerEvents = 'auto';
+    } else {
+        upArrow.style.opacity = '0';
+        upArrow.style.pointerEvents = 'none';
+    }
+}
+
+window.addEventListener('scroll', updateUpArrowVisibility);
+window.addEventListener('resize', updateUpArrowVisibility);
+document.addEventListener('DOMContentLoaded', updateUpArrowVisibility);
+
 if (upArrow) {
     upArrow.addEventListener('click', () => {
         const firstSection = document.querySelector('.first-section');
