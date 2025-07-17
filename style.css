@@ -662,8 +662,8 @@ body.june-hover .resume-download {
 .bio-text a {
     color: #34312e;
     text-decoration: none;
-    transition: all 0.3s ease;
-    font-family: "Franklin Gothic URW Medium", Arial, sans-serif;
+    transition: color 0.3s ease;
+    font-family: 'Franklin Gothic ATF Book', Arial, sans-serif;
 }
 
 .bio-text a:hover {
