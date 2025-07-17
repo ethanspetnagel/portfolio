@@ -1302,10 +1302,11 @@ body.june-hover .date-text {
     height: 40px;
     width: 35px;
     cursor: crosshair;
-    z-index: 10;
-    opacity: 0;
-    pointer-events: none;
+    z-index: 1000; /* Make sure it's above other elements */
+    opacity: 1; /* Force visible for testing */
+    pointer-events: auto; /* Allow clicking */
     transition: opacity 0.3s ease;
+    background: none;
 }
 
 .up-arrow:hover {
