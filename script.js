@@ -877,3 +877,16 @@ if (resumeDownload) {
         });
     });
 }
+
+// Scroll to top arrow
+const upArrow = document.querySelector('.up-arrow');
+if (upArrow) {
+    upArrow.addEventListener('click', () => {
+        const firstSection = document.querySelector('.first-section');
+        if (firstSection) {
+            firstSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    });
+}
