@@ -83,9 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (profileImage) {
         profileImage.addEventListener('mouseenter', () => {
             document.body.classList.add('profile-hover');
+            profileImage.style.backgroundImage = "url('pink.png')";
         });
         profileImage.addEventListener('mouseleave', () => {
             document.body.classList.remove('profile-hover');
+            profileImage.style.backgroundImage = "url('photo.png')";
         });
     }
 
