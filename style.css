@@ -199,7 +199,7 @@ body.page-navigating * {
     left: auto;
     top: auto;
     transform: none;
-    font-family: 'Franklin Gothic ATF Bold', Arial, sans-serif;
+    font-family: 'Franklin Gothic  URW Medium', Arial, sans-serif;
     font-weight: bold;
     color: #34312f;
     font-size: 18px;
@@ -1281,7 +1281,7 @@ body.transitioning {
 #introText,
 .main-title,
 .main-title p {
-    font-family: 'Franklin Gothic ATF Bold', Arial, sans-serif !important;
+    font-family: 'Franklin Gothic URW Medium', Arial, sans-serif !important;
     font-weight: bold;
 }
 
