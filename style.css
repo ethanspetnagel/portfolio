@@ -1198,18 +1198,154 @@ body.transitioning {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Center vertically */
     min-height: 100vh;
-    padding-top: 60px; /* Add space at the top */
-    padding-bottom: 0;
+    padding-bottom: 0; /* Remove extra space from bottom */
 }
 
 .main-title {
-    margin-top: 20px; /* Add space above title */
     margin-bottom: 20px;
+    margin-top: 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+    max-width: 455px;
+    width: 100%;
+}
+
+.profile-image {
+    margin-bottom: 44px;
+    margin-top: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 120px;
+    height: 168px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 0px;
+    opacity: 1; /* Ensure always visible */
+    transition: opacity 0.5s ease-in-out, background-image 0.3s;
+    cursor: crosshair;
+}
+
+.profile-image:hover {
+    background-image: url('pink.png');
+    opacity: 1; /* Ensure always visible on hover */
+    transition: background-image 0.3s;
 }
 
 .about-text {
-    margin-top: 20px; /* Add space above about-text */
-    margin-bottom: 20px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    max-width: 450px;
+    width: 100%;
+}
+
+.about-text p {
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+    font-size: 15px;
+}
+
+.about-text p:last-of-type {
+    margin-bottom: 20;
+}
+
+.about-text .contact-links {
+    margin-top: 50px; /* Increased space */
+    justify-content: center;
+    gap: 30px;
+    opacity: 1;
+    position: static;
+    display: flex;
+}
+
+.about-text .contact-links a {
+    font-size: 15px;
+    color: #34312e !important;
+    padding: 0;
+}
+
+.profile-image,
+.main-title,
+.about-text,
+.first-section .contact-links {
+    order: unset; /* Remove any order property */
+}
+
+.main-title,
+.about-text {
+    max-width: 450px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#introText,
+.main-title,
+.main-title p {
+    font-family: 'Franklin Gothic URW Medium', Arial, sans-serif !important;
+    font-weight: bold;
+}
+
+.about-text,
+.about-text p {
+    font-family: 'Franklin Gothic ATF Book', Arial, sans-serif;
+}
+
+body.june-hover .date-text {
+    color: #d9d9d9 !important;
+    text-shadow: none !important;
+}
+
+.up-arrow {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    height: 40px;
+    width: 35px;
+    cursor: crosshair;
+    z-index: 1000;
+    background: none;
+}
+
+.up-arrow:hover {
+    transform: scale(1.05);
+}
+
+.arrow-rotated-up {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg); /* Arrow points up */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.up-arrow .arrow-image {
+    height: 100%;
+    width: 100%;
+    background-color: #d92020;
+    -webkit-mask-image: url('arrow-right.png');
+    mask-image: url('arrow-right.png');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    transition: background-color 0.3s ease;
+}
+
+/* Make up arrow white on hover states */
+body.profile-hover .up-arrow .arrow-image,
+body.june-hover .up-arrow .arrow-image,
+body.project_hovering .up-arrow .arrow-image {
+    background-color: #fff !important;
 }
