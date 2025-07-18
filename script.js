@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showDownArrowIfOnFirstSection();
 });
 
-// --- ARROW CLICK EVENTS ---
+// Arrow click handlers
 if (upArrow) {
     upArrow.addEventListener('click', () => {
         if (firstSection) {
@@ -306,7 +306,6 @@ if (upArrow) {
         }
     });
 }
-
 if (downArrow) {
     downArrow.addEventListener('click', () => {
         if (secondSection) {
