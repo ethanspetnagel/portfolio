@@ -1241,7 +1241,7 @@ body.transitioning {
 .about-text p {
     margin: 0 0 12px 0;
     line-height: 1.3;
-    font-size: 16px;
+    font-size: 12px;
 }
 
 .about-text p:last-of-type {
