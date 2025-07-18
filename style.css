@@ -487,7 +487,7 @@ body.project_links-hover .resume-download {
 .date-text:hover {
     color: #d92020 !important;
     opacity: 1;
-    text-shadow: none;
+    text-shadow: none !important;
 }
 
 /* Special class for black background effect */
