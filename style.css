@@ -1245,7 +1245,7 @@ body.transitioning {
 }
 
 .about-text p:last-of-type {
-    margin-bottom: 0;
+    margin-bottom: 20;
 }
 
 .about-text .contact-links {
