@@ -44,11 +44,10 @@
                 <a href="https://www.are.na/ethan-spetnagel" target="_blank">are.na</a>
             </div>
         </div>
-        
     </div>
 
     <!-- Second Section - Old Portfolio Content -->
-
+    <div class="section-container second-section">
         <!-- Full Screen Background for Images/Videos -->
         <div class="fullscreen-bg" id="fullscreenBg">
             <video id="bgVideo" muted loop playsinline autoplay></video>
@@ -74,9 +73,12 @@
             <p class="date-text" id="dateText">AUGUST 2025</p>
         </div>
 
-        <!-- Bio Section -->
+        <!-- Bio Section with Resume Button -->
         <div class="bio-section">
-            <div class="about-toggle" id="aboutToggle">ARTWORK</div>
+            <div class="bio-controls">
+                <div class="about-toggle" id="aboutToggle">ARTWORK</div>
+                <span id="resumeDownload" class="resume-download">RESUME</span>
+            </div>
             <div id="bioContent" class="bio-content">
                 <div class="bio-text">
                     <p>
@@ -111,11 +113,6 @@
             </div>
         </div>
 
-        <!-- Resume Section -->
-        <div class="resume-section">
-            <span id="resumeDownload" class="resume-download">RESUME</span>
-        </div>
-
         <!-- Bio Image Preview -->
         <div class="bio-preview" id="bioPreview">
             <img id="bioPreviewImage" src="" alt="">
@@ -123,8 +120,11 @@
         </div>
     </div>
 
+    <!-- Section Arrow - Fixed Position -->
     <button class="section-arrow" id="sectionArrow">
-        <img src="down-arrow.svg" alt="Scroll Down" id="arrowIcon" />
+        <div class="arrow-image-wrapper" id="arrowWrapper">
+            <div class="arrow-image"></div>
+        </div>
     </button>
 
     <script src="script.js"></script>

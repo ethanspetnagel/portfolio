@@ -979,3 +979,92 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// ADD this code to your script.js file (add after your existing DOMContentLoaded event listener)
+
+// --- SECTION ARROW FUNCTIONALITY ---
+document.addEventListener('DOMContentLoaded', function() {
+    const sectionArrow = document.getElementById('sectionArrow');
+    const arrowWrapper = document.getElementById('arrowWrapper');
+    const firstSection = document.querySelector('.first-section');
+    const secondSection = document.querySelector('.second-section');
+    
+    // Check which section is in view and update arrow
+    function updateArrowDirection() {
+        const secondSectionRect = secondSection.getBoundingClientRect();
+        const isInSecondSection = secondSectionRect.top < window.innerHeight / 2;
+        
+        if (isInSecondSection) {
+            arrowWrapper.classList.add('flipped');
+        } else {
+            arrowWrapper.classList.remove('flipped');
+        }
+    }
+    
+    // Smooth scroll with custom duration
+    function smoothScrollTo(element) {
+        const startPosition = window.pageY || window.scrollY;
+        const targetPosition = element.offsetTop;
+        const distance = targetPosition - startPosition;
+        const duration = 800; // milliseconds (adjust for slower/faster scroll)
+        let start = null;
+        
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            const progress = timestamp - start;
+            const percentage = Math.min(progress / duration, 1);
+            
+            // Easing function (ease-in-out)
+            const easeInOutCubic = percentage < 0.5
+                ? 4 * percentage * percentage * percentage
+                : 1 - Math.pow(-2 * percentage + 2, 3) / 2;
+            
+            window.scrollTo(0, startPosition + (distance * easeInOutCubic));
+            
+            if (progress < duration) {
+                window.requestAnimationFrame(step);
+            }
+        }
+        
+        window.requestAnimationFrame(step);
+    }
+    
+    // Handle arrow click
+    sectionArrow.addEventListener('click', function() {
+        const isFlipped = arrowWrapper.classList.contains('flipped');
+        
+        if (isFlipped) {
+            // Scroll to first section
+            smoothScrollTo(firstSection);
+        } else {
+            // Scroll to second section
+            smoothScrollTo(secondSection);
+        }
+    });
+    
+    // Update arrow on scroll
+    window.addEventListener('scroll', updateArrowDirection);
+    
+    // Initial arrow state
+    updateArrowDirection();
+});
+
+// REMOVE this code from your existing script.js:
+/*
+- Remove any old up-arrow related code
+- Remove the old section arrow code that uses down-arrow.svg
+- Remove duplicate down-arrow click handlers
+*/
+
+// UPDATE your existing video handling to ensure it only works in second section:
+// In your showVideo function, add this check at the beginning:
+function showVideo(project) {
+    // Add this check to ensure we're in the second section
+    const secondSection = document.querySelector('.second-section');
+    const rect = secondSection.getBoundingClientRect();
+    if (rect.top > window.innerHeight || rect.bottom < 0) {
+        return false; // Don't show video if second section not in view
+    }
+    
+    // ... rest of your existing showVideo code
+}
