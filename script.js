@@ -106,12 +106,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const downArrow = document.querySelector('.down-arrow');
     if (downArrow) {
         downArrow.addEventListener('click', () => {
-            const oldContentSection = document.getElementById('old-content');
-            if (oldContentSection) {
-                oldContentSection.scrollIntoView({
-                    behavior: 'smooth'
-                });
+            const firstSection = document.querySelector('.first-section');
+            const secondSection = document.querySelector('.second-section');
+            if (secondSection) {
+                secondSection.style.display = '';
             }
+            if (firstSection) {
+                firstSection.style.display = 'none';
+            }
+            secondSection.scrollIntoView({
+                behavior: 'smooth'
+            });
         });
     }
 
@@ -938,5 +943,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (upArrow) {
         upArrow.style.opacity = '1';
         upArrow.style.pointerEvents = 'auto';
+    }
+    // Ensure about-text and main-title are visible
+    const aboutText = document.querySelector('.about-text');
+    if (aboutText) {
+        aboutText.style.opacity = '1';
+        aboutText.style.display = '';
+    }
+    const mainTitle = document.querySelector('.main-title');
+    if (mainTitle) {
+        mainTitle.style.opacity = '1';
+        mainTitle.style.display = '';
     }
 });
