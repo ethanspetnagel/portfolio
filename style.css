@@ -292,7 +292,7 @@ body.page-navigating * {
     top: auto;
     transform: none;
     display: flex;
-    gap: 30px;
+    gap: 35px;
     justify-content: center;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
@@ -1249,9 +1249,9 @@ body.transitioning {
 }
 
 .about-text .contact-links {
-    margin-top: 40px; /* Increased space */
+    margin-top: 50px; /* Increased space */
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
     opacity: 1;
     position: static;
     display: flex;
