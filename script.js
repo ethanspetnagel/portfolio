@@ -106,17 +106,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const downArrow = document.querySelector('.down-arrow');
     if (downArrow) {
         downArrow.addEventListener('click', () => {
-            const firstSection = document.querySelector('.first-section');
             const secondSection = document.querySelector('.second-section');
             if (secondSection) {
-                secondSection.style.display = '';
+                secondSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
             }
-            if (firstSection) {
-                firstSection.style.display = 'none';
-            }
-            secondSection.scrollIntoView({
-                behavior: 'smooth'
-            });
         });
     }
 
@@ -890,18 +885,9 @@ if (upArrow) {
     upArrow.addEventListener('click', () => {
         const firstSection = document.querySelector('.first-section');
         if (firstSection) {
-            // Make sure first section is visible before scrolling
-            firstSection.style.display = '';
             firstSection.scrollIntoView({
                 behavior: 'smooth'
             });
-            // Optionally, hide the second section after scroll
-            setTimeout(() => {
-                const secondSection = document.querySelector('.second-section');
-                if (secondSection) {
-                    secondSection.style.display = '';
-                }
-            }, 700); // Adjust delay as needed
         }
     });
 }
