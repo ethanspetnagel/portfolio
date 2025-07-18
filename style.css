@@ -516,6 +516,7 @@ body.june-hover .date-text {
 /* Date text when project is active */
 .date-text.project-active {
     color: #34312e !important;
+    text-shadow: none !important;
 }
 
 /* Bio Section */
