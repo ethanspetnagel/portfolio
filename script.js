@@ -239,6 +239,7 @@ let upArrowTimeout = null;
 let arrowTimeout = null;
 
 // --- ARROW LOGIC ---
+// Show/hide up arrow when second section is in view and not scrolling
 function showUpArrowIfOnSecondSection() {
     if (!upArrow || !secondSection) return;
     const rect = secondSection.getBoundingClientRect();
@@ -251,6 +252,7 @@ function showUpArrowIfOnSecondSection() {
     }
 }
 
+// Show/hide down arrow when first section is in view and not scrolling
 function showDownArrowIfOnFirstSection() {
     if (!downArrow || !firstSection) return;
     const rect = firstSection.getBoundingClientRect();
@@ -263,18 +265,19 @@ function showDownArrowIfOnFirstSection() {
     }
 }
 
+// Hide both arrows
 function hideUpArrow() {
     if (!upArrow) return;
     upArrow.style.opacity = '0';
     upArrow.style.pointerEvents = 'none';
 }
-
 function hideDownArrow() {
     if (!downArrow) return;
     downArrow.style.opacity = '0';
     downArrow.style.pointerEvents = 'none';
 }
 
+// Handle scroll: hide arrows while scrolling, show after scroll stops
 function handleScroll() {
     hideUpArrow();
     hideDownArrow();
