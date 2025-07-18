@@ -1200,7 +1200,7 @@ body.transitioning {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding-top: 80px; /* Add this line */
+    padding-top: 50px; /* <-- Now exactly 40px */
     padding-bottom: 0;
 }
 
@@ -1256,7 +1256,7 @@ body.transitioning {
 }
 
 .about-text .contact-links {
-    margin-top: 50px; /* Increased space */
+    margin-top: 40px; /* Increased space */
     justify-content: center;
     gap: 30px;
     opacity: 1;
