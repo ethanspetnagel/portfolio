@@ -233,6 +233,35 @@ let hideMediaTimeout = null;
 let isHoveringProject = false;
 let upArrowTimeout = null;
 
+function showUpArrowIfOnSecondSection() {
+    if (!upArrow || !secondSection) return;
+    const rect = secondSection.getBoundingClientRect();
+    // Only show if second section is in viewport
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+        upArrow.style.opacity = '1';
+        upArrow.style.pointerEvents = 'auto';
+    } else {
+        upArrow.style.opacity = '0';
+        upArrow.style.pointerEvents = 'none';
+    }
+}
+
+function hideUpArrow() {
+    if (!upArrow) return;
+    upArrow.style.opacity = '0';
+    upArrow.style.pointerEvents = 'none';
+}
+
+function handleScroll() {
+    hideUpArrow();
+    if (upArrowTimeout) clearTimeout(upArrowTimeout);
+    upArrowTimeout = setTimeout(showUpArrowIfOnSecondSection, 200); // Show after scroll stops
+}
+
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('resize', showUpArrowIfOnSecondSection);
+document.addEventListener('DOMContentLoaded', showUpArrowIfOnSecondSection);
+
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
@@ -914,9 +943,9 @@ function hideUpArrow() {
 function handleScroll() {
     hideUpArrow();
     if (upArrowTimeout) clearTimeout(upArrowTimeout);
-    upArrowTimeout = setTimeout(updateUpArrowVisibility, 200); // Show after scroll stops
+    upArrowTimeout = setTimeout(showUpArrowIfOnSecondSection, 200); // Show after scroll stops
 }
 
 window.addEventListener('scroll', handleScroll);
-window.addEventListener('resize', updateUpArrowVisibility);
-document.addEventListener('DOMContentLoaded', updateUpArrowVisibility);
+window.addEventListener('resize', showUpArrowIfOnSecondSection);
+document.addEventListener('DOMContentLoaded', showUpArrowIfOnSecondSection);
