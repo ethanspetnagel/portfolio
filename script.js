@@ -942,3 +942,46 @@ document.addEventListener('DOMContentLoaded', () => {
         mainTitle.style.display = '';
     }
 });
+
+// --- SECTION ARROW SETUP ---
+document.addEventListener('DOMContentLoaded', function() {
+    const sectionArrow = document.getElementById('sectionArrow');
+    const arrowIcon = document.getElementById('arrowIcon');
+    const firstSection = document.querySelector('.first-section');
+    const secondSection = document.querySelector('.second-section');
+
+    let isDown = true; // Arrow starts pointing down
+
+    function updateArrowDirection() {
+        // If second section is in view, arrow points up
+        const rect = secondSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            arrowIcon.style.transform = 'rotate(180deg)'; // Up
+            isDown = false;
+        } else {
+            arrowIcon.style.transform = 'rotate(0deg)'; // Down
+            isDown = true;
+        }
+    }
+
+    // Initial direction
+    updateArrowDirection();
+
+    // Scroll event to update arrow direction
+    window.addEventListener('scroll', updateArrowDirection);
+    window.addEventListener('resize', updateArrowDirection);
+
+    sectionArrow.addEventListener('click', function() {
+        if (isDown) {
+            // Scroll to second section
+            if (secondSection) {
+                secondSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            // Scroll to first section
+            if (firstSection) {
+                firstSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+});
