@@ -1296,8 +1296,8 @@ body.june-hover .date-text {
 }
 
 .up-arrow {
-    opacity: 0;
-    pointer-events: none;
+    opacity: 1 !important;
+    pointer-events: auto !important;
     transition: opacity 0.3s ease;
     position: absolute;
     top: 32px;

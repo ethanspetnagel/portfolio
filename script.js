@@ -885,9 +885,18 @@ if (upArrow) {
     upArrow.addEventListener('click', () => {
         const firstSection = document.querySelector('.first-section');
         if (firstSection) {
+            // Make sure first section is visible before scrolling
+            firstSection.style.display = '';
             firstSection.scrollIntoView({
                 behavior: 'smooth'
             });
+            // Optionally, hide the second section after scroll
+            setTimeout(() => {
+                const secondSection = document.querySelector('.second-section');
+                if (secondSection) {
+                    secondSection.style.display = '';
+                }
+            }, 700); // Adjust delay as needed
         }
     });
 }
@@ -920,3 +929,14 @@ function handleScroll() {
 window.addEventListener('scroll', handleScroll);
 window.addEventListener('resize', updateUpArrowVisibility);
 document.addEventListener('DOMContentLoaded', updateUpArrowVisibility);
+document.addEventListener('DOMContentLoaded', () => {
+    const firstSection = document.querySelector('.first-section');
+    if (firstSection) {
+        firstSection.style.display = '';
+    }
+    const upArrow = document.querySelector('.up-arrow');
+    if (upArrow) {
+        upArrow.style.opacity = '1';
+        upArrow.style.pointerEvents = 'auto';
+    }
+});
