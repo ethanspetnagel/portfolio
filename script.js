@@ -953,7 +953,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let isDown = true; // Arrow starts pointing down
 
     function updateArrowDirection() {
-        // If second section is in view, arrow points up
         const rect = secondSection.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
             arrowIcon.style.transform = 'rotate(180deg)'; // Up
@@ -964,21 +963,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Initial direction
     updateArrowDirection();
-
-    // Scroll event to update arrow direction
     window.addEventListener('scroll', updateArrowDirection);
     window.addEventListener('resize', updateArrowDirection);
 
     sectionArrow.addEventListener('click', function() {
         if (isDown) {
-            // Scroll to second section
             if (secondSection) {
                 secondSection.scrollIntoView({ behavior: 'smooth' });
             }
         } else {
-            // Scroll to first section
             if (firstSection) {
                 firstSection.scrollIntoView({ behavior: 'smooth' });
             }
