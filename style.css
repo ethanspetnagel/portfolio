@@ -1199,9 +1199,9 @@ body.transitioning {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end; /* Push content to the bottom */
+    justify-content: center; /* Center vertically */
     min-height: 100vh;
-    padding-bottom: 10vh; /* Add some space from the very bottom */
+    padding-bottom: 0; /* Remove extra space from bottom */
 }
 
 .main-title {
@@ -1249,7 +1249,7 @@ body.transitioning {
 }
 
 .about-text .contact-links {
-    margin-top: 12px;
+    margin-top: 40px; /* Increased space */
     justify-content: center;
     gap: 20px;
     opacity: 1;
