@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             introOverlay.style.display = 'none';
         }
         if (firstSection) {
-            firstSection.style.display = 'none';
+            firstSection.style.display = 'block';
         }
         if (secondSection) {
             secondSection.style.display = 'block';
@@ -32,8 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startSubtitleAnimation(overlay, textElement) {
         const paragraphs = [
-"Web designer + UX designer"
-            
+            "Web designer + UX designer"
         ];
         let paragraphIndex = 0;
 
@@ -64,12 +63,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         const mainTitle = document.querySelector('.main-title');
                         const aboutText = document.querySelector('.about-text');
                         const contactLinks = document.querySelector('.first-section .contact-links');
-                        const downArrow = document.querySelector('.down-arrow');
 
                         if (mainTitle) mainTitle.style.opacity = '1';
                         if (aboutText) aboutText.style.opacity = '1';
                         if (contactLinks) contactLinks.style.opacity = '1';
-                        if (downArrow) downArrow.style.opacity = '1';
                     }, 700); // Delay for profile image animation
                 }, 500); // Match transition duration
             }
@@ -91,30 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- JULY 2025 TEXT HOVER EFFECT ---
-    const dateText = document.querySelector('.date-text');
-    if (dateText) {
-        dateText.addEventListener('mouseenter', () => {
-            document.body.classList.add('profile-hover');
-        });
-        dateText.addEventListener('mouseleave', () => {
-            document.body.classList.remove('profile-hover');
-        });
-    }
-
-    // --- SMOOTH SCROLL FOR DOWN ARROW ---
-    const downArrow = document.querySelector('.down-arrow');
-    if (downArrow) {
-        downArrow.addEventListener('click', () => {
-            const secondSection = document.querySelector('.second-section');
-            if (secondSection) {
-                secondSection.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    }
-
     // --- PROJECT HOVER CLASS ---
     const projectsContainer = document.querySelector('.projects-container');
     if (projectsContainer) {
@@ -126,13 +99,74 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- MAIN INITIALIZATION ---
-    if (!aboutToggle || !bioContent) {
-        console.error('Required elements not found!');
-        return;
+    // --- SECTION ARROW FUNCTIONALITY ---
+    const sectionArrow = document.getElementById('sectionArrow');
+    const arrowWrapper = document.getElementById('arrowWrapper');
+    
+    // Check which section is in view and update arrow
+    function updateArrowDirection() {
+        const secondSectionRect = secondSection.getBoundingClientRect();
+        const isInSecondSection = secondSectionRect.top < window.innerHeight / 2;
+        
+        if (isInSecondSection) {
+            arrowWrapper.classList.add('flipped');
+        } else {
+            arrowWrapper.classList.remove('flipped');
+        }
     }
-    initializeVideoPool();
+    
+    // Smooth scroll with custom duration
+    function smoothScrollTo(element) {
+        const startPosition = window.pageY || window.scrollY;
+        const targetPosition = element.offsetTop;
+        const distance = targetPosition - startPosition;
+        const duration = 800; // milliseconds (adjust for slower/faster scroll)
+        let start = null;
+        
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            const progress = timestamp - start;
+            const percentage = Math.min(progress / duration, 1);
+            
+            // Easing function (ease-in-out)
+            const easeInOutCubic = percentage < 0.5
+                ? 4 * percentage * percentage * percentage
+                : 1 - Math.pow(-2 * percentage + 2, 3) / 2;
+            
+            window.scrollTo(0, startPosition + (distance * easeInOutCubic));
+            
+            if (progress < duration) {
+                window.requestAnimationFrame(step);
+            }
+        }
+        
+        window.requestAnimationFrame(step);
+    }
+    
+    // Handle arrow click
+    if (sectionArrow) {
+        sectionArrow.addEventListener('click', function() {
+            const isFlipped = arrowWrapper.classList.contains('flipped');
+            
+            if (isFlipped) {
+                // Scroll to first section
+                smoothScrollTo(firstSection);
+            } else {
+                // Scroll to second section
+                smoothScrollTo(secondSection);
+            }
+        });
+    }
+    
+    // Update arrow on scroll
+    window.addEventListener('scroll', updateArrowDirection);
+    
+    // Initial arrow state
+    updateArrowDirection();
+    
+    // --- MAIN INITIALIZATION ---
     preloadPages(); // Preload linked pages
+    
     document.addEventListener('mousemove', () => {
         Object.values(videoPool).forEach(video => {
             if (video.paused) {
@@ -143,6 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { once: true });
+    
     setInterval(() => {
         if (currentActiveVideo && activeProject) {
             analyzeVideoBrightness(currentActiveVideo, activeProject);
@@ -163,38 +198,38 @@ const projectMedia = {
     'slug': {
         url: './slug.mp4',
         position: { left: '27%', top: '15%' },
-        size: 'm' // Example size
+        size: 'm'
     }, 
     'church': {
         url: './church video bg.mp4',
         position: { left: '77%', top: '23%' },
-        size: 'm' // Example size
+        size: 'm'
     },
     'talamel': {
         url: './talamel1.mp4',
         position: { left: '22%', top: '31%' },
-        size: 'm' // Example size
+        size: 'm'
     }, 
     'fox-and-lion': { 
         url: './foxlionbg.mp4',
         position: { left: '50%', top: '30%' },
-        size: 'xl' // Example size
+        size: 'xl'
     }, 
     'ecoscan': '',
     'cardioscape': { 
         url: './cardio.mp4',
         position: { left: '84.5%', top: '45.5%' },
-        size: 'm' // Example size
+        size: 'm'
     },
     'lu-rose-gold': {
         url: './lu rose gold video bg.mp4',
         position: { left: '50%', top: '45%' },
-        size: 'm' // Example size
+        size: 'm'
     },
     'green-lake-law': {
         url: './bag.png',
         position: { left: '85%', top: '53.5%' },
-        size: 'l' // Example size
+        size: 'l'
     }, 
     'june-2025': ''
 };
@@ -209,13 +244,13 @@ const bioImages = {
     'colorado': './colorado.gif'
 };
 
-// DOM Elements
+// DOM Elements - Global declarations
 const fullscreenBg = document.getElementById('fullscreenBg');
 const projectLinks = document.querySelectorAll('.project-link');
 const projectsContainer = document.querySelector('.projects-container');
 const dateText = document.getElementById('dateText');
 const aboutToggle = document.getElementById('aboutToggle');
-const bioSection = document.querySelector('.bio-section'); // Get the container
+const bioSection = document.querySelector('.bio-section');
 const bioContent = document.getElementById('bioContent');
 const bioLinks = document.querySelectorAll('.bio-text a[data-bio], .about-text a[data-bio]');
 const bioPreview = document.getElementById('bioPreview');
@@ -231,7 +266,6 @@ let isTransitioning = false;
 let videoBrightness = {};
 let hideMediaTimeout = null;
 let isHoveringProject = false;
-let upArrowTimeout = null;
 
 // Touch device detection
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -271,7 +305,6 @@ function preloadPages() {
     links.forEach(link => {
         const url = link.href;
         if (url) {
-            // Fetching the page will cause the browser to cache it
             fetch(url).catch(err => console.error(`Failed to preload page: ${url}`, err));
         }
     });
@@ -327,6 +360,13 @@ function updateTextColors(project) {
 
 // Show video instantly with custom position
 function showVideo(project) {
+    // Check if we're in the second section
+    const secondSection = document.querySelector('.second-section');
+    const rect = secondSection.getBoundingClientRect();
+    if (rect.top > window.innerHeight || rect.bottom < 0) {
+        return false; // Don't show video if second section not in view
+    }
+    
     if (isTransitioning) return false;
     const video = videoPool[project];
     if (!video) return false;
@@ -409,7 +449,7 @@ class FontFlip {
     constructor(el) {
         this.el = el;
         this.fonts = [
-            'EB Garamond, serif', // Use the loaded web font
+            'EB Garamond, serif',
             'UnifrakturCook, cursive',
             'Impact, sans-serif',
             'Courier New, monospace',
@@ -509,7 +549,7 @@ class FontFlip {
     }
 }
 
-// Text Parting Effect (unchanged)
+// Text Parting Effect
 class TextPartingEffect {
     constructor() {
         this.activeElements = new Map();
@@ -660,7 +700,7 @@ if (aboutToggle && bioContent) {
         aboutToggle.classList.toggle('active');
 
         if (isActive) {
-            // If it's open, hide the content and animate the button to "ABOUT"
+            // If it's open, hide the content and animate the button to "ARTWORK"
             bioContent.classList.remove('active');
             aboutFlip.setText('HIDE', () => {
                 setAboutButtonText('ARTWORK');
@@ -707,7 +747,7 @@ function handleProjectHover(link, isEntering) {
                 activeProject = null;
                 projectsContainer.classList.remove('hovering');
                 document.body.classList.remove('project-hovering');
-                dateText.textContent = 'JULY 2025';
+                dateText.textContent = 'AUGUST 2025';
                 dateText.classList.remove('project-active');
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
@@ -768,7 +808,7 @@ if (!isTouchDevice) {
                 projectLinks.forEach(l => l.classList.remove('touch-active'));
                 projectsContainer.classList.remove('touch-hovering');
                 document.body.classList.remove('project-hovering');
-                dateText.textContent = 'JULY 2025';
+                dateText.textContent = 'AUGUST 2025';
                 dateText.classList.remove('project-active');
                 Object.values(videoPool).forEach(v => {
                     v.style.zIndex = '1';
@@ -780,24 +820,26 @@ if (!isTouchDevice) {
     });
 }
 
-// Date text hover
-dateText.addEventListener('mouseenter', function() {
-    if (!dateText.classList.contains('project-active')) {
-        if (hideMediaTimeout) {
-            clearTimeout(hideMediaTimeout);
-            hideMediaTimeout = null;
+// Date text hover - Only add event if dateText exists
+if (dateText) {
+    dateText.addEventListener('mouseenter', function() {
+        if (!dateText.classList.contains('project-active')) {
+            if (hideMediaTimeout) {
+                clearTimeout(hideMediaTimeout);
+                hideMediaTimeout = null;
+            }
+            document.body.classList.add('june-hover');
+            if (fullscreenBg && fullscreenBg.classList.contains('active')) {
+                hideAllMedia();
+            }
         }
-        document.body.classList.add('june-hover');
-        if (fullscreenBg.classList.contains('active')) {
-            hideAllMedia();
+    });
+    dateText.addEventListener('mouseleave', function() {
+        if (!dateText.classList.contains('project-active')) {
+            document.body.classList.remove('june-hover');
         }
-    }
-});
-dateText.addEventListener('mouseleave', function() {
-    if (!dateText.classList.contains('project-active')) {
-        document.body.classList.remove('june-hover');
-    }
-});
+    });
+}
 
 // Bio link hover
 bioLinks.forEach(link => {
@@ -879,109 +921,6 @@ if (resumeDownload) {
     });
 }
 
-// Scroll to top arrow
-const upArrow = document.querySelector('.up-arrow');
-if (upArrow) {
-    upArrow.addEventListener('click', () => {
-        const firstSection = document.querySelector('.first-section');
-        if (firstSection) {
-            firstSection.scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-    });
-}
-
-function updateUpArrowVisibility() {
-    if (!upArrow || !secondSection) return;
-    const rect = secondSection.getBoundingClientRect();
-    // Show arrow if any part of second section is in the viewport
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-        upArrow.style.opacity = '1';
-        upArrow.style.pointerEvents = 'auto';
-    } else {
-        upArrow.style.opacity = '0';
-        upArrow.style.pointerEvents = 'none';
-    }
-}
-
-function hideUpArrow() {
-    if (!upArrow) return;
-    upArrow.style.opacity = '0';
-    upArrow.style.pointerEvents = 'none';
-}
-
-function handleScroll() {
-    hideUpArrow();
-    if (upArrowTimeout) clearTimeout(upArrowTimeout);
-    upArrowTimeout = setTimeout(updateUpArrowVisibility, 200); // Show after scroll stops
-}
-
-window.addEventListener('scroll', handleScroll);
-window.addEventListener('resize', updateUpArrowVisibility);
-document.addEventListener('DOMContentLoaded', updateUpArrowVisibility);
-document.addEventListener('DOMContentLoaded', () => {
-    const firstSection = document.querySelector('.first-section');
-    if (firstSection) {
-        firstSection.style.display = '';
-    }
-    const upArrow = document.querySelector('.up-arrow');
-    if (upArrow) {
-        upArrow.style.opacity = '1';
-        upArrow.style.pointerEvents = 'auto';
-    }
-    // Ensure about-text and main-title are visible
-    const aboutText = document.querySelector('.about-text');
-    if (aboutText) {
-        aboutText.style.opacity = '1';
-        aboutText.style.display = '';
-    }
-    const mainTitle = document.querySelector('.main-title');
-    if (mainTitle) {
-        mainTitle.style.opacity = '1';
-        mainTitle.style.display = '';
-    }
-});
-
-// --- SECTION ARROW SETUP ---
-document.addEventListener('DOMContentLoaded', function() {
-    const sectionArrow = document.getElementById('sectionArrow');
-    const arrowIcon = document.getElementById('arrowIcon');
-    const firstSection = document.querySelector('.first-section');
-    const secondSection = document.querySelector('.second-section');
-
-    let isDown = true; // Arrow starts pointing down
-
-    function updateArrowDirection() {
-        const rect = secondSection.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            arrowIcon.style.transform = 'rotate(180deg)'; // Up
-            isDown = false;
-        } else {
-            arrowIcon.style.transform = 'rotate(0deg)'; // Down
-            isDown = true;
-        }
-    }
-
-    updateArrowDirection();
-    window.addEventListener('scroll', updateArrowDirection);
-    window.addEventListener('resize', updateArrowDirection);
-
-    sectionArrow.addEventListener('click', function() {
-        if (isDown) {
-            if (secondSection) {
-                secondSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        } else {
-            if (firstSection) {
-                firstSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    });
-});
-
-// ADD this code to your script.js file (add after your existing DOMContentLoaded event listener)
-
 // --- SECTION ARROW FUNCTIONALITY ---
 document.addEventListener('DOMContentLoaded', function() {
     const sectionArrow = document.getElementById('sectionArrow');
@@ -1048,23 +987,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial arrow state
     updateArrowDirection();
 });
-
-// REMOVE this code from your existing script.js:
-/*
-- Remove any old up-arrow related code
-- Remove the old section arrow code that uses down-arrow.svg
-- Remove duplicate down-arrow click handlers
-*/
-
-// UPDATE your existing video handling to ensure it only works in second section:
-// In your showVideo function, add this check at the beginning:
-function showVideo(project) {
-    // Add this check to ensure we're in the second section
-    const secondSection = document.querySelector('.second-section');
-    const rect = secondSection.getBoundingClientRect();
-    if (rect.top > window.innerHeight || rect.bottom < 0) {
-        return false; // Don't show video if second section not in view
-    }
-    
-    // ... rest of your existing showVideo code
-}
