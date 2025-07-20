@@ -249,11 +249,11 @@ body.title-hover .project-gallery {
 .site-title {
   position: fixed;
   top: 60px; /* Adjusted for vertical alignment with arrow */
-  left: 65px;
+  left: 10px;
   z-index: 1001; /* Above the header background */
   font-family: "Franklin Gothic URW Medium", Arial, sans-serif;
   font-weight: bold;
-  font-size: 60px; /* Increased font size */
+  font-size: 80px; /* Increased font size */
   letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: crosshair;
@@ -261,6 +261,7 @@ body.title-hover .project-gallery {
   margin: 0;
   white-space: nowrap;
   flex-shrink: 0;
+  color: #34312e;
 }
 
 .site-title a {
@@ -269,25 +270,24 @@ body.title-hover .project-gallery {
 }
 
 .site-title a[href*="slug.html"] {
-  color: #d92020;
+  color: #34312e;
 }
 
 /* UPDATED NEURAL TABS */
 .nav-tabs {
   display: flex;
-  gap: 40px;
+  gap: 30px;
   position: relative;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 9px);
+  font-size: 15px;
   font-weight: normal;
-  text-transform: uppercase;
   letter-spacing: -0.01em;
   white-space: nowrap;
   padding: 8px 0;
 }
 
 .essay-tab {
-  cursor: pointer;
+  cursor: crosshair;
   color: #34312e;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   white-space: nowrap;
