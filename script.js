@@ -88,6 +88,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+     // --- ADD YOUR NEW PLUS/MINUS TOGGLE HERE ---
+    const aboutPlusToggle = document.getElementById('aboutPlusToggle');
+    const aboutContent = document.getElementById('aboutContent');
+    
+    if (aboutPlusToggle && aboutContent) {
+        // Start with content visible
+        aboutPlusToggle.textContent = '+';
+        aboutContent.classList.add('active');
+        
+        aboutPlusToggle.addEventListener('click', function() {
+            const isActive = aboutContent.classList.contains('active');
+            
+            if (isActive) {
+                // Close content
+                aboutContent.classList.remove('active');
+                aboutPlusToggle.textContent = '-';
+            } else {
+                // Open content
+                aboutContent.classList.add('active');
+                aboutPlusToggle.textContent = '+';
+            }
+        });
+    }
+
     // --- PROJECT HOVER CLASS ---
     const projectsContainer = document.querySelector('.projects-container');
     if (projectsContainer) {

@@ -180,7 +180,7 @@ body.page-navigating * {
     position: relative;
     width: clamp(200px, 50vh, 405px);
     height: clamp(140px, 35vh, 270px);
-    margin-top: clamp(90px, 45vh, 290px);
+    margin-top: clamp(120px, 45vh, 290px); /* This moves the image down */
     margin-bottom: 25px;
     background-image: url('id.png');
     background-position: center;
@@ -1191,3 +1191,51 @@ body.transitioning {
     padding: 0;
 }
 
+/* Plus/Minus Toggle Button */
+.about-toggle-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.about-plus-toggle {
+    background: none;
+    border: none;
+    font-size: 28px;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+    color: #34312e;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, color 0.3s ease;
+    line-height: 1;
+}
+
+.about-plus-toggle:hover {
+    color: #d92020;
+    transform: scale(1.1);
+}
+
+/* About content container */
+.about-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+}
+
+.about-content.active {
+    max-height: 500px; /* Adjust based on your content */
+    opacity: 1;
+}
+
+
+/* When profile-hover is active, make plus button white */
+body.profile-hover .about-plus-toggle {
+    color: #d9d9d9;
+}
