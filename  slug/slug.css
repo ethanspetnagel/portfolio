@@ -4,6 +4,33 @@
   font-family: "Borgia Pro";
   src: url("../BorgiaPro-Regular.woff") format("woff");
 }
+@font-face {
+    font-family: 'Franklin Gothic ATF Heavy';
+    src: url('fonts/Franklin_Gothic_ATF_Hvy.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic URW Book';
+    src: url('fonts/FranklinGothicURW-Book.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic ATF Bold';
+    src: url('fonts/Franklin_Gothic_ATF_Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Franklin Gothic URW Medium';
+    src: url('fonts/FranklinGothic_URW_Medium.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 * {
   margin: 0;
@@ -222,12 +249,12 @@ body.title-hover .project-gallery {
 
 .site-title {
   position: fixed;
-  top: 18px; /* Adjusted for vertical alignment with arrow */
+  top: 50px; /* Adjusted for vertical alignment with arrow */
   left: 65px;
   z-index: 1001; /* Above the header background */
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-weight: bold;
-  font-size: 1.5rem; /* Increased font size */
+  font-size: 4%; /* Increased font size */
   letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: pointer;
@@ -333,9 +360,8 @@ body.title-hover .project-gallery {
 
 /* Interactive text for word-level parting effect */
 .interactive-text {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: calc(1.6rem - 9px);
-  font-weight: normal;
+  font-family: "Franklin Gothic URW Book", Arial, sans-serif;
+  font-size: 15px;
   line-height: 1.08;
   margin-bottom: 20px;
   color: #34312e;
@@ -831,9 +857,6 @@ ul.interactive-text li {
     margin-bottom: 10px;
     padding: 15px 0;
   }
-  .site-title {
-    font-size: calc(1.3rem - 7px);
-  }
   .essay-nav {
     font-size: calc(1.3rem - 7px);
     gap: 20px;
@@ -876,9 +899,7 @@ ul.interactive-text li {
   .projects-button {
     font-size: clamp(10.8px, 2.43vw, 29.7px);
   }
-  .site-title {
-    font-size: calc(1.3rem - 7px);
-  }
+
   .cursor-label {
     font-size: clamp(20px, 5vw, 40px);
   }
