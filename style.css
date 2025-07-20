@@ -178,13 +178,14 @@ body.page-navigating * {
 
 .profile-image {
     position: relative;
-    width: 45vh;
-    height: 30vh;
+    width: clamp(200px, 50vh, 405px);
+    height: clamp(140px, 35vh, 270px);
+    margin-top: clamp(90px, 45vh, 290px);
+    margin-bottom: 25px;
     background-image: url('id.png');
     background-position: center;
     background-size: contain;
-    background-repeat: no-repeat;
-    margin: 0 0 60px 0; /* Only margin-bottom for spacing below */
+    background-repeat: no-repeat; /* Only margin-bottom for spacing below */
     display: block;
     opacity: 1;
     transition: opacity 0.5s ease-in-out, background-image 0.3s;
@@ -208,7 +209,7 @@ body.page-navigating * {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     line-height: 1.3;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     margin-top: 0;
     text-align: center;
     margin-left: auto;
@@ -241,13 +242,13 @@ body.page-navigating * {
 }
 
 .about-text p {
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
     line-height: 1.3;
     font-size: 15px;
 }
 
 .about-text p:last-of-type {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .first-section .contact-links {
@@ -503,8 +504,9 @@ body.june-hover .main-title p,
 body.june-hover .about-text p,
 body.june-hover .top-contacts a,
 body.june-hover .resume-download,
+body.june-hover .arrow-image,
 body.june-hover .date-text {
-    color: #d9d9d9 !important;
+    color: #d92020 !important;
     text-shadow: none;
 }
 
@@ -1188,3 +1190,4 @@ body.transitioning {
     color: #34312e !important;
     padding: 0;
 }
+
