@@ -253,7 +253,7 @@ body.title-hover .project-gallery {
   z-index: 1001; /* Above the header background */
   font-family: "Franklin Gothic URW Medium", Arial, sans-serif;
   font-weight: bold;
-  font-size: 30px; /* Increased font size */
+  font-size: 60px; /* Increased font size */
   letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: crosshair;
