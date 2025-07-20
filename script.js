@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (mainTitle) mainTitle.style.opacity = '1';
                         if (aboutText) aboutText.style.opacity = '1';
                         if (contactLinks) contactLinks.style.opacity = '1';
-                    }, 700); // Delay for profile image animation
+                    }, 500); // Delay for profile image animation
                 }, 500); // Match transition duration
             }
         }
@@ -80,11 +80,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (profileImage) {
         profileImage.addEventListener('mouseenter', () => {
             document.body.classList.add('profile-hover');
-            profileImage.style.backgroundImage = "url('pink.png')";
+            profileImage.style.backgroundImage = "url('id.png')";
         });
         profileImage.addEventListener('mouseleave', () => {
             document.body.classList.remove('profile-hover');
-            profileImage.style.backgroundImage = "url('photo.png')";
+            profileImage.style.backgroundImage = "url('id.png')";
         });
     }
 
