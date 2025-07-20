@@ -212,11 +212,12 @@ body.title-hover .project-gallery {
   overflow-x: hidden;
   padding: 60px 0px 40px 15px; /* Added 60px top padding */
   background: #d9d9d9;
-  position: relative;
-  border-right: 2px solid #34312e; /* Vertical separator line */
+  position: relative;/* Vertical separator line */
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none;  /* For Internet Explorer and Edge */
 }
+
+
 
 .essay-sidebar::-webkit-scrollbar {
   display: none; /* For Chrome, Safari and Opera */
@@ -227,6 +228,18 @@ body.title-hover .project-gallery {
 .essay-sidebar:hover ~ .star-scroll-indicator,
 .essay-sidebar.scrolling ~ .star-scroll-indicator {
   opacity: 1;
+}
+
+.corner-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 33.35vw;    /* Covers left column, adjust as needed */
+  height: 10vh;   /* Covers top area, adjust as needed */
+  background: #d9d9d9;
+  z-index: 999;   /* Below arrows/title/nav, above scrolling text */
+  pointer-events: none;
+  transition: width 0.3s, height 0.3s;
 }
 
 /* Navigation with reduced gap */
@@ -241,7 +254,7 @@ body.title-hover .project-gallery {
   margin-top:25px;
   width: calc(100% + 15px); /* Extend width to cover the padding */
   margin-left: -15px; /* Pull the element to the left edge */
-  padding-left: 15px; /* Add padding back to align the content */
+  padding-left: 300px; /* Add padding back to align the content */
   border-bottom: 2px solid #34312e; /* Horizontal separator line */
   padding-top: 60px; /* ADDED: Creates space for the arrow and title */
   padding-bottom: 0px; /* Adjust space between tabs and the line */
@@ -249,12 +262,12 @@ body.title-hover .project-gallery {
 
 .site-title {
   position: fixed;
-  top: 60px; /* Adjusted for vertical alignment with arrow */
+  top: 100px; /* Adjusted for vertical alignment with arrow */
   left: 10px;
   z-index: 1001; /* Above the header background */
   font-family: "Franklin Gothic URW Medium", Arial, sans-serif;
   font-weight: bold;
-  font-size: 80px; /* Increased font size */
+  font-size: 100px; /* Increased font size */
   letter-spacing: -0.01em;
   text-transform: uppercase;
   cursor: crosshair;
@@ -277,7 +290,7 @@ body.title-hover .project-gallery {
 /* UPDATED NEURAL TABS */
 .nav-tabs {
   display: flex;
-  gap: 30px;
+  gap: 23px;
   position: relative;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 15px;
@@ -438,7 +451,7 @@ body.title-hover .project-gallery {
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 20px 0px 0px 0px; /* Reduced left padding from 60px */
+  padding-top: 22vh ;
   background-color: #d9d9d9;
   display: flex;
   flex-direction: column;
@@ -904,4 +917,44 @@ ul.interactive-text li {
     font-size: clamp(20px, 5vw, 40px);
   }
   
+}
+
+.site-title {
+  font-size: clamp(48px, 8vw, 100px); /* Scales from 48px up to 100px */
+  letter-spacing: clamp(-0.04em, -0.01vw, -0.01em);
+}
+
+.nav-tabs,
+.essay-tab {
+  font-size: clamp(13px, 2vw, 18px); /* Scales from 13px up to 18px */
+}
+
+.interactive-text {
+  font-size: clamp(13px, 1.7vw, 15px); /* Scales from 13px up to 15px */
+}
+
+.caption,
+.info-toggle,
+.info-panel {
+  font-size: clamp(13px, 1.7vw, 15px); /* Scales from 13px up to 15px */
+}
+
+.projects-button,
+.cursor-label {
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+}
+
+/* Responsive overrides for mobile (already present, but you can use clamp for consistency) */
+@media (max-width: 768px) {
+  .nav-tabs,
+  .essay-tab,
+  .interactive-text,
+  .caption,
+  .info-toggle,
+  .info-panel {
+    font-size: clamp(12px, 3vw, 16px);
+  }
+  .site-title {
+    font-size: clamp(32px, 12vw, 60px);
+  }
 }
