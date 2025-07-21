@@ -181,7 +181,7 @@ body.page-navigating * {
     width: clamp(250px, 62vh, 490px); 
     height: clamp(178px, 44vh, 330px);
     margin-top: clamp(120px, 45vh, 290px); /* This moves the image down */
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     background-image: url('id.png');
     background-position: center;
     background-size: contain;
@@ -934,7 +934,6 @@ body.transitioning {
 /* Responsive Design for New Portfolio Section */
 @media (max-width: 1920px) {
     .profile-image {
-        left: auto;
         transform: none;
         top: auto;
     }
