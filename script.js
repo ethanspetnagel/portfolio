@@ -88,29 +88,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-     // --- ADD YOUR NEW PLUS/MINUS TOGGLE HERE ---
-    const aboutPlusToggle = document.getElementById('aboutPlusToggle');
-    const aboutContent = document.getElementById('aboutContent');
+    // --- PLUS/MINUS TOGGLE ---
+const aboutPlusToggle = document.getElementById('aboutPlusToggle');
+const aboutContent = document.getElementById('aboutContent');
+
+if (aboutPlusToggle && aboutContent) {
+    // Start with content closed
+    aboutPlusToggle.textContent = '+';
     
-    if (aboutPlusToggle && aboutContent) {
-        // Start with content visible
-        aboutPlusToggle.textContent = '+';
-        aboutContent.classList.add('active');
+    aboutPlusToggle.addEventListener('click', function() {
+        const isActive = aboutContent.classList.contains('active');
         
-        aboutPlusToggle.addEventListener('click', function() {
-            const isActive = aboutContent.classList.contains('active');
-            
-            if (isActive) {
-                // Close content
-                aboutContent.classList.remove('active');
-                aboutPlusToggle.textContent = '-';
-            } else {
-                // Open content
-                aboutContent.classList.add('active');
-                aboutPlusToggle.textContent = '+';
-            }
-        });
-    }
+        if (isActive) {
+            // Close content
+            aboutContent.classList.remove('active');
+            aboutPlusToggle.textContent = '+';
+            aboutPlusToggle.classList.remove('active'); // Remove active class
+        } else {
+            // Open content
+            aboutContent.classList.add('active');
+            aboutPlusToggle.textContent = '−'; // Proper minus sign
+            aboutPlusToggle.classList.add('active'); // Add active class
+        }
+    });
+}
 
     // --- PROJECT HOVER CLASS ---
     const projectsContainer = document.querySelector('.projects-container');
@@ -1010,4 +1011,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial arrow state
     updateArrowDirection();
+});
+
+// Scroll to second section when page loads
+window.addEventListener('load', function() {
+    const secondSection = document.querySelector('.second-section');
+    if (secondSection) {
+        secondSection.scrollIntoView();
+    }
 });

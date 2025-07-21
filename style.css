@@ -178,8 +178,8 @@ body.page-navigating * {
 
 .profile-image {
     position: relative;
-    width: clamp(200px, 50vh, 405px);
-    height: clamp(140px, 35vh, 270px);
+    width: clamp(250px, 62vh, 490px); 
+    height: clamp(178px, 44vh, 330px);
     margin-top: clamp(120px, 45vh, 290px); /* This moves the image down */
     margin-bottom: 25px;
     background-image: url('id.png');
@@ -230,7 +230,7 @@ body.page-navigating * {
     color: #34312e;
     font-size: 18px;
     width: 100%;
-    max-width: 450px;
+    max-width: 480px;
     opacity: 0;
     transition: opacity 1s ease-in-out;
     line-height: 1.3;
@@ -950,7 +950,7 @@ body.transitioning {
         left: auto;
         top: auto;
         width: 100%;
-        max-width: 450px;
+        max-width: 500px;
     }
 }
 
@@ -959,7 +959,7 @@ body.transitioning {
     /* New portfolio section */
     .main-title,
     .about-text {
-        font-size: 16px;
+        font-size: 15px;
         width: 90%;
     }
     
@@ -1031,9 +1031,7 @@ body.transitioning {
         top: 180px;
     }
     
-    .about-text {
-        top: 450px;
-    }
+  
 
     /* Old portfolio section */
     body {
@@ -1193,7 +1191,7 @@ body.transitioning {
 
 /* Plus/Minus Toggle Button */
 .about-toggle-container {
-    text-align: center;
+    text-align: right;
     margin-bottom: 15px;
 }
 
@@ -1238,4 +1236,18 @@ body.transitioning {
 /* When profile-hover is active, make plus button white */
 body.profile-hover .about-plus-toggle {
     color: #d9d9d9;
+}/* Make minus button red when content is active */
+.about-content.active ~ .about-toggle-container .about-plus-toggle {
+    color: #d92020;
+}
+
+/* Make button red when active (showing minus) */
+.about-plus-toggle.active {
+    color: #d92020;
+}
+
+/* Keep the hover effect */
+.about-plus-toggle:hover {
+    color: #d92020;
+    transform: scale(1.1);
 }
