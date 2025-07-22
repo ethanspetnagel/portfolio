@@ -403,15 +403,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const textParting = new TextPartingEffect();
     textParting.init();
 
-    // --- BACKSPACE ANIMATION ---
-    function startBackspaceAnimation() {
-        const textElement = document.getElementById('backspace-text');
-        if (!textElement) return;
-        
-        const originalText = 'ETHANSPETNAGEL.ONLINE';
-        const afterDelete = 'ETHANSPETNAGEL';
-        const withSpace = 'ETHAN SPETNAGEL';
-        const extension = '.ONLINE';
+    // --- BROWSER TAB TITLE ANIMATION ---
+    function startTabTitleAnimation() {
+        const originalText = "SLUG.ONLINE";
+        const afterDelete = 'SLUG';
+        const extension = ':)';
         
         let currentText = originalText;
         let step = 0;
@@ -419,13 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let typingIndex = 0;
         let animationTimeout;
         
-        textElement.innerHTML = originalText + '<span class="cursor"></span>';
-        
-        function updateDisplay() {
-            const beforeCursor = currentText.slice(0, cursorPosition);
-            const afterCursor = currentText.slice(cursorPosition);
-            textElement.innerHTML = beforeCursor + '<span class="cursor"></span>' + afterCursor;
-        }
+        document.title = originalText;
         
         function animate() {
             if (step === 0) {
@@ -437,8 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (step === 1) {
                 if (currentText.length > afterDelete.length) {
                     currentText = currentText.slice(0, -1);
-                    cursorPosition = currentText.length;
-                    updateDisplay();
+                    document.title = currentText;
                     animationTimeout = setTimeout(animate, 150);
                 } else {
                     step = 2;
@@ -448,7 +437,6 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (step === 2) {
                 if (cursorPosition > 5) {
                     cursorPosition--;
-                    updateDisplay();
                     animationTimeout = setTimeout(animate, 200);
                 } else {
                     step = 3;
@@ -456,40 +444,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             else if (step === 3) {
-                currentText = currentText.slice(0, cursorPosition) + ' ' + currentText.slice(cursorPosition);
-                cursorPosition++;
-                updateDisplay();
+                currentText = currentText.slice(0, 5) + ' ' + currentText.slice(5);
+                document.title = currentText;
                 step = 4;
                 animationTimeout = setTimeout(animate, 2000);
             }
             else if (step === 4) {
-                currentText = currentText.slice(0, cursorPosition - 1) + currentText.slice(cursorPosition);
-                cursorPosition--;
-                updateDisplay();
+                currentText = currentText.slice(0, 5) + currentText.slice(6);
+                document.title = currentText;
                 step = 5;
                 animationTimeout = setTimeout(animate, 400);
             }
             else if (step === 5) {
-                if (cursorPosition < currentText.length) {
-                    cursorPosition++;
-                    updateDisplay();
-                    animationTimeout = setTimeout(animate, 100);
-                } else {
-                    step = 6;
-                    typingIndex = 0;
-                    animationTimeout = setTimeout(animate, 500);
-                }
+                step = 6;
+                typingIndex = 0;
+                animationTimeout = setTimeout(animate, 500);
             }
             else if (step === 6) {
                 if (typingIndex < extension.length) {
                     currentText += extension[typingIndex];
-                    cursorPosition++;
+                    document.title = currentText;
                     typingIndex++;
-                    updateDisplay();
                     animationTimeout = setTimeout(animate, 150);
                 } else {
+                    cursorPosition = originalText.length;
                     animationTimeout = setTimeout(() => {
-                        startBackspaceAnimation();
+                        startTabTitleAnimation();
                     }, 2000);
                 }
             }
@@ -498,8 +478,8 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
     }
 
-    // Start the backspace animation
-    startBackspaceAnimation();
+    // Start the tab title animation
+    startTabTitleAnimation();
 
     // --- NAVIGATION ARROW HOVER LABELS ---
     function setupArrowHover(arrowElement, labelText) {

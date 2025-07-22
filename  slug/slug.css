@@ -829,6 +829,31 @@ ul.interactive-text li {
   margin-bottom: 5px;
 }
 
+.backspace-animation {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1000;
+  font-family: 'Franklin Gothic URW Medium', Arial, sans-serif;
+  font-size: clamp(10.8px, 2.43vw, 29.7px);
+  color: #34312e;
+  font-weight: normal;
+  letter-spacing: -0.01em;
+}
+
+.backspace-animation .cursor {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  background-color: #34312e;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
 /* Responsive styles */
 @media (max-width: 1100px) {
   .essay-sidebar {
@@ -957,28 +982,4 @@ ul.interactive-text li {
   .site-title {
     font-size: clamp(32px, 12vw, 60px);
   }
-}
-.backspace-animation {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1000;
-  font-family: 'Franklin Gothic URW Medium', Arial, sans-serif;
-  font-size: clamp(6.48px, 2.16vw, 12.15px);
-  color: #34312e;
-  font-weight: normal;
-  letter-spacing: -0.01em;
-}
-
-.backspace-animation .cursor {
-  display: inline-block;
-  width: 1px;
-  height: 1em;
-  background-color: #34312e;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
 }

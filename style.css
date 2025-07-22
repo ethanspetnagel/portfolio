@@ -1204,9 +1204,15 @@ body.transitioning {
     line-height: 1;
 }
 
+/* Hover: daff00 yellow */
 .about-plus-toggle:hover {
-    color: #d92020;
+    color: #daff00;
     transform: scale(1.1);
+}
+
+/* Active (clicked/open): red */
+.about-plus-toggle.active {
+    color: #d92020;
 }
 
 /* About content container */
