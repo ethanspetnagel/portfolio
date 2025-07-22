@@ -1013,10 +1013,17 @@ document.addEventListener('DOMContentLoaded', function() {
     updateArrowDirection();
 });
 
-// Scroll to second section when page loads
 window.addEventListener('load', function() {
-    const secondSection = document.querySelector('.second-section');
-    if (secondSection) {
-        secondSection.scrollIntoView();
+    let isReload = false;
+    if (performance.getEntriesByType('navigation')[0]) {
+        isReload = performance.getEntriesByType('navigation')[0].type === 'reload';
+    } else if (performance.navigation) {
+        isReload = performance.navigation.type === 1; // 1 means reload
+    }
+    if (isReload) {
+        const secondSection = document.querySelector('.second-section');
+        if (secondSection) {
+            secondSection.scrollIntoView();
+        }
     }
 });

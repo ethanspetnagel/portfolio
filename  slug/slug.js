@@ -403,6 +403,104 @@ document.addEventListener('DOMContentLoaded', () => {
     const textParting = new TextPartingEffect();
     textParting.init();
 
+    // --- BACKSPACE ANIMATION ---
+    function startBackspaceAnimation() {
+        const textElement = document.getElementById('backspace-text');
+        if (!textElement) return;
+        
+        const originalText = 'ETHANSPETNAGEL.ONLINE';
+        const afterDelete = 'ETHANSPETNAGEL';
+        const withSpace = 'ETHAN SPETNAGEL';
+        const extension = '.ONLINE';
+        
+        let currentText = originalText;
+        let step = 0;
+        let cursorPosition = originalText.length;
+        let typingIndex = 0;
+        let animationTimeout;
+        
+        textElement.innerHTML = originalText + '<span class="cursor"></span>';
+        
+        function updateDisplay() {
+            const beforeCursor = currentText.slice(0, cursorPosition);
+            const afterCursor = currentText.slice(cursorPosition);
+            textElement.innerHTML = beforeCursor + '<span class="cursor"></span>' + afterCursor;
+        }
+        
+        function animate() {
+            if (step === 0) {
+                animationTimeout = setTimeout(() => {
+                    step = 1;
+                    animate();
+                }, 2000);
+            } 
+            else if (step === 1) {
+                if (currentText.length > afterDelete.length) {
+                    currentText = currentText.slice(0, -1);
+                    cursorPosition = currentText.length;
+                    updateDisplay();
+                    animationTimeout = setTimeout(animate, 150);
+                } else {
+                    step = 2;
+                    animationTimeout = setTimeout(animate, 300);
+                }
+            }
+            else if (step === 2) {
+                if (cursorPosition > 5) {
+                    cursorPosition--;
+                    updateDisplay();
+                    animationTimeout = setTimeout(animate, 200);
+                } else {
+                    step = 3;
+                    animationTimeout = setTimeout(animate, 400);
+                }
+            }
+            else if (step === 3) {
+                currentText = currentText.slice(0, cursorPosition) + ' ' + currentText.slice(cursorPosition);
+                cursorPosition++;
+                updateDisplay();
+                step = 4;
+                animationTimeout = setTimeout(animate, 2000);
+            }
+            else if (step === 4) {
+                currentText = currentText.slice(0, cursorPosition - 1) + currentText.slice(cursorPosition);
+                cursorPosition--;
+                updateDisplay();
+                step = 5;
+                animationTimeout = setTimeout(animate, 400);
+            }
+            else if (step === 5) {
+                if (cursorPosition < currentText.length) {
+                    cursorPosition++;
+                    updateDisplay();
+                    animationTimeout = setTimeout(animate, 100);
+                } else {
+                    step = 6;
+                    typingIndex = 0;
+                    animationTimeout = setTimeout(animate, 500);
+                }
+            }
+            else if (step === 6) {
+                if (typingIndex < extension.length) {
+                    currentText += extension[typingIndex];
+                    cursorPosition++;
+                    typingIndex++;
+                    updateDisplay();
+                    animationTimeout = setTimeout(animate, 150);
+                } else {
+                    animationTimeout = setTimeout(() => {
+                        startBackspaceAnimation();
+                    }, 2000);
+                }
+            }
+        }
+        
+        animate();
+    }
+
+    // Start the backspace animation
+    startBackspaceAnimation();
+
     // --- NAVIGATION ARROW HOVER LABELS ---
     function setupArrowHover(arrowElement, labelText) {
         if (!arrowElement) return;
